@@ -71,18 +71,24 @@ def _profile_patches(raw):
 
 
 class M3BWriterTests(unittest.TestCase):
-    def test_canonical_candidate_constants_are_bounded_and_unsealed(self):
+    def test_canonical_candidate_constants_are_bounded_and_sealed(self):
         self.assertEqual(
             w.EXPECTED_INPUT_SHA256,
             "c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac",
+        )
+        self.assertEqual(
+            w.EXPECTED_OUTPUT_SHA256,
+            "cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f",
+        )
+        self.assertEqual(
+            w.EXPECTED_DIFFS,
+            ((0x3080, 0xBE, 0xBF), (0x3FF6, 0x20, 0x21)),
         )
         self.assertEqual(w.EXPECTED_ACTIVE_SLOT, 0)
         self.assertEqual(w.EXPECTED_ACTIVE_COUNTER, 2)
         self.assertEqual(w.EXPECTED_INACTIVE_COUNTER, 1)
         self.assertEqual(w.EXPECTED_OLD_HP_IV, 30)
         self.assertEqual(w.TARGET_HP_IV, 31)
-        self.assertIsNone(w.EXPECTED_DIFFS)
-        self.assertIsNone(w.EXPECTED_OUTPUT_SHA256)
 
     def test_derive_uses_both_valid_rotated_slots_and_stays_in_envelope(self):
         raw = _make_save()
@@ -105,11 +111,11 @@ class M3BWriterTests(unittest.TestCase):
         after = v.verify_bytes(output)
         self.assertEqual(after.party[0].ivs, (31, 29, 26, 23, 27, 29))
 
-    def test_production_build_rejects_until_candidate_is_sealed(self):
+    def test_private_seal_rejects_unrelated_synthetic_fingerprint(self):
         raw = _make_save()
         patches = _profile_patches(raw)
         with patches[0], patches[1], patches[2], patches[3]:
-            with self.assertRaisesRegex(w.WriterError, "not sealed"):
+            with self.assertRaisesRegex(w.WriterError, "non-allowlisted M3B diff"):
                 w.build_proof_output(raw)
 
     def test_slot_counter_parity_mismatch_is_rejected(self):
