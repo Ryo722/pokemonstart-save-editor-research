@@ -15,7 +15,13 @@ The canonical M2 proof reproduced exactly two changed bytes:
 
 The repository-generated output SHA-256 is `569fc5b2b18c77593a0f55bbe01fd20a603fe96ce9c5f955b978710d117db0dc` and was byte-identical to the retained earlier HP-IV-30 proof save. A fresh human game round trip then loaded that repository-generated output in PokemonStart v0.15, completed a normal in-game save, and produced a private resave that independently verified with both slots valid, slot 0 counter 2 uniquely newest, HP IV 30 retained, unrelated checked party data stable, and sectors 30/31 preserved. No private save bytes are stored in Git.
 
-Current canonical position: **M1 COMPLETE; M2 COMPLETE; stopped before M3 field-by-field expansion authorization.** M2 proves only the exact allowlisted HP-IV 31→30 transformation. It does not authorize a general writer, other save hashes/builds, additional editable fields, GUI work, box editing, or save overwrite behavior.
+**M3A — supported-save / reusable write-envelope characterization is authorized.** This is a one-time read-only evidence/design gate before reusable writing or further field expansion. It does not add a new editable field, generalize the writer, or mutate saves. Its purpose is to establish the supported-save/profile boundary and common transaction invariants that later proofs can reuse instead of re-solving them field by field.
+
+M3B same-field reusable transaction proof, M3C field-by-field expansion, and M4 usable editor/GUI remain **not authorized** until the preceding evidence gates justify them.
+
+The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.
+
+See `docs/decision-record.md` and `docs/m3a-support-envelope-plan.md` for the current milestone architecture and authorization boundary.
 
 ## Run the verifier
 
@@ -49,7 +55,7 @@ Tests build synthetic save bytes in memory. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See [evidence](docs/evidence.md) and [decision record](docs/decision-record.md). Evidence levels distinguish independently reproduced/source-backed facts, private local verification, human observation, prior observations, and hypotheses. Nickname and OT-name bytes are currently reported as hex rather than decoded text because a complete, pinned charmap is not required for the structural M1/M2 gates.
+See [evidence](docs/evidence.md) and [decision record](docs/decision-record.md). Evidence levels distinguish independently reproduced/source-backed facts, private local verification, human observation, prior observations, and hypotheses. Nickname and OT-name bytes are currently reported as hex rather than decoded text because a complete, pinned charmap is not required for the structural gates completed so far.
 
 ## Data boundary
 
