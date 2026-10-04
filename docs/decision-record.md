@@ -1,141 +1,155 @@
 # Canonical re-evaluation — 2026-10-05
 
-## Evidence hierarchy and current state
+## Authority and evidence discipline
 
-GitHub `main` is the durable canonical source. Protected binaries remain outside Git. Current conclusions distinguish repository evidence, independently checked public CFRU-JP source, local private-input verification, human observation, prior observations/command logs, and hypotheses.
+GitHub `main` is the durable canonical authority. Protected binaries remain outside Git. Conclusions must distinguish repository/canonical evidence, independently checked public upstream source, local private-input verification, human observation, prior observations/command logs, and hypotheses.
 
-M1 / Gate 1 is complete. The merged read-only verifier has no write path, its synthetic tests cover malformed/ambiguous cases, and retained private original/test/resave inputs reproduced the expected slot selection, section validation, party decoding, footer separation, and sectors 30/31 diagnostics without changing the input files.
-
-M2 / Gate 2 is complete for one exact allowlisted proof transformation. The bounded repository writer accepts only the known before-test save SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, changes only party slot 0 HP IV 31 -> 30, refuses input overwrite and pre-existing output paths, requires the complete diff to be exactly `0x10080 BF->BE` plus `0x10FF6 62->61`, and requires output SHA-256 `569fc5b2b18c77593a0f55bbe01fd20a603fe96ce9c5f955b978710d117db0dc`.
-
-The repository-generated proof output completed a fresh human game load + normal-save round trip. The resulting private resave independently passed structural verification with both slots valid, slot 0 counter 2 uniquely newest, HP IV 30 retained, checked unrelated party values stable, sectors 30/31 preserved, and the prior slot retained byte-for-byte. The optional 16-byte external footer remains opaque and is not assigned semantics.
+Do not generalize from a single successful save edit. Unsupported, malformed, ambiguous, or unqualified saves must fail closed.
 
 ## Refined North Star
 
-Enable a PokemonStart player to inspect a **positively supported** save, make a small **evidence-proven** party edit into a **separate output file**, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed rather than be guessed about.
+Enable a PokemonStart player to inspect a **positively supported** save, make a small **evidence-proven** party edit into a **separate output file**, independently verify that output, and retain a reliable recovery path.
 
-A Windows GUI is a delivery option only after the save/profile boundary and individual field writes have evidence. Proven field safety and proven save support determine UI scope, not the reverse.
+A GUI is a delivery layer only after save/profile eligibility and field capability are proven. The project is not trying to maximize editable fields or reproduce a generic PKHeX-style editor by default.
 
 ## Milestone architecture
 
 1. **M1 — reproducible read audit — COMPLETE.**
+   - fail-closed structural verifier;
+   - slot/section/signature/checksum validation;
+   - counter selection including wrap behavior;
+   - section permutation handling;
+   - party decoding for the observed 100-byte records;
+   - optional 16-byte external footer separated as opaque;
+   - sectors 30/31 reported without mutation.
+
 2. **M2 — exact one-field writer proof — COMPLETE.**
-3. **M3A — supported-save / reusable write-envelope characterization — COMPLETE.** The support/profile boundary and common transaction contract are recorded in `docs/m3a-support-envelope-findings.md`.
-4. **M3B — same-field reusable transaction proof — NOT YET AUTHORIZED.** Recommended next proof keeps the semantic field family fixed while testing a different save-state/physical-slot condition inside the already-qualified private v0.15 lineage.
-5. **M3C — field-by-field expansion — NOT YET AUTHORIZED.** Each new field or tightly coupled field group requires a separate reversible proof with explicit expected diff, checksum/coupling analysis, invariant checks, and game round trip.
-6. **M4 — usable editor — NOT AUTHORIZED.** Expose only proven fields and qualified save profiles, with read-only preview, validation, separate output path, and recovery instructions.
+   - exact private input SHA-256 allowlist;
+   - `party[0]` HP IV `31 -> 30` only;
+   - exactly two changed bytes: field + logical section 1 checksum;
+   - exclusive new-file output and input immutability;
+   - human game load + normal-save round trip PASS.
 
-The original M3A plan and authorization boundary are recorded in `docs/m3a-support-envelope-plan.md`.
+3. **M3A — supported-save / reusable write-envelope characterization — COMPLETE.**
+   - structural compatibility is not PokemonStart build identity;
+   - writer support is layered: structural eligibility + provenance/profile eligibility + field capability eligibility;
+   - sectors 30/31 are CFRU-JP game-managed expanded save data;
+   - logical sections 0/4/13 contain game-managed parasite data in checksum-uncovered tails;
+   - active-slot/counter parity is part of actual game-load behavior;
+   - physical section permutation must be preserved;
+   - party-field transactions preserve the complete file outside explicitly proven field/checksum bytes.
 
-Current canonical position: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; stopped before M3B implementation authorization.**
+4. **M3B — bounded same-field transaction proof — COMPLETE for the exact retained private v0.15 lineage once PR #8 is merged.**
+   - exact input SHA-256 `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac`;
+   - both slots valid, active slot 0 counter 2, inactive counter 1;
+   - `party[0]` HP IV `30 -> 31` only;
+   - exact two-byte diff `0x3080 BE->BF` and `0x3FF6 20->21`;
+   - exact output SHA-256 `cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f`;
+   - source-backed parity preflight, complete byte-diff confinement, output re-verification, new-file-only semantics;
+   - human game round trip PASS: returned resave has slot 0 counter 2, slot 1 counter 3 active, parity PASS, HP IV 31 retained, old slot 0 byte-for-byte preserved, sectors 28–31 byte-for-byte preserved, and checked unrelated party values stable.
 
-## 2026-10-05 milestone-boundary audit decision
+5. **M3C — field-by-field expansion — NOT AUTHORIZED.**
+   - each new field or tightly coupled field group requires its own semantic/coupling analysis, bounded encoder, expected-diff contract, checksum analysis, invariant checks, and game round trip before being called safe.
 
-The M2 result validates the original M1 -> M2 ordering, but M2 also exposed a cross-cutting gap: the proof deliberately fixed the exact input hash, starting value, physical changed bytes, checksum byte, and output hash. Repeating that pattern across many fields would increase field evidence while leaving reusable user-save support and transaction semantics unresolved.
+6. **M4 — usable editor / GUI — NOT AUTHORIZED.**
+   - expose only proven fields and qualified save profiles;
+   - read-only preview, fail-closed validation, separate output path, explicit recovery path.
 
-The roadmap was therefore **REFINED, not redesigned**. Field-by-field proof remains required, but the one-time M3A support-envelope gate was inserted before further capability expansion. M3A is not a repeating review layer for each future field.
+Detailed M3A support-envelope evidence is in `docs/m3a-support-envelope-findings.md`. Detailed M3B evidence is in `docs/m3b-proof-candidate.md`.
 
-## M3A completion findings
+## Current position
 
-Fresh upstream verification confirms the pinned CFRU-JP `main` revision remains `e24a16fe39e27ae162faf5b78596d1f3df18489d`.
+On canonical `main` before PR #8 merge: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B candidate evidence PASS but not yet canonicalized.**
 
-M3A produced the following cross-cutting conclusions:
+If PR #8 is explicitly authorized and merged, the canonical position becomes: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
 
-- **Structural compatibility is not PokemonStart build identity.** The default save signature/layout is format evidence, not a unique title/build identifier. The source can also accept compile-time custom file signatures. No current canonical evidence establishes a save-resident build identifier. Arbitrary structurally similar saves therefore remain unsupported unless provenance/profile evidence qualifies them.
-- **Writer support is layered.** Future support requires structural eligibility + provenance/profile eligibility + field capability eligibility. Passing the structural verifier alone is insufficient.
-- **Sectors 30/31 are game-managed expanded save data.** Pinned `src/save.c` explicitly loads and saves them. Their application-level semantics are not decoded here, so party-field writers must preserve them byte-for-byte.
-- **Sections 0/4/13 contain game-managed parasite data in checksum-uncovered tails.** A writer must preserve the entire file outside explicitly proven field/checksum bytes rather than treating unchecked tail bytes as disposable padding.
-- **Slot/counter parity matters to actual game loading.** The pinned load path chooses the physical slot from `gSaveCounter % 2`; the observed lineage matches counter 1 -> slot 1 and counter 2 -> slot 0. Writer eligibility must therefore require the selected active slot index to equal `active_counter % 2`.
-- **Physical section permutation must be preserved.** Locate data through verified logical section IDs; do not normalize/reorder sectors.
-- **External editing should not emulate a normal game save.** For the next bounded proof, preserve counters, slot selection, physical order, inactive slot, sectors 28–31, parasite tails, and the external footer; change only the proven field bytes and affected checksum.
-- **The 16-byte external footer remains preservation-only.** Preserve it in tool-generated output, but do not require it to remain equal after a later emulator/game resave.
+## What M3B actually proves
 
-Detailed evidence, support predicates, fail-closed matrix, and transaction invariants are in `docs/m3a-support-envelope-findings.md`.
+M3B does **not** prove a general writer or arbitrary-save support. It validates the M3A transaction envelope on a second bounded save-state condition while keeping the field family fixed:
 
-## Supported-save/profile boundary after M3A
+- the input hash differs from the original M2 proof input;
+- both save slots are valid;
+- the active physical slot is the opposite slot from M2;
+- the writer discovers the target logical section through metadata rather than fixed physical location;
+- the tool changes only the proven field/checksum bytes and preserves all other bytes;
+- the actual game accepts that output and carries the edited HP-IV value into the next normal-save slot.
 
-### Structural eligibility S0
+This materially reduces uncertainty around slot/counter state, section permutation, and the reusable transaction envelope. It does not expand the supported provenance profile beyond the retained private v0.15 lineage.
 
-A future bounded writer candidate must require at least:
+## Supported-save / writer-support boundary
 
-- file size exactly `0x20000` or `0x20010`;
-- current fail-closed slot/section/signature/checksum validation;
+A future writer-supported save must pass all applicable layers:
+
+### S0 — structural eligibility
+
+- file size `0x20000` or `0x20010`;
+- fail-closed slot/section/signature/checksum validation;
 - one unique active slot;
 - internally consistent active counter;
 - active slot index equals `counter % 2`;
-- successful decoding of the target capability's required party layout;
-- preservation of existing physical section order.
+- target capability's required party layout decodes successfully;
+- existing physical section order is preserved.
 
-S0 proves structure only, not title/build identity.
+### P0 — provenance/profile eligibility
 
-### Provenance/profile eligibility P0
+Current bounded write evidence is only for the retained private PokemonStart v0.15 lineage. Structural similarity alone does not establish title/build identity. Arbitrary external saves and other builds remain unsupported.
 
-For the next proof, only the retained private M2 v0.15 lineage is currently qualified. Arbitrary external saves, other PokemonStart builds, and structurally similar files without qualified provenance remain unsupported.
+A stronger future user-facing profile mechanism should prefer independently verified local build/ROM identity rather than infer build identity from save structure.
 
-A stronger future user-facing build-profile mechanism should prefer independently verified local build/ROM identity. The target ROM hash currently recorded elsewhere is prior command-log evidence only and is not promoted by M3A.
+### C(field) — capability eligibility
 
-### Capability eligibility C(field)
+Every editable field or tightly coupled field group requires its own proof. M2/M3B establish only the HP-IV field family under the exact bounded proof conditions above.
 
-Each field transformation needs its own proof. At M3A completion, the only completed write capability remains the exact M2 HP-IV 31 -> 30 transformation.
+## Reusable transaction contract retained
 
-## Reusable transaction contract after M3A
+Future bounded writers must:
 
-A future bounded writer using this contract must:
-
-- hash/read the input before mutation;
+- hash/read input before mutation;
 - reject input/output aliasing and existing output paths;
-- run structural and writer-support preflight checks;
+- run structural + writer-support preflight;
 - locate the active logical section through verified metadata;
-- require slot/counter parity;
-- preserve physical section permutation and all section metadata/counters;
+- require active-slot/counter parity;
+- preserve section permutation and section counters/IDs/signatures;
 - mutate only explicitly authorized field bytes;
-- recalculate only checksum(s) whose covered payload changed unless field-specific evidence proves additional coupling;
-- require every output byte change to be explained by the authorized field encoder or checksum update;
-- preserve every other byte including inactive slot, sectors 28–31, checksum-uncovered parasite tails, and optional external footer;
-- re-verify the complete output;
-- use exclusive new-file creation, verify written bytes, re-hash the input, and clean up a newly created output on post-write failure when safely possible;
+- recompute only checksum(s) whose covered payload changed unless field evidence proves additional coupling;
+- require the complete byte diff to be explainable by authorized field/checksum changes;
+- preserve every other byte including inactive slot, sectors 28–31, parasite tails, and optional external footer;
+- re-verify generated bytes;
+- use exclusive new-file creation, verify written bytes, re-hash the original input, and clean up a newly created output on post-write failure when safely possible;
 - report exact diff and output hash.
 
-A fixed expected output SHA-256 is useful for a bounded proof candidate but is not a reusable invariant for arbitrary future values/inputs.
+The external 16-byte footer is preservation-only for tool output; equality is not required after a later game/emulator resave.
 
-## Recommended M3B candidate
+## M3B boundary check / next-step posture
 
-The cheapest next uncertainty reducer is a same-field proof against the fresh M2 round-trip resave:
+M3B produced no evidence that invalidates the refined North Star or the M3A transaction contract. It instead confirms that the transaction envelope works across the intended second bounded slot state.
 
-- input SHA-256 `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac`;
-- retained P0 private v0.15 lineage only;
-- both slots valid, active physical slot 0, counter 2;
-- party[0] HP IV starts at 30;
-- proposed transformation: HP IV `30 -> 31` in the active slot;
-- preserve counters, inactive slot, section order/metadata, all non-target bytes, sectors 28–31, parasite tails, and footer;
-- recompute only logical section 1 checksum;
-- derive and freeze exact diff/output hash before execution;
-- output to a new path only;
-- require a human game load + normal-save round trip before M3B completion.
+Therefore no roadmap redesign is currently justified. The nominal next milestone remains **M3C field-by-field expansion**, but it must not start merely because the roadmap names it. Before authorization, select the cheapest new field or tightly coupled field group whose proof materially advances the user outcome and does not introduce unresolved coupling that is cheaper to investigate first.
 
-This candidate changes previously unproven save-state dimensions while keeping the field family fixed. It does **not** establish arbitrary-save support.
-
-## M2 design decision retained
-
-The M2 writer remains intentionally non-general and exact-hash bounded. It is evidence, not the future user-facing architecture.
+Broad arbitrary-save/profile generalization remains a separate future qualification problem and is not automatically inserted ahead of every field proof.
 
 ## Remaining risks and unresolved uncertainties
 
-Known risks remain: PokemonStart version/build mismatch outside the retained lineage; no positive build identity from save structure alone; future variants with different signatures/layouts; field coupling; expanded IDs; broader build/profile qualification; interrupted-save behavior; arbitrary non-lineage save support; and unproven fields.
-
-The application-level meaning/integrity of expanded sector 30/31 data and checksum-uncovered parasite tails is not decoded. Current safety derives from byte-for-byte preservation, not semantic validation.
-
-Broader provenance gaps also remain: exact distribution URL/package hash, complete extraction transcript, and independently reproduced target-build identity.
+- PokemonStart version/build mismatch outside the retained private lineage;
+- no positive build identity derived from save structure alone;
+- arbitrary external/non-lineage save support;
+- field coupling outside HP IV;
+- expanded IDs and other game-specific field semantics;
+- interrupted-save behavior outside the external new-file transaction model;
+- application-level semantics/integrity of sectors 30/31 and parasite tails beyond byte preservation;
+- exact distribution/package provenance gaps and independently reproduced target-build identity;
+- GUI readiness remains unproven until useful editable fields and profile support exist.
 
 ## Authorization boundary
 
-The 2026-10-05 authorization covered the roadmap refinement and M3A read-only research/design/canonical documentation. That work is now complete.
+The human authorization on 2026-10-05 covered the bounded M3B same-field proof: implementation, exact private candidate derivation/sealing, one new private proof output, human round-trip preparation, and read-only verification of the returned resave.
 
 It does **not** authorize:
 
-- M3B writer implementation or save mutation;
-- non-lineage/arbitrary save writing;
-- another editable field;
+- PR #8 merge unless separately authorized;
+- M3C/new editable fields;
+- non-lineage or arbitrary save writing;
+- general writer capability expansion;
 - save overwrite behavior;
 - GUI work;
 - box editing;
@@ -143,4 +157,4 @@ It does **not** authorize:
 - executing Defender-blocked executables;
 - ROM / `.sav` / `.pks` / patches / executables / proprietary payload uploads.
 
-The next human gate is explicit authorization of the bounded M3B candidate above. M3C remains a later separate authorization.
+The immediate human gate is **PR #8 merge authorization**. After merge, M3C remains a separate authorization boundary.
