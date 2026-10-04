@@ -39,7 +39,7 @@ A GUI is a delivery layer only after save/profile eligibility and field capabili
    - physical section permutation must be preserved;
    - party-field transactions preserve the complete file outside explicitly proven field/checksum bytes.
 
-4. **M3B — bounded same-field transaction proof — COMPLETE for the exact retained private v0.15 lineage once PR #8 is merged.**
+4. **M3B — bounded same-field transaction proof — COMPLETE for the exact retained private v0.15 lineage.**
    - exact input SHA-256 `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac`;
    - both slots valid, active slot 0 counter 2, inactive counter 1;
    - `party[0]` HP IV `30 -> 31` only;
@@ -59,9 +59,7 @@ Detailed M3A support-envelope evidence is in `docs/m3a-support-envelope-findings
 
 ## Current position
 
-On canonical `main` before PR #8 merge: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B candidate evidence PASS but not yet canonicalized.**
-
-If PR #8 is explicitly authorized and merged, the canonical position becomes: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
+Canonical `main` after PR #8 merge commit `8d28835da09b93f4c8155b4d9d59d65f374254fb`: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
 
 ## What M3B actually proves
 
@@ -142,11 +140,10 @@ Broad arbitrary-save/profile generalization remains a separate future qualificat
 
 ## Authorization boundary
 
-The human authorization on 2026-10-05 covered the bounded M3B same-field proof: implementation, exact private candidate derivation/sealing, one new private proof output, human round-trip preparation, and read-only verification of the returned resave.
+The human authorizations on 2026-10-05 covered the bounded M3B same-field proof, PR #8 merge, and this bounded post-merge documentation correction.
 
-It does **not** authorize:
+They do **not** authorize:
 
-- PR #8 merge unless separately authorized;
 - M3C/new editable fields;
 - non-lineage or arbitrary save writing;
 - general writer capability expansion;
@@ -157,4 +154,4 @@ It does **not** authorize:
 - executing Defender-blocked executables;
 - ROM / `.sav` / `.pks` / patches / executables / proprietary payload uploads.
 
-The immediate human gate is **PR #8 merge authorization**. After merge, M3C remains a separate authorization boundary.
+The current human gate is **M3C authorization**. M3C remains a separate future decision and has not been authorized by the M3B merge or this documentation correction.
