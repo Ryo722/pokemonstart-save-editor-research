@@ -4,23 +4,19 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 ## Current position
 
-**M1 — reproducible read-only save verifier is complete.** `pokemonstart_save_verifier.py` validates the supported observed CFRU-JP-derived save layout without modifying the input file. It separates a 128 KiB flash body from an optional 16-byte opaque external footer, validates both 14-section slots, selects a unique newest valid slot, decodes supported 100-byte party records, and reports sectors 30/31.
+**M1 — reproducible read-only save verifier is complete.** `pokemonstart_save_verifier.py` validates the supported observed CFRU-JP-derived save layout without modifying the input file.
 
-**M2 — exact one-field writer proof is complete.** `pokemonstart_hpiv_proof_writer.py` accepts only the known before-test private save SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, changes only party[0] HP IV `31 -> 30`, updates logical section 1's checksum, writes only to a brand-new output path, and completed a human game load + normal-save round trip.
+**M2 — exact one-field HP-IV writer proof is complete.**
 
-**M3A — supported-save / reusable write-envelope characterization is complete.** Source review established that structural compatibility is not build identity; sectors 30/31 are game-managed expanded save data; checksum-uncovered tails of sections 0/4/13 contain game-managed parasite data; and writer eligibility must enforce source-backed active-slot/counter parity. The resulting transaction contract preserves every byte outside explicitly proven field/checksum changes, including inactive slot, physical section order, sectors 28–31, parasite tails, counters/metadata, and optional external footer.
+**M3A — supported-save / reusable write-envelope characterization is complete.** The reusable contract is fail closed, preserve every non-target byte, preserve section order/counters/inactive slot/sectors 28–31/parasite tails/footer, write only to a new file, and re-verify the result.
 
-**M3B — bounded same-field transaction proof is complete for the retained private v0.15 lineage.** The sealed candidate `pokemonstart_hpiv_m3b_proof_writer.py` accepts only the M2 round-trip private input SHA-256 `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac` and changes only party[0] HP IV `30 -> 31`. Its exact output differs by two bytes (`0x3080 BE->BF`, `0x3FF6 20->21`) and has SHA-256 `cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f`.
+**M3B — bounded same-field transaction proof is complete for the retained private v0.15 lineage.**
 
-The returned human-round-trip resave independently verified with both slots valid, slot 1 counter 3 uniquely newest, active-slot/counter parity passing, HP IV 31 retained, checked unrelated party values stable, old slot 0 preserved byte-for-byte, and sectors 28–31 preserved byte-for-byte. The external 16-byte footer changed during the game/emulator save as expected under the preservation-only contract.
+**M3C — field expansion is at a decision boundary.** M3C-F1 (`party[0] friendship 50 -> 51`) completed its exact private preflight and human game round trip on PR #9, which remains unmerged pending a separate merge decision. No second field or broad M3C batch is authorized yet.
 
-M3B does **not** establish arbitrary-save support or a reusable general writer implementation. It validates the M3A transaction envelope on a second bounded save state: a non-M2-input hash with both slots valid and the opposite active physical slot, while keeping the semantic field family fixed.
-
-**M3C — field-by-field expansion remains not authorized. M4 GUI remains not authorized.**
+**M4 — usable editor / GUI remains not authorized.**
 
 The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.
-
-See `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, and `docs/m3b-proof-candidate.md` for the current milestone architecture, support boundary, and proof evidence.
 
 ## Run the verifier
 
@@ -30,13 +26,11 @@ Python 3.10+ is sufficient; there are no third-party dependencies.
 python3 pokemonstart_save_verifier.py /path/to/private/save.sav
 ```
 
-The verifier accepts only `0x20000`-byte flash images or `0x20010`-byte files with a 16-byte opaque footer. It exits nonzero and prints `status: REJECTED` for malformed, ambiguous, internally inconsistent, or unsupported layouts.
-
-The M1 verifier is a structural verifier. M3A's additional writer-support requirements, including provenance/profile qualification and slot/counter parity, are separate from merely parsing a structurally valid save.
+The verifier accepts only `0x20000`-byte flash images or `0x20010`-byte files with a 16-byte opaque footer. It exits nonzero for malformed, ambiguous, internally inconsistent, or unsupported layouts.
 
 ## Proof writers
 
-`pokemonstart_hpiv_proof_writer.py` and `pokemonstart_hpiv_m3b_proof_writer.py` are proof-only exact-input tools, not user-facing general editors. They reject unsupported hashes, unexpected starting values, unexpected complete diffs/output hashes, input/output path aliasing, and existing output paths. They re-verify generated bytes and preserve the original input.
+The repository's proof writers are exact-input research tools, not user-facing general editors. They reject unsupported hashes, unexpected starting values, unexpected complete diffs/output hashes, input/output path aliasing, and existing output paths. They re-verify generated bytes and preserve the original input.
 
 Run repository tests with:
 
@@ -44,12 +38,12 @@ Run repository tests with:
 python3 -m unittest discover -s tests -v
 ```
 
-Tests build synthetic save bytes in memory. No `.sav` fixture is committed.
+Tests use synthetic save bytes. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See [evidence](docs/evidence.md), [decision record](docs/decision-record.md), [M3A findings](docs/m3a-support-envelope-findings.md), and [M3B proof](docs/m3b-proof-candidate.md). Evidence levels distinguish independently reproduced/source-backed facts, private local verification, human observation, prior observations, and hypotheses.
+See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, and the current M3C-F1 PR for detailed evidence and authorization boundaries.
 
 ## Data boundary
 
-Never commit or upload ROMs, `.sav` files, copyrighted game assets, `.pks` payloads, BPS/IPS patches, patcher executables, extracted distribution executables, or other proprietary package contents. Use legally obtained local inputs. See [contributing](CONTRIBUTING.md).
+Never commit or upload ROMs, `.sav` files, copyrighted game assets, `.pks` payloads, BPS/IPS patches, patcher executables, extracted distribution executables, or other proprietary package contents. Use legally obtained local inputs. See `CONTRIBUTING.md`.
