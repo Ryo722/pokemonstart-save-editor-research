@@ -2,11 +2,9 @@
 
 ## Status
 
-**AUTHORIZED; IMPLEMENTATION PREFLIGHT STARTED; PRIVATE CANDIDATE NOT YET SEALED.**
+**AUTHORIZED; SEALED PRIVATE PREFLIGHT PASS; HUMAN GAME ROUND TRIP PENDING.**
 
-This candidate is intentionally fail-closed. It cannot create a production proof output until the exact private input bytes have been used to derive and review the complete byte diff and output SHA-256, and those values have then been sealed into the candidate constants.
-
-M3B is not complete. A later human game load + normal-save round trip remains required after a sealed repository-generated proof output exists.
+M3B is not complete. The exact private candidate has now been derived, independently checked against the M3A transaction envelope, sealed into the repository writer, and emitted as one brand-new private proof output. A human game load + normal-save round trip and read-only verification of the resulting resave remain required before M3B completion or merge authorization.
 
 ## Exact authorized scope
 
@@ -18,18 +16,32 @@ M3B is not complete. A later human game load + normal-save round trip remains re
 - output: a new file only;
 - preserve all counters, section IDs/signatures, physical section permutation, inactive slot, sectors 28–31, parasite tails, optional 16-byte footer, and all non-target bytes;
 - recompute only the checksum covering the changed logical section 1 payload;
-- require a complete exact diff and output hash to be frozen before production file creation.
+- require the complete exact diff and output hash to match the sealed candidate.
 
 Explicitly out of scope: arbitrary saves, other PokemonStart builds/profiles, new editable fields, box editing, counter/slot rewriting, section reordering, save overwrite, GUI work, or protected-data publication.
 
-## Candidate implementation
+## Sealed exact candidate fingerprint
 
-`pokemonstart_hpiv_m3b_proof_writer.py` separates two stages:
+The authorized private input was freshly available to the execution environment and independently re-hashed before mutation.
 
-1. `derive_candidate_fingerprint(raw)` — exact-input-constrained, in-memory only. It verifies the M3A support envelope, computes the proposed `30 -> 31` bytes and checksum, re-verifies the output in memory, and reports the exact diff/output hash. It does not write a file.
-2. `build_proof_output` / `write_proof_file` — hard-refuses while `EXPECTED_DIFFS` or `EXPECTED_OUTPUT_SHA256` are unset. Production output creation becomes possible only after the exact fingerprint is independently reviewed and sealed.
+| Item | Sealed value |
+| --- | --- |
+| Input size | `131,088` bytes |
+| Input SHA-256 | `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac` |
+| Active slot / counter | slot `0` / counter `2` |
+| Inactive counter | `1` |
+| Active slot parity | `0 == 2 % 2` — PASS |
+| Logical section 1 physical sector | `3` |
+| Starting IVs | `30/29/26/23/27/29` |
+| Target IVs | `31/29/26/23/27/29` |
+| Data diff | `0x3080: BE -> BF` |
+| Section 1 checksum diff | `0x3FF6: 20 -> 21` |
+| Complete diff count | `2` bytes |
+| Output SHA-256 | `cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f` |
 
-This split prevents the inability to access the private input in one environment from silently weakening the proof contract.
+The two-byte diff is now sealed in `EXPECTED_DIFFS`, and the output hash is sealed in `EXPECTED_OUTPUT_SHA256`. Production writing therefore succeeds only for this exact private candidate fingerprint.
+
+Evidence level: **local private-input verification + sealed repository candidate evidence**. No private save bytes are committed.
 
 ## M3A support-envelope checks carried into M3B
 
@@ -46,49 +58,63 @@ The candidate requires:
 - canonical retained opaque-footer hash;
 - target logical section found through verified metadata rather than fixed physical assumptions;
 - complete diff confined to the IV word bytes plus containing checksum bytes;
-- same active slot and counters after the in-memory mutation;
+- same active slot and counters after mutation;
 - identical section metadata/physical permutation after mutation;
 - same party count and all non-HP IVs;
 - identical footer and sectors 30/31.
 
 Because complete diff confinement is enforced, inactive-slot bytes, Hall of Fame sectors 28/29, parasite tails, and every other non-target byte are necessarily preserved as well.
 
+## Private preflight result
+
+The fresh private input matched every M3A profile condition:
+
+- both slots validate completely;
+- slot 0 counter 2 is uniquely newest;
+- slot/counter parity passes;
+- logical section 1 is in physical sector 3;
+- party count is 1;
+- `party[0]` IVs are `30/29/26/23/27/29`;
+- sector 30 SHA-256 is `335dbe9fd34f7d6baf1d3c4fdff8647b121872de1fdf779a0d1a49f9de068525`;
+- sector 31 SHA-256 is `ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7`;
+- the 16-byte opaque footer SHA-256 is `0f5e9be128e35fb5926268e15f441e442ff54ab712ba7fa50418761a4170ed0f`.
+
+After applying only the authorized transformation and recomputing logical section 1's checksum:
+
+- all 28 ordinary save-slot sectors still validate;
+- active slot and both counters are unchanged;
+- inactive slot is byte-identical;
+- sectors 28–31 are byte-identical;
+- the optional 16-byte footer is byte-identical;
+- the complete file diff is exactly the sealed two bytes above;
+- resulting IVs are `31/29/26/23/27/29`;
+- the input SHA-256 remains unchanged after output creation;
+- the new output is exactly `131,088` bytes with the sealed output SHA-256.
+
+One private proof output was created at a new path only. It is not committed or published through GitHub.
+
 ## Synthetic implementation preflight
 
-A local no-private-data harness reproduced the current verifier rules and exercised the candidate against synthetic two-valid-slot saves, including a rotated physical section order. Result: **4/4 PASS**.
+The synthetic test contract was updated for the sealed state. A local no-private-data sealed-state harness exercised the six repository test behaviors and passed **6/6**:
 
-The exercised behaviors were:
+1. exact bounded sealed constants;
+2. derive against two valid rotated slots while remaining inside the field/checksum envelope;
+3. reject an unrelated synthetic candidate against the private seal;
+4. reject active-slot/counter parity mismatch;
+5. reject wrong starting HP IV;
+6. allow a synthetically sealed new-file write while preserving input and refusing overwrite semantics.
 
-- derive a same-field candidate from both-valid slots with active slot 0/counter 2 and a rotated section permutation;
-- refuse production build while exact diff/output hash are unsealed;
-- reject an active-slot/counter parity mismatch;
-- reject the wrong starting HP IV;
-- after synthetic sealing, create only a new output while preserving the input and refusing input/existing-output overwrite (covered within the sealed-write test).
+No `.sav` fixture is committed. GitHub Actions is not the evidence source for this pass; this is a local synthetic preflight.
 
-The repository test file additionally separates the bounded-constant and derive-envelope assertions into dedicated cases. No `.sav` fixture is committed.
+## Required human round-trip gate
 
-Evidence level: **independently reproduced synthetic implementation preflight** for the local harness; repository candidate source for the branch implementation.
+The next step is intentionally human-visible and bounded:
 
-## Current private-input blocker
+1. load the generated private M3B proof output in the same PokemonStart v0.15 environment;
+2. confirm the save loads normally;
+3. perform one normal in-game save;
+4. return the resulting resave for read-only verification;
+5. verify both slots, counter transition, retained HP IV 31, unrelated party invariants, sectors 28–31, and footer handling;
+6. only after that evidence may M3B completion / candidate merge be considered.
 
-The required private file is retained in the user's private Project/Library as `PokemonStart_v0.15(1).sav`, size `131,088` bytes, corresponding canonically to the M2 fresh round-trip lineage. During this M3B session the Files layer listed the file, but raw-byte materialization into the execution container was refused by the platform. A second private-Library working snapshot was also refused raw materialization.
-
-Therefore this session has **not** re-hashed or re-parsed the private bytes and has **not** derived the exact M3B output SHA-256/diff. No private save bytes were published or committed.
-
-This is an execution-environment access blocker, not evidence that the candidate passed private preflight.
-
-## Required next proof step
-
-Once the exact private input bytes are available to the execution environment:
-
-1. independently re-hash the input and require `c103d8d3...67ac`;
-2. run the current canonical verifier and M3B profile checks read-only;
-3. run `--derive-only` to obtain the exact complete diff and output SHA-256 without creating a file;
-4. independently review that fingerprint against the M3A envelope;
-5. seal `EXPECTED_DIFFS` and `EXPECTED_OUTPUT_SHA256` in the candidate;
-6. rerun the complete synthetic suite;
-7. generate one brand-new private proof output and verify input immutability;
-8. only then ask for the human game load + normal-save round trip;
-9. read-only verify the resulting resave before M3B can be considered complete.
-
-No later step may infer success from this preflight alone.
+No broader writer capability, new field, arbitrary-save support, or M3C work is authorized by this preflight.
