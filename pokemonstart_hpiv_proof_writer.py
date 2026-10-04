@@ -48,14 +48,10 @@ def _diffs(before: bytes, after: bytes) -> tuple[tuple[int, int, int], ...]:
     return tuple((i, a, b) for i, (a, b) in enumerate(zip(before, after)) if a != b)
 
 
-def _build(
-    raw: bytes,
-    expected_input_sha256: str,
-    expected_output_sha256: str,
-    expected_diffs: tuple[tuple[int, int, int], ...],
-) -> tuple[bytes, ProofResult]:
+def build_proof_output(raw: bytes) -> tuple[bytes, ProofResult]:
+    """Build only the one exact, allowlisted M2 proof output."""
     input_sha = _sha256(raw)
-    if input_sha != expected_input_sha256:
+    if input_sha != EXPECTED_INPUT_SHA256:
         raise WriterError(f"unsupported proof input sha256 {input_sha}")
 
     before = v.verify_bytes(raw)
@@ -89,14 +85,14 @@ def _build(
     output = bytes(out)
 
     actual_diffs = _diffs(raw, output)
-    if actual_diffs != expected_diffs:
+    if actual_diffs != EXPECTED_DIFFS:
         rendered = ", ".join(
             f"0x{i:X}:{a:02X}->{b:02X}" for i, a, b in actual_diffs
         )
         raise WriterError(f"non-allowlisted diff: [{rendered}]")
 
     output_sha = _sha256(output)
-    if output_sha != expected_output_sha256:
+    if output_sha != EXPECTED_OUTPUT_SHA256:
         raise WriterError(f"unexpected proof output sha256 {output_sha}")
 
     after = v.verify_bytes(output)
@@ -122,10 +118,6 @@ def _build(
         new_hp_iv=TARGET_HP_IV,
         diffs=actual_diffs,
     )
-
-
-def build_proof_output(raw: bytes) -> tuple[bytes, ProofResult]:
-    return _build(raw, EXPECTED_INPUT_SHA256, EXPECTED_OUTPUT_SHA256, EXPECTED_DIFFS)
 
 
 def write_proof_file(input_path: str | Path, output_path: str | Path) -> ProofResult:
