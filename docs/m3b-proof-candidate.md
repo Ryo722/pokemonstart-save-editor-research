@@ -2,9 +2,9 @@
 
 ## Status
 
-**BOUNDED EVIDENCE COMPLETE; MERGE AUTHORIZATION PENDING.**
+**COMPLETE AND CANONICALIZED.**
 
-The authorized M3B candidate has completed its sealed private preflight, repository test contract, one private proof-file generation, human game round trip, and read-only verification of the returned resave. This conclusion is limited to the exact retained private PokemonStart v0.15 lineage and the exact `party[0]` HP IV `30 -> 31` transformation.
+The authorized M3B candidate completed its sealed private preflight, repository test contract, one private proof-file generation, human game round trip, read-only verification of the returned resave, and canonical merge through PR #8. This conclusion is limited to the exact retained private PokemonStart v0.15 lineage and the exact `party[0]` HP IV `30 -> 31` transformation.
 
 No arbitrary-save support, new editable field, GUI, overwrite behavior, counter/slot rewriting, or M3C authorization is implied.
 
@@ -90,10 +90,10 @@ Evidence classification:
 
 ## M3B verdict
 
-**M3B COMPLETE for the exact bounded private-lineage proof, subject only to canonical merge authorization.**
+**M3B COMPLETE for the exact bounded private-lineage proof and canonicalized by merged PR #8 (`8d28835da09b93f4c8155b4d9d59d65f374254fb`).**
 
 This proof closes the specific uncertainty targeted by M3B: the M3A transaction envelope works on a non-M2-input hash with both slots valid and the opposite active physical slot, while keeping the semantic field family fixed. The game accepted the resulting external edit and a normal in-game save carried the HP-IV value forward into the next slot.
 
 What remains unproven includes arbitrary PokemonStart v0.15 saves, other builds, a general build-identification mechanism, other editable fields, field coupling outside HP IV, and GUI readiness.
 
-PR #8 must remain unmerged until explicit human merge authorization. Before merge, canonical README / decision-record milestone wording should be updated on the branch so `main` will not contain stale M3B status.
+Canonical current position after M3B merge: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
