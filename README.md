@@ -8,16 +8,18 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 The repository test suite for M1 passes 12/12 synthetic cases covering valid layouts and fail-closed malformed/ambiguous cases. Private original, HP-IV-30 test, and normal in-game resave inputs were also verified locally without entering Git history.
 
-**M2 — bounded one-field writer proof is now in candidate stage on this branch.** `pokemonstart_hpiv_proof_writer.py` is intentionally not a general editor. It accepts only the exact known before-test save identified by SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, changes only party slot 0 HP IV from 31 to 30, updates the containing section checksum, and writes only to a brand-new output path.
+**M2 — bounded one-field writer proof has satisfied its branch evidence gate and is ready for bounded review/merge.** `pokemonstart_hpiv_proof_writer.py` is intentionally not a general editor. It accepts only the exact known before-test save identified by SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, changes only party slot 0 HP IV from 31 to 30, updates the containing section checksum, and writes only to a brand-new output path.
 
 The candidate requires the resulting output SHA-256 to be exactly `569fc5b2b18c77593a0f55bbe01fd20a603fe96ce9c5f955b978710d117db0dc` and the complete byte diff to be exactly:
 
 - `0x10080: BF -> BE` — HP IV bit change;
 - `0x10FF6: 62 -> 61` — section 1 checksum.
 
-Local private-input execution reproduced those exact two bytes and generated a file byte-identical to the retained earlier HP-IV-30 proof save. The input hash remained unchanged. **M2 is not complete yet:** the repository-generated output still requires the bounded human game load + normal-save round trip before this candidate may be treated as proven or merged as a completed M2 gate.
+Local private-input execution reproduced those exact two bytes and generated a file byte-identical to the retained earlier HP-IV-30 proof save. The input hash remained unchanged.
 
-No broader writer, additional editable field, GUI, box editing, or save-overwrite behavior is authorized by this candidate.
+A fresh human round trip then used that repository-generated private output. The user reported that PokemonStart v0.15 loaded it and completed a normal in-game save. The supplied resave was independently rechecked read-only: both slots are valid, slot 0 counter 2 is uniquely newest, HP IV remains 30 in both slots, all other checked party values remain stable, sector 30/31 are preserved, and the old slot 1 bytes remain byte-identical to the repository-generated proof output. No protected save bytes are stored in Git.
+
+Canonical `main` is still at M1 complete until this branch is explicitly reviewed and merged. No broader writer, additional editable field, GUI, box editing, or save-overwrite behavior is authorized by this candidate.
 
 ## Run the verifier
 
@@ -51,7 +53,7 @@ Tests build synthetic save bytes in memory. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See [evidence](docs/evidence.md) and [decision record](docs/decision-record.md). Evidence levels distinguish independently reproduced/source-backed facts, private local verification, prior observations, and hypotheses. Nickname and OT-name bytes are currently reported as hex rather than decoded text because a complete, pinned charmap is not required for the structural M1 gate.
+See [evidence](docs/evidence.md) and [decision record](docs/decision-record.md). Evidence levels distinguish independently reproduced/source-backed facts, private local verification, human observation, prior observations, and hypotheses. Nickname and OT-name bytes are currently reported as hex rather than decoded text because a complete, pinned charmap is not required for the structural M1/M2 gates.
 
 ## Data boundary
 
