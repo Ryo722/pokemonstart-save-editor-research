@@ -132,8 +132,11 @@ class WriterTests(unittest.TestCase):
 
     def test_rejects_if_hpiv_is_not_31(self):
         raw = _save(30)
-        with self.assertRaisesRegex(w.WriterError, "HP IV is 30"):
-            w._build(raw, hashlib.sha256(raw).hexdigest(), "unused", ())
+        with mock.patch.object(
+            w, "EXPECTED_INPUT_SHA256", hashlib.sha256(raw).hexdigest()
+        ):
+            with self.assertRaisesRegex(w.WriterError, "HP IV is 30"):
+                w.build_proof_output(raw)
 
     def test_write_never_overwrites_input_or_existing_output(self):
         raw = _save(31)
