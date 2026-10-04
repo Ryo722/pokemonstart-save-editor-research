@@ -1,10 +1,12 @@
 # Canonical re-evaluation — 2026-10-05
 
-## Derived-stat M3C decision after merged low-coupling batch
+## M3C closure decision after derived-stat canary
 
-Fresh canonical `main` at `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3` includes a human-passed friendship/markings/ball batch. Its returned private save re-verifies at SHA-256 `baf0b88fd357c54e17743601bbfa26b436db467a2fd78cd1d2c598fb714c50fa`, active slot 1/counter 5. The next high-information M3C group is nature mint, Attack IV, HP EV, and their derived cached stats/HP. It is prepared as a sealed exact-lineage candidate, with individual isolation variants and one combined canary. See `docs/m3c-derived-stats-canary.md` for source, diffs, independent verification, and blocked alternatives. This does not authorize merging the new group or M4.
+Canonical `main` before this closure merge is `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3`, which contains the human-passed low-coupling friendship/markings/ball batch. The exact derived-state group on PR #11 then proved nature mint, Attack IV, HP EV, and the required cached stats/HP update as one coupled transformation on the retained private v0.15 lineage.
 
-The supplied combined-canary return save now verifies at SHA-256 `ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86`, active slot 0/counter 6. The old active slot, active party record, and sectors 28–31 are byte-identical to the candidate. The exact group is PROVEN for the retained lineage; PR #11 remains unmerged. Future private save outputs go outside the repository, enforced by the shared transaction writer. The next decision surface is a formal M3C exit review versus further field expansion; no M4 work begins without authorization.
+The supplied combined-canary return save independently re-verifies at SHA-256 `ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86`, active slot 0/counter 6. All 28 ordinary section checksums validate; the old active slot, returned active party record, and sectors 28–31 are preserved as required; the external footer changed only under the established game-resave rule. The exact derived-state group is therefore PROVEN for the named retained-lineage transformation. Future private save outputs go outside the repository, enforced by the shared transaction writer.
+
+Human authorization `AUTHORIZE PR #11 MERGE AND M3C CLOSURE` adopts the M3C exit assessment and closes M3C after this PR is merged. This authorization does **not** authorize M4 implementation.
 
 ## Authority and evidence discipline
 
@@ -25,18 +27,20 @@ A GUI is a delivery layer only after save/profile eligibility and field capabili
 3. **M3A — supported-save / reusable write-envelope characterization — COMPLETE.**
 4. **M3B — bounded same-field transaction proof — COMPLETE.**
 5. **M3C-F1 — friendship field proof — COMPLETE.** `party[0] friendship 50 -> 51` survived sealed private preflight and a human game load + normal-save round trip; PR #9 merged as `ece114d0475691e34bf4c83de2f73a9e732dd34e`.
-6. **M3C — goal-driven batch field expansion — AUTHORIZED / IN PROGRESS.**
-7. **M4 — usable editor / GUI — NOT AUTHORIZED.**
+6. **M3C — goal-driven bounded party-field expansion — COMPLETE.** Low-coupling friendship/markings/ball and the first nontrivial derived-state nature-mint/EV/IV/stat group survived representative game round trips. Remaining fields are explicitly BLOCKED/UNSUPPORTED rather than guessed.
+7. **M4 — usable editor / GUI — NOT AUTHORIZED.** The next boundary is an evidence-backed M4 entry/design decision, not automatic implementation.
 
 ## Current position
 
-Canonical `main` is **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; M3C-F1 COMPLETE; M3C batch program authorized and in progress.**
+After PR #11 is merged under the explicit closure authorization, canonical `main` is **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; M3C COMPLETE; M4 authorization boundary.**
 
-The batch program may research, implement, test, and privately preflight multiple party fields before returning to the human. It must stop at representative game/emulator canaries, consequential scope changes, missing private input, or unresolved evidence.
+M3C is closed because it now has a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, successful low- and high-coupling game-boundary evidence, explicit unsupported capability handling, and a formal remaining-gap assessment. Additional field proofs are not required merely because more offsets exist.
 
 ## Supported-save / writer-support boundary
 
-Writer-supported saves must pass structural eligibility, provenance/profile eligibility, and field-capability eligibility. Structural similarity alone does not prove PokemonStart build identity. Current write evidence remains limited to the retained private PokemonStart v0.15 lineage.
+Writer-supported saves must pass structural eligibility, provenance/profile eligibility, and field-capability eligibility. Structural similarity alone does not prove PokemonStart build identity. Current write evidence remains limited to the retained private PokemonStart v0.15 lineage and the named exact transformations/hashes documented by the proof records.
+
+M3C completion does not promote these exact proofs into arbitrary values, party members, save hashes, builds, or versions.
 
 ## Reusable transaction contract retained
 
@@ -44,6 +48,7 @@ Every generated candidate must:
 
 - hash/read input before mutation;
 - reject input/output aliasing and existing output paths;
+- reject private output paths within the repository;
 - run structural + writer-support preflight;
 - locate the active logical section through verified metadata;
 - require active-slot/counter parity;
@@ -58,76 +63,82 @@ Every generated candidate must:
 
 The external 16-byte footer is preservation-only for tool output; equality is not required after a later game/emulator resave.
 
-## M3C execution refinement — goal-driven batch program
+## M3C execution refinement — retained as historical method
 
-The project no longer requires one human authorization and one game round trip for every scalar field. That procedure produced useful early evidence but has diminishing information value after M2, M3B, and M3C-F1 demonstrated the common transaction envelope across different hashes, active slots, and two semantic field families.
+M3C separated **field-level proof** from **human-level proof**:
 
-M3C now separates **field-level proof** from **human-level proof**:
-
-- each field or tightly coupled field group still requires source-backed layout/semantics, explicit validity constraints, a named capability record, synthetic/property coverage, and private differential verification;
-- fields are grouped by coupling/risk rather than by arbitrary one-field milestones;
-- a batch generates individual variants plus a combined canary and exact manifests;
-- a representative human game round trip validates the batch at the game boundary;
-- if a combined canary fails, prepared variants or automatic/binary bisection isolate the failing field/group; success of one field never proves another;
-- high-coupling fields remain separate groups and may require dedicated canaries.
+- each field or tightly coupled group required source-backed layout/semantics, explicit validity constraints, a named capability record, synthetic/property coverage, and private differential verification;
+- fields were grouped by coupling/risk rather than arbitrary one-field milestones;
+- batches generated individual variants plus a combined canary and exact manifests;
+- a representative human game round trip validated each defensible group at the game boundary;
+- high-coupling fields were not smuggled into low-coupling batches merely to reduce interaction count.
 
 ### Risk/coupling classes
 
-- **L — direct / low-coupling scalar or cosmetic fields:** eligible for multi-field canaries after source/range checks.
-- **M — catalog/encoding-dependent fields:** require a target-profile catalog/encoding proof before canary inclusion.
-- **C — derived-state coupled fields:** e.g. stats/EXP-level, IV/EV/nature/hyper-training, moves/PP; require coupled transformation and derived-invariant proof.
-- **H — identity/form/system fields:** species/form/ability/PID-like identity or broader game-state fields; separate research gate unless evidence reduces their risk.
+- **L — direct / low-coupling scalar or cosmetic fields:** multi-field canaries after source/range checks.
+- **M — catalog/encoding-dependent fields:** target-profile catalog/encoding proof required before mutation.
+- **C — derived-state coupled fields:** coupled transformation plus derived-invariant proof required.
+- **H — identity/form/system fields:** separate research gate unless evidence narrows the risk.
+
+## Proven M3C capability set for the retained v0.15 lineage
+
+- HP IV bounded `31 -> 30` and `30 -> 31` proofs;
+- friendship `50 -> 51` and `51 -> 52`;
+- markings `0 -> 1`;
+- ball `3 -> 11` (Premier Ball);
+- nature mint `0 -> 4` with cached stats updated;
+- HP EV `0 -> 80` with max/current HP `21/21 -> 22/22`;
+- Attack IV `29 -> 0` with cached Attack updated;
+- the combined nature-mint + HP-EV + Attack-IV derived-state transformation.
+
+`PROVEN` remains bounded to the documented exact private lineage and transformations.
 
 ## External reference policy
 
 Pinned CFRU-JP source remains primary upstream structural/semantic evidence. Private PokemonStart saves remain the local compatibility proof. Public CFRU-family editors may be used as supporting implementation/reference evidence only and never as PokemonStart authority.
 
-PUSE is a useful MIT-licensed Unbound/CFRU-family reference because it independently implements the same broad section/party concepts and multi-field editing, but its Unbound-specific checksum/field assumptions must not be imported without independent PokemonStart/CFRU-JP confirmation. PKForge and PKHeX-family implementations may inform architecture or invariants, subject to their licenses, but do not expand project scope or compatibility by themselves.
+PUSE, PKForge, PKHeX-family implementations, and vanilla Gen III decompilations may inform architecture or invariants subject to their licenses, but they do not expand PokemonStart support by themselves.
 
-## M3C batch-program completion criteria
+## M3C exit criteria — satisfied
 
-A batch is ready for the human canary only when:
+M3C exit required a useful bounded party-edit capability set plus a final review of remaining gaps and whether further field expansion was more valuable than delivery work. That criterion is satisfied because:
 
-1. candidate fields/groups have source-backed semantics and explicit validity/coupling rules;
-2. the common transaction engine and per-field validators fail closed;
-3. synthetic/property tests pass for every included capability and for combined application order;
-4. the exact retained private input has been verified read-only;
-5. individual variants and a combined canary are generated to new files only;
-6. exact manifests account for every changed byte and affected checksum;
-7. independent verification reproduces the resulting semantic values, checksums, preserved regions, and output hashes;
-8. unresolved/high-risk capabilities are marked BLOCKED/UNSUPPORTED rather than guessed.
+1. both low-coupling and derived-state transformations have source-backed semantics and explicit validity/coupling rules;
+2. fail-closed transaction infrastructure preserves the established save envelope and rejects in-repository private output;
+3. synthetic/regression tests and private complete-diff audits cover the implemented groups;
+4. representative game round trips passed for both groups;
+5. every proven transformation remains explicitly bounded rather than generalized;
+6. remaining candidate capabilities are marked BLOCKED/UNSUPPORTED with reasons;
+7. the exit assessment finds diminishing value in additional exact-field canaries absent a specific player need.
 
-M3C itself is not complete merely because one batch works. Exit requires a useful bounded party-edit capability set plus a final review of remaining gaps and whether M4 is justified.
+The North Star is demonstrated as a bounded proof foundation, but a general player-facing workflow is not yet delivered. That is the M4 problem.
 
-## Remaining risks
+## Remaining risks / blocked capability surface
 
 - PokemonStart build mismatch outside the retained private lineage;
 - arbitrary external/non-lineage save support;
-- target-build data catalogs and field semantics for IDs such as species/items/moves/abilities;
-- field coupling for derived stats, moves/PP, species/form/ability, identity, and other complex groups;
+- target-build catalogs/semantics for Tera type, held items, moves/PP/PP-Up, abilities, species/forms, and identity-related values;
+- hyper-training and broader EXP/level/stat coupling beyond the proven exact derived-state case;
 - application semantics of sectors 30/31 and parasite tails beyond byte preservation;
-- GUI readiness remains unproven until a useful field set is demonstrated.
+- user-facing supported-save eligibility, recovery UX, packaging, and cross-platform delivery remain unproven;
+- GUI readiness requires an M4 design decision rather than being inferred from M3C completion.
 
-## Authorization boundary
+## Authorization boundary after M3C closure
 
-Human authorization `AUTHORIZE M3C GOAL-DRIVEN BATCH PROGRAM` permits:
+Human authorization `AUTHORIZE PR #11 MERGE AND M3C CLOSURE` permits:
 
-- canonical adoption of this M3C execution refinement;
-- research of multiple party fields using current canonical evidence, pinned CFRU-JP source, private local saves, and public reference implementations;
-- common batch transaction infrastructure and per-field capability validators;
-- synthetic/property tests;
-- private-copy individual variants, combined canaries, manifests, differential verification, and bisection artifacts;
-- feature branches, commits, documentation, and review-ready PR preparation;
-- completion/merge of the already-passed M3C-F1 PR #9.
+- the PR #11 derived-state evidence/transaction/test/docs merge;
+- canonical recording of the named derived-state group as PROVEN on the retained lineage;
+- canonical closure of M3C as COMPLETE.
 
 It does **not** authorize:
 
-- final merge of new M3C batch capability PRs without a later human merge decision;
+- M4 implementation or GUI work;
 - arbitrary/non-lineage save support or broad PokemonStart-version generalization;
+- new field capability implementation merely because a storage offset is known;
 - input overwrite;
-- M4 GUI work;
 - box/bag editing;
 - protected-data publication;
 - execution of blocked/proprietary binaries.
 
-The next mandatory human gate is the smallest representative game/emulator canary required by the batch evidence, or an earlier consequential decision if the evidence cannot safely resolve it.
+The next mandatory project decision is **M4 entry/design**: determine the smallest useful delivery layer that exposes only positively supported saves and proven capabilities while preserving the fail-closed transaction/recovery model. M4 implementation requires separate human authorization.
