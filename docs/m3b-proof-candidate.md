@@ -39,7 +39,7 @@ The authorized private input was freshly available to the execution environment 
 | Complete diff count | `2` bytes |
 | Output SHA-256 | `cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f` |
 
-The two-byte diff is now sealed in `EXPECTED_DIFFS`, and the output hash is sealed in `EXPECTED_OUTPUT_SHA256`. Production writing therefore succeeds only for this exact private candidate fingerprint.
+The two-byte diff is sealed in `EXPECTED_DIFFS`, and the output hash is sealed in `EXPECTED_OUTPUT_SHA256`. Production writing therefore succeeds only for this exact private candidate fingerprint.
 
 Evidence level: **local private-input verification + sealed repository candidate evidence**. No private save bytes are committed.
 
@@ -117,4 +117,4 @@ The next step is intentionally human-visible and bounded:
 5. verify both slots, counter transition, retained HP IV 31, unrelated party invariants, sectors 28–31, and footer handling;
 6. only after that evidence may M3B completion / candidate merge be considered.
 
-No broader writer capability, new field, arbitrary-save support, or M3C work is authorized by this preflight.
+The current branch/PR must remain unmerged until that round-trip evidence is reviewed. No broader writer capability, new field, arbitrary-save support, or M3C work is authorized by this preflight.
