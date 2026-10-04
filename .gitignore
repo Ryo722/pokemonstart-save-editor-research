@@ -1,0 +1,14 @@
+*.sav
+*.gba
+*.gbc
+*.gb
+*.pks
+*.bps
+*.ips
+*.exe
+*.zip
+*.7z
+*.rar
+__pycache__/
+.venv/
+work/
