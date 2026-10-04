@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""M3B bounded same-field proof candidate for the retained v0.15 lineage.
+"""M3B bounded same-field proof writer for the retained v0.15 lineage.
 
-The candidate targets exactly the fresh M2 round-trip input, party[0] HP IV
-30 -> 31. Production writing remains fail-closed until the exact private-input
-candidate diff and output SHA-256 have been derived, reviewed, and sealed into
-the constants below.
+This candidate targets exactly the fresh M2 round-trip input and changes only
+party[0] HP IV 30 -> 31. The exact complete diff and output SHA-256 were
+derived from the authorized private input, independently checked against the
+M3A transaction envelope, and are sealed below.
 """
 
 from __future__ import annotations
@@ -22,8 +22,10 @@ import pokemonstart_save_verifier as v
 EXPECTED_INPUT_SHA256 = (
     "c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac"
 )
-EXPECTED_OUTPUT_SHA256: str | None = None
-EXPECTED_DIFFS: tuple[tuple[int, int, int], ...] | None = None
+EXPECTED_OUTPUT_SHA256 = (
+    "cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f"
+)
+EXPECTED_DIFFS = ((0x3080, 0xBE, 0xBF), (0x3FF6, 0x20, 0x21))
 EXPECTED_ACTIVE_SLOT = 0
 EXPECTED_ACTIVE_COUNTER = 2
 EXPECTED_INACTIVE_COUNTER = 1
@@ -134,13 +136,7 @@ def _allowed_diff_offsets(iv_offset: int, checksum_offset: int) -> set[int]:
 def derive_candidate_fingerprint(
     raw: bytes,
 ) -> tuple[bytes, CandidateFingerprint]:
-    """Derive the exact M3B candidate entirely in memory, without file writes.
-
-    This is the pre-sealing step. It is exact-input constrained and validates
-    the complete transaction envelope, but does not authorize production file
-    creation. The returned diff/output hash must be independently reviewed and
-    sealed into EXPECTED_DIFFS / EXPECTED_OUTPUT_SHA256 first.
-    """
+    """Derive the exact M3B candidate entirely in memory, without file writes."""
 
     input_sha = _sha256(raw)
     if input_sha != EXPECTED_INPUT_SHA256:
@@ -213,10 +209,6 @@ def derive_candidate_fingerprint(
 
 
 def _require_sealed(fingerprint: CandidateFingerprint) -> None:
-    if EXPECTED_DIFFS is None or EXPECTED_OUTPUT_SHA256 is None:
-        raise WriterError(
-            "M3B candidate is not sealed; derive and review exact diff/output hash first"
-        )
     if fingerprint.diffs != EXPECTED_DIFFS:
         raise WriterError(f"non-allowlisted M3B diff: {fingerprint.diffs!r}")
     if fingerprint.output_sha256 != EXPECTED_OUTPUT_SHA256:
@@ -285,24 +277,21 @@ def format_fingerprint(fingerprint: CandidateFingerprint) -> str:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description=(
-            "M3B bounded same-field proof candidate. Production writing is "
-            "disabled until exact diff/output hash sealing."
-        )
+        description="M3B bounded sealed same-field proof writer."
     )
     parser.add_argument("input", help="exact retained M3B private input")
     parser.add_argument(
         "--derive-only",
         action="store_true",
-        help="derive exact candidate fingerprint in memory; never write a save",
+        help="derive and verify the sealed candidate fingerprint in memory only",
     )
-    parser.add_argument("--output", help="new output path; requires sealed candidate")
+    parser.add_argument("--output", help="new output path")
     args = parser.parse_args(argv)
 
     try:
         raw = Path(args.input).read_bytes()
         if args.derive_only:
-            _, fingerprint = derive_candidate_fingerprint(raw)
+            _, fingerprint = build_proof_output(raw)
             print(format_fingerprint(fingerprint))
             return 0
         if not args.output:
