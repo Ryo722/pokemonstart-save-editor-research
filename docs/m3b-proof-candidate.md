@@ -1,36 +1,32 @@
-# M3B bounded same-field proof candidate — 2026-10-05
+# M3B bounded same-field proof — 2026-10-05
 
 ## Status
 
-**AUTHORIZED; SEALED PRIVATE PREFLIGHT PASS; HUMAN GAME ROUND TRIP PENDING.**
+**BOUNDED EVIDENCE COMPLETE; MERGE AUTHORIZATION PENDING.**
 
-M3B is not complete. The exact private candidate has now been derived, independently checked against the M3A transaction envelope, sealed into the repository writer, and emitted as one brand-new private proof output. A human game load + normal-save round trip and read-only verification of the resulting resave remain required before M3B completion or merge authorization.
+The authorized M3B candidate has completed its sealed private preflight, repository test contract, one private proof-file generation, human game round trip, and read-only verification of the returned resave. This conclusion is limited to the exact retained private PokemonStart v0.15 lineage and the exact `party[0]` HP IV `30 -> 31` transformation.
+
+No arbitrary-save support, new editable field, GUI, overwrite behavior, counter/slot rewriting, or M3C authorization is implied.
 
 ## Exact authorized scope
 
 - provenance profile: retained private PokemonStart v0.15 M2 lineage only;
 - exact input SHA-256: `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac`;
-- starting state: both save slots valid; active physical slot 0 at counter 2; inactive slot counter 1;
+- starting state: both slots valid; active physical slot 0 at counter 2; inactive counter 1;
 - field: `party[0]` HP IV only;
 - transformation: `30 -> 31`;
-- output: a new file only;
-- preserve all counters, section IDs/signatures, physical section permutation, inactive slot, sectors 28–31, parasite tails, optional 16-byte footer, and all non-target bytes;
-- recompute only the checksum covering the changed logical section 1 payload;
-- require the complete exact diff and output hash to match the sealed candidate.
-
-Explicitly out of scope: arbitrary saves, other PokemonStart builds/profiles, new editable fields, box editing, counter/slot rewriting, section reordering, save overwrite, GUI work, or protected-data publication.
+- output: brand-new file only;
+- preserve counters, section metadata/permutation, inactive slot, sectors 28–31, parasite tails, optional footer, and every non-target byte;
+- recompute only the checksum covering changed logical section 1 data.
 
 ## Sealed exact candidate fingerprint
 
-The authorized private input was freshly available to the execution environment and independently re-hashed before mutation.
-
-| Item | Sealed value |
+| Item | Value |
 | --- | --- |
 | Input size | `131,088` bytes |
 | Input SHA-256 | `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac` |
 | Active slot / counter | slot `0` / counter `2` |
 | Inactive counter | `1` |
-| Active slot parity | `0 == 2 % 2` — PASS |
 | Logical section 1 physical sector | `3` |
 | Starting IVs | `30/29/26/23/27/29` |
 | Target IVs | `31/29/26/23/27/29` |
@@ -39,82 +35,65 @@ The authorized private input was freshly available to the execution environment 
 | Complete diff count | `2` bytes |
 | Output SHA-256 | `cf2ca33a303b6409300ac4032c7c47efd9859562bc06fe18e89481bb93ea5f1f` |
 
-The two-byte diff is sealed in `EXPECTED_DIFFS`, and the output hash is sealed in `EXPECTED_OUTPUT_SHA256`. Production writing therefore succeeds only for this exact private candidate fingerprint.
+The repository writer seals both the exact complete diff and exact output hash. The private preflight confirmed both slots and all ordinary section checksums, source-backed active-slot/counter parity, expected sector 30/31 hashes, footer hash, physical section permutation, and starting party state before mutation. Generated output re-verifies with the expected IVs and preserves all bytes outside the two sealed changes.
 
-Evidence level: **local private-input verification + sealed repository candidate evidence**. No private save bytes are committed.
-
-## M3A support-envelope checks carried into M3B
-
-The candidate requires:
-
-- exact known input SHA-256;
-- both slots valid;
-- active slot 0;
-- active counter 2 and inactive counter 1;
-- source-backed slot/counter parity `active_slot == active_counter % 2`;
-- `party[0]` present with HP IV 30;
-- canonical retained sector 30 hash;
-- canonical retained sector 31 hash;
-- canonical retained opaque-footer hash;
-- target logical section found through verified metadata rather than fixed physical assumptions;
-- complete diff confined to the IV word bytes plus containing checksum bytes;
-- same active slot and counters after mutation;
-- identical section metadata/physical permutation after mutation;
-- same party count and all non-HP IVs;
-- identical footer and sectors 30/31.
-
-Because complete diff confinement is enforced, inactive-slot bytes, Hall of Fame sectors 28/29, parasite tails, and every other non-target byte are necessarily preserved as well.
-
-## Private preflight result
-
-The fresh private input matched every M3A profile condition:
-
-- both slots validate completely;
-- slot 0 counter 2 is uniquely newest;
-- slot/counter parity passes;
-- logical section 1 is in physical sector 3;
-- party count is 1;
-- `party[0]` IVs are `30/29/26/23/27/29`;
-- sector 30 SHA-256 is `335dbe9fd34f7d6baf1d3c4fdff8647b121872de1fdf779a0d1a49f9de068525`;
-- sector 31 SHA-256 is `ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7`;
-- the 16-byte opaque footer SHA-256 is `0f5e9be128e35fb5926268e15f441e442ff54ab712ba7fa50418761a4170ed0f`.
-
-After applying only the authorized transformation and recomputing logical section 1's checksum:
-
-- all 28 ordinary save-slot sectors still validate;
-- active slot and both counters are unchanged;
-- inactive slot is byte-identical;
-- sectors 28–31 are byte-identical;
-- the optional 16-byte footer is byte-identical;
-- the complete file diff is exactly the sealed two bytes above;
-- resulting IVs are `31/29/26/23/27/29`;
-- the input SHA-256 remains unchanged after output creation;
-- the new output is exactly `131,088` bytes with the sealed output SHA-256.
-
-One private proof output was created at a new path only and handed back to the user for the required game round trip. It is not committed or published through GitHub.
+Evidence level: **local private-input verification + repository candidate evidence**. No private save bytes are committed.
 
 ## Synthetic implementation preflight
 
-The synthetic test contract was updated for the sealed state. A local no-private-data sealed-state harness exercised the six repository test behaviors and passed **6/6**:
+The sealed-state no-private-data test contract passed **6/6** locally:
 
 1. exact bounded sealed constants;
-2. derive against two valid rotated slots while remaining inside the field/checksum envelope;
+2. derive with two valid rotated slots while remaining in the field/checksum envelope;
 3. reject an unrelated synthetic candidate against the private seal;
 4. reject active-slot/counter parity mismatch;
 5. reject wrong starting HP IV;
-6. allow a synthetically sealed new-file write while preserving input and refusing overwrite semantics.
+6. exercise exclusive new-file creation, input immutability, and overwrite refusal under a synthetic seal override.
 
-No `.sav` fixture is committed. GitHub Actions is not the evidence source for this pass; this is a local synthetic preflight.
+No GitHub Actions run exists for this candidate head; the PASS above is a local synthetic preflight, not CI evidence.
 
-## Required human round-trip gate
+## Human round-trip result — PASS
 
-The next step is intentionally human-visible and bounded:
+The user returned a new private save in direct response to the requested M3B human round-trip step. The returned file was inspected read-only and compared with the exact repository-generated M3B proof output.
 
-1. load the generated private M3B proof output in the same PokemonStart v0.15 environment;
-2. confirm the save loads normally;
-3. perform one normal in-game save;
-4. return the resulting resave for read-only verification;
-5. verify both slots, counter transition, retained HP IV 31, unrelated party invariants, sectors 28–31, and footer handling;
-6. only after that evidence may M3B completion / candidate merge be considered.
+| Observation | Result |
+| --- | --- |
+| Resave size | `131,088` bytes |
+| Resave SHA-256 | `d8f193de253dd3a1d3a5060273044fb165b3dfb09938bd8331aaa22eb879f282` |
+| Flash-body SHA-256 | `ae5838c5630f56c8663f5d74aabc4a64ca90779c9e4929ecd41c4c21b11c7604` |
+| Slot 0 | valid, counter 2 |
+| Slot 1 | valid, counter 3 |
+| Active slot | slot 1, uniquely newer |
+| Active parity | `1 == 3 % 2` — PASS |
+| Active logical section 1 | physical sector 18 |
+| Active party count | 1 |
+| Active IVs | `31/29/26/23/27/29` |
+| Active IV word | `0x3BBBEBBF` |
+| Checked party values | species 1; level 5; EXP 134; friendship 50; ball 3; moves 33/45; PP 35/40; EVs zero; HP 21/21; stats 9/11/10/13/12 |
+| Sector 30 SHA-256 | `335dbe9fd34f7d6baf1d3c4fdff8647b121872de1fdf779a0d1a49f9de068525` |
+| Sector 31 SHA-256 | `ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7` |
+| Resave footer SHA-256 | `62cdba6ee59f22ce914c34e4007c31bead308d63393d43b18e3c774796b562cb` |
 
-The current branch/PR must remain unmerged until that round-trip evidence is reviewed. No broader writer capability, new field, arbitrary-save support, or M3C work is authorized by this preflight.
+Additional byte-level checks:
+
+- proof output slot 0 (counter 2) is preserved **byte-for-byte** in the resave;
+- the game rewrote slot 1 from counter 1 to counter 3 and selected it as active;
+- the returned active party record 0 is **byte-for-byte identical** to the proof output's prior active party record, so HP IV 31 and all record-local checked values survived the normal save;
+- flash sectors 28–31 are **byte-for-byte identical** to the proof output;
+- the optional 16-byte external footer changed across the game/emulator save, as already allowed by the M3A contract: preserve it in tool-generated output, but do not require equality across a later game round trip.
+
+Evidence classification:
+
+- game-round-trip occurrence: **human-relayed result**, corroborated by the independently observed counter/slot transition;
+- returned save structure and byte comparisons: **local private-input verification**;
+- slot/counter parity expectation: **upstream source evidence + local verification**.
+
+## M3B verdict
+
+**M3B COMPLETE for the exact bounded private-lineage proof, subject only to canonical merge authorization.**
+
+This proof closes the specific uncertainty targeted by M3B: the M3A transaction envelope works on a non-M2-input hash with both slots valid and the opposite active physical slot, while keeping the semantic field family fixed. The game accepted the resulting external edit and a normal in-game save carried the HP-IV value forward into the next slot.
+
+What remains unproven includes arbitrary PokemonStart v0.15 saves, other builds, a general build-identification mechanism, other editable fields, field coupling outside HP IV, and GUI readiness.
+
+PR #8 must remain unmerged until explicit human merge authorization. Before merge, canonical README / decision-record milestone wording should be updated on the branch so `main` will not contain stale M3B status.
