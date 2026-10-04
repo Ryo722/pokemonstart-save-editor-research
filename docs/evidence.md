@@ -93,15 +93,15 @@ Evidence level: **local private-input verification**, corroborated by the source
 
 This closes the M1 reproduction gap: the original and normal-resave inputs now reproduce the expected slot selection, section validation, party decoding, footer separation, and sectors 30/31 diagnostics without modifying the inputs.
 
-## M2 bounded repository writer candidate — 2026-10-04
+## M2 bounded repository writer proof — COMPLETE — 2026-10-04
 
 M2 is deliberately constrained to a single proof transformation. `pokemonstart_hpiv_proof_writer.py` accepts only the known before-test input hash and refuses every other save. It writes only to a new path using exclusive creation and refuses both input overwrite and pre-existing output paths.
 
-The candidate's fixed proof contract is:
+The proven proof contract is:
 
 | Item | Required value | Evidence level |
 | --- | --- | --- |
-| Input SHA-256 | `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b` | local private-input verification + candidate allowlist |
+| Input SHA-256 | `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b` | local private-input verification + allowlist |
 | Starting field | `party[0] HP IV = 31` | local private-input verification |
 | Target field | `party[0] HP IV = 30` | bounded M2 design |
 | Allowed data diff | `0x10080: BF -> BE` | local repository-writer preflight |
@@ -147,7 +147,7 @@ The fresh resave preserves the repository-generated proof output's entire old sl
 
 The fresh resave also reproduces the same structural outcome as the earlier historical normal resave: two valid slots, counter 2 newest, and HP IV 30 retained. The two resaves are not byte-identical; that exact identity is not an M2 requirement.
 
-This satisfies the bounded M2 round-trip evidence gate for the exact v0.15 proof transformation. It does **not** establish a general writer, support other save hashes/builds, or prove any other field safe.
+This satisfies the bounded M2 round-trip evidence gate for the exact v0.15 proof transformation. PR #4 merged the exact reviewed candidate into canonical `main`; M2 is therefore complete for this proof contract. It does **not** establish a general writer, support other save hashes/builds, or prove any other field safe.
 
 ## Earlier manual writer proof and round trip
 
@@ -159,6 +159,6 @@ The earlier normal in-game resave is independently parseable as described above:
 
 M1's read-only reproduction gap is closed for the supplied v0.15 original/test/resave set.
 
-M2's bounded repository-writer and fresh game round-trip evidence requirements are satisfied for the exact allowlisted v0.15 proof input and HP-IV 31→30 transformation. Canonical `main` still remains at M1 until the M2 branch is reviewed and explicitly merged.
+M2's bounded repository-writer and fresh game round-trip evidence requirements are closed for the exact allowlisted v0.15 proof input and HP-IV 31→30 transformation. The proof is now canonical on `main` via PR #4.
 
 Broader gaps remain outside this milestone: exact distribution provenance, package hash/extraction transcript, exact PokemonStart/CFRU-JP integration revision, version/build generalization, emulator-footer semantics beyond opaque preservation/reporting, support for non-allowlisted saves, and field-specific writer coupling. No protected binary should enter this repository.
