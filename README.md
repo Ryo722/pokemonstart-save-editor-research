@@ -4,11 +4,11 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 ## Current position
 
-M1 is the reproducible read-only save verifier. A bounded implementation candidate now exists in `pokemonstart_save_verifier.py` with synthetic unit tests. It validates the observed CFRU-JP-derived save layout without modifying the input file, separates a 128 KiB flash body from an optional 16-byte opaque emulator footer, validates both 14-section slots, selects a unique newest valid slot, decodes supported 100-byte party records, and reports sectors 30/31.
+**M1 — reproducible read-only save verifier is complete.** `pokemonstart_save_verifier.py` is merged and validates the supported observed CFRU-JP-derived save layout without modifying the input file. It separates a 128 KiB flash body from an optional 16-byte opaque emulator footer, validates both 14-section slots, selects a unique newest valid slot, decodes supported 100-byte party records, and reports sectors 30/31.
 
-The M1 gate is **not complete yet**. The candidate passed synthetic tests and a private local check against the retained HP-IV-30 test save, but the canonical gate still requires reproduction on the private original and normal-resave files plus review of the exact candidate. Those protected files must not enter Git history.
+The repository test suite passes 12/12 synthetic cases covering valid layouts and fail-closed malformed/ambiguous cases. Private original, HP-IV-30 test, and normal in-game resave inputs were also verified locally without entering Git history. The before-test/original state reproduces HP IV 31 with slot 1 counter 1; the normal resave reproduces HP IV 30 with slot 0 counter 2 selected as newest. Input hashes were unchanged by verification.
 
-The prior successful single-field HP IV write remains evidence for a narrow writer proof, not permission to broaden writer scope or begin GUI work.
+The project is now stopped before **M2 — bounded one-field writer proof**. M2 has not been authorized. The prior successful manual HP-IV write is evidence for that narrow proof only; it does not authorize broader writer scope, additional editable fields, save overwrites, or GUI work.
 
 ## Run the verifier
 
