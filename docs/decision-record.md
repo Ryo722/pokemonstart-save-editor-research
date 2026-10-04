@@ -4,7 +4,7 @@
 
 GitHub `main` is the durable canonical authority. Protected binaries remain outside Git. Conclusions must distinguish repository/canonical evidence, independently checked public upstream source, local private-input verification, human observation, prior observations/command logs, and hypotheses.
 
-Do not generalize from a single successful save edit. Unsupported, malformed, ambiguous, or unqualified saves must fail closed.
+Do not generalize from one successful edit or one successful batch. Unsupported, malformed, ambiguous, or unqualified saves must fail closed.
 
 ## Refined North Star
 
@@ -18,24 +18,23 @@ A GUI is a delivery layer only after save/profile eligibility and field capabili
 2. **M2 — exact one-field writer proof — COMPLETE.**
 3. **M3A — supported-save / reusable write-envelope characterization — COMPLETE.**
 4. **M3B — bounded same-field transaction proof — COMPLETE.**
-5. **M3C — field expansion — CANONICAL MAIN STOPPED AT AUTHORIZATION BOUNDARY.**
-   - M3C-F1 friendship proof is complete on PR #9 but remains non-canonical until merge authorization.
-   - no second field or batch expansion is authorized yet.
-6. **M4 — usable editor / GUI — NOT AUTHORIZED.**
+5. **M3C-F1 — friendship field proof — COMPLETE.** `party[0] friendship 50 -> 51` survived sealed private preflight and a human game load + normal-save round trip; PR #9 merged as `ece114d0475691e34bf4c83de2f73a9e732dd34e`.
+6. **M3C — goal-driven batch field expansion — AUTHORIZED / IN PROGRESS.**
+7. **M4 — usable editor / GUI — NOT AUTHORIZED.**
 
 ## Current position
 
-Canonical `main` remains **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
+Canonical `main` is **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; M3C-F1 COMPLETE; M3C batch program authorized and in progress.**
 
-The open M3C-F1 branch has completed `party[0] friendship 50 -> 51`, including the human game round trip, but is not canonical until a later explicit merge decision.
+The batch program may research, implement, test, and privately preflight multiple party fields before returning to the human. It must stop at representative game/emulator canaries, consequential scope changes, missing private input, or unresolved evidence.
 
 ## Supported-save / writer-support boundary
 
-Future writer-supported saves must pass structural eligibility, provenance/profile eligibility, and field-capability eligibility. Structural similarity alone does not prove PokemonStart build identity. Current write evidence remains limited to the retained private v0.15 lineage.
+Writer-supported saves must pass structural eligibility, provenance/profile eligibility, and field-capability eligibility. Structural similarity alone does not prove PokemonStart build identity. Current write evidence remains limited to the retained private PokemonStart v0.15 lineage.
 
 ## Reusable transaction contract retained
 
-Future bounded writers must:
+Every generated candidate must:
 
 - hash/read input before mutation;
 - reject input/output aliasing and existing output paths;
@@ -43,7 +42,7 @@ Future bounded writers must:
 - locate the active logical section through verified metadata;
 - require active-slot/counter parity;
 - preserve physical section permutation and counters/IDs/signatures;
-- mutate only explicitly authorized field bytes;
+- mutate only explicitly capability-authorized field bytes;
 - recompute only required checksum(s);
 - require every output byte difference to be explained by authorized field/checksum changes;
 - preserve inactive slot, sectors 28–31, parasite tails, footer, and all other bytes unless separately proven otherwise;
@@ -53,13 +52,46 @@ Future bounded writers must:
 
 The external 16-byte footer is preservation-only for tool output; equality is not required after a later game/emulator resave.
 
-## Roadmap reassessment trigger after M3C-F1
+## M3C execution refinement — goal-driven batch program
 
-M3C-F1 adds a second semantic field family and shows that the one-field proof loop works. It also exposes the process cost of requiring a separate human authorization and round trip for every small scalar field. This is a meaningful evidence boundary at which M3C throughput should be independently reassessed before authorizing more fields.
+The project no longer requires one human authorization and one game round trip for every scalar field. That procedure produced useful early evidence but has diminishing information value after M2, M3B, and M3C-F1 demonstrated the common transaction envelope across different hashes, active slots, and two semantic field families.
 
-A higher-throughput design may batch research, implementation, synthetic/property testing, private differential preflight, and low-coupling field validation under one bounded program while retaining field-specific capability records. Human game round trips can be reduced to representative canaries plus automatic bisection on failure rather than being mechanically required after every field.
+M3C now separates **field-level proof** from **human-level proof**:
 
-Such a change would refine execution flow, not weaken the North Star or fail-closed writer contract. It must be explicitly authorized before becoming canonical.
+- each field or tightly coupled field group still requires source-backed layout/semantics, explicit validity constraints, a named capability record, synthetic/property coverage, and private differential verification;
+- fields are grouped by coupling/risk rather than by arbitrary one-field milestones;
+- a batch generates individual variants plus a combined canary and exact manifests;
+- a representative human game round trip validates the batch at the game boundary;
+- if a combined canary fails, prepared variants or automatic/binary bisection isolate the failing field/group; success of one field never proves another;
+- high-coupling fields remain separate groups and may require dedicated canaries.
+
+### Risk/coupling classes
+
+- **L — direct / low-coupling scalar or cosmetic fields:** eligible for multi-field canaries after source/range checks.
+- **M — catalog/encoding-dependent fields:** require a target-profile catalog/encoding proof before canary inclusion.
+- **C — derived-state coupled fields:** e.g. stats/EXP-level, IV/EV/nature/hyper-training, moves/PP; require coupled transformation and derived-invariant proof.
+- **H — identity/form/system fields:** species/form/ability/PID-like identity or broader game-state fields; separate research gate unless evidence reduces their risk.
+
+## External reference policy
+
+Pinned CFRU-JP source remains primary upstream structural/semantic evidence. Private PokemonStart saves remain the local compatibility proof. Public CFRU-family editors may be used as supporting implementation/reference evidence only and never as PokemonStart authority.
+
+PUSE is a useful MIT-licensed Unbound/CFRU-family reference because it independently implements the same broad section/party concepts and multi-field editing, but its Unbound-specific checksum/field assumptions must not be imported without independent PokemonStart/CFRU-JP confirmation. PKForge and PKHeX-family implementations may inform architecture or invariants, subject to their licenses, but do not expand project scope or compatibility by themselves.
+
+## M3C batch-program completion criteria
+
+A batch is ready for the human canary only when:
+
+1. candidate fields/groups have source-backed semantics and explicit validity/coupling rules;
+2. the common transaction engine and per-field validators fail closed;
+3. synthetic/property tests pass for every included capability and for combined application order;
+4. the exact retained private input has been verified read-only;
+5. individual variants and a combined canary are generated to new files only;
+6. exact manifests account for every changed byte and affected checksum;
+7. independent verification reproduces the resulting semantic values, checksums, preserved regions, and output hashes;
+8. unresolved/high-risk capabilities are marked BLOCKED/UNSUPPORTED rather than guessed.
+
+M3C itself is not complete merely because one batch works. Exit requires a useful bounded party-edit capability set plus a final review of remaining gaps and whether M4 is justified.
 
 ## Remaining risks
 
@@ -68,10 +100,28 @@ Such a change would refine execution flow, not weaken the North Star or fail-clo
 - target-build data catalogs and field semantics for IDs such as species/items/moves/abilities;
 - field coupling for derived stats, moves/PP, species/form/ability, identity, and other complex groups;
 - application semantics of sectors 30/31 and parasite tails beyond byte preservation;
-- GUI readiness remains unproven until useful field capability and profile support exist.
+- GUI readiness remains unproven until a useful field set is demonstrated.
 
 ## Authorization boundary
 
-Existing authorization covers M3C-F1 through returned-resave read-only verification. It does **not** authorize PR #9 merge, a second field, a broader M3C batch/goal program, arbitrary/non-lineage writes, general writer expansion, overwrite, GUI, box editing, or protected-data publication.
+Human authorization `AUTHORIZE M3C GOAL-DRIVEN BATCH PROGRAM` permits:
 
-The next human decision is whether to adopt a bounded higher-throughput M3C execution model and, if so, what scope Codex `/goal` may autonomously pursue before stopping at a human-only gate.
+- canonical adoption of this M3C execution refinement;
+- research of multiple party fields using current canonical evidence, pinned CFRU-JP source, private local saves, and public reference implementations;
+- common batch transaction infrastructure and per-field capability validators;
+- synthetic/property tests;
+- private-copy individual variants, combined canaries, manifests, differential verification, and bisection artifacts;
+- feature branches, commits, documentation, and review-ready PR preparation;
+- completion/merge of the already-passed M3C-F1 PR #9.
+
+It does **not** authorize:
+
+- final merge of new M3C batch capability PRs without a later human merge decision;
+- arbitrary/non-lineage save support or broad PokemonStart-version generalization;
+- input overwrite;
+- M4 GUI work;
+- box/bag editing;
+- protected-data publication;
+- execution of blocked/proprietary binaries.
+
+The next mandatory human gate is the smallest representative game/emulator canary required by the batch evidence, or an earlier consequential decision if the evidence cannot safely resolve it.
