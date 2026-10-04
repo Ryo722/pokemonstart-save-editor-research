@@ -16,6 +16,8 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M3C — goal-driven batch field expansion is AUTHORIZED and IN PROGRESS.** Further field work is grouped by coupling/risk class. Field-specific source evidence, validators, synthetic/property tests, private differential proofs, and capability records remain mandatory, but human game round trips are consolidated into representative batch canaries with bisection/fallback variants prepared in advance. Final batch merge remains a human gate.
 
+**M3C low-coupling batch — COMPLETE on the retained v0.15 lineage.** Friendship 52, marking 1, and Premier Ball 11 survived a combined game round trip and were merged via #10. A derived-stat batch candidate now has private preflight evidence and awaits its combined game canary; see `docs/m3c-derived-stats-canary.md`.
+
 **M4 — usable editor / GUI remains not authorized.**
 
 The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.

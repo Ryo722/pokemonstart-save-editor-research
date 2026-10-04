@@ -1,5 +1,9 @@
 # Canonical re-evaluation — 2026-10-05
 
+## Derived-stat M3C decision after merged low-coupling batch
+
+Fresh canonical `main` at `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3` includes a human-passed friendship/markings/ball batch. Its returned private save re-verifies at SHA-256 `baf0b88fd357c54e17743601bbfa26b436db467a2fd78cd1d2c598fb714c50fa`, active slot 1/counter 5. The next high-information M3C group is nature mint, Attack IV, HP EV, and their derived cached stats/HP. It is prepared as a sealed exact-lineage candidate, with individual isolation variants and one combined canary. See `docs/m3c-derived-stats-canary.md` for source, diffs, independent verification, and blocked alternatives. This does not authorize merging the new group or M4.
+
 ## Authority and evidence discipline
 
 GitHub `main` is the durable canonical authority. Protected binaries remain outside Git. Conclusions must distinguish repository/canonical evidence, independently checked public upstream source, local private-input verification, human observation, prior observations/command logs, and hypotheses.
