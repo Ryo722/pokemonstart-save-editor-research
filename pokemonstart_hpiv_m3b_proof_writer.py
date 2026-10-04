@@ -4,7 +4,8 @@
 This candidate targets exactly the fresh M2 round-trip input and changes only
 party[0] HP IV 30 -> 31. The exact complete diff and output SHA-256 were
 derived from the authorized private input, independently checked against the
-M3A transaction envelope, and are sealed below.
+M3A transaction envelope, and are sealed below. This remains a proof-only
+writer and does not authorize support for arbitrary saves or additional fields.
 """
 
 from __future__ import annotations
