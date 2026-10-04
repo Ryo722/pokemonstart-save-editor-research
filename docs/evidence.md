@@ -124,18 +124,41 @@ A private local execution against `PokemonStart_v0.15_BEFORE_HPIV_TEST.sav` prod
 
 Evidence level: **local private-input verification / repository-writer preflight**. The private input and generated save remain outside Git.
 
-### M2 gate still open
+### Fresh M2 human game round trip — PASS
 
-The repository implementation has reproduced the exact historical proof bytes, but the M2 canonical gate requires a fresh human game load + normal-save round trip using this repository-generated output. That fresh round trip has not yet been performed in this candidate cycle. Therefore M2 is **not complete** and the candidate must not be generalized to other saves or fields.
+The user reported loading the repository-generated private output in PokemonStart v0.15 and completing one normal in-game save. The resulting private resave was then inspected read-only and kept outside Git.
+
+| Observation | Value | Evidence level |
+| --- | --- | --- |
+| Resave size / SHA-256 | `131,088` bytes / `c103d8d3eb158bb9e9ca3de3b2d00fe46849e1dfc25c6e7b27a01057005767ac` | local private-input verification |
+| Flash-body SHA-256 | `8318c04bd726b11de4ce3c46da0d567090d557dfdf11048308c6e994a278f723` | local private-input verification |
+| Game accepted proof output and normal save completed | yes | human observation |
+| Slot 0 | valid; counter 2; all 14 section IDs present once; all signatures/checksums pass | local private-input verification |
+| Slot 1 | valid; counter 1; all 14 section IDs present once; all signatures/checksums pass | local private-input verification |
+| Active slot | slot 0, uniquely newer | local private-input verification |
+| Party in both slots | count 1; species 1; level 5; EXP 134; friendship 50; ball 3; moves 33/45; PP 35/40; EVs zero | local private-input verification |
+| IVs in both slots | `30/29/26/23/27/29`; IV word `0x3BBBEBBE` | local private-input verification |
+| HP / stats in both slots | HP `21/21`; Atk 9, Def 11, Spe 10, SpA 13, SpD 12 | local private-input verification |
+| Sector 30 | SHA-256 `335dbe9fd34f7d6baf1d3c4fdff8647b121872de1fdf779a0d1a49f9de068525`; 23 nonzero bytes | local private-input verification |
+| Sector 31 | SHA-256 `ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7`; 0 nonzero bytes | local private-input verification |
+| Opaque footer | 16 bytes present; SHA-256 `0f5e9be128e35fb5926268e15f441e442ff54ab712ba7fa50418761a4170ed0f` | local private-input verification |
+
+The fresh resave preserves the repository-generated proof output's entire old slot 1 byte-for-byte. Flash sectors 28–31 are also byte-identical to the proof output. The game wrote a new valid slot 0 at counter 2 and updated the opaque 16-byte footer. No semantics are assigned to the footer bytes.
+
+The fresh resave also reproduces the same structural outcome as the earlier historical normal resave: two valid slots, counter 2 newest, and HP IV 30 retained. The two resaves are not byte-identical; that exact identity is not an M2 requirement.
+
+This satisfies the bounded M2 round-trip evidence gate for the exact v0.15 proof transformation. It does **not** establish a general writer, support other save hashes/builds, or prove any other field safe.
 
 ## Earlier manual writer proof and round trip
 
 The earlier manual writer proof changed HP IV from 31 to 30 while other IVs remained 29/26/23/27/29. The exact reported two-byte difference from the original test input was `0x10080: BF→BE` and section 1 checksum `0x10FF6: 62→61`; all other bytes, including the emulator footer, were reported unchanged. At level 5, HP remained 21/21.
 
-The normal in-game resave is independently parseable as described above: slot 0 counter 2 is newest, slot 1 counter 1 remains valid, the party retains HP IV 30, and the structural checks pass. This historical evidence strongly motivates the M2 proof, but the current M2 gate intentionally requires a fresh round trip of the repository-generated output before declaring the repository writer proven.
+The earlier normal in-game resave is independently parseable as described above: slot 0 counter 2 is newest, slot 1 counter 1 remains valid, the party retains HP IV 30, and the structural checks pass. The fresh repository-generated round trip now independently closes the integration uncertainty that this historical observation alone could not close.
 
 ## Reproduction gaps
 
 M1's read-only reproduction gap is closed for the supplied v0.15 original/test/resave set.
 
-M2's remaining bounded gap is the fresh human game load + normal-save round trip of the repository-generated proof output. Broader gaps remain outside this milestone: exact distribution provenance, package hash/extraction transcript, exact PokemonStart/CFRU-JP integration revision, version/build generalization, emulator-footer semantics beyond opaque preservation/reporting, and field-specific writer coupling. No protected binary should enter this repository.
+M2's bounded repository-writer and fresh game round-trip evidence requirements are satisfied for the exact allowlisted v0.15 proof input and HP-IV 31→30 transformation. Canonical `main` still remains at M1 until the M2 branch is reviewed and explicitly merged.
+
+Broader gaps remain outside this milestone: exact distribution provenance, package hash/extraction transcript, exact PokemonStart/CFRU-JP integration revision, version/build generalization, emulator-footer semantics beyond opaque preservation/reporting, support for non-allowlisted saves, and field-specific writer coupling. No protected binary should enter this repository.
