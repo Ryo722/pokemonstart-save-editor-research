@@ -48,18 +48,21 @@ A GUI is a delivery layer only after save/profile eligibility and field capabili
    - source-backed parity preflight, complete byte-diff confinement, output re-verification, new-file-only semantics;
    - human game round trip PASS: returned resave has slot 0 counter 2, slot 1 counter 3 active, parity PASS, HP IV 31 retained, old slot 0 byte-for-byte preserved, sectors 28–31 byte-for-byte preserved, and checked unrelated party values stable.
 
-5. **M3C — field-by-field expansion — NOT AUTHORIZED.**
-   - each new field or tightly coupled field group requires its own semantic/coupling analysis, bounded encoder, expected-diff contract, checksum analysis, invariant checks, and game round trip before being called safe.
+5. **M3C — field-by-field expansion — AUTHORIZED ONLY FOR F1 CANDIDATE; BROADER EXPANSION NOT AUTHORIZED.**
+   - M3C-F1 friendship proof has completed bounded preflight and human game round trip on its review branch; merge remains separately gated.
+   - no second field or general M3C batch is authorized by F1.
 
 6. **M4 — usable editor / GUI — NOT AUTHORIZED.**
    - expose only proven fields and qualified save profiles;
    - read-only preview, fail-closed validation, separate output path, explicit recovery path.
 
-Detailed M3A support-envelope evidence is in `docs/m3a-support-envelope-findings.md`. Detailed M3B evidence is in `docs/m3b-proof-candidate.md`.
+Detailed M3A support-envelope evidence is in `docs/m3a-support-envelope-findings.md`. Detailed M3B evidence is in `docs/m3b-proof-candidate.md`. M3C-F1 proof evidence is retained on PR #9 until merge authorization.
 
 ## Current position
 
-Canonical `main` after PR #8 merge commit `8d28835da09b93f4c8155b4d9d59d65f374254fb`: **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
+Canonical `main` remains **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; stopped at the M3C authorization boundary.**
+
+The open M3C-F1 review branch has completed its exact friendship proof and human game round trip but is not canonical until a later explicit merge decision.
 
 ## What M3B actually proves
 
@@ -96,7 +99,7 @@ A stronger future user-facing profile mechanism should prefer independently veri
 
 ### C(field) — capability eligibility
 
-Every editable field or tightly coupled field group requires its own proof. M2/M3B establish only the HP-IV field family under the exact bounded proof conditions above.
+Every editable field or tightly coupled field group requires its own semantic/coupling analysis and proof. Canonical `main` currently establishes only the HP-IV field family. The completed M3C-F1 friendship evidence remains non-canonical until merge.
 
 ## Reusable transaction contract retained
 
@@ -118,33 +121,30 @@ Future bounded writers must:
 
 The external 16-byte footer is preservation-only for tool output; equality is not required after a later game/emulator resave.
 
-## M3B boundary check / next-step posture
+## Current roadmap question
 
-M3B produced no evidence that invalidates the refined North Star or the M3A transaction contract. It instead confirms that the transaction envelope works across the intended second bounded slot state.
-
-Therefore no roadmap redesign is currently justified. The nominal next milestone remains **M3C field-by-field expansion**, but it must not start merely because the roadmap names it. Before authorization, select the cheapest new field or tightly coupled field group whose proof materially advances the user outcome and does not introduce unresolved coupling that is cheaper to investigate first.
-
-Broad arbitrary-save/profile generalization remains a separate future qualification problem and is not automatically inserted ahead of every field proof.
+M3C-F1 confirms that a second semantic field can survive the same bounded transaction and normal-save round trip. This creates a meaningful point to reassess throughput: the project should compare continued one-field-at-a-time human gating with a bounded batch/goal-driven proof program before authorizing more fields. Any such change must preserve field-specific semantic/coupling evidence and fail-closed write boundaries rather than treating batch execution as blanket field safety.
 
 ## Remaining risks and unresolved uncertainties
 
 - PokemonStart version/build mismatch outside the retained private lineage;
 - no positive build identity derived from save structure alone;
 - arbitrary external/non-lineage save support;
-- field coupling outside HP IV;
+- field coupling beyond the individually proven fields;
 - expanded IDs and other game-specific field semantics;
 - interrupted-save behavior outside the external new-file transaction model;
 - application-level semantics/integrity of sectors 30/31 and parasite tails beyond byte preservation;
 - exact distribution/package provenance gaps and independently reproduced target-build identity;
-- GUI readiness remains unproven until useful editable fields and profile support exist.
+- GUI readiness remains unproven until a useful field set and profile support exist.
 
 ## Authorization boundary
 
-The human authorizations on 2026-10-05 covered the bounded M3B same-field proof, PR #8 merge, and this bounded post-merge documentation correction.
+The human authorizations on 2026-10-05 covered M3B completion/merge/docs correction and the exact M3C-F1 friendship proof through returned-resave read-only verification.
 
 They do **not** authorize:
 
-- M3C/new editable fields;
+- PR #9 merge without a later explicit merge decision;
+- a second M3C field or batch;
 - non-lineage or arbitrary save writing;
 - general writer capability expansion;
 - save overwrite behavior;
@@ -154,4 +154,4 @@ They do **not** authorize:
 - executing Defender-blocked executables;
 - ROM / `.sav` / `.pks` / patches / executables / proprietary payload uploads.
 
-The current human gate is **M3C authorization**. M3C remains a separate future decision and has not been authorized by the M3B merge or this documentation correction.
+The next decision is whether to merge M3C-F1 as-is and/or refine M3C into a bounded higher-throughput batch/goal-driven program. That roadmap change requires an explicit human decision before becoming canonical.
