@@ -139,7 +139,7 @@ class M3BWriterTests(unittest.TestCase):
             with self.assertRaisesRegex(w.WriterError, "HP IV is 31"):
                 w.derive_candidate_fingerprint(raw)
 
-    def test_sealed_synthetic_candidate_writes_new_file_and_preserves_input(self):
+    def test_synthetic_override_can_exercise_new_file_and_overwrite_safety(self):
         raw = _make_save()
         patches = _profile_patches(raw)
         with patches[0], patches[1], patches[2], patches[3]:
