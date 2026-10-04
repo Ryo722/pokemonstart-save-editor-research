@@ -9,7 +9,7 @@ The group is **nature mint + IV + EV + cached party stats** (class C). It tests 
 ## Canonical and private profile
 
 - Canonical starting `main`: `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3` (merged low-coupling batch #10). Its merge record states that the human combined canary passed and gives the retained returned-save hash.
-- Exact private input: `C:\Users\kurei\PokemonStart-private\PokemonStart_v0.15(5).sav`, SHA-256 `baf0b88fd357c54e17743601bbfa26b436db467a2fd78cd1d2c598fb714c50fa`, size `131,088` bytes. The writer reads it but never writes to it. The file is outside Git.
+- Exact private input: retained `PokemonStart_v0.15(5).sav`, SHA-256 `baf0b88fd357c54e17743601bbfa26b436db467a2fd78cd1d2c598fb714c50fa`, size `131,088` bytes. The writer reads it but never writes to it. The file is outside Git.
 - Both slots valid; active slot 1/counter 5, inactive slot 0/counter 4; parity 1 = 5 mod 2. Active logical section 1 is physical sector 20. Party count 1.
 - Party[0] is species 1, level 5, EXP 134, nature mint 0, hyper-training 0, Tera type 12, friendship 52, markings 1, ball 11, no held item, IVs `31/29/26/23/27/29`, EVs zero, HP `21/21`, and Atk/Def/Spe/SpA/SpD `9/11/10/13/12`.
 - Sector 30 SHA-256 `335dbe9fd34f7d6baf1d3c4fdff8647b121872de1fdf779a0d1a49f9de068525`; sector 31 `ad7facb2586fc6e966c004d7d1d16b024f5805ff7cb47c7a85dabd8b48892ca7`; opaque footer `f1f4a7b20f12225b63887afa855735504f25db397acedb1c2aab6e000b0833e4`.
