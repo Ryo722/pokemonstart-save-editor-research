@@ -91,7 +91,7 @@ After applying only the authorized transformation and recomputing logical sectio
 - the input SHA-256 remains unchanged after output creation;
 - the new output is exactly `131,088` bytes with the sealed output SHA-256.
 
-One private proof output was created at a new path only. It is not committed or published through GitHub.
+One private proof output was created at a new path only and handed back to the user for the required game round trip. It is not committed or published through GitHub.
 
 ## Synthetic implementation preflight
 
