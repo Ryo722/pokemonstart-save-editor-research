@@ -32,14 +32,52 @@ The log reports a matching source CRC and output CRC, with the target ROM writte
 | Extra sectors | sector 30 had 23 nonzero bytes, unchanged across test/resave; sector 31 zero. Earlier claim that both were zero was incorrect. | corrected prior analysis |
 | Party | count 1; 100-byte `Pokemon` struct matched CFRU-JP fields including 7-byte nickname, natureMint, hyperTraining, teratype | prior analysis |
 
-Parsed starter: フシギダネ, species 1, level 5, EXP 134, friendship 50, ball 3, moves 33/45, PP 35/40, EVs all zero, IVs HP/Atk/Def/Spe/SpA/SpD = 31/29/26/23/27/29. HP 21/21; Atk 9, Def 11, Spe 10, SpA 13, SpD 12. Nickname decoded using a CFRU-JP Japanese charmap. Money was reported as 3000. These are prior analysis, pending independent parser reproduction.
+Parsed starter: フシギダネ, species 1, level 5, EXP 134, friendship 50, ball 3, moves 33/45, PP 35/40, EVs all zero, IVs HP/Atk/Def/Spe/SpA/SpD = 31/29/26/23/27/29. HP 21/21; Atk 9, Def 11, Spe 10, SpA 13, SpD 12. Nickname decoded using a CFRU-JP Japanese charmap. Money was reported as 3000. These are prior analysis, pending independent parser reproduction on the original/resave inputs.
+
+## M1 verifier source basis — upstream source evidence
+
+The M1 candidate pins its structural constants to public `kapibarasan000/CFRU-JP` `main` commit `e24a16fe39e27ae162faf5b78596d1f3df18489d`, observed as current on 2026-10-04.
+
+- `include/save.h` defines a `0x1000`-byte `SaveSection` with `data[0xFF4]`, then `u16 id`, `u16 checksum`, `u32 signature`, and `u32 counter`. This fixes footer offsets `0xFF4`, `0xFF6`, `0xFF8`, and `0xFFC`.
+- `src/save.c` defines 14 sectors per slot, signature `0x08012025`, and section checksum lengths: section 0 `0xF24`; sections 1–3 `0xFF0`; section 4 `0xD98`; sections 5–12 `0xFF0`; section 13 `0x450`. `GetSaveValidStatus` validates signatures/checksums and special-cases counter wrap `0xFFFFFFFF -> 0` before otherwise comparing counters as signed 32-bit values.
+- `include/global.h` places `playerPartyCount` at SaveBlock1 offset `0x34` and `playerParty` at `0x38`.
+- `include/pokemon.h` defines the extended in-save `Pokemon` field order used by the candidate. The listed fields total 100 bytes, including 7-byte nickname, nature mint, hyper-training flags, tera type, expanded growth/attack/EV/IV data, level, HP, and battle stats.
+
+Evidence level: **upstream source evidence**. This establishes the parser constants; it does not by itself prove that every PokemonStart build uses the same layout.
+
+## M1 verifier implementation evidence
+
+The candidate `pokemonstart_save_verifier.py` is original repository code and exposes no write path. It accepts only `0x20000` or `0x20010` bytes, treats any trailing 16 bytes as an opaque emulator footer, validates both slots, requires each non-empty slot to contain section IDs 0–13 exactly once with one counter value, validates section-specific checksums/signatures, refuses equal-counter ambiguity, decodes party count and 100-byte party records, and reports sectors 30/31 deterministically.
+
+Synthetic tests construct bytes in memory and cover: one-valid/one-erased slot, section permutation, newest-slot choice, `0xFFFFFFFF -> 0` counter wrap, equal-counter rejection, checksum corruption, duplicate/missing section rejection, inconsistent counters, partial erase, party count > 6, 16-byte footer separation, unsupported size, and deterministic report output.
+
+Local test command: `python3 -m unittest discover -s tests -v` -> **12/12 PASS** on 2026-10-04. Evidence level: **independently reproduced / synthetic test evidence**.
+
+### Private retained HP-IV-30 save check
+
+A retained private Library file named `PokemonStart_v0.15_TEST_HPIV30.sav` was materialized only for local verification and was not added to Git history.
+
+| Observation | Value | Evidence level |
+| --- | --- | --- |
+| File size / SHA-256 | `131,088` bytes / `569fc5b2b18c77593a0f55bbe01fd20a603fe96ce9c5f955b978710d117db0dc` | local private-input verification |
+| Flash-body SHA-256 | `05066a91355796e52e43616b3b4dd37998a5112dc33b6e3c1a7919417f1dd637` | local private-input verification |
+| Emulator footer | 16 bytes present; kept opaque by verifier | local private-input verification |
+| Slot state | slot 0 erased; slot 1 valid, counter 1 | local private-input verification |
+| Physical/logical order | sectors 14–27 contain logical sections `13,0,1,...,12` | local private-input verification |
+| Section validation | all 14 signatures/checksums pass using the pinned per-section lengths | local private-input verification |
+| Party | count 1; species 1; level 5; EXP 134; friendship 50; ball 3; moves 33/45; PP 35/40; EVs zero; IVs `30/29/26/23/27/29`; HP 21/21; stats 9/11/10/13/12 | local private-input verification |
+| Extra sectors | sector 30 has 23 nonzero bytes; sector 31 has 0 nonzero bytes | local private-input verification |
+
+A separate throwaway parser, not importing the candidate module, independently recomputed the 14 checksums and the party IV word for this file and obtained the same results. This materially strengthens the earlier HP-IV-30 observation without publishing the save.
 
 ## Minimal writer proof and round trip
 
-The prior analysis reports a test save with HP IV changed from 31 to 30 while other IVs remained 29/26/23/27/29. The exact two-byte difference from the original was `0x10080: BF→BE` and section 1 checksum `0x10FF6: 62→61`; all other bytes, including the RTC footer, were reported unchanged. At level 5, HP remained 21/21. The test save itself is unavailable here.
+The prior analysis reports a test save with HP IV changed from 31 to 30 while other IVs remained 29/26/23/27/29. The exact two-byte difference from the original was `0x10080: BF→BE` and section 1 checksum `0x10FF6: 62→61`; all other bytes, including the RTC footer, were reported unchanged. At level 5, HP remained 21/21.
 
 The user then loaded that output in the game and performed a normal resave. The attached resave's hash and size were locally rechecked. Prior analysis reports slot 0 counter 2, slot 1 counter 1, all 14 checksums passing in both, signature passing, IV word `3BBBEBBE`, HP IV 30 in both slots, and preserved other party values. This is strong observed evidence for that particular write, while wider editing claims remain untested.
 
 ## Reproduction gaps
 
-Archive a source URL, release identity, package hash, extraction transcript, exact CFRU-JP revision/links, and original script provenance in a future evidence update when available. Recompute all parser claims from private inputs before using them as code assertions. No protected binary should enter this repository.
+The retained private HP-IV-30 test save is now independently parseable, but the original and normal-resave binaries are not currently available to the M1 candidate in this workspace. Gate 1 therefore remains open until those private inputs are rerun with the verifier and the exact candidate is reviewed.
+
+Archive a source URL, release identity, package hash, extraction transcript, exact PokemonStart/CFRU-JP integration revision, and original script provenance in a future evidence update when available. Recompute all remaining parser claims from private inputs before using them as writer assertions. No protected binary should enter this repository.
