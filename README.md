@@ -16,7 +16,11 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M3C — goal-driven batch field expansion is AUTHORIZED and IN PROGRESS.** Further field work is grouped by coupling/risk class. Field-specific source evidence, validators, synthetic/property tests, private differential proofs, and capability records remain mandatory, but human game round trips are consolidated into representative batch canaries with bisection/fallback variants prepared in advance. Final batch merge remains a human gate.
 
-**M3C low-coupling batch — COMPLETE on the retained v0.15 lineage.** Friendship 52, marking 1, and Premier Ball 11 survived a combined game round trip and were merged via #10. A derived-stat batch candidate now has private preflight evidence and awaits its combined game canary; see `docs/m3c-derived-stats-canary.md`.
+**M3C low-coupling batch — COMPLETE on the retained v0.15 lineage.** Friendship 52, marking 1, and Premier Ball 11 survived a combined game round trip and were merged via #10. The derived-stat batch also survived its combined return-save check and remains in an unmerged PR; see `docs/m3c-derived-stats-canary.md`.
+
+The proven field set is ready for a formal M3C exit review; see `docs/m3c-exit-assessment.md`. This does not authorize M4 work or merge the derived-stat PR.
+
+New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
 
 **M4 — usable editor / GUI remains not authorized.**
 

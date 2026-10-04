@@ -4,6 +4,10 @@
 
 Fresh `main` is `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3`, which merged the human-passed low-coupling canary. Its private returned save re-verified read-only at SHA-256 `baf0b88fd357c54e17743601bbfa26b436db467a2fd78cd1d2c598fb714c50fa`, active slot 1/counter 5, retaining friendship 52, marking 1, and ball 11. The next class-C nature-mint/HP-EV/Attack-IV batch has source-backed layout and stat formulas, 43/43 local synthetic tests, four exact private-copy outputs, and a separate checksum/byte-diff audit PASS. It is **CANARY_READY**, not game-proven. Full source links, capability boundaries, output hashes, exact diffs, and the human gate are in `docs/m3c-derived-stats-canary.md`. No save bytes are committed.
 
+## M3C derived-stat round trip — 2026-10-05
+
+The user-supplied return save SHA-256 `ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86` passed a separate read-only audit: all 28 section checksums valid; new active slot 0/counter 6; old slot 1/counter 5 retained byte-for-byte; active 100-byte party record byte-identical to the combined candidate; sectors 28–31 unchanged; external footer changed as allowed. This proves the exact nature-mint/HP-EV/Attack-IV combined transformation for the retained v0.15 lineage. The returned file was copied with exclusive creation to the repo-external private lineage directory and verified at the same SHA-256. The source and candidate files remained unchanged. Details are in `docs/m3c-derived-stats-canary.md`.
+
 ## Provenance and patch chain
 
 The referenced work describes a PokemonStart v0.15 `.pks` distribution. It was extracted as data without executing Defender-blocked executables. A BPS stream was extracted from `パッチ当て.exe` as data and applied by an original Python script; the patcher EXE was not executed. The full `.pks` file, its download URL, its SHA-256, and the extraction script are unavailable here, so their exact provenance and extraction behavior remain **unverified in this repository**. Do not invent package hashes.

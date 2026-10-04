@@ -112,6 +112,9 @@ class DerivedStatsTests(unittest.TestCase):
                     tx.write_new(source, source, build)
                 with self.assertRaisesRegex(tx.TransactionError, "existing output"):
                     tx.write_new(source, dest, build)
+                repository_output = Path(__file__).resolve().parents[1] / "work" / "forbidden.sav"
+                with self.assertRaisesRegex(tx.TransactionError, "outside the repository"):
+                    tx.write_new(source, repository_output, build)
 
 
 if __name__ == "__main__":

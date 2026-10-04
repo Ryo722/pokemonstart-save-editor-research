@@ -146,6 +146,9 @@ def write_new(
     build: Callable[[bytes], tuple[bytes, Fingerprint]],
 ) -> Fingerprint:
     source, dest = Path(input_path), Path(output_path)
+    repository = Path(__file__).resolve().parent
+    if dest.resolve().is_relative_to(repository):
+        raise TransactionError("private output must be outside the repository")
     if source.resolve() == dest.resolve():
         raise TransactionError("refusing to overwrite input")
     if dest.exists():
