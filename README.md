@@ -14,9 +14,15 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M3C-F1 — friendship `50 -> 51` proof is complete and merged.** It survived a human game load + normal save and returned with friendship 51 and the checked party record preserved.
 
-**M3C — goal-driven batch field expansion is AUTHORIZED and IN PROGRESS.** Further field work is grouped by coupling/risk class. Field-specific source evidence, validators, synthetic/property tests, private differential proofs, and capability records remain mandatory, but human game round trips are consolidated into representative batch canaries with bisection/fallback variants prepared in advance. Final batch merge remains a human gate.
+**M3C low-coupling batch — COMPLETE on the retained v0.15 lineage.** Friendship 52, marking 1, and Premier Ball 11 survived a combined game round trip and were merged via #10.
 
-**M4 — usable editor / GUI remains not authorized.**
+**M3C derived-state batch — COMPLETE for its exact retained-lineage transformations.** Nature mint `0 -> 4`, HP EV `0 -> 80` with HP `21/21 -> 22/22`, and Attack IV `29 -> 0` with cached stats updated together survived the combined game round trip. The returned private save re-verified at SHA-256 `ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86`.
+
+**M3C — COMPLETE.** The field-expansion milestone is closed with a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, explicit blocked/unsupported capabilities, and a formal exit assessment. Further field proofs require a new evidence-backed need rather than continuing M3C by default.
+
+**M4 — usable editor / GUI is NOT AUTHORIZED.** The next project boundary is an M4 entry/design decision. M3C completion does not authorize GUI implementation, arbitrary/non-lineage save support, boxes/bags, overwrite mode, or new unproven capabilities.
+
+New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
 
 The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.
 
@@ -30,11 +36,11 @@ python3 pokemonstart_save_verifier.py /path/to/private/save.sav
 
 The verifier accepts only `0x20000`-byte flash images or `0x20010`-byte files with a 16-byte opaque footer. It exits nonzero for malformed, ambiguous, internally inconsistent, or unsupported layouts.
 
-## Proof writers and batch program
+## Proof writers and transaction infrastructure
 
-The repository's proof writers and M3C batch tooling are research tools, not a user-facing general editor. They must reject unsupported profiles/starting states, unexplained diffs, input/output path aliasing, and existing output paths; generated files are re-verified and inputs remain immutable.
+The repository's proof writers and transaction tooling are research infrastructure, not a user-facing general editor. They must reject unsupported profiles/starting states, unexplained diffs, input/output path aliasing, in-repository private-save outputs, and existing output paths; generated files are re-verified and inputs remain immutable.
 
-M3C batch execution keeps **field-level evidence** while reducing **human-level repetition**: low/medium-risk fields may be researched and implemented together, individual variants and a combined canary are generated, and a representative game round trip is used for the group. If the combined canary fails, prepared variants are used to isolate the failing field/group rather than treating the batch as proven.
+M3C preserved **field-level evidence** while reducing **human-level repetition**: fields were grouped by coupling/risk class, individual variants and combined canaries were prepared, and representative game round trips were used for each defensible group. Success remains bounded to the named transformations and retained v0.15 lineage.
 
 Run repository tests with:
 
@@ -46,7 +52,7 @@ Tests use synthetic save bytes. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, and `docs/m3c-goal-batch-program.md`.
+See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, and `docs/m3c-exit-assessment.md`.
 
 ## Data boundary
 

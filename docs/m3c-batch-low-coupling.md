@@ -2,7 +2,9 @@
 
 ## Status
 
-**PRIVATE PREFLIGHT PASS / HUMAN COMBINED CANARY PENDING.**
+**HUMAN COMBINED CANARY PASS / MERGED INTO `main` VIA #10.**
+
+The canonical merge commit `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3` records the human game load/normal-save PASS. The returned private resave SHA-256 is `baf0b88fd357c54e17743601bbfa26b436db467a2fd78cd1d2c598fb714c50fa`: active slot 1/counter 5, with friendship 52, markings 1, and ball 11 retained. The checked party record, prior active slot, and sectors 28–31 were preserved. The external footer remains preservation-only across tool output, not normal game saves. This result is limited to the exact retained v0.15 lineage and three bounded fields.
 
 This batch is the first execution of the authorized goal-driven M3C program. It uses the exact M3C-F1 human-round-trip resave as the next private lineage anchor and prepares individual variants plus one combined canary.
 
@@ -114,7 +116,7 @@ The repository candidate writer generated all four private outputs from the exac
 
 Result: **PRIVATE BATCH PREFLIGHT PASS.**
 
-## Human canary gate
+## Human canary gate — completed
 
 The normal path requires only the **combined canary** first:
 
