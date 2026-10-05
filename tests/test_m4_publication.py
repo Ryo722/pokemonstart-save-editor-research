@@ -14,6 +14,7 @@ def sha(raw):
     return hashlib.sha256(raw).hexdigest()
 
 
+@unittest.skipUnless(sys.platform == "darwin", "macOS publication proof")
 class PublicationTests(unittest.TestCase):
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
@@ -43,6 +44,22 @@ class PublicationTests(unittest.TestCase):
         self.destination.symlink_to(self.source)
         with self.assertRaisesRegex(p.PublicationError, "alias"):
             self.publish()
+
+    def test_repository_destination_and_racing_creator(self):
+        repository_destination = Path(p.__file__).resolve().parent / "m4-test-output.sav"
+        with self.assertRaisesRegex(p.PublicationError, "inside repository"):
+            p.publish_new(self.source, repository_destination, sha(b"original"),
+                          b"candidate", lambda raw: None)
+        self.assertFalse(repository_destination.exists())
+        real_link = os.link
+        def race(staged, destination):
+            Path(destination).write_bytes(b"another writer")
+            return real_link(staged, destination)
+        with patch.object(p.os, "link", side_effect=race):
+            with self.assertRaises(FileExistsError):
+                self.publish()
+        self.assertEqual(self.destination.read_bytes(), b"another writer")
+        self.assertEqual(list(self.directory.glob(".pokemonstart-stage-*")), [])
 
     def test_prepublication_audit_failure_leaves_no_final(self):
         def reject(raw):
@@ -88,6 +105,19 @@ class PublicationTests(unittest.TestCase):
             self.publish(audit)
         self.assertFalse(self.destination.exists())
 
+    def test_postpublication_audit_failure_removes_own_link(self):
+        calls = 0
+        def audit(raw):
+            nonlocal calls
+            calls += 1
+            if calls == 3:
+                raise p.PublicationError("published audit failed")
+        with self.assertRaisesRegex(p.PublicationError, "published audit failed"):
+            self.publish(audit)
+        self.assertEqual(calls, 3)
+        self.assertFalse(self.destination.exists())
+        self.assertEqual(list(self.directory.glob(".pokemonstart-stage-*")), [])
+
     def test_process_crash_at_publication_boundaries(self):
         after_link = (
             "import os,sys,hashlib; import pokemonstart_m4_publication as p; "
@@ -114,6 +144,13 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(result.returncode, 38)
         self.assertFalse(self.destination.exists())
         self.assertEqual(self.source.read_bytes(), b"original")
+
+
+class UnsupportedPlatformTests(unittest.TestCase):
+    def test_windows_path_fails_closed_before_read_or_write(self):
+        with patch.object(p.sys, "platform", "win32"):
+            with self.assertRaisesRegex(p.PublicationError, "unvalidated"):
+                p.publish_new("missing.sav", "new.sav", "0" * 64, b"candidate", lambda raw: None)
 
 
 if __name__ == "__main__":

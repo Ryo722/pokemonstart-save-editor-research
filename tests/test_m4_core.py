@@ -3,6 +3,7 @@ import sys
 import unittest
 import contextlib
 import io
+from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
 
@@ -111,6 +112,27 @@ class M4CoreTests(unittest.TestCase):
             with contextlib.redirect_stdout(stream):
                 self.assertEqual(cli.main(["preview", str(source), "--capability", "markings-0-to-1"]), 2)
             self.assertIn("REJECTED", stream.getvalue())
+
+    def test_family_constraints_and_independent_diff_audit(self):
+        raw = _make_save()
+        for capability in (
+            m4.Capability("x", "EXACT_VECTOR", 0, 0, 1),
+            m4.Capability("x", "FAMILY", 1, 0, 1),
+            m4.Capability("x", "FAMILY", 0, 0, 2),
+            m4.Capability("x", "FAMILY", 0, 2, 1),
+        ):
+            with self.assertRaisesRegex(m4.EligibilityError, "unsupported capability"):
+                m4._derive_markings(raw, capability)
+        permitted = m4.Capability("markings-0-to-1", "FAMILY", 0, 0, 1)
+        output, plan = m4._derive_markings(raw, permitted)
+        self.assertTrue(m4.audit_output(raw, output, plan).independently_verified)
+        mutated = bytearray(output)
+        mutated[30 * v.SECTOR_SIZE] ^= 1
+        mutated = bytes(mutated)
+        full_diff = tuple((i, old, new) for i, (old, new) in enumerate(zip(raw, mutated)) if old != new)
+        forged_plan = replace(plan, output_sha256=m4.sha(mutated), diffs=full_diff)
+        with self.assertRaisesRegex(m4.EligibilityError, "unexplained byte diff"):
+            m4.audit_output(raw, mutated, forged_plan)
 
     @unittest.skipUnless(sys.platform == "darwin", "macOS publication proof")
     def test_synthetic_repeated_use_across_both_slot_directions(self):
