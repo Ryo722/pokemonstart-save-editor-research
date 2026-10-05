@@ -1,18 +1,23 @@
 # M4 Windows validation plan
 
-**Status: Windows synthetic and one retained private-input validation PASS on
-Draft PR #14; Windows production writes/downloads are disabled.** The current
-implementation permits read-only S0/P inspection on an unvalidated host. It
-returns no C write actions and rejects preview, core commit, browser commit, and
-browser download until Windows validation is completed and a later human
-decision explicitly adopts Windows write delivery. Do not describe Windows as
-supported before that decision.
+**Status: Draft PR #14 contains a bounded Windows production-integration
+candidate; canonical `main` still disables Windows write/download.** The
+candidate's semantic/browser gate requires the exact validated Windows build.
+Filesystem commit has a separate destination gate requiring a local fixed NTFS
+volume with no reparse component in the parent chain. A later exact-candidate
+Human review and adoption decision is required before canonical support.
 
-The executed Windows baseline and candidate record is in
+The executed Windows baseline, prior private validation, and integrated-path
+record is in
 [`m4-windows-candidate-evidence.md`](m4-windows-candidate-evidence.md). The
-candidate module is called only by an explicit synthetic validation harness;
-canonical `pokemonstart_m4_core.py`, `pokemonstart_m4_publication.py`, and the
-public NiceGUI adapter still reject Windows write delivery.
+earlier standalone Windows experiment has been promoted into production
+publication dispatch on PR #14. No integration code is on canonical `main`.
+The untouched source save remains the recovery anchor. Staged bytes are
+flushed before final-name exposure, but sudden power-loss persistence of the
+Windows directory entry is not claimed.
+
+The remainder of this document preserves the validation plan and acceptance
+boundary. Executed results and explicit non-claims are in the evidence record.
 
 ## Dependency and network boundary
 

@@ -14,6 +14,7 @@ from pathlib import Path
 
 import pokemonstart_save_verifier as v
 import pokemonstart_m4_publication as publication
+import pokemonstart_m4_host as host
 
 ROOT_SHA256 = "ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86"
 # Historical seals are regression vectors only. They are never consulted by
@@ -61,9 +62,11 @@ class EligibilityError(ValueError):
 
 
 def write_delivery_status() -> tuple[bool, str]:
-    if sys.platform != "darwin":
-        return False, "write delivery disabled pending explicit validation for this platform"
-    return True, "write delivery enabled on validated macOS platform"
+    if sys.platform == "darwin":
+        return True, "write delivery enabled on validated macOS platform"
+    if host.validated_windows_host():
+        return True, "in-memory/browser delivery enabled on validated Windows build"
+    return False, "write delivery disabled pending explicit validation for this platform"
 
 
 def require_write_delivery() -> None:

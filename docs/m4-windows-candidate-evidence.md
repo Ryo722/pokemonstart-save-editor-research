@@ -3,10 +3,11 @@
 ## Authority and scope
 
 Fresh-fetched GitHub `main` was `d80b0deb9be235344a6bbb0dc54fc98dfaefa02d`.
-This feature branch is a reviewable candidate only. Canonical M4 is ADOPTED /
-IN PROGRESS, with Windows write and download still disabled. No private ROM or
-save was copied into this repository or used in these tests. Open GitHub state
-at validation: PR #3 remains open; no open issues were returned.
+This feature branch is a reviewable Draft PR only. Canonical M4 is ADOPTED /
+IN PROGRESS, with Windows write and download still disabled on `main`. No
+private ROM or save was copied into this repository. The initial synthetic
+phase used no private inputs. At that baseline, PR #3 was open and no open
+issues were returned.
 
 ## Actual Windows baseline
 
@@ -28,7 +29,7 @@ at validation: PR #3 remains open; no open issues were returned.
 
 ## Publication primitive and executed synthetic evidence
 
-`pokemonstart_m4_windows_candidate.py` is an unadopted direct-call experiment.
+The initial `pokemonstart_m4_windows_candidate.py` was an unadopted direct-call experiment.
 It rejects nonfixed/non-NTFS destination volumes and reparse-point parents,
 including junctions. It stages a private file in the destination directory,
 writes and flushes it with `os.fsync`, independently audits staged bytes,
@@ -77,8 +78,9 @@ The path checks do not pin parent directory handles against a concurrent
 malicious junction swap. The intended first proof is a private local NTFS
 directory under the user's control, not a shared or adversarial directory.
 Stronger path-race resistance, symlink fixture execution, unsupported-volume
-execution, and power-loss behavior remain unverified. The candidate is not
-ready to replace production publication or enable Windows write delivery.
+execution, and power-loss behavior remain unverified. This was the boundary
+at the validation-candidate stage; the later canonical authorization permits
+the bounded integration described below without claiming those proofs.
 
 ## Local private-input Windows verification
 
@@ -120,15 +122,75 @@ After the private gate, the complete actual-Windows synthetic suite with
 NiceGUI 3.17.0 ran **82 tests: OK, 12 macOS-only skips**. The separate private
 byte audit also passed.
 
-## Decision surface
+## Bounded production integration candidate
 
-This validates the exact retained v0.15 root and one bounded `1 -> 0` output
-on a user-controlled local NTFS directory. It does not prove general Windows
-publication safety. Actual symlink creation, non-NTFS/network volume
-execution, concurrent hostile parent-junction replacement, and Windows
-directory-metadata/power-loss durability remain unresolved as stated above.
-The current candidate is sufficient for review of the bounded Windows
-validation result, but is **not yet sufficient to propose general Windows
-write/download enablement**. A later Human decision must address these limits
-and explicitly authorize any adoption or merge. M4 remains IN PROGRESS; no
-additional game canary is indicated by this Windows evidence.
+Canonical authorization
+[`m4-windows-bounded-integration-authorization.md`](m4-windows-bounded-integration-authorization.md)
+permits Draft PR #14 to integrate the narrow path without merging it. The PR
+now has two distinct production gates:
+
+- `pokemonstart_m4_host.py` qualifies the exact observed Windows 11 kernel
+  build/update revision `26200.9457` for semantic, in-memory, CLI preview,
+  and localhost NiceGUI delivery. Other Windows builds, missing build evidence,
+  and other platforms except the adopted macOS path fail closed. Browser
+  delivery does not check NTFS because it publishes no filesystem pathname.
+- `pokemonstart_m4_publication.py` dispatches macOS to its prior publisher and
+  Windows to the promoted same-directory NTFS hard-link publisher. The Windows
+  path separately checks the current destination volume is fixed and NTFS,
+  rejects every reparse component in its parent chain, existing destinations,
+  aliases, and repository destinations. Network, removable, and non-NTFS
+  volume responses fail before source I/O. No semantic mutation logic was
+  duplicated.
+
+**Actual Windows executed integration evidence:** Production `core.inspect`
+returned only the bounded synthetic markings action; `preview`, filesystem
+`commit`, the CLI preview/commit path, and `BrowserWorkflow` commit/download
+used the unpatched production gates and publisher. Output bytes and
+independent receipts agreed; source bytes stayed unchanged. A separate test
+forced NTFS publication to reject while in-memory/browser delivery still
+passed, proving the logical gate split. Production publisher tests covered
+the earlier NTFS success, alias, junction, race, write/audit/link fault, and
+process-exit cases, plus deterministic network/removable/non-NTFS rejections
+and an unvalidated-Windows-build rejection. The NiceGUI user simulation
+used the actual Windows gate, and a short-lived process was observed listening
+on `127.0.0.1` only with `on_air=False`.
+
+A **read-only** integration check reused the already generated private
+Windows output, source, ROM, and journal. It passed the new production host
+gate, S0/P/C inspection and preview, `audit_output`, the independent
+complete-byte oracle, and BrowserWorkflow upload/preview. The predicted
+output hash exactly matched the earlier private output. It created no new
+save, journal, browser commit, or game/emulator canary. Private paths and new
+hashes remain outside this PR.
+
+The full actual-Windows suite with pinned NiceGUI 3.17.0 was run after
+integration: **88 tests OK, 12 macOS-only skips**. The test run included
+production core, CLI, NiceGUI browser simulation, localhost listener, NTFS
+publication fault/race/crash checks, post-publication rival-replacement
+preservation, and the unsupported-volume mocks.
+This host cannot execute the macOS OS-specific publication suite. The macOS
+branch was left structurally unchanged, and existing synthetic macOS-gate
+regressions ran on Windows; earlier executed macOS evidence remains the
+OS-specific basis for that adopted path.
+
+## Decision surface and non-claims
+
+This candidate is bounded to the retained v0.15 lineage/build/environment,
+`party[0]` markings `0 <-> 1`, the exact validated Windows build for semantic
+delivery, and user-controlled local fixed NTFS for filesystem publication.
+The input save remains the recovery anchor and is never overwritten. Tested
+process exits before publication left no final pathname; tested exits just
+after publication left complete bytes. A private stage may remain after a
+process exit.
+
+Actual symlink fixture execution was unavailable without changing host
+privileges. Actual unsupported-volume execution was unavailable; deterministic
+runtime mocks exercised those branches. Hostile concurrent parent-junction
+or final-name replacement after path validation is not protected against.
+Windows directory-metadata and sudden power-loss persistence are not proven. No
+general Windows filesystem or arbitrary-save support is claimed.
+
+Canonical `main` still disables Windows write/download. The exact future
+Human decision is whether to adopt and merge this **bounded** PR after fresh
+review; the present authorization does not merge it or mark M4 COMPLETE.
+No new semantic/game canary is indicated by the integrated-path evidence.

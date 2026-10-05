@@ -3,6 +3,7 @@ import hashlib
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import pokemonstart_m4_core as core
 import pokemonstart_m4_web as web
@@ -11,7 +12,8 @@ from test_m3c_batch_writer import _make_save
 
 @unittest.skipUnless(core.sys.platform == "win32", "actual Windows gate")
 class ActualWindowsGateTests(unittest.TestCase):
-    def test_all_write_entry_points_reject_without_mutation(self):
+    @patch.object(core.host, "validated_windows_host", lambda: False)
+    def test_unvalidated_build_rejects_all_write_entry_points_without_mutation(self):
         raw = _make_save()
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

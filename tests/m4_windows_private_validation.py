@@ -4,8 +4,8 @@ Usage: python tests/m4_windows_private_validation.py --rom PATH --save PATH
        --private-directory PATH
 
 All generated artifacts stay under the supplied private directory. This
-requires the exact retained ROM and root hash, and patches the write gate only
-inside this process. It does not enable product Windows write delivery.
+requires the exact retained ROM and root hash and uses current production
+gates. Run only when a new private output is explicitly authorized.
 """
 from __future__ import annotations
 
@@ -14,16 +14,16 @@ import hashlib
 import json
 import sys
 import tempfile
+from contextlib import nullcontext
 from dataclasses import replace
 from pathlib import Path
-from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import m4_independent_markings_audit as independent
 import pokemonstart_m4_core as core
 import pokemonstart_m4_web as web
-import pokemonstart_m4_windows_candidate as ntfs
+import pokemonstart_m4_publication as ntfs
 import pokemonstart_save_verifier as verifier
 
 ROM_SHA256 = "48ecc0ef2df7fe9bbe389f0adbfbe7e277696a461ec631c65bcdf750898e4e12"
@@ -105,10 +105,9 @@ def main() -> None:
     read_only = core.inspect(source_raw, journal, rom_hash, ENVIRONMENT)
     require(read_only.structural.eligible and read_only.profile.eligible,
             "Windows-local S0/P enrollment failed")
-    require(read_only.capabilities == (), "production Windows gate unexpectedly open")
-    with patch.object(core, "write_delivery_status", return_value=(True, "private validation harness")), \
-         patch.object(core, "require_write_delivery", return_value=None), \
-         patch.object(core.publication, "publish_new", side_effect=ntfs.publish_new):
+    require(len(read_only.capabilities) == 1,
+            "integrated Windows gate did not return the bounded capability")
+    with nullcontext():
         inspected = core.inspect(source_raw, journal, rom_hash, ENVIRONMENT)
         require(len(inspected.capabilities) == 1, "core returned no unique FAMILY action")
         capability = inspected.capabilities[0]
@@ -144,7 +143,8 @@ def main() -> None:
                 "duplicate journal node/edge added")
         require(hashlib.sha256(args.save.read_bytes()).hexdigest() == source_hash,
                 "source changed after browser workflow")
-    require(core.write_delivery_status()[0] is False, "production Windows gate changed")
+    require(core.write_delivery_status()[0] is True,
+            "integrated Windows semantic gate is closed")
     require(web.server_options()["host"] == "127.0.0.1" and
             web.server_options()["on_air"] is False, "server settings broadened")
     report = {"environment": ENVIRONMENT, "rom_sha256": rom_hash,
