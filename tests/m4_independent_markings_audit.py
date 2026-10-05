@@ -1,7 +1,7 @@
-"""Stdlib-only independent A -> B markings audit; prints hashes and small diffs.
+"""Stdlib-only independent 0 <-> 1 markings audit; prints hashes and small diffs.
 
 Usage: python3 tests/m4_independent_markings_audit.py A [B]
-With only A, derive the expected B digest without writing a file.
+With only a source, derive the next digest without writing a file.
 """
 import hashlib
 import sys
@@ -40,10 +40,10 @@ def expected(source):
     physical = active * 14 + sector_ids.index(1)
     base = physical * 4096
     mark = base + 0x38 + 27
-    if source[mark] != 1:
-        raise ValueError("markings source is not 1")
+    if source[mark] not in (0, 1):
+        raise ValueError("markings source is outside 0/1")
     out = bytearray(source)
-    out[mark] = 0
+    out[mark] = 1 - source[mark]
     # Pinned section-1 payload length is 0xFF0. Sum little-endian u32 words.
     payload = out[base:base + 0xFF0]
     total = sum(int.from_bytes(payload[i:i + 4], "little")
@@ -61,14 +61,14 @@ def main():
         raise SystemExit(__doc__)
     source = Path(sys.argv[1]).read_bytes()
     output, diffs = expected(source)
-    print("A SHA-256:", digest(source))
-    print("expected B SHA-256:", digest(output))
-    print("complete A->B diff:", [(hex(i), hex(a), hex(b)) for i, a, b in diffs])
+    print("source SHA-256:", digest(source))
+    print("expected output SHA-256:", digest(output))
+    print("complete diff:", [(hex(i), hex(a), hex(b)) for i, a, b in diffs])
     if len(sys.argv) == 3:
         candidate = Path(sys.argv[2]).read_bytes()
         if candidate != output:
-            raise SystemExit("B does not match independent derivation")
-        print("B independent audit: PASS")
+            raise SystemExit("output does not match independent derivation")
+        print("independent output audit: PASS")
 
 
 if __name__ == "__main__":
