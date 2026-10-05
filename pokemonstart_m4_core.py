@@ -30,6 +30,14 @@ EXACT_VECTOR_REGISTRY = {
 FAMILY_REGISTRY = {"party0-markings-0-1": "BLOCKED: private P/C evidence incomplete"}
 FAMILY_PROVEN = False
 MARKINGS_OFFSET = 27
+# Logical-section offsets observed changing in the retained counter 5 -> 6
+# normal save. The excluded bytes are narrow; the rest of each payload is
+# hashed into the lineage fingerprint. Game-return canaries may narrow this.
+GAME_SAVE_VOLATILE_OFFSETS = {
+    0: (0x11, 0x12),  # SaveBlock2 play-time seconds/VBlanks
+    1: (0x6DC, 0x6E4, 0x724, 0x72C),  # SaveBlock1 eventObjects bytes
+    2: (0x210,),  # SaveBlock1 gameStats[GAME_STAT_SAVED_GAME]
+}
 
 
 class EligibilityError(ValueError):
@@ -136,6 +144,17 @@ def _tail_hashes(raw: bytes, result: v.VerificationResult) -> tuple[str, ...]:
                  for s in result.slots[result.active_slot].sections)
 
 
+def _stable_payload_hashes(result: v.VerificationResult) -> list[str]:
+    active = result.slots[result.active_slot]
+    hashes = []
+    for section in active.sections:
+        payload = bytearray(section.data[:v.SECTION_LENGTHS[section.section_id]])
+        for offset in GAME_SAVE_VOLATILE_OFFSETS.get(section.section_id, ()):
+            payload[offset] = 0
+        hashes.append(sha(payload))
+    return hashes
+
+
 def journal_fingerprint(raw: bytes, result: v.VerificationResult) -> dict:
     active = result.slots[result.active_slot]
     mon = result.party[0]
@@ -148,6 +167,7 @@ def journal_fingerprint(raw: bytes, result: v.VerificationResult) -> dict:
         "permutation": [s.physical_sector % v.SLOT_SECTORS for s in active.sections],
         "sector28_31_sha256": [_sector_hash(raw, i) for i in range(28, 32)],
         "active_payload_sha256": [sha(s.data[:v.SECTION_LENGTHS[s.section_id]]) for s in active.sections],
+        "stable_payload_sha256": _stable_payload_hashes(result),
         "active_tail_sha256": list(_tail_hashes(raw, result)),
         "footer_sha256": sha(result.footer),
     }
@@ -171,7 +191,7 @@ def validate_journal(data: dict) -> None:
 
     if not isinstance(data, dict) or set(data) != {"version", "root_sha256", "build_sha256",
                                                   "environment_id", "nodes", "edges"} or \
-            data.get("version") != 2 or data.get("root_sha256") != ROOT_SHA256:
+            data.get("version") != 3 or data.get("root_sha256") != ROOT_SHA256:
         raise EligibilityError("journal root/schema mismatch")
     if not is_hash(data.get("build_sha256")):
         raise EligibilityError("journal build binding missing")
@@ -181,7 +201,7 @@ def validate_journal(data: dict) -> None:
         raise EligibilityError("journal root node missing")
     keys = {"sha256", "active_slot", "counter", "active_slot_sha256", "record0_sha256",
             "identity_sha256", "species", "party_count", "markings", "permutation", "sector28_31_sha256",
-            "active_payload_sha256", "active_tail_sha256", "footer_sha256"}
+            "active_payload_sha256", "stable_payload_sha256", "active_tail_sha256", "footer_sha256"}
     for key, node in data["nodes"].items():
         if not is_hash(key):
             raise EligibilityError("journal hash malformed")
@@ -202,6 +222,7 @@ def validate_journal(data: dict) -> None:
                 not isinstance(node["markings"], int) or not 0 <= node["markings"] <= 0xFF:
             raise EligibilityError("journal party metadata malformed")
         for field, length in (("sector28_31_sha256", 4), ("active_payload_sha256", 14),
+                              ("stable_payload_sha256", 14),
                               ("active_tail_sha256", 14)):
             if not isinstance(node[field], list) or len(node[field]) != length or \
                     any(not is_hash(value) for value in node[field]):
@@ -253,7 +274,7 @@ def check_game_transition(parent: dict, candidate_raw: bytes,
         return "party identity/count changed"
     if current["record0_sha256"] != parent["record0_sha256"]:
         return "party[0] record changed outside editor edit"
-    if current["active_payload_sha256"] != parent["active_payload_sha256"]:
+    if current["stable_payload_sha256"] != parent["stable_payload_sha256"]:
         return "game-save payload changed outside qualified envelope"
     if current["sector28_31_sha256"] != parent["sector28_31_sha256"]:
         return "sectors 28-31 changed"
@@ -395,7 +416,7 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path, environment_id
         raise EligibilityError("journal already exists")
     if not 1 <= len(environment_id) <= 100:
         raise EligibilityError("environment ID must be 1-100 characters")
-    journal = {"version": 2, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
+    journal = {"version": 3, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
                "environment_id": environment_id,
                "nodes": {ROOT_SHA256: journal_fingerprint(raw, s0.result)}, "edges": []}
     validate_journal(journal)
@@ -431,6 +452,69 @@ def commit(source_path: str | Path, destination_path: str | Path, journal_path: 
     journal.setdefault("edges", []).append({"kind": "editor", "parent": receipt.source_sha256,
                                              "child": receipt.output_sha256,
                                              "capability": plan.capability.capability_id})
+    _write_journal(Path(journal_path), journal)
+    return receipt
+
+
+def prepare_root_canary(source_path: str | Path, destination_path: str | Path,
+                        journal_path: str | Path, rom_path: str | Path,
+                        environment_id: str) -> VerificationReceipt:
+    """Seal one exact-root 1 -> 0 proof B; never grant reusable FAMILY access."""
+    raw = Path(source_path).read_bytes()
+    if sha(raw) != ROOT_SHA256:
+        raise EligibilityError("canary source is not the observed root")
+    journal = load_journal(journal_path)
+    build_hash = sha(Path(rom_path).read_bytes())
+    found = inspect(raw, journal, build_hash, environment_id)
+    if not found.structural.eligible or not found.profile.eligible:
+        raise EligibilityError(f"root canary S0/P failed: {found.structural.reason}; {found.profile.reason}")
+    if found.structural.result.party[0].markings != 1:
+        raise EligibilityError("root canary starting marking is not 1")
+    if len(journal["nodes"]) != 1 or journal["edges"]:
+        raise EligibilityError("root canary already prepared")
+    capability = Capability("markings-1-to-0", "FAMILY", 0, 1, 0)
+    output, plan = _derive_markings(raw, capability)
+    receipt = audit_output(raw, output, plan)
+    published_sha = publication.publish_new(source_path, destination_path, plan.source_sha256,
+        output, lambda candidate: audit_output(raw, candidate, plan))
+    if published_sha != receipt.output_sha256:
+        raise EligibilityError("published canary hash mismatch")
+    journal["nodes"][published_sha] = journal_fingerprint(output, v.verify_bytes(output))
+    journal["edges"].append({"kind": "editor", "parent": plan.source_sha256,
+                             "child": published_sha, "capability": capability.capability_id})
+    _write_journal(Path(journal_path), journal)
+    return receipt
+
+
+def prepare_return_canary(source_path: str | Path, destination_path: str | Path,
+                          journal_path: str | Path, rom_path: str | Path,
+                          environment_id: str) -> VerificationReceipt:
+    """Seal 0 -> 1 proof D only after the journaled B -> C game return."""
+    raw = Path(source_path).read_bytes()
+    journal = load_journal(journal_path)
+    found = inspect(raw, journal, sha(Path(rom_path).read_bytes()), environment_id)
+    if not found.structural.eligible or not found.profile.eligible:
+        raise EligibilityError(f"return canary S0/P failed: {found.structural.reason}; {found.profile.reason}")
+    if found.structural.result.party[0].markings != 0:
+        raise EligibilityError("return canary starting marking is not 0")
+    if len(journal["nodes"]) != 3 or len(journal["edges"]) != 2:
+        raise EligibilityError("return canary lineage is incomplete or already used")
+    editor, game = journal["edges"]
+    if (editor.get("kind"), editor.get("parent"), editor.get("capability")) != \
+            ("editor", ROOT_SHA256, "markings-1-to-0") or \
+            (game.get("kind"), game.get("parent"), game.get("child")) != \
+            ("game", editor.get("child"), sha(raw)):
+        raise EligibilityError("return canary is not the observed B -> C descendant")
+    capability = Capability("markings-0-to-1", "FAMILY", 0, 0, 1)
+    output, plan = _derive_markings(raw, capability)
+    receipt = audit_output(raw, output, plan)
+    published_sha = publication.publish_new(source_path, destination_path, plan.source_sha256,
+        output, lambda candidate: audit_output(raw, candidate, plan))
+    if published_sha != receipt.output_sha256:
+        raise EligibilityError("published return canary hash mismatch")
+    journal["nodes"][published_sha] = journal_fingerprint(output, v.verify_bytes(output))
+    journal["edges"].append({"kind": "editor", "parent": plan.source_sha256,
+                             "child": published_sha, "capability": capability.capability_id})
     _write_journal(Path(journal_path), journal)
     return receipt
 

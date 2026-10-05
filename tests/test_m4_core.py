@@ -52,7 +52,7 @@ class M4CoreTests(unittest.TestCase):
         self.assertNotIn("ot_name_hex", node)
         self.assertEqual(len(node["identity_sha256"]), 64)
         root = m4.sha(raw)
-        journal = {"version": 2, "root_sha256": root, "build_sha256": "a" * 64,
+        journal = {"version": 3, "root_sha256": root, "build_sha256": "a" * 64,
                    "environment_id": "synthetic",
                    "nodes": {root: node}, "edges": []}
         with patch.object(m4, "ROOT_SHA256", root):
@@ -80,6 +80,23 @@ class M4CoreTests(unittest.TestCase):
         self.assertIn("previous slot", m4.check_game_transition(parent, bytes(altered), result))
         self.assertIn("counter", m4.check_game_transition({**parent, "counter": 3}, candidate, result))
 
+        def with_payload_byte(section_id, offset):
+            changed = bytearray(candidate)
+            sector = result.slots[result.active_slot].section(section_id).physical_sector
+            base = sector * v.SECTOR_SIZE
+            changed[base + offset] ^= 1
+            checksum = v.calculate_save_checksum(bytes(changed[base:base + v.SECTION_LENGTHS[section_id]]))
+            changed[base + v.SECTION_CHECKSUM_OFFSET:base + v.SECTION_CHECKSUM_OFFSET + 2] = checksum.to_bytes(2, "little")
+            return bytes(changed)
+
+        for section_id, offset in ((0, 0x11), (0, 0x12), (1, 0x6DC),
+                                   (1, 0x6E4), (1, 0x724), (1, 0x72C), (2, 0x210)):
+            changed = with_payload_byte(section_id, offset)
+            self.assertIsNone(m4.check_game_transition(parent, changed, v.verify_bytes(changed)))
+        for section_id, offset in ((0, 0x10), (1, 0x6DD), (2, 0x211), (3, 0x100)):
+            changed = with_payload_byte(section_id, offset)
+            self.assertIn("outside qualified envelope", m4.check_game_transition(parent, changed, v.verify_bytes(changed)))
+
     def test_missing_broken_journal(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "lineage.json"
@@ -97,7 +114,7 @@ class M4CoreTests(unittest.TestCase):
         root = m4.sha(raw)
         node = m4.journal_fingerprint(raw, v.verify_bytes(raw))
         a, b = "a" * 64, "b" * 64
-        journal = {"version": 2, "root_sha256": root, "build_sha256": "c" * 64,
+        journal = {"version": 3, "root_sha256": root, "build_sha256": "c" * 64,
                    "environment_id": "synthetic",
                    "nodes": {root: node, a: {**node, "sha256": a}, b: {**node, "sha256": b}},
                    "edges": [{"kind": "game", "parent": a, "child": b},
@@ -110,7 +127,7 @@ class M4CoreTests(unittest.TestCase):
         raw = _make_save()
         root = m4.sha(raw)
         node = m4.journal_fingerprint(raw, v.verify_bytes(raw))
-        journal = {"version": 2, "root_sha256": root, "build_sha256": "c" * 64,
+        journal = {"version": 3, "root_sha256": root, "build_sha256": "c" * 64,
                    "environment_id": "synthetic", "nodes": {root: node}, "edges": []}
         with patch.object(m4, "ROOT_SHA256", root):
             extra = {**journal, "private_bytes": "unwanted"}
@@ -159,6 +176,42 @@ class M4CoreTests(unittest.TestCase):
         forged_plan = replace(plan, output_sha256=m4.sha(mutated), diffs=full_diff)
         with self.assertRaisesRegex(m4.EligibilityError, "unexplained byte diff"):
             m4.audit_output(raw, mutated, forged_plan)
+
+    @unittest.skipUnless(sys.platform == "darwin", "macOS publication proof")
+    def test_proof_only_root_and_return_canaries_keep_family_closed(self):
+        root, _ = m4._derive_markings(_make_save(), m4.Capability("markings-0-to-1", "FAMILY", 0, 0, 1))
+        with tempfile.TemporaryDirectory() as directory, patch.object(m4, "ROOT_SHA256", m4.sha(root)):
+            directory = Path(directory)
+            a_path, b_path, c_path, d_path = (directory / name for name in ("A.sav", "B.sav", "C.sav", "D.sav"))
+            a_path.write_bytes(root)
+            rom = directory / "synthetic.gba"
+            rom.write_bytes(b"synthetic build only")
+            journal_path = directory / "lineage.json"
+            m4.enroll_root(root, rom.read_bytes(), journal_path, "synthetic")
+            receipt_b = m4.prepare_root_canary(a_path, b_path, journal_path, rom, "synthetic")
+            self.assertEqual(v.verify_file(b_path).party[0].markings, 0)
+            self.assertEqual(m4.inspect(b_path.read_bytes(), m4.load_journal(journal_path),
+                                        m4.sha(rom.read_bytes()), "synthetic").capabilities, ())
+            with self.assertRaisesRegex(m4.EligibilityError, "already prepared"):
+                m4.prepare_root_canary(a_path, directory / "duplicate.sav", journal_path, rom, "synthetic")
+
+            b_raw = b_path.read_bytes()
+            c = bytearray(b_raw)
+            for local in range(14):
+                sector = bytearray(b_raw[local * v.SECTOR_SIZE:(local + 1) * v.SECTOR_SIZE])
+                sector[v.SECTION_COUNTER_OFFSET:v.SECTION_COUNTER_OFFSET + 4] = (5).to_bytes(4, "little")
+                new_local = (local + 1) % 14
+                start = (14 + new_local) * v.SECTOR_SIZE
+                c[start:start + v.SECTOR_SIZE] = sector
+            c_path.write_bytes(bytes(c))
+            with self.assertRaisesRegex(m4.EligibilityError, "S0/P failed"):
+                m4.prepare_return_canary(c_path, d_path, journal_path, rom, "synthetic")
+            m4.record_observed_game_return(c_path, journal_path, rom, receipt_b.output_sha256,
+                                           "synthetic", True)
+            receipt_d = m4.prepare_return_canary(c_path, d_path, journal_path, rom, "synthetic")
+            self.assertTrue(receipt_d.independently_verified)
+            self.assertEqual(v.verify_file(d_path).party[0].markings, 1)
+            self.assertEqual(a_path.read_bytes(), root)
 
     @unittest.skipUnless(sys.platform == "darwin", "macOS publication proof")
     def test_synthetic_repeated_use_across_both_slot_directions(self):
