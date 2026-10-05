@@ -2,17 +2,21 @@
 
 GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or adopted here.
 
-## Controlling current decision — post-M4 North Star expansion and M5A Money investigation
+## Controlling current decision — post-M4 expansion and exact M5A max-money canary
 
-Human authorization:
+Strategic Human authorization:
 
 > `AUTHORIZE POST-M4 NORTH STAR EXPANSION AND M5A MONEY INVESTIGATION`
 
-This authorization supersedes the prior post-M4 assumption that the bounded markings editor might be followed only by owner-use hardening / maintenance. The owner has now identified a concrete practical unmet need: common PKHeX-like local edits such as money, inventory/items, and substantial party-Pokemon editing including species changes. General progression/event flag management is not desired; Pokédex editing is future work.
+Exact writer/canary Human authorization:
 
-The strategic expansion and current M5A evidence/plan are recorded in `docs/post-m4-strategy-and-m5a-money.md`.
+> `AUTHORIZE M5A EXACT MAX-MONEY CANARY: implement and execute the bounded exact-input 3000-to-9999999 proof writer against SHA-256 fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b; write only a new output file; require complete independent diff/checksum/invariant audit and source immutability; do not generalize this proof to reusable arbitrary money editing or any other capability.`
 
-**Current position:** M1–M4 remain COMPLETE for their adopted bounded scopes. **M5A Money is IN INVESTIGATION. No money writer is authorized.**
+The owner has identified a concrete practical unmet need: common PKHeX-like local edits such as money, inventory/items, and substantial party-Pokemon editing including species changes. General progression/event flag management is not desired; Pokédex editing is future work.
+
+The strategic expansion is recorded in `docs/post-m4-strategy-and-m5a-money.md`. The read-side money proof is recorded in `docs/m5a-money-private-read-audit.md`. The exact writer execution and pre-game canary evidence are recorded in `docs/m5a-exact-max-money-canary.md`.
+
+**Current position:** M1–M4 remain COMPLETE for their adopted bounded scopes. **M5A Money remains IN PROGRESS. One exact 3000 -> 9,999,999 candidate has been generated and independently audited, but the human game round trip is still required. No reusable arbitrary-money writer/FAMILY is authorized or claimed.**
 
 ## Expanded North Star
 
@@ -40,7 +44,7 @@ The completed M4 markings editor remains a valid bounded first slice and safety 
 5. **M3C-F1 — friendship field proof — COMPLETE.**
 6. **M3C — goal-driven bounded party-field expansion — COMPLETE.** Low-coupling friendship/markings/ball and the first nontrivial derived-state nature-mint/EV/IV/stat group survived representative game-boundary proofs; remaining fields were explicitly BLOCKED/UNSUPPORTED rather than guessed.
 7. **M4 — bounded usable editor / GUI first slice — COMPLETE.** PR #13 established the retained-lineage S0/P/C implementation and macOS delivery; PR #14 added the reviewed bounded Windows path under the exact host/filesystem limits below.
-8. **M5A — Money capability — IN INVESTIGATION.** Current authorization covers source/read-only characterization and the controlled private differential plan only. Writer implementation/private mutation is not authorized yet.
+8. **M5A — Money capability — IN PROGRESS.** Read semantics are independently reproduced for the exact retained input. The exact `3000 -> 9,999,999` candidate has been generated with a sealed one-input writer, five-byte complete diff, synthetic tests, and an independent complete-byte audit. Human game load/resave evidence remains required before any game-proven or reusable money capability claim.
 9. **M5B — Inventory capability — PLANNED, NOT AUTHORIZED.** Investigate only after M5A reaches a justified boundary; item catalog/pocket/encryption/add-remove semantics must be proven rather than inferred.
 10. **M5C — Practical Pokemon editing — PLANNED, NOT AUTHORIZED.** Prefer generalizing already-proven/low-coupling attributes first; treat level/EXP/stat coupling and species transformation as separate higher-risk capabilities.
 11. **Future — Pokédex — NOT AUTHORIZED.** Seen/caught editing may be evaluated as a dedicated semantic capability; this does not authorize a general flag editor.
@@ -48,8 +52,6 @@ The completed M4 markings editor remains a valid bounded first slice and safety 
 Owner-use hardening and packaging are supporting work rather than mandatory standalone milestones. They should be performed when they materially improve safe use of the currently proven capability set, not as a substitute for the requested practical features.
 
 ## M5A controlling boundary
-
-M5A currently establishes only a source-derived hypothesis and a private read-only proof plan.
 
 Pinned CFRU-JP source evidence at `e24a16fe39e27ae162faf5b78596d1f3df18489d` places:
 
@@ -61,15 +63,15 @@ Pinned CFRU-JP source evidence at `e24a16fe39e27ae162faf5b78596d1f3df18489d` pla
 
 CFRU-JP also declares encrypted-data rekey helpers and links the original FireRed money routines. Public `pret/pokefirered` source corroborates that the corresponding FireRed representation is an XOR of the stored money word with the SaveBlock2 encryption key.
 
-Therefore the current candidate read formula is:
+The candidate/read rule is:
 
 `money = LE32(active logical section 1 @ 0x0290) XOR LE32(active logical section 0 @ 0x0F20)`
 
-and the candidate write model would encode a target with that same key and recompute only the required logical-section-1 checksum.
+For exact retained input SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, independent read-only analysis obtained key `0`, stored word `0x00000BB8`, and decoded money `3000`; the user independently confirmed the game displays `3000` for that exact save.
 
-**This is not yet a PokemonStart private-save proof and grants no writer authority.** The next required evidence is a controlled before/after private game save whose displayed money changes by a known amount, followed by an independent read-only differential. See `docs/post-m4-strategy-and-m5a-money.md`.
+Under the later exact canary authorization, `pokemonstart_m5a_exact_max_money_writer.py` generated one new candidate only for that hash/start state/target. Output SHA-256 is `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`. The complete diff is exactly three changed money bytes at `0x10290`–`0x10292` plus two logical-section-1 checksum bytes at `0x10FF6`–`0x10FF7`; all other bytes are identical. An independent auditor that does not import the writer passed all structural/checksum/diff/preservation checks. The source remained immutable. See `docs/m5a-exact-max-money-canary.md`.
 
-A separate Human authorization is required before implementing or executing any money writer.
+**This proves only a pre-game exact candidate. It does not yet prove that PokemonStart accepts/persists the write, and it grants no reusable arbitrary-money writer authority.** Human load/display/resave and return-file audit are the next required evidence.
 
 ## Bounded M4 support contract retained as safety foundation
 
@@ -138,7 +140,7 @@ The post-M4 expansion is a goal and roadmap authorization, **not a blanket suppo
 - arbitrary/non-lineage saves;
 - broad PokemonStart build/version generalization;
 - arbitrary party indices or unrestricted values;
-- money writing beyond a future exact adopted M5A capability;
+- reusable/arbitrary money writing beyond the exact pre-game M5A canary;
 - bags/items beyond a future adopted M5B capability;
 - species/forms, held items, moves/PP/PP-Up, abilities, level/EXP/hyper-training and other coupled Pokemon state beyond independently adopted M5C capabilities;
 - Pokédex writes;
@@ -169,18 +171,22 @@ Key durable authority/evidence records now include:
 - `docs/m4-windows-bounded-integration-authorization.md`
 - `docs/m4-completion.md`
 - `docs/post-m4-strategy-and-m5a-money.md`
+- `docs/m5a-money-private-read-audit.md`
+- `docs/m5a-exact-max-money-canary.md`
 
-## Authorization boundary after post-M4 expansion
+## Authorization boundary after exact M5A canary generation
 
-The owner has authorized the **expanded North Star / milestone direction** and **M5A Money investigation**. This means source review, read-only characterization, private read-only differential analysis when inputs are provided, and canonical documentation of those findings are authorized.
+The owner has authorized the expanded North Star / milestone direction, M5A investigation, and exactly one bounded `3000 -> 9,999,999` writer execution for the named input SHA-256. That exact candidate has been generated and independently audited.
 
-It does **not** authorize:
+The current authorization does **not** authorize:
 
-- implementation or execution of a money writer;
-- M5B inventory writer/research that mutates private saves;
+- generalizing the exact canary to arbitrary money values or additional save hashes;
+- adopting a reusable money FAMILY before game-round-trip/repeated-use evidence;
+- exposing money editing through the GUI;
+- M5B inventory mutation;
 - M5C Pokemon writer implementation;
 - new supported save/build/version scope;
 - public distribution/release guarantees;
 - broader network/threat-model scope.
 
-After the M5A private differential is independently reproduced, present the exact bounded writer proof as a new decision surface with proposed transformation, evidence, benefit, risks/trade-offs, downstream impact, and human-canary burden. Stop for fresh Human authorization before writer implementation or repository-driven private save mutation.
+The next authorized activity is the Human game canary: load the exact candidate, confirm displayed `9,999,999`, perform one normal in-game save, and provide the return `.sav` for read-only audit. Any further writer-scope expansion requires a fresh evidence-based decision surface and Human authorization.
