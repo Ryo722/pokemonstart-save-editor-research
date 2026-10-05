@@ -20,9 +20,9 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M3C — COMPLETE.** The field-expansion milestone is closed with a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, explicit blocked/unsupported capabilities, and a formal exit assessment. Further field proofs require a new evidence-backed need rather than continuing M3C by default.
 
-**M4 — bounded usable-editor implementation is AUTHORIZED / IN PROGRESS.** PR #12 adopted the evidence-gated M4 design. The authorized first slice is retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, and thin Tkinter/CLI delivery with required private canaries. Arbitrary/non-lineage save support, boxes/bags, unrestricted values, and final implementation-PR merge remain unauthorized.
+**M4 — bounded usable-editor implementation is AUTHORIZED / IN PROGRESS.** PR #12 adopted the evidence-gated M4 design. The authorized first slice is retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, CLI/audit delivery, and a **localhost-only NiceGUI browser UI** with required private canaries. The earlier Tkinter delivery choice has been superseded by `docs/m4-delivery-correction.md`. Arbitrary/non-lineage save support, boxes/bags, unrestricted values, remote/browser exposure, and final implementation-PR merge remain unauthorized.
 
-See `docs/m4-entry-decision.md` for the adopted design and `docs/m4-bounded-implementation-authorization.md` for the exact authorization boundary.
+See `docs/m4-entry-decision.md` for the adopted design, `docs/m4-bounded-implementation-authorization.md` for the bounded implementation authority, and `docs/m4-delivery-correction.md` for the controlling GUI-delivery correction.
 
 New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
 
@@ -30,7 +30,7 @@ The refined North Star is: enable a PokemonStart player to inspect a positively 
 
 ## Run the verifier
 
-Python 3.10+ is sufficient; there are no third-party dependencies.
+Python 3.10+ is sufficient for the core verifier; the browser delivery layer adds NiceGUI as a separate UI dependency.
 
 ```bash
 python3 pokemonstart_save_verifier.py /path/to/private/save.sav
@@ -54,7 +54,7 @@ Tests use synthetic save bytes. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, `docs/m3c-exit-assessment.md`, `docs/m4-entry-decision.md`, and `docs/m4-bounded-implementation-authorization.md`.
+See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, `docs/m3c-exit-assessment.md`, `docs/m4-entry-decision.md`, `docs/m4-bounded-implementation-authorization.md`, and `docs/m4-delivery-correction.md`.
 
 ## Data boundary
 
