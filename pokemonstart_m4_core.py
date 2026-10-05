@@ -118,6 +118,13 @@ def _record_hash(raw: bytes, result: v.VerificationResult) -> str:
     return sha(raw[start:start + v.POKEMON_SIZE])
 
 
+def _identity_hash(raw: bytes, result: v.VerificationResult) -> str:
+    physical = result.slots[result.active_slot].section(1).physical_sector
+    start = physical * v.SECTOR_SIZE + v.PARTY_OFFSET
+    record = raw[start:start + v.POKEMON_SIZE]
+    return sha(record[0:15] + record[20:27] + record[32:34])
+
+
 def _sector_hash(raw: bytes, number: int) -> str:
     start = number * v.SECTOR_SIZE
     return sha(raw[start:start + v.SECTOR_SIZE])
@@ -136,7 +143,7 @@ def journal_fingerprint(raw: bytes, result: v.VerificationResult) -> dict:
         "sha256": sha(raw), "active_slot": result.active_slot,
         "counter": active.counter, "active_slot_sha256": _slot_hash(raw, result.active_slot),
         "record0_sha256": _record_hash(raw, result),
-        "identity": [mon.personality, mon.ot_id, mon.species, mon.nickname_hex, mon.ot_name_hex],
+        "identity_sha256": _identity_hash(raw, result), "species": mon.species,
         "party_count": result.party_count, "markings": mon.markings,
         "permutation": [s.physical_sector % v.SLOT_SECTORS for s in active.sections],
         "sector28_31_sha256": [_sector_hash(raw, i) for i in range(28, 32)],
@@ -159,31 +166,45 @@ def load_journal(path: str | Path) -> dict:
 
 
 def validate_journal(data: dict) -> None:
-    if not isinstance(data, dict) or data.get("version") != 1 or data.get("root_sha256") != ROOT_SHA256:
+    def is_hash(value) -> bool:
+        return isinstance(value, str) and re.fullmatch(r"[0-9a-f]{64}", value) is not None
+
+    if not isinstance(data, dict) or set(data) != {"version", "root_sha256", "build_sha256",
+                                                  "environment_id", "nodes", "edges"} or \
+            data.get("version") != 2 or data.get("root_sha256") != ROOT_SHA256:
         raise EligibilityError("journal root/schema mismatch")
-    if not isinstance(data.get("build_sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", data["build_sha256"]):
+    if not is_hash(data.get("build_sha256")):
         raise EligibilityError("journal build binding missing")
     if not isinstance(data.get("environment_id"), str) or not 1 <= len(data["environment_id"]) <= 100:
         raise EligibilityError("journal environment binding missing")
     if not isinstance(data.get("nodes"), dict) or ROOT_SHA256 not in data["nodes"]:
         raise EligibilityError("journal root node missing")
     keys = {"sha256", "active_slot", "counter", "active_slot_sha256", "record0_sha256",
-            "identity", "party_count", "markings", "permutation", "sector28_31_sha256",
+            "identity_sha256", "species", "party_count", "markings", "permutation", "sector28_31_sha256",
             "active_payload_sha256", "active_tail_sha256", "footer_sha256"}
     for key, node in data["nodes"].items():
-        if not isinstance(key, str) or not re.fullmatch(r"[0-9a-f]{64}", key):
+        if not is_hash(key):
             raise EligibilityError("journal hash malformed")
         if not isinstance(node, dict) or set(node) != keys or node.get("sha256") != key:
             raise EligibilityError("journal node mismatch")
         if not isinstance(node["active_slot"], int) or node["active_slot"] not in (0, 1) or not isinstance(node["counter"], int) or not 0 <= node["counter"] <= 0xFFFFFFFF:
             raise EligibilityError("journal slot/counter malformed")
-        if not isinstance(node["permutation"], list) or sorted(node["permutation"]) != list(range(14)):
+        if not all(is_hash(node[field]) for field in ("active_slot_sha256", "record0_sha256",
+                                                       "identity_sha256", "footer_sha256")):
+            raise EligibilityError("journal fingerprint hash malformed")
+        if not isinstance(node["permutation"], list) or len(node["permutation"]) != 14 or \
+                any(type(position) is not int for position in node["permutation"]) or \
+                sorted(node["permutation"]) != list(range(14)):
             raise EligibilityError("journal permutation malformed")
-        if not isinstance(node["identity"], list) or len(node["identity"]) != 5:
-            raise EligibilityError("journal identity malformed")
+        if not isinstance(node["species"], int) or not 0 <= node["species"] <= 0xFFFF:
+            raise EligibilityError("journal species malformed")
+        if not isinstance(node["party_count"], int) or not 1 <= node["party_count"] <= v.PARTY_SIZE or \
+                not isinstance(node["markings"], int) or not 0 <= node["markings"] <= 0xFF:
+            raise EligibilityError("journal party metadata malformed")
         for field, length in (("sector28_31_sha256", 4), ("active_payload_sha256", 14),
                               ("active_tail_sha256", 14)):
-            if not isinstance(node[field], list) or len(node[field]) != length:
+            if not isinstance(node[field], list) or len(node[field]) != length or \
+                    any(not is_hash(value) for value in node[field]):
                 raise EligibilityError(f"journal {field} malformed")
     edges = data.get("edges")
     if not isinstance(edges, list):
@@ -193,6 +214,9 @@ def validate_journal(data: dict) -> None:
     for edge in edges:
         if not isinstance(edge, dict) or edge.get("kind") not in ("editor", "game"):
             raise EligibilityError("journal edge malformed")
+        expected = {"kind", "parent", "child", "capability"} if edge["kind"] == "editor" else {"kind", "parent", "child"}
+        if set(edge) != expected or (edge["kind"] == "editor" and edge["capability"] not in ("markings-0-to-1", "markings-1-to-0")):
+            raise EligibilityError("journal edge metadata malformed")
         parent, child = edge.get("parent"), edge.get("child")
         if parent not in data["nodes"] or child not in data["nodes"] or child == ROOT_SHA256 or child in children:
             raise EligibilityError("journal parent/child missing or duplicated")
@@ -225,7 +249,7 @@ def check_game_transition(parent: dict, candidate_raw: bytes,
     if _slot_hash(candidate_raw, old_slot) != parent["active_slot_sha256"]:
         return "previous slot bytes changed"
     current = journal_fingerprint(candidate_raw, candidate)
-    if current["identity"] != parent["identity"] or current["party_count"] != parent["party_count"]:
+    if current["identity_sha256"] != parent["identity_sha256"] or current["species"] != parent["species"] or current["party_count"] != parent["party_count"]:
         return "party identity/count changed"
     if current["record0_sha256"] != parent["record0_sha256"]:
         return "party[0] record changed outside editor edit"
@@ -342,6 +366,7 @@ def preview(raw: bytes, journal: dict, build_sha256: str, environment_id: str,
 
 
 def _write_journal(path: Path, journal: dict) -> None:
+    validate_journal(journal)
     if path.resolve().is_relative_to(Path(__file__).resolve().parent):
         raise EligibilityError("journal must be outside repository")
     encoded = (json.dumps(journal, sort_keys=True, indent=2) + "\n").encode()
@@ -370,12 +395,14 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path, environment_id
         raise EligibilityError("journal already exists")
     if not 1 <= len(environment_id) <= 100:
         raise EligibilityError("environment ID must be 1-100 characters")
-    journal = {"version": 1, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
+    journal = {"version": 2, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
                "environment_id": environment_id,
                "nodes": {ROOT_SHA256: journal_fingerprint(raw, s0.result)}, "edges": []}
+    validate_journal(journal)
     if path.resolve().is_relative_to(Path(__file__).resolve().parent):
         raise EligibilityError("journal must be outside repository")
-    with path.open("x", encoding="utf-8") as handle:
+    fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "w", encoding="utf-8") as handle:
         json.dump(journal, handle, sort_keys=True, indent=2)
         handle.write("\n")
         handle.flush()

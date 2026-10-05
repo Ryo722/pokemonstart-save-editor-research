@@ -3,6 +3,9 @@ import sys
 import unittest
 import contextlib
 import io
+import os
+import stat
+import copy
 from dataclasses import replace
 from pathlib import Path
 from unittest.mock import patch
@@ -44,8 +47,12 @@ class M4CoreTests(unittest.TestCase):
         self.assertEqual(model["actions"], ())
         result = v.verify_bytes(raw)
         node = m4.journal_fingerprint(raw, result)
+        self.assertNotIn("identity", node)
+        self.assertNotIn("nickname_hex", node)
+        self.assertNotIn("ot_name_hex", node)
+        self.assertEqual(len(node["identity_sha256"]), 64)
         root = m4.sha(raw)
-        journal = {"version": 1, "root_sha256": root, "build_sha256": "a" * 64,
+        journal = {"version": 2, "root_sha256": root, "build_sha256": "a" * 64,
                    "environment_id": "synthetic",
                    "nodes": {root: node}, "edges": []}
         with patch.object(m4, "ROOT_SHA256", root):
@@ -90,7 +97,7 @@ class M4CoreTests(unittest.TestCase):
         root = m4.sha(raw)
         node = m4.journal_fingerprint(raw, v.verify_bytes(raw))
         a, b = "a" * 64, "b" * 64
-        journal = {"version": 1, "root_sha256": root, "build_sha256": "c" * 64,
+        journal = {"version": 2, "root_sha256": root, "build_sha256": "c" * 64,
                    "environment_id": "synthetic",
                    "nodes": {root: node, a: {**node, "sha256": a}, b: {**node, "sha256": b}},
                    "edges": [{"kind": "game", "parent": a, "child": b},
@@ -98,6 +105,25 @@ class M4CoreTests(unittest.TestCase):
         with patch.object(m4, "ROOT_SHA256", root):
             with self.assertRaisesRegex(m4.EligibilityError, "root-anchored"):
                 m4.validate_journal(journal)
+
+    def test_journal_rejects_unbounded_or_nonhash_data(self):
+        raw = _make_save()
+        root = m4.sha(raw)
+        node = m4.journal_fingerprint(raw, v.verify_bytes(raw))
+        journal = {"version": 2, "root_sha256": root, "build_sha256": "c" * 64,
+                   "environment_id": "synthetic", "nodes": {root: node}, "edges": []}
+        with patch.object(m4, "ROOT_SHA256", root):
+            extra = {**journal, "private_bytes": "unwanted"}
+            with self.assertRaisesRegex(m4.EligibilityError, "root/schema"):
+                m4.validate_journal(extra)
+            malformed = copy.deepcopy(journal)
+            malformed["nodes"][root]["active_payload_sha256"][0] = "raw bytes"
+            with self.assertRaisesRegex(m4.EligibilityError, "active_payload_sha256"):
+                m4.validate_journal(malformed)
+            malformed = copy.deepcopy(journal)
+            malformed["nodes"][root]["permutation"][0] = "0"
+            with self.assertRaisesRegex(m4.EligibilityError, "permutation"):
+                m4.validate_journal(malformed)
 
     def test_cli_inspect_and_preview_fail_closed(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -148,9 +174,13 @@ class M4CoreTests(unittest.TestCase):
             rom.write_bytes(b"synthetic build only")
             journal_path = directory / "lineage.json"
             journal = m4.enroll_root(raw, rom.read_bytes(), journal_path, "synthetic")
+            if os.name == "posix":
+                self.assertEqual(stat.S_IMODE(journal_path.stat().st_mode), 0o600)
             plan = m4.preview(raw, journal, m4.sha(rom.read_bytes()), "synthetic", "markings-0-to-1")
             b_path = directory / "B.sav"
             receipt = m4.commit(source, b_path, journal_path, rom, "synthetic", plan)
+            if os.name == "posix":
+                self.assertEqual(stat.S_IMODE(journal_path.stat().st_mode), 0o600)
             self.assertTrue(receipt.independently_verified)
             self.assertEqual(v.verify_file(b_path).party[0].markings, 1)
             self.assertEqual(source.read_bytes(), raw)
