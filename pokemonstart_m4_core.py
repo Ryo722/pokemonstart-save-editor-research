@@ -6,6 +6,7 @@ import json
 import os
 import re
 import struct
+import sys
 import tempfile
 from dataclasses import replace
 from dataclasses import dataclass
@@ -57,6 +58,18 @@ def _volatile_payload_offsets(section_id: int) -> set[int]:
 
 class EligibilityError(ValueError):
     pass
+
+
+def write_delivery_status() -> tuple[bool, str]:
+    if sys.platform != "darwin":
+        return False, "write delivery disabled pending explicit validation for this platform"
+    return True, "write delivery enabled on validated macOS platform"
+
+
+def require_write_delivery() -> None:
+    enabled, reason = write_delivery_status()
+    if not enabled:
+        raise EligibilityError(reason)
 
 
 def sha(raw: bytes) -> str:
@@ -355,7 +368,8 @@ def inspect(raw: bytes, journal: dict | None = None,
     s0 = structural(raw)
     p = profile(raw, s0.result, journal, build_sha256, environment_id) if s0.eligible and s0.result else ProfileEligibility(False, "S0 failed", None)
     capabilities: tuple[Capability, ...] = ()
-    if s0.eligible and p.eligible and FAMILY_PROVEN:
+    write_enabled, _ = write_delivery_status()
+    if s0.eligible and p.eligible and FAMILY_PROVEN and write_enabled:
         marking = s0.result.party[0].markings
         if marking in (0, 1):
             capabilities = (Capability(f"markings-{marking}-to-{1-marking}", "FAMILY", 0, marking, 1-marking),)
@@ -363,6 +377,7 @@ def inspect(raw: bytes, journal: dict | None = None,
 
 
 def _derive_markings(raw: bytes, capability: Capability) -> tuple[bytes, MutationPlan]:
+    require_write_delivery()
     if capability.kind != "FAMILY" or capability.party_index != 0 or (capability.before, capability.after) not in ((0, 1), (1, 0)):
         raise EligibilityError("unsupported capability request")
     before = structural(raw)
@@ -420,6 +435,7 @@ def audit_output(source: bytes, output: bytes, plan: MutationPlan) -> Verificati
 
 def preview(raw: bytes, journal: dict, build_sha256: str, environment_id: str,
             capability_id: str) -> MutationPlan:
+    require_write_delivery()
     found = inspect(raw, journal, build_sha256, environment_id)
     for capability in found.capabilities:
         if capability.capability_id == capability_id:
@@ -474,6 +490,7 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path, environment_id
 
 def _verified_candidate(raw: bytes, journal: dict, build_hash: str,
                         environment_id: str, plan: MutationPlan) -> tuple[bytes, VerificationReceipt]:
+    require_write_delivery()
     if sha(raw) != plan.source_sha256:
         raise EligibilityError("stale MutationPlan: source hash changed")
     current_plan = preview(raw, journal, build_hash, environment_id, plan.capability.capability_id)
@@ -505,6 +522,7 @@ def _record_editor_output(journal: dict, output: bytes, receipt: VerificationRec
 def commit_download(source_raw: bytes, journal_path: str | Path, rom_path: str | Path,
                     environment_id: str, plan: MutationPlan) -> tuple[bytes, VerificationReceipt]:
     """Create and journal a verified in-memory candidate for browser download."""
+    require_write_delivery()
     journal = load_journal(journal_path)
     build_hash = sha(Path(rom_path).read_bytes())
     output, receipt = _verified_candidate(source_raw, journal, build_hash, environment_id, plan)
@@ -517,6 +535,7 @@ def commit_download(source_raw: bytes, journal_path: str | Path, rom_path: str |
 
 def commit(source_path: str | Path, destination_path: str | Path, journal_path: str | Path,
            rom_path: str | Path, environment_id: str, plan: MutationPlan) -> VerificationReceipt:
+    require_write_delivery()
     journal = load_journal(journal_path)
     build_hash = sha(Path(rom_path).read_bytes())
     raw = Path(source_path).read_bytes()

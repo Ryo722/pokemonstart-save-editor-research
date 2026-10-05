@@ -15,11 +15,13 @@ def inspect_path(save: Path, journal_path: Path | None, rom_path: Path | None,
     journal = core.load_journal(journal_path) if journal_path else None
     build_hash = core.sha(rom_path.read_bytes()) if rom_path else None
     report = core.inspect(raw, journal, build_hash, environment_id)
+    write_enabled, write_reason = core.write_delivery_status()
     values = report.structural.result.party[0] if report.structural.result else None
     return {
         "source_sha256": report.source_sha256,
         "S0": {"eligible": report.structural.eligible, "reason": report.structural.reason},
         "P": {"eligible": report.profile.eligible, "reason": report.profile.reason},
+        "write_delivery": {"enabled": write_enabled, "reason": write_reason},
         "C": [{"id": cap.capability_id, "kind": cap.kind, "party_index": cap.party_index,
                "before": cap.before, "after": cap.after} for cap in report.capabilities],
         "party0": None if values is None else {"species": values.species,

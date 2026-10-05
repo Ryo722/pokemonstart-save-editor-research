@@ -99,6 +99,52 @@ class NiceGuiAdapterTests(unittest.TestCase):
         with self.assertRaises(core.EligibilityError):
             self.workflow.download()
 
+    def test_unvalidated_platform_disables_all_private_write_paths(self):
+        report = self.workflow.upload(self.save_path.name, self.source)
+        plan = self.workflow.preview(report.actions[0])
+        journal_before = self.journal_path.read_bytes()
+        journal = core.load_journal(self.journal_path)
+        build_hash = core.sha(self.rom_path.read_bytes())
+        destination = self.directory / "must-not-exist.sav"
+
+        with patch.object(core.sys, "platform", "win32"):
+            disabled = self.workflow.upload(self.save_path.name, self.source)
+            self.assertTrue(disabled.s0_eligible)
+            self.assertTrue(disabled.p_eligible)
+            self.assertFalse(disabled.write_delivery_enabled)
+            self.assertIn("disabled pending explicit validation", disabled.write_delivery_reason)
+            self.assertEqual(disabled.actions, ())
+            self.assertEqual(core.inspect(self.source, journal, build_hash, "synthetic").capabilities, ())
+            with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
+                self.workflow.preview("markings-0-to-1")
+            with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
+                core.preview(self.source, journal, build_hash, "synthetic", "markings-0-to-1")
+            with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
+                core.commit_download(self.source, self.journal_path, self.rom_path, "synthetic", plan)
+            with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
+                core.commit(self.save_path, destination, self.journal_path, self.rom_path,
+                            "synthetic", plan)
+            with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
+                self.workflow.commit()
+            with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
+                self.workflow.download()
+
+        self.assertEqual(self.journal_path.read_bytes(), journal_before)
+        journal_after = core.load_journal(self.journal_path)
+        self.assertEqual(journal_after["nodes"], journal["nodes"])
+        self.assertEqual(journal_after["edges"], journal["edges"])
+        self.assertFalse(destination.exists())
+        self.assertIsNone(self.workflow.output_raw)
+        self.assertEqual(self.save_path.read_bytes(), self.source)
+
+    def test_macOS_write_delivery_remains_enabled(self):
+        if core.sys.platform != "darwin":
+            self.skipTest("this host is not macOS")
+        report = self.workflow.upload(self.save_path.name, self.source)
+        self.assertTrue(report.write_delivery_enabled)
+        self.assertEqual(report.actions, ("markings-0-to-1",))
+        self.workflow.preview(report.actions[0])
+
     def test_unsupported_filename_rejected_and_clears_prior_state(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         self.assertTrue(report.actions)

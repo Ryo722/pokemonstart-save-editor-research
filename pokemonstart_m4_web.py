@@ -37,6 +37,8 @@ class BrowserInspection:
     s0_reason: str
     p_eligible: bool
     p_reason: str
+    write_delivery_enabled: bool
+    write_delivery_reason: str
     species: int | None
     level: int | None
     markings: int | None
@@ -70,16 +72,19 @@ class BrowserWorkflow:
         self.source_name, self.source_raw = name, raw
         self.source_hash = hashlib.sha256(raw).hexdigest()
         self.inspection = self._inspect(raw)
+        write_enabled, write_reason = core.write_delivery_status()
         result = self.inspection.structural.result
         party0 = result.party[0] if result else None
         return BrowserInspection(
             self.source_hash, self.inspection.structural.eligible,
             self.inspection.structural.reason, self.inspection.profile.eligible,
-            self.inspection.profile.reason, party0.species if party0 else None,
+            self.inspection.profile.reason, write_enabled, write_reason,
+            party0.species if party0 else None,
             party0.level if party0 else None, party0.markings if party0 else None,
             tuple(cap.capability_id for cap in self.inspection.capabilities))
 
     def preview(self, capability_id: str) -> core.MutationPlan:
+        core.require_write_delivery()
         if self.source_raw is None or self.inspection is None:
             raise core.EligibilityError("select a save first")
         if capability_id not in {c.capability_id for c in self.inspection.capabilities}:
@@ -93,6 +98,7 @@ class BrowserWorkflow:
         return plan
 
     def commit(self) -> tuple[bytes, core.VerificationReceipt]:
+        core.require_write_delivery()
         if self.source_raw is None or self.source_hash is None or self.plan is None:
             raise core.EligibilityError("preview a proven action first")
         if hashlib.sha256(self.source_raw).hexdigest() != self.source_hash:
@@ -115,6 +121,7 @@ class BrowserWorkflow:
         return output, receipt
 
     def download(self) -> tuple[bytes, str]:
+        core.require_write_delivery()
         if self.output_raw is None or self.receipt is None or self.output_name is None:
             raise core.EligibilityError("no independently verified output is available")
         return self.output_raw, self.output_name
@@ -159,7 +166,8 @@ def create_page(journal_path: str | Path, rom_path: str | Path,
         try:
             report = workflow.upload(event.file.name, await event.file.read())
             status.text = (f"SHA-256: {report.source_sha256}\n"
-                           f"S0: {report.s0_reason}\nP: {report.p_reason}")
+                           f"S0: {report.s0_reason}\nP: {report.p_reason}\n"
+                           f"Write delivery: {report.write_delivery_reason}")
             detail.text = (f"party[0]: species {report.species}, level {report.level}, "
                            f"markings {report.markings}\n"
                            f"PROVEN actions: {', '.join(report.actions) if report.actions else 'none'}")
