@@ -51,6 +51,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         with self.assertRaises(core.EligibilityError):
             self.workflow.download()
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_capability_preview_commit_independent_receipt_and_download(self):
         report = self.workflow.upload(self.save_path.name, self.save_path.read_bytes())
         self.assertTrue(report.s0_eligible)
@@ -88,6 +89,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         self.assertEqual(after_repeat["nodes"], before_repeat["nodes"])
         self.assertEqual(after_repeat["edges"], before_repeat["edges"])
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_stale_plan_rejected_if_lineage_binding_changes(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         plan = self.workflow.preview(report.actions[0])
@@ -99,6 +101,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         with self.assertRaises(core.EligibilityError):
             self.workflow.download()
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_unvalidated_platform_disables_all_private_write_paths(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         plan = self.workflow.preview(report.actions[0])
@@ -145,6 +148,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         self.assertEqual(report.actions, ("markings-0-to-1",))
         self.workflow.preview(report.actions[0])
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_unsupported_filename_rejected_and_clears_prior_state(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         self.assertTrue(report.actions)
@@ -152,6 +156,8 @@ class NiceGuiAdapterTests(unittest.TestCase):
             self.workflow.upload("source.gba", self.source)
         self.assertIsNone(self.workflow.source_raw)
 
+    @patch.object(core, "write_delivery_status", lambda: (True, "synthetic test gate"))
+    @patch.object(core, "require_write_delivery", lambda: None)
     def test_nicegui_browser_upload_preview_commit_and_download(self):
         if web.ui is None:
             self.skipTest("NiceGUI is an optional UI-only dependency")

@@ -1,11 +1,18 @@
 # M4 Windows validation plan
 
-**Status: NOT RUN; Windows private writes/downloads are disabled.** The current
+**Status: Windows synthetic validation candidate under review; private Windows
+validation NOT RUN; Windows production writes/downloads are disabled.** The current
 implementation permits read-only S0/P inspection on an unvalidated host. It
 returns no C write actions and rejects preview, core commit, browser commit, and
 browser download until Windows validation is completed and a later human
 decision explicitly adopts Windows write delivery. Do not describe Windows as
 supported before that decision.
+
+The executed Windows baseline and candidate record is in
+[`m4-windows-candidate-evidence.md`](m4-windows-candidate-evidence.md). The
+candidate module is called only by an explicit synthetic validation harness;
+canonical `pokemonstart_m4_core.py`, `pokemonstart_m4_publication.py`, and the
+public NiceGUI adapter still reject Windows write delivery.
 
 ## Dependency and network boundary
 

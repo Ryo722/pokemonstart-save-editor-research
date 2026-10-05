@@ -60,6 +60,7 @@ class M4CoreTests(unittest.TestCase):
             raw[offset:offset + 4] = (6).to_bytes(4, "little")
         self.assertIn("parity", m4.structural(bytes(raw)).reason)
 
+    @patch.object(m4.sys, "platform", "darwin")
     def test_unknown_root_missing_journal_and_wrong_build(self):
         self.assertIn("m3c-markings-0-to-1", m4.EXACT_VECTOR_REGISTRY)
         self.assertIn("PROVEN", m4.FAMILY_REGISTRY["party0-markings-0-1"])
@@ -189,6 +190,7 @@ class M4CoreTests(unittest.TestCase):
                 self.assertEqual(cli.main(["preview", str(source), "--capability", "markings-0-to-1"]), 2)
             self.assertIn("REJECTED", stream.getvalue())
 
+    @patch.object(m4.sys, "platform", "darwin")
     def test_family_constraints_and_independent_diff_audit(self):
         raw = _make_save()
         for capability in (
