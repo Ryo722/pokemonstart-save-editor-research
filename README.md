@@ -24,6 +24,10 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 See `docs/m4-entry-decision.md` for the adopted design, `docs/m4-bounded-implementation-authorization.md` for the bounded implementation authority, and `docs/m4-delivery-correction.md` for the controlling GUI-delivery correction.
 
+The bounded M4 implementation is being developed on a feature branch. See `docs/m4-implementation-progress.md` for current evidence and `docs/m4-windows-validation.md` for the separate Windows proof plan. The M4 CLI and localhost-only NiceGUI browser adapter use the same S0/P/C core. The only exposed edit is the evidence-qualified party[0] markings `0 ↔ 1` FAMILY on the retained PokemonStart v0.15 lineage/build/environment. Unsupported saves expose no edit action. NiceGUI binds to `127.0.0.1`; it offers a verified browser download and never writes to an emulator live-save location. Write delivery is enabled only on the validated macOS host; unvalidated platforms retain read-only S0/P inspection and reject write actions pending platform validation.
+
+Tkinter was the initial delivery experiment and is superseded by the canonical NiceGUI delivery correction. The old Tk adapter remains as historical reference and is not part of M4 acceptance.
+
 New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
 
 The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.
@@ -37,6 +41,12 @@ python3 pokemonstart_save_verifier.py /path/to/private/save.sav
 ```
 
 The verifier accepts only `0x20000`-byte flash images or `0x20010`-byte files with a 16-byte opaque footer. It exits nonzero for malformed, ambiguous, internally inconsistent, or unsupported layouts.
+
+## Bounded M4 local browser adapter
+
+The NiceGUI layer is optional and is kept separate from the standard-library save core and CLI. Install its pinned UI dependency from `requirements-m4-ui.txt`, then run `pokemonstart_m4_web.py` with the local private lineage journal, selected ROM/build, and matching environment ID. The server binds only to `127.0.0.1`. The browser returns a verified new `.sav` download; save it as a separate recovery copy and never choose an emulator live-save path.
+
+This implementation is a bounded research slice for its retained lineage only. It does not provide a general save editor or general PokemonStart build support.
 
 ## Proof writers and transaction infrastructure
 
