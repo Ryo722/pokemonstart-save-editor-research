@@ -2,10 +2,10 @@
 
 ## Scope
 
-This model qualifies only normal-save descendants of retained root
-`ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86`, bound
-to ROM/build `48ecc0ef2df7fe9bbe389f0adbfbe7e277696a461ec631c65bcdf750898e4e12`
-and the matching local emulator environment journal. It separates:
+This model qualifies only normal-save descendants of the single retained M3C
+root, bound to the locally selected PokemonStart v0.15 ROM/build and matching
+emulator environment journal. Exact root/build fingerprints remain in code and
+the private journal; this document separates:
 
 - **S0:** checksums, counters/parity, section permutation, and save structure;
 - **P:** root-anchored journal chain and the normal-save transition below;
@@ -58,8 +58,8 @@ preservation/change policy and is not interpreted here.
 
 ## Retained private transition results
 
-All hashes and byte offsets below are local evidence metadata; save bytes stay
-outside Git.
+Save bytes and per-save hashes stay outside Git; bounded transition metadata
+and source-mapped field offsets are recorded below.
 
 | Parent → child | Active slot/counter | Play time | Saved-game stat | Result |
 | --- | --- | --- | --- | --- |

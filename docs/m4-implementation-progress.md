@@ -9,8 +9,7 @@
 
 ## Evidence disposition
 
-- The retained root SHA-256 is `ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86`; the selected local ROM/build SHA-256 is `48ecc0ef2df7fe9bbe389f0adbfbe7e277696a461ec631c65bcdf750898e4e12`. Both remain outside Git.
-- The private v4 hash-only journal records the retained A→B→C→D→E→F chain. E independently hashes to `5baaea8687e8d56e4ea40ff9d32dc73a698b45da6705b326bbfc0db51d61cede`; F is the already audited CLI output. The journal contains hashes and bounded metadata, not save or ROM bytes.
+- The private v4 hash-only journal binds the single retained M3C root to the locally selected PokemonStart v0.15 ROM/build and matching emulator environment, then records A→B→C→D→E→F. Per-save and ROM/build fingerprints stay outside Git; the journal contains hashes and bounded metadata, not save or ROM bytes.
 - Human game canaries B→C (`1→0`) and D→E (`0→1`) both loaded, displayed the expected party[0] markings, and completed a normal in-game save. C/D are proof outputs; E is the second game-return direction.
 - P is evidence-backed by the independently audited retained transitions with counters 5→6, 6→7, and 7→8. The narrow source model masks SaveBlock2 play-time fields, selected source-defined EventObject runtime/movement fields, and the saved-game statistic with exact `+1`. Other payload bytes remain equality-checked. See [`m4-p-transition-model.md`](m4-p-transition-model.md).
 - The independent D→E audit passed every adopted S0/P transition check, including slot/counter/parity, prior slot, party, sectors 28–31, tails, checksums, and footer policy. Every non-checksum payload difference maps to the source-backed volatility model; none remain unexplained.
