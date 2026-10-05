@@ -10,6 +10,14 @@ Human authorization:
 
 PR #12 adopted `docs/m4-entry-decision.md` as the M4 entry design. This authorization permits implementation of the bounded vertical slice defined below. It does not authorize merging an implementation PR into `main`.
 
+## Later controlling delivery correction
+
+Human authorization:
+
+> `AUTHORIZE M4 DELIVERY CORRECTION: replace the Tkinter adapter with a localhost-only NiceGUI browser UI using the existing S0/P/C core and verified download-output flow; retain CLI, fail-closed capability gates, private-data boundaries, and the existing no-merge boundary.`
+
+The later authorization supersedes the Tkinter adapter choice only. The controlling delivery authority is `docs/m4-delivery-correction.md`. S0/P/C scope, the bounded markings family, private-data boundaries, CLI/audit path, game-canary requirements, and the implementation-PR no-merge boundary are unchanged.
+
 ## Authorized implementation scope
 
 The bounded M4 slice may implement and privately verify:
@@ -18,10 +26,10 @@ The bounded M4 slice may implement and privately verify:
 2. one bounded repeated-use `party[0]` markings capability family, nominally `0 <-> 1`, only if fresh evidence continues to support that candidate;
 3. a local/private retained-lineage journal containing hashes and bounded metadata only, never save bytes;
 4. new-file-only transaction hardening, including independent output verification and platform-specific atomic/no-clobber publication proof work;
-5. a reusable Python standard-library core;
+5. a reusable Python core with save safety logic independently testable from the UI layer;
 6. a CLI/audit adapter;
-7. a thin local Tkinter GUI;
-8. synthetic/regression/fault tests;
+7. a **localhost-only NiceGUI browser UI** over the same S0/P/C core and verified output path;
+8. synthetic/regression/fault/browser-adapter tests;
 9. required private preflight and representative private game/emulator canaries;
 10. macOS source-run validation and preparation for later Windows validation;
 11. feature branches, commits, documentation, and review-ready implementation PR preparation.
@@ -54,6 +62,14 @@ The central M4 proof is continuity across a normal game save:
 
 Success proves only the tested bounded retained-lineage continuation, not arbitrary-save or arbitrary-value support.
 
+## Browser/local delivery boundary
+
+The NiceGUI service must bind only to loopback (`127.0.0.1` or an equivalently verified loopback-only configuration). LAN/public binding, remote hosting, and relay/`on_air` exposure are outside scope.
+
+The browser adapter must not bypass the core. It may only inspect, preview, invoke a core-returned capability, and surface a verified output/receipt. Private save and ROM/build data must never be sent to an external service.
+
+A GUI-specific game canary is not required merely because the caller is NiceGUI when the adapter invokes the same already-proven core transaction path. Game-boundary proof remains attached to P/C/transaction semantics, not presentation technology.
+
 ## Data / safety boundary
 
 Never commit or upload ROMs, `.sav`, `.pks`, BPS/IPS patches, proprietary executables/payloads, copyrighted game assets, or private save bytes. Private outputs stay outside the repository. Inputs are never overwritten. Existing destination files are never overwritten. The tool must never auto-write into an emulator live-save location.
@@ -70,6 +86,7 @@ This authorization does **not** permit:
 - boxes or bags;
 - new unproven fields outside the bounded first family merely because their offsets are known;
 - automatic live-emulator save replacement;
+- remote/public browser exposure;
 - protected-data publication;
 - execution of blocked/proprietary binaries;
 - merging any M4 implementation PR into `main` without a later explicit human merge authorization.

@@ -1,16 +1,26 @@
 # Canonical re-evaluation — 2026-10-05
 
+## M4 delivery correction — controlling current decision
+
+Later human authorization
+
+> `AUTHORIZE M4 DELIVERY CORRECTION: replace the Tkinter adapter with a localhost-only NiceGUI browser UI using the existing S0/P/C core and verified download-output flow; retain CLI, fail-closed capability gates, private-data boundaries, and the existing no-merge boundary.`
+
+supersedes only the earlier Tkinter adapter choice. The current bounded M4 delivery is **CLI/audit + localhost-only NiceGUI browser UI** over the same evidence-gated S0/P/C core. The browser service must remain loopback-only; remote/LAN/public exposure and external upload of private save/ROM data are not authorized. The preferred UI flow is local select/upload -> inspect/preview -> core-gated mutation -> independent verification -> verified browser download/save action. The implementation PR merge remains a separate human gate. See `docs/m4-delivery-correction.md` for the controlling delivery-layer authority.
+
+This correction does not broaden the retained-lineage P rule, the bounded `party[0]` markings capability family, supported values, party indices, builds/versions, boxes/bags, or any writer capability.
+
 ## M4 bounded implementation authorization
 
 PR #12 adopted `docs/m4-entry-decision.md` as the evidence-gated M4 entry design. Human authorization
 
 > `AUTHORIZE PR #12 DESIGN MERGE AND BOUNDED M4 IMPLEMENTATION: retained-lineage S0/P/C qualification, one bounded repeated-use party[0] markings family, new-file transaction hardening, thin Tkinter/CLI delivery, and required private canaries; no arbitrary-save support and no implementation PR merge without separate authorization.`
 
-moves the project from the M4 design boundary into a **bounded M4 implementation phase**.
+moves the project from the M4 design boundary into a **bounded M4 implementation phase**. The later delivery correction above supersedes the Tkinter choice while retaining the rest of this authorization.
 
-The authorized slice is limited to retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, a local/private lineage journal containing hashes and bounded metadata only, hardened new-file publication and independent verification, a Python standard-library core, CLI/audit adapter, thin Tkinter GUI, required synthetic/private/game-boundary proof work, macOS source-run validation, and preparation for later Windows validation.
+The authorized slice is limited to retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, a local/private lineage journal containing hashes and bounded metadata only, hardened new-file publication and independent verification, a reusable Python core, CLI/audit adapter, localhost-only NiceGUI browser UI, required synthetic/private/game-boundary proof work, macOS source-run validation, and preparation for later Windows validation.
 
-This authorization does **not** permit arbitrary/non-lineage saves, broad PokemonStart build/version generalization, unrestricted values, boxes/bags, automatic live-emulator save replacement, protected-data publication, or merging any M4 implementation PR into `main` without a later explicit human merge authorization. See `docs/m4-bounded-implementation-authorization.md` for the exact scope.
+This authorization does **not** permit arbitrary/non-lineage saves, broad PokemonStart build/version generalization, unrestricted values, boxes/bags, automatic live-emulator save replacement, remote/public browser exposure, protected-data publication, or merging any M4 implementation PR into `main` without a later explicit human merge authorization. See `docs/m4-bounded-implementation-authorization.md` and `docs/m4-delivery-correction.md` for the exact current scope.
 
 ## M3C closure decision after derived-stat canary
 
@@ -40,7 +50,7 @@ A GUI is a delivery layer only after save/profile eligibility and field capabili
 4. **M3B — bounded same-field transaction proof — COMPLETE.**
 5. **M3C-F1 — friendship field proof — COMPLETE.** `party[0] friendship 50 -> 51` survived sealed private preflight and a human game load + normal-save round trip; PR #9 merged as `ece114d0475691e34bf4c83de2f73a9e732dd34e`.
 6. **M3C — goal-driven bounded party-field expansion — COMPLETE.** Low-coupling friendship/markings/ball and the first nontrivial derived-state nature-mint/EV/IV/stat group survived representative game round trips. Remaining fields are explicitly BLOCKED/UNSUPPORTED rather than guessed.
-7. **M4 — usable editor / GUI — BOUNDED IMPLEMENTATION AUTHORIZED / IN PROGRESS.** The adopted first slice is the evidence-gated S0/P/C design from PR #12, one repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, and thin Tkinter/CLI delivery. Final implementation merge remains a separate human gate.
+7. **M4 — usable editor / GUI — BOUNDED IMPLEMENTATION AUTHORIZED / IN PROGRESS.** The adopted first slice is the evidence-gated S0/P/C design from PR #12, one repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, CLI/audit delivery, and a localhost-only NiceGUI browser UI. Final implementation merge remains a separate human gate.
 
 ## Current position
 
@@ -59,7 +69,7 @@ M3C completion does not promote these exact proofs into arbitrary values, party 
 Every generated candidate must:
 
 - hash/read input before mutation;
-- reject input/output aliasing and existing output paths;
+- reject input/output aliasing and existing output paths where filesystem publication is used;
 - reject private output paths within the repository;
 - run structural + writer-support preflight;
 - locate the active logical section through verified metadata;
@@ -70,8 +80,10 @@ Every generated candidate must:
 - require every output byte difference to be explained by authorized field/checksum changes;
 - preserve inactive slot, sectors 28–31, parasite tails, footer, and all other bytes unless separately proven otherwise;
 - re-verify generated bytes;
-- create a new output file only and prove original-input immutability;
+- prove original-input immutability;
 - report exact diff and output hash.
+
+For the NiceGUI browser path, verified output may be surfaced as a local browser download/save action rather than requiring a native GUI destination picker. The browser adapter still must not overwrite the input, auto-write a live emulator save, or bypass transaction/receipt verification.
 
 The external 16-byte footer is preservation-only for tool output; equality is not required after a later game/emulator resave.
 
@@ -109,7 +121,7 @@ M3C separated **field-level proof** from **human-level proof**:
 
 Pinned CFRU-JP source remains primary upstream structural/semantic evidence. Private PokemonStart saves remain the local compatibility proof. Public CFRU-family editors may be used as supporting implementation/reference evidence only and never as PokemonStart authority.
 
-PUSE, PKForge, PKHeX-family implementations, and vanilla Gen III decompilations may inform architecture or invariants subject to their licenses, but they do not expand PokemonStart support by themselves.
+PUSE, PKForge, PKHeX-family implementations, vanilla Gen III decompilations, and UI framework documentation may inform architecture or invariants subject to their licenses, but they do not expand PokemonStart support by themselves.
 
 ## M3C exit criteria — satisfied
 
@@ -132,25 +144,32 @@ The North Star is demonstrated as a bounded proof foundation. M4 is the authoriz
 - target-build catalogs/semantics for Tera type, held items, moves/PP/PP-Up, abilities, species/forms, and identity-related values;
 - hyper-training and broader EXP/level/stat coupling beyond the proven exact derived-state case;
 - application semantics of sectors 30/31 and parasite tails beyond byte preservation;
-- the proposed root-anchored/journaled P rule is still an implementation hypothesis until private transition evidence validates it;
-- the repeated-use markings FAMILY is not yet PROVEN across qualified hashes/both directions;
-- atomic/no-clobber publication semantics require platform-specific proof, especially Windows validation;
-- Tkinter/CLI source-run delivery and recovery UX remain to be implemented and tested.
+- the root-anchored/journaled P rule remains bounded to its validated private-transition evidence and must fail closed outside it;
+- the repeated-use markings FAMILY requires the adopted evidence status before private UI exposure;
+- atomic/no-clobber filesystem publication semantics require platform-specific proof where that publication path is used, especially Windows validation;
+- NiceGUI localhost-only delivery, verified download UX, and Windows browser-path validation remain implementation proof obligations.
 
 ## Authorization boundary for bounded M4 implementation
 
-Human authorization `AUTHORIZE PR #12 DESIGN MERGE AND BOUNDED M4 IMPLEMENTATION: retained-lineage S0/P/C qualification, one bounded repeated-use party[0] markings family, new-file transaction hardening, thin Tkinter/CLI delivery, and required private canaries; no arbitrary-save support and no implementation PR merge without separate authorization.` permits:
+The original bounded M4 authorization permits:
 
 - canonical adoption of PR #12's M4 entry design;
 - implementation and testing of retained-lineage S0/P/C qualification;
 - local/private retained-lineage journal work using hashes and bounded metadata only;
 - research, implementation, and proof preparation for one bounded repeated-use `party[0]` markings family, nominally `0 <-> 1`, subject to fresh evidence;
 - hardened new-file transaction/publication and independent receipt verification;
-- Python stdlib core, CLI/audit adapter, and thin Tkinter GUI work;
+- reusable Python core and CLI/audit adapter;
 - synthetic/regression/fault tests;
 - local-private preflight and required representative private game/emulator canaries;
-- macOS source-run validation and preparation for later Windows validation;
+- macOS validation and preparation for later Windows validation;
 - feature branches, commits, documentation, and review-ready implementation PR preparation.
+
+The later delivery correction additionally permits and controls:
+
+- replacing the Tkinter adapter with a localhost-only NiceGUI browser UI;
+- local browser select/upload, preview, core-gated mutation, verified receipt, and verified download/save output flow;
+- NiceGUI-specific adapter tests and dependency work;
+- discontinuing Tkinter visible-event-loop debugging unless later evidence makes it necessary.
 
 It does **not** authorize:
 
@@ -158,10 +177,10 @@ It does **not** authorize:
 - unrestricted values or arbitrary party indices;
 - boxes/bags;
 - unrelated new field capabilities merely because offsets are known;
-- input overwrite or existing-destination overwrite;
-- automatic writing into emulator live-save locations;
+- input overwrite or automatic writing into emulator live-save locations;
+- remote/LAN/public browser exposure or external private-save upload;
 - protected-data publication;
 - execution of blocked/proprietary binaries;
 - merging any M4 implementation PR into `main` without a later explicit human merge authorization.
 
-The next mandatory human gate is the smallest representative private game/emulator canary genuinely required to validate the proposed retained-lineage P rule and repeated-use C family, or an earlier consequential evidence/safety blocker. After bounded implementation evidence is complete, implementation-PR adoption/merge remains a separate explicit decision.
+The next mandatory human gate is the smallest representative private game/emulator canary genuinely required by unresolved P/C semantics, an earlier consequential evidence/safety blocker, or final implementation-PR adoption/merge. A separate GUI-specific game canary is not required solely because the presentation layer is NiceGUI when it invokes the same already-proven core transaction path.
