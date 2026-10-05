@@ -24,6 +24,8 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 See `docs/m4-entry-decision.md` for the adopted design and `docs/m4-bounded-implementation-authorization.md` for the exact authorization boundary.
 
+The bounded M4 implementation is being developed on a feature branch. See `docs/m4-implementation-progress.md` for current evidence and remaining gates. The M4 CLI can inspect S0/P/C eligibility; the repeated-use markings FAMILY remains blocked pending private differential and game-return proof, so no M4 edit action is currently exposed.
+
 New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
 
 The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.
