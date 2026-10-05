@@ -37,6 +37,10 @@ Each capability remains independently gated. One successful transformation does 
 
 **M5A MONEY — INVESTIGATION IN PROGRESS; WRITER NOT AUTHORIZED.**
 
+A read-only hypothesis probe now exists as `pokemonstart_m5a_money_probe.py`. It delegates structural selection to the existing verifier, locates logical section 0/1 by section ID rather than physical position, reports the stored word, encryption key, XOR-decoded value, active slot/counter, and whether the value falls inside the source-derived candidate maximum. It does not expose any write path.
+
+`tests/test_m5a_money_probe.py` contains five synthetic tests for XOR decoding, physical section permutation, advisory range handling, corrupt-save rejection through the existing verifier, and path immutability. These tests are currently **UNEXECUTED IN THE PRESENT CHAT ENVIRONMENT** because the working container could not resolve GitHub to clone the fresh repository. Their presence is code/test-artifact evidence, not a PASS claim. They must be run in an appropriate local repository environment before being promoted to executed synthetic evidence.
+
 ### Fresh upstream/source findings
 
 The project continues to pin the structural CFRU-JP source basis to public `kapibarasan000/CFRU-JP` commit `e24a16fe39e27ae162faf5b78596d1f3df18489d` unless a later canonical record explicitly updates that source basis.
