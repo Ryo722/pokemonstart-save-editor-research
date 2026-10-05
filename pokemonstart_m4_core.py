@@ -27,17 +27,36 @@ EXACT_VECTOR_REGISTRY = {
         "output_sha256": "9baa0be361f52a6bc4b2a5cc6611bb302196d24ad9de3107600adcdd8b572ff3",
     },
 }
-FAMILY_REGISTRY = {"party0-markings-0-1": "BLOCKED: private P/C evidence incomplete"}
-FAMILY_PROVEN = False
+FAMILY_REGISTRY = {"party0-markings-0-1": "PROVEN: retained PokemonStart v0.15 root/build/environment; party[0] markings 0<->1"}
+FAMILY_PROVEN = True
 MARKINGS_OFFSET = 27
-# Logical-section offsets observed changing in the retained counter 5 -> 6
-# normal save. The excluded bytes are narrow; the rest of each payload is
-# hashed into the lineage fingerprint. Game-return canaries may narrow this.
-GAME_SAVE_VOLATILE_OFFSETS = {
-    0: (0x11, 0x12),  # SaveBlock2 play-time seconds/VBlanks
-    1: (0x6DC, 0x6E4, 0x724, 0x72C),  # SaveBlock1 eventObjects bytes
-    2: (0x210,),  # SaveBlock1 gameStats[GAME_STAT_SAVED_GAME]
-}
+# Source-backed state with normal game-save transitions in the retained
+# counter 5 -> 6, 6 -> 7, and 7 -> 8 corpus. Only these named fields are
+# masked from stable payload hashes; all other payload bytes remain exact.
+SAVE_BLOCK2_PLAY_TIME = range(0x0E, 0x13)  # hours, minutes, seconds, VBlanks
+SAVE_BLOCK1_EVENT_OBJECTS_OFFSET = 0x6A0
+EVENT_OBJECT_SIZE = 0x24
+EVENT_OBJECT_COUNT = 16
+# struct EventObject fields: first runtime-flag byte, current/previous map
+# coordinates, direction nybbles, movement action, and previous direction.
+EVENT_OBJECT_RUNTIME_FIELDS = ((0x00, 1), (0x10, 4), (0x14, 4),
+                               (0x18, 1), (0x1C, 1), (0x20, 1))
+SAVE_BLOCK1_SAVED_GAME_STAT_SECTION = 2
+SAVE_BLOCK1_SAVED_GAME_STAT_OFFSET = 0x210  # SaveBlock1 0x1200 - section1 0xFF0
+
+
+def _volatile_payload_offsets(section_id: int) -> set[int]:
+    if section_id == 0:
+        return set(SAVE_BLOCK2_PLAY_TIME)
+    if section_id == 1:
+        return {SAVE_BLOCK1_EVENT_OBJECTS_OFFSET + index * EVENT_OBJECT_SIZE + field_offset + byte
+                for index in range(EVENT_OBJECT_COUNT)
+                for field_offset, size in EVENT_OBJECT_RUNTIME_FIELDS
+                for byte in range(size)}
+    if section_id == SAVE_BLOCK1_SAVED_GAME_STAT_SECTION:
+        return set(range(SAVE_BLOCK1_SAVED_GAME_STAT_OFFSET,
+                         SAVE_BLOCK1_SAVED_GAME_STAT_OFFSET + 4))
+    return set()
 
 
 class EligibilityError(ValueError):
@@ -149,10 +168,24 @@ def _stable_payload_hashes(result: v.VerificationResult) -> list[str]:
     hashes = []
     for section in active.sections:
         payload = bytearray(section.data[:v.SECTION_LENGTHS[section.section_id]])
-        for offset in GAME_SAVE_VOLATILE_OFFSETS.get(section.section_id, ()):
+        for offset in _volatile_payload_offsets(section.section_id):
             payload[offset] = 0
         hashes.append(sha(payload))
     return hashes
+
+
+def _transition_metadata(result: v.VerificationResult) -> dict[str, int]:
+    active = result.slots[result.active_slot]
+    save_block2 = active.section(0).data
+    hours = int.from_bytes(save_block2[0x0E:0x10], "little")
+    minutes, seconds = save_block2[0x10], save_block2[0x11]
+    if hours > 999 or minutes > 59 or seconds > 59:
+        raise EligibilityError("invalid saved play-time fields")
+    saved_game_count = int.from_bytes(
+        active.section(SAVE_BLOCK1_SAVED_GAME_STAT_SECTION).data[
+            SAVE_BLOCK1_SAVED_GAME_STAT_OFFSET:SAVE_BLOCK1_SAVED_GAME_STAT_OFFSET + 4], "little")
+    return {"play_time_seconds": hours * 3600 + minutes * 60 + seconds,
+            "saved_game_count": saved_game_count}
 
 
 def journal_fingerprint(raw: bytes, result: v.VerificationResult) -> dict:
@@ -168,6 +201,7 @@ def journal_fingerprint(raw: bytes, result: v.VerificationResult) -> dict:
         "sector28_31_sha256": [_sector_hash(raw, i) for i in range(28, 32)],
         "active_payload_sha256": [sha(s.data[:v.SECTION_LENGTHS[s.section_id]]) for s in active.sections],
         "stable_payload_sha256": _stable_payload_hashes(result),
+        **_transition_metadata(result),
         "active_tail_sha256": list(_tail_hashes(raw, result)),
         "footer_sha256": sha(result.footer),
     }
@@ -191,7 +225,7 @@ def validate_journal(data: dict) -> None:
 
     if not isinstance(data, dict) or set(data) != {"version", "root_sha256", "build_sha256",
                                                   "environment_id", "nodes", "edges"} or \
-            data.get("version") != 3 or data.get("root_sha256") != ROOT_SHA256:
+            data.get("version") != 4 or data.get("root_sha256") != ROOT_SHA256:
         raise EligibilityError("journal root/schema mismatch")
     if not is_hash(data.get("build_sha256")):
         raise EligibilityError("journal build binding missing")
@@ -201,7 +235,8 @@ def validate_journal(data: dict) -> None:
         raise EligibilityError("journal root node missing")
     keys = {"sha256", "active_slot", "counter", "active_slot_sha256", "record0_sha256",
             "identity_sha256", "species", "party_count", "markings", "permutation", "sector28_31_sha256",
-            "active_payload_sha256", "stable_payload_sha256", "active_tail_sha256", "footer_sha256"}
+            "active_payload_sha256", "stable_payload_sha256", "play_time_seconds", "saved_game_count",
+            "active_tail_sha256", "footer_sha256"}
     for key, node in data["nodes"].items():
         if not is_hash(key):
             raise EligibilityError("journal hash malformed")
@@ -221,6 +256,9 @@ def validate_journal(data: dict) -> None:
         if not isinstance(node["party_count"], int) or not 1 <= node["party_count"] <= v.PARTY_SIZE or \
                 not isinstance(node["markings"], int) or not 0 <= node["markings"] <= 0xFF:
             raise EligibilityError("journal party metadata malformed")
+        if type(node["play_time_seconds"]) is not int or not 0 <= node["play_time_seconds"] <= 999 * 3600 + 59 * 60 + 59 or \
+                type(node["saved_game_count"]) is not int or not 0 <= node["saved_game_count"] <= 0xFFFFFFFF:
+            raise EligibilityError("journal game-transition metadata malformed")
         for field, length in (("sector28_31_sha256", 4), ("active_payload_sha256", 14),
                               ("stable_payload_sha256", 14),
                               ("active_tail_sha256", 14)):
@@ -269,13 +307,20 @@ def check_game_transition(parent: dict, candidate_raw: bytes,
         return "previous slot counter changed"
     if _slot_hash(candidate_raw, old_slot) != parent["active_slot_sha256"]:
         return "previous slot bytes changed"
-    current = journal_fingerprint(candidate_raw, candidate)
+    try:
+        current = journal_fingerprint(candidate_raw, candidate)
+    except EligibilityError as exc:
+        return str(exc)
     if current["identity_sha256"] != parent["identity_sha256"] or current["species"] != parent["species"] or current["party_count"] != parent["party_count"]:
         return "party identity/count changed"
     if current["record0_sha256"] != parent["record0_sha256"]:
         return "party[0] record changed outside editor edit"
     if current["stable_payload_sha256"] != parent["stable_payload_sha256"]:
         return "game-save payload changed outside qualified envelope"
+    if current["play_time_seconds"] < parent["play_time_seconds"]:
+        return "saved play time moved backwards"
+    if current["saved_game_count"] != ((parent["saved_game_count"] + 1) & 0xFFFFFFFF):
+        return "saved-game statistic did not increment once"
     if current["sector28_31_sha256"] != parent["sector28_31_sha256"]:
         return "sectors 28-31 changed"
     if current["active_tail_sha256"] != parent["active_tail_sha256"]:
@@ -416,7 +461,7 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path, environment_id
         raise EligibilityError("journal already exists")
     if not 1 <= len(environment_id) <= 100:
         raise EligibilityError("environment ID must be 1-100 characters")
-    journal = {"version": 3, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
+    journal = {"version": 4, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
                "environment_id": environment_id,
                "nodes": {ROOT_SHA256: journal_fingerprint(raw, s0.result)}, "edges": []}
     validate_journal(journal)
@@ -431,11 +476,8 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path, environment_id
     return journal
 
 
-def commit(source_path: str | Path, destination_path: str | Path, journal_path: str | Path,
-           rom_path: str | Path, environment_id: str, plan: MutationPlan) -> VerificationReceipt:
-    journal = load_journal(journal_path)
-    build_hash = sha(Path(rom_path).read_bytes())
-    raw = Path(source_path).read_bytes()
+def _verified_candidate(raw: bytes, journal: dict, build_hash: str,
+                        environment_id: str, plan: MutationPlan) -> tuple[bytes, VerificationReceipt]:
     if sha(raw) != plan.source_sha256:
         raise EligibilityError("stale MutationPlan: source hash changed")
     current_plan = preview(raw, journal, build_hash, environment_id, plan.capability.capability_id)
@@ -443,15 +485,44 @@ def commit(source_path: str | Path, destination_path: str | Path, journal_path: 
         raise EligibilityError("stale MutationPlan: preview changed")
     output, _ = _derive_markings(raw, plan.capability)
     receipt = audit_output(raw, output, plan)
-    published_sha = publication.publish_new(source_path, destination_path, plan.source_sha256,
-        output, lambda candidate: audit_output(raw, candidate, plan))
-    if published_sha != receipt.output_sha256:
-        raise EligibilityError("published hash mismatch")
+    return output, receipt
+
+
+def _record_editor_output(journal: dict, output: bytes, receipt: VerificationReceipt,
+                          plan: MutationPlan) -> None:
+    if receipt.output_sha256 in journal["nodes"]:
+        raise EligibilityError("output candidate is already journaled")
     after = v.verify_bytes(output)
     journal["nodes"][receipt.output_sha256] = journal_fingerprint(output, after)
     journal.setdefault("edges", []).append({"kind": "editor", "parent": receipt.source_sha256,
                                              "child": receipt.output_sha256,
                                              "capability": plan.capability.capability_id})
+
+
+def commit_download(source_raw: bytes, journal_path: str | Path, rom_path: str | Path,
+                    environment_id: str, plan: MutationPlan) -> tuple[bytes, VerificationReceipt]:
+    """Create and journal a verified in-memory candidate for browser download."""
+    journal = load_journal(journal_path)
+    build_hash = sha(Path(rom_path).read_bytes())
+    output, receipt = _verified_candidate(source_raw, journal, build_hash, environment_id, plan)
+    # Re-audit immediately before journal enrollment and returning bytes to UI.
+    audit_output(source_raw, output, plan)
+    _record_editor_output(journal, output, receipt, plan)
+    _write_journal(Path(journal_path), journal)
+    return output, receipt
+
+
+def commit(source_path: str | Path, destination_path: str | Path, journal_path: str | Path,
+           rom_path: str | Path, environment_id: str, plan: MutationPlan) -> VerificationReceipt:
+    journal = load_journal(journal_path)
+    build_hash = sha(Path(rom_path).read_bytes())
+    raw = Path(source_path).read_bytes()
+    output, receipt = _verified_candidate(raw, journal, build_hash, environment_id, plan)
+    published_sha = publication.publish_new(source_path, destination_path, plan.source_sha256,
+        output, lambda candidate: audit_output(raw, candidate, plan))
+    if published_sha != receipt.output_sha256:
+        raise EligibilityError("published hash mismatch")
+    _record_editor_output(journal, output, receipt, plan)
     _write_journal(Path(journal_path), journal)
     return receipt
 

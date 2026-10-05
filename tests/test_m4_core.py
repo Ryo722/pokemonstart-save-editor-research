@@ -17,6 +17,30 @@ import pokemonstart_save_verifier as v
 from test_m3c_batch_writer import _make_save, _make_slot
 
 
+def _advance_synthetic_game_state(raw: bytes, slot_index: int) -> bytes:
+    """Model one narrow normal save: play time, event runtime, save counter."""
+    result = bytearray(raw)
+    for local in range(v.SLOT_SECTORS):
+        base = (slot_index * v.SLOT_SECTORS + local) * v.SECTOR_SIZE
+        section_id = int.from_bytes(result[base + v.SECTION_ID_OFFSET:base + v.SECTION_ID_OFFSET + 2], "little")
+        if section_id == 0:
+            seconds = result[base + 0x11] + 1
+            if seconds > 59:
+                seconds = 0
+                result[base + 0x10] += 1
+            result[base + 0x11] = seconds
+        elif section_id == 1:
+            result[base + 0x6A0 + 2 * 0x24] ^= 1  # EventObject[2] runtime flag byte
+        elif section_id == 2:
+            start = base + 0x210
+            value = (int.from_bytes(result[start:start + 4], "little") + 1) & 0xFFFFFFFF
+            result[start:start + 4] = value.to_bytes(4, "little")
+        if section_id in (0, 1, 2):
+            checksum = v.calculate_save_checksum(bytes(result[base:base + v.SECTION_LENGTHS[section_id]]))
+            result[base + v.SECTION_CHECKSUM_OFFSET:base + v.SECTION_CHECKSUM_OFFSET + 2] = checksum.to_bytes(2, "little")
+    return bytes(result)
+
+
 class M4CoreTests(unittest.TestCase):
     def test_s0_accepts_permuted_valid_save_and_rejects_malformed(self):
         raw = _make_save()
@@ -38,7 +62,7 @@ class M4CoreTests(unittest.TestCase):
 
     def test_unknown_root_missing_journal_and_wrong_build(self):
         self.assertIn("m3c-markings-0-to-1", m4.EXACT_VECTOR_REGISTRY)
-        self.assertIn("BLOCKED", m4.FAMILY_REGISTRY["party0-markings-0-1"])
+        self.assertIn("PROVEN", m4.FAMILY_REGISTRY["party0-markings-0-1"])
         raw = _make_save()
         unqualified = m4.inspect(raw)
         self.assertIn("journal missing", unqualified.profile.reason)
@@ -52,14 +76,15 @@ class M4CoreTests(unittest.TestCase):
         self.assertNotIn("ot_name_hex", node)
         self.assertEqual(len(node["identity_sha256"]), 64)
         root = m4.sha(raw)
-        journal = {"version": 3, "root_sha256": root, "build_sha256": "a" * 64,
+        journal = {"version": 4, "root_sha256": root, "build_sha256": "a" * 64,
                    "environment_id": "synthetic",
                    "nodes": {root: node}, "edges": []}
         with patch.object(m4, "ROOT_SHA256", root):
             self.assertIn("build hash mismatch", m4.inspect(raw, journal, "b" * 64, "synthetic").profile.reason)
             self.assertIn("environment mismatch", m4.inspect(raw, journal, "a" * 64, "wrong").profile.reason)
             self.assertTrue(m4.inspect(raw, journal, "a" * 64, "synthetic").profile.eligible)
-            self.assertEqual(m4.inspect(raw, journal, "a" * 64, "synthetic").capabilities, ())
+            self.assertEqual(m4.inspect(raw, journal, "a" * 64, "synthetic").capabilities[0].capability_id,
+                             "markings-0-to-1")
             other = raw[:-1] + bytes((raw[-1] ^ 1,))
             self.assertIn("unknown root", m4.inspect(other, journal, "a" * 64, "synthetic").profile.reason)
 
@@ -72,7 +97,7 @@ class M4CoreTests(unittest.TestCase):
         candidate = bytearray(raw)
         start = 14 * v.SECTOR_SIZE
         candidate[start:start + 14 * v.SECTOR_SIZE] = _make_slot(5, next_permutation)
-        candidate = bytes(candidate)
+        candidate = _advance_synthetic_game_state(bytes(candidate), 1)
         result = v.verify_bytes(candidate)
         self.assertEqual(m4.check_game_transition(parent, candidate, result), None)
         altered = bytearray(candidate)
@@ -89,13 +114,21 @@ class M4CoreTests(unittest.TestCase):
             changed[base + v.SECTION_CHECKSUM_OFFSET:base + v.SECTION_CHECKSUM_OFFSET + 2] = checksum.to_bytes(2, "little")
             return bytes(changed)
 
-        for section_id, offset in ((0, 0x11), (0, 0x12), (1, 0x6DC),
-                                   (1, 0x6E4), (1, 0x724), (1, 0x72C), (2, 0x210)):
+        for section_id, offset in ((0, 0x0E), (0, 0x10), (0, 0x11), (0, 0x12),
+                                   (1, 0x6A0), (1, 0x6B0), (1, 0x6B4), (1, 0x6B8),
+                                   (1, 0x6BC), (1, 0x6C0), (1, 0x6DC), (1, 0x6E4),
+                                   (1, 0x724), (1, 0x72C)):
             changed = with_payload_byte(section_id, offset)
             self.assertIsNone(m4.check_game_transition(parent, changed, v.verify_bytes(changed)))
-        for section_id, offset in ((0, 0x10), (1, 0x6DD), (2, 0x211), (3, 0x100)):
+        for section_id, offset in ((0, 0x13), (1, 0x6A6), (1, 0x6DD),
+                                   (2, 0x215), (3, 0x100)):
             changed = with_payload_byte(section_id, offset)
             self.assertIn("outside qualified envelope", m4.check_game_transition(parent, changed, v.verify_bytes(changed)))
+        self.assertIn("play time moved backwards",
+                      m4.check_game_transition({**parent, "play_time_seconds": 2}, candidate, result))
+        wrong_save_count = with_payload_byte(2, 0x210)
+        self.assertIn("saved-game statistic did not increment once",
+                      m4.check_game_transition(parent, wrong_save_count, v.verify_bytes(wrong_save_count)))
 
     def test_missing_broken_journal(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -114,7 +147,7 @@ class M4CoreTests(unittest.TestCase):
         root = m4.sha(raw)
         node = m4.journal_fingerprint(raw, v.verify_bytes(raw))
         a, b = "a" * 64, "b" * 64
-        journal = {"version": 3, "root_sha256": root, "build_sha256": "c" * 64,
+        journal = {"version": 4, "root_sha256": root, "build_sha256": "c" * 64,
                    "environment_id": "synthetic",
                    "nodes": {root: node, a: {**node, "sha256": a}, b: {**node, "sha256": b}},
                    "edges": [{"kind": "game", "parent": a, "child": b},
@@ -127,7 +160,7 @@ class M4CoreTests(unittest.TestCase):
         raw = _make_save()
         root = m4.sha(raw)
         node = m4.journal_fingerprint(raw, v.verify_bytes(raw))
-        journal = {"version": 3, "root_sha256": root, "build_sha256": "c" * 64,
+        journal = {"version": 4, "root_sha256": root, "build_sha256": "c" * 64,
                    "environment_id": "synthetic", "nodes": {root: node}, "edges": []}
         with patch.object(m4, "ROOT_SHA256", root):
             extra = {**journal, "private_bytes": "unwanted"}
@@ -191,7 +224,8 @@ class M4CoreTests(unittest.TestCase):
             receipt_b = m4.prepare_root_canary(a_path, b_path, journal_path, rom, "synthetic")
             self.assertEqual(v.verify_file(b_path).party[0].markings, 0)
             self.assertEqual(m4.inspect(b_path.read_bytes(), m4.load_journal(journal_path),
-                                        m4.sha(rom.read_bytes()), "synthetic").capabilities, ())
+                                        m4.sha(rom.read_bytes()), "synthetic").capabilities[0].capability_id,
+                             "markings-0-to-1")
             with self.assertRaisesRegex(m4.EligibilityError, "already prepared"):
                 m4.prepare_root_canary(a_path, directory / "duplicate.sav", journal_path, rom, "synthetic")
 
@@ -203,7 +237,7 @@ class M4CoreTests(unittest.TestCase):
                 new_local = (local + 1) % 14
                 start = (14 + new_local) * v.SECTOR_SIZE
                 c[start:start + v.SECTOR_SIZE] = sector
-            c_path.write_bytes(bytes(c))
+            c_path.write_bytes(_advance_synthetic_game_state(bytes(c), 1))
             with self.assertRaisesRegex(m4.EligibilityError, "S0/P failed"):
                 m4.prepare_return_canary(c_path, d_path, journal_path, rom, "synthetic")
             m4.record_observed_game_return(c_path, journal_path, rom, receipt_b.output_sha256,
@@ -249,7 +283,7 @@ class M4CoreTests(unittest.TestCase):
                 start = (14 + new_local) * v.SECTOR_SIZE
                 c[start:start + v.SECTOR_SIZE] = sector
             c_path = directory / "C.sav"
-            c_path.write_bytes(bytes(c))
+            c_path.write_bytes(_advance_synthetic_game_state(bytes(c), 1))
             with self.assertRaisesRegex(m4.EligibilityError, "observation required"):
                 m4.record_observed_game_return(c_path, journal_path, rom, receipt.output_sha256,
                                                "synthetic", False)
