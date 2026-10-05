@@ -1,8 +1,4 @@
-"""Bounded M4 inspection and lineage diagnostics.
-
-Private write authority stays closed until a local ROM rehash, retained
-transition audit, both markings directions and game canaries qualify it.
-"""
+"""Bounded M4 inspection, lineage diagnostics, and one qualified mutation family."""
 from __future__ import annotations
 
 import hashlib
@@ -490,10 +486,17 @@ def _verified_candidate(raw: bytes, journal: dict, build_hash: str,
 
 def _record_editor_output(journal: dict, output: bytes, receipt: VerificationReceipt,
                           plan: MutationPlan) -> None:
-    if receipt.output_sha256 in journal["nodes"]:
-        raise EligibilityError("output candidate is already journaled")
     after = v.verify_bytes(output)
-    journal["nodes"][receipt.output_sha256] = journal_fingerprint(output, after)
+    fingerprint = journal_fingerprint(output, after)
+    existing = journal["nodes"].get(receipt.output_sha256)
+    if existing is not None:
+        # A deterministic edit can reproduce an already retained node. Reuse
+        # it only when the complete bounded fingerprint agrees; never create
+        # a second parent edge or accept a hash/fingerprint inconsistency.
+        if existing != fingerprint:
+            raise EligibilityError("journaled output fingerprint mismatch")
+        return
+    journal["nodes"][receipt.output_sha256] = fingerprint
     journal.setdefault("edges", []).append({"kind": "editor", "parent": receipt.source_sha256,
                                              "child": receipt.output_sha256,
                                              "capability": plan.capability.capability_id})

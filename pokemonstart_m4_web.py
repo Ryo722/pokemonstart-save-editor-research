@@ -133,93 +133,97 @@ class BrowserWorkflow:
         self.inspection = self.plan = self.output_raw = self.receipt = self.output_name = None
 
 
+def deliver_verified_download(workflow: BrowserWorkflow) -> None:
+    """Hand only a verified in-memory result to NiceGUI's browser download API."""
+    if ui is None:
+        raise RuntimeError("NiceGUI is unavailable; install requirements-m4-ui.txt")
+    raw, filename = workflow.download()
+    ui.download.content(raw, filename, media_type="application/octet-stream")
+
+
 def create_page(journal_path: str | Path, rom_path: str | Path,
                 environment_id: str) -> None:
     if ui is None:
         raise RuntimeError("NiceGUI is unavailable; install requirements-m4-ui.txt")
+    workflow = BrowserWorkflow(journal_path, rom_path, environment_id)
+    ui.label("PokemonStart bounded save editor").classes("text-h5")
+    ui.label("Local-only: uploaded save data stays in this process. Keep the original as your recovery copy.")
+    status = ui.label("Select a private .sav file to inspect S0/P/C.").classes("whitespace-pre-line")
+    detail = ui.label("").classes("whitespace-pre-line")
+    action = ui.select(options=[], label="Proven party[0] markings action").props("outlined")
+    preview_button = ui.button("Preview", on_click=lambda: do_preview()).disable()
+    commit_button = ui.button("Create verified download", on_click=lambda: do_commit()).disable()
+    download_button = ui.button("Save verified .sav", on_click=lambda: send_download()).disable()
 
-    @ui.page("/")
-    def index() -> None:
-        workflow = BrowserWorkflow(journal_path, rom_path, environment_id)
-        ui.label("PokemonStart bounded save editor").classes("text-h5")
-        ui.label("Local-only: uploaded save data stays in this process. Keep the original as your recovery copy.")
-        status = ui.label("Select a private .sav file to inspect S0/P/C.").classes("whitespace-pre-line")
-        detail = ui.label("").classes("whitespace-pre-line")
-        action = ui.select(options=[], label="Proven party[0] markings action").props("outlined")
-        preview_button = ui.button("Preview", on_click=lambda: do_preview()).disable()
-        commit_button = ui.button("Create verified download", on_click=lambda: do_commit()).disable()
-        download_button = ui.button("Save verified .sav", on_click=lambda: send_download()).disable()
+    async def on_upload(event: events.UploadEventArguments) -> None:
+        try:
+            report = workflow.upload(event.file.name, await event.file.read())
+            status.text = (f"SHA-256: {report.source_sha256}\n"
+                           f"S0: {report.s0_reason}\nP: {report.p_reason}")
+            detail.text = (f"party[0]: species {report.species}, level {report.level}, "
+                           f"markings {report.markings}\n"
+                           f"PROVEN actions: {', '.join(report.actions) if report.actions else 'none'}")
+            action.options = list(report.actions)
+            action.value = report.actions[0] if report.actions else None
+            action.update()
+            preview_button.set_enabled(bool(report.actions))
+            commit_button.set_enabled(False)
+            download_button.set_enabled(False)
+        except (OSError, ValueError) as exc:
+            status.text = f"REJECTED: {exc}"
+            detail.text = "No edit action is available."
+            action.options, action.value = [], None
+            action.update()
+            preview_button.set_enabled(False)
+            commit_button.set_enabled(False)
+            download_button.set_enabled(False)
 
-        async def on_upload(event: events.UploadEventArguments) -> None:
-            try:
-                report = workflow.upload(event.file.name, await event.file.read())
-                status.text = (f"SHA-256: {report.source_sha256}\n"
-                               f"S0: {report.s0_reason}\nP: {report.p_reason}")
-                detail.text = (f"party[0]: species {report.species}, level {report.level}, "
-                               f"markings {report.markings}\n"
-                               f"PROVEN actions: {', '.join(report.actions) if report.actions else 'none'}")
-                action.options = list(report.actions)
-                action.value = report.actions[0] if report.actions else None
-                action.update()
-                preview_button.set_enabled(bool(report.actions))
-                commit_button.set_enabled(False)
-                download_button.set_enabled(False)
-            except (OSError, ValueError) as exc:
-                status.text = f"REJECTED: {exc}"
-                detail.text = "No edit action is available."
-                action.options, action.value = [], None
-                action.update()
-                preview_button.set_enabled(False)
-                commit_button.set_enabled(False)
-                download_button.set_enabled(False)
+    def do_preview() -> None:
+        try:
+            plan = workflow.preview(action.value)
+            detail.text = (f"Preview: party[0] markings {plan.capability.before} → "
+                           f"{plan.capability.after}; {len(plan.diffs)} changed bytes including checksum.\n"
+                           f"Expected output SHA-256: {plan.output_sha256}\n"
+                           "The input stays unchanged; output is audited before download.")
+            commit_button.set_enabled(True)
+            download_button.set_enabled(False)
+        except (OSError, ValueError) as exc:
+            status.text = f"Preview rejected: {exc}"
+            commit_button.set_enabled(False)
+            download_button.set_enabled(False)
 
-        def do_preview() -> None:
-            try:
-                plan = workflow.preview(action.value)
-                detail.text = (f"Preview: party[0] markings {plan.capability.before} → "
-                               f"{plan.capability.after}; {len(plan.diffs)} changed bytes including checksum.\n"
-                               f"Expected output SHA-256: {plan.output_sha256}\n"
-                               "The input stays unchanged; output is audited before download.")
-                commit_button.set_enabled(True)
-                download_button.set_enabled(False)
-            except (OSError, ValueError) as exc:
-                status.text = f"Preview rejected: {exc}"
-                commit_button.set_enabled(False)
-                download_button.set_enabled(False)
+    def do_commit() -> None:
+        try:
+            _, receipt = workflow.commit()
+            detail.text = (f"Independently verified output SHA-256: {receipt.output_sha256}\n"
+                           f"Source SHA-256: {receipt.source_sha256}\n"
+                           "Use Save verified .sav and choose a separate file. Never select a live emulator save.")
+            commit_button.set_enabled(False)
+            download_button.set_enabled(True)
+        except (OSError, ValueError) as exc:
+            status.text = f"Commit rejected: {exc}"
+            download_button.set_enabled(False)
 
-        def do_commit() -> None:
-            try:
-                _, receipt = workflow.commit()
-                detail.text = (f"Independently verified output SHA-256: {receipt.output_sha256}\n"
-                               f"Source SHA-256: {receipt.source_sha256}\n"
-                               "Use Save verified .sav and choose a separate file. Never select a live emulator save.")
-                commit_button.set_enabled(False)
-                download_button.set_enabled(True)
-            except (OSError, ValueError) as exc:
-                status.text = f"Commit rejected: {exc}"
-                download_button.set_enabled(False)
+    def send_download() -> None:
+        deliver_verified_download(workflow)
 
-        def send_download() -> None:
-            raw, filename = workflow.download()
-            ui.download.content(raw, filename, media_type="application/octet-stream")
+    def on_rejected() -> None:
+        status.text = "Upload rejected."
 
-        def on_rejected() -> None:
-            status.text = "Upload rejected."
-
-        ui.upload(on_upload=on_upload, on_rejected=on_rejected,
-                  max_file_size=MAX_SAVE_SIZE, max_files=1, multiple=False,
-                  auto_upload=True, label="Select local .sav").props("accept=.sav")
-        ui.separator()
-        ui.label("After download, save a new copy and retain the original for recovery. "
-                 "This tool never writes to an emulator live-save location.").classes("text-caption")
+    ui.upload(on_upload=on_upload, on_rejected=on_rejected,
+              max_file_size=MAX_SAVE_SIZE, max_files=1, multiple=False,
+              auto_upload=True, label="Select local .sav").props("accept=.sav")
+    ui.separator()
+    ui.label("After download, save a new copy and retain the original for recovery. "
+             "This tool never writes to an emulator live-save location.").classes("text-caption")
 
 
 def run_server(journal_path: str | Path, rom_path: str | Path,
                environment_id: str, port: int = DEFAULT_PORT) -> None:
     if ui is None:
         raise RuntimeError("NiceGUI is unavailable; install requirements-m4-ui.txt")
-    create_page(journal_path, rom_path, environment_id)
-    ui.run(**server_options(port))
+    ui.run(root=lambda: create_page(journal_path, rom_path, environment_id),
+           **server_options(port))
 
 
 def main(argv: list[str] | None = None) -> int:
