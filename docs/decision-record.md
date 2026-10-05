@@ -2,25 +2,34 @@
 
 GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or adopted here.
 
-## Controlling current decision — PR #14 adoption and bounded M4 completion
+## Controlling current decision — post-M4 North Star expansion and M5A Money investigation
 
 Human authorization:
 
-> `AUTHORIZE PR #14 BOUNDED WINDOWS ADOPTION AND M4 COMPLETION: adopt and merge exact candidate a2f61ac9fa34164a531b5a884a40102de3bc52cf as bounded Windows support—semantic/browser delivery only on validated Windows build 26200.9457 and filesystem publication only to user-controlled local fixed NTFS with reparse parents rejected; retain network/removable/non-NTFS, hostile concurrent path replacement, and power-loss final-name durability as unsupported/non-claimed; retain the existing retained-lineage party[0] markings 0↔1 scope and all private-data/localhost/fail-closed boundaries; after verifying the exact merge on canonical main and reconciling canonical records, mark M4 COMPLETE for this bounded first slice. Do not broaden save/build/capability scope`
+> `AUTHORIZE POST-M4 NORTH STAR EXPANSION AND M5A MONEY INVESTIGATION`
 
-The exact PR #14 candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was merged as `2547650cf898c89450a1d95b5252cf9c52e0f634` after fresh exact-candidate review.
+This authorization supersedes the prior post-M4 assumption that the bounded markings editor might be followed only by owner-use hardening / maintenance. The owner has now identified a concrete practical unmet need: common PKHeX-like local edits such as money, inventory/items, and substantial party-Pokemon editing including species changes. General progression/event flag management is not desired; Pokédex editing is future work.
 
-**M4 is COMPLETE for the bounded first slice defined below.** This does not declare general PokemonStart save-editor support.
+The strategic expansion and current M5A evidence/plan are recorded in `docs/post-m4-strategy-and-m5a-money.md`.
 
-The exact completion record is `docs/m4-completion.md`.
+**Current position:** M1–M4 remain COMPLETE for their adopted bounded scopes. **M5A Money is IN INVESTIGATION. No money writer is authorized.**
 
-## Refined North Star
+## Expanded North Star
 
-Enable a PokemonStart player to inspect a **positively supported** save, make a small **evidence-proven** party edit into a **separate output file**, independently verify that output, and retain a reliable recovery path.
+Build an evidence-first local save editor for the owner's **positively supported PokemonStart save lineage** that performs the common practical edits the owner actually wants, while retaining fail-closed provenance/capability gates, separate-output publication, independent verification, and a reliable recovery path.
 
-Malformed, ambiguous, unsupported, non-lineage, or capability-ineligible saves must fail closed. The GUI is a delivery layer over proven S0/P/C authority, not a source of writer authority.
+The target practical capability set is:
 
-The North Star is demonstrated for the bounded M4 first slice below.
+1. money editing;
+2. inventory/item editing;
+3. practical party-Pokemon editing, ultimately including species changes and every coupled state that must be established for a safe transformation;
+4. future bounded Pokédex editing if independently justified.
+
+General event/story/quest flag editing is an explicit non-goal. PKHeX compatibility, generic CFRU editing, arbitrary save support, broad PokemonStart version support, and feature-count parity are not goals by themselves.
+
+The North Star remains evidence-first: each field/capability must be proven independently, malformed/ambiguous/unsupported states fail closed, and a known offset or upstream struct does not by itself create writer authority.
+
+The completed M4 markings editor remains a valid bounded first slice and safety foundation. This expanded goal does not retroactively broaden any M1–M4 claim.
 
 ## Milestone architecture and current position
 
@@ -31,28 +40,50 @@ The North Star is demonstrated for the bounded M4 first slice below.
 5. **M3C-F1 — friendship field proof — COMPLETE.**
 6. **M3C — goal-driven bounded party-field expansion — COMPLETE.** Low-coupling friendship/markings/ball and the first nontrivial derived-state nature-mint/EV/IV/stat group survived representative game-boundary proofs; remaining fields were explicitly BLOCKED/UNSUPPORTED rather than guessed.
 7. **M4 — bounded usable editor / GUI first slice — COMPLETE.** PR #13 established the retained-lineage S0/P/C implementation and macOS delivery; PR #14 added the reviewed bounded Windows path under the exact host/filesystem limits below.
+8. **M5A — Money capability — IN INVESTIGATION.** Current authorization covers source/read-only characterization and the controlled private differential plan only. Writer implementation/private mutation is not authorized yet.
+9. **M5B — Inventory capability — PLANNED, NOT AUTHORIZED.** Investigate only after M5A reaches a justified boundary; item catalog/pocket/encryption/add-remove semantics must be proven rather than inferred.
+10. **M5C — Practical Pokemon editing — PLANNED, NOT AUTHORIZED.** Prefer generalizing already-proven/low-coupling attributes first; treat level/EXP/stat coupling and species transformation as separate higher-risk capabilities.
+11. **Future — Pokédex — NOT AUTHORIZED.** Seen/caught editing may be evaluated as a dedicated semantic capability; this does not authorize a general flag editor.
 
-Canonical current position is therefore:
+Owner-use hardening and packaging are supporting work rather than mandatory standalone milestones. They should be performed when they materially improve safe use of the currently proven capability set, not as a substitute for the requested practical features.
 
-**M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; M3C COMPLETE; M4 COMPLETE for the bounded first slice.**
+## M5A controlling boundary
 
-No later milestone or general-editor expansion is automatically adopted by this completion.
+M5A currently establishes only a source-derived hypothesis and a private read-only proof plan.
 
-## Bounded M4 support contract
+Pinned CFRU-JP source evidence at `e24a16fe39e27ae162faf5b78596d1f3df18489d` places:
 
-Writer support remains the conjunction of three independent gates:
+- `SaveBlock1.money` at SaveBlock1 offset `0x0290`;
+- `SaveBlock2.encryptionKey` at SaveBlock2 offset `0xF20`;
+- logical section 0 as SaveBlock2 (`0xF24` bytes);
+- logical section 1 as the first SaveBlock1 chunk (`0xFF0` bytes);
+- an explicit CFRU-JP byte patch increasing maximum money to `9,999,999`.
+
+CFRU-JP also declares encrypted-data rekey helpers and links the original FireRed money routines. Public `pret/pokefirered` source corroborates that the corresponding FireRed representation is an XOR of the stored money word with the SaveBlock2 encryption key.
+
+Therefore the current candidate read formula is:
+
+`money = LE32(active logical section 1 @ 0x0290) XOR LE32(active logical section 0 @ 0x0F20)`
+
+and the candidate write model would encode a target with that same key and recompute only the required logical-section-1 checksum.
+
+**This is not yet a PokemonStart private-save proof and grants no writer authority.** The next required evidence is a controlled before/after private game save whose displayed money changes by a known amount, followed by an independent read-only differential. See `docs/post-m4-strategy-and-m5a-money.md`.
+
+A separate Human authorization is required before implementing or executing any money writer.
+
+## Bounded M4 support contract retained as safety foundation
+
+Writer support in the completed M4 slice remains the conjunction of three independent gates:
 
 - **S0 — structural eligibility:** supported save size/layout, checksums, unique active slot, counter/parity, section permutation, and party structure;
 - **P — provenance/profile eligibility:** the retained, root-anchored private PokemonStart v0.15 lineage bound to the independently selected ROM/build and local environment through the private hash/metadata-only journal;
 - **C — capability eligibility:** only the separately proven reusable `party[0]` markings `0 <-> 1` FAMILY with exact starting-state preconditions.
 
-Structural similarity alone does not prove PokemonStart build identity. A ROM hash alone does not prove arbitrary save provenance. Unknown or unjournaled saves remain read-only even if S0 passes.
-
-The M4 FAMILY does not imply arbitrary markings values, party indices, save lineages, builds, versions, or other fields.
+M5 research must reuse or deliberately extend this model with fresh evidence. Structural similarity alone does not prove PokemonStart build identity. A ROM hash alone does not prove arbitrary save provenance. Unknown or unjournaled saves remain read-only even if S0 passes.
 
 ## Reusable transaction contract
 
-Every generated candidate must:
+Every future generated candidate, including any eventual M5 capability, must preserve the already adopted transaction properties unless a separately authorized change proves otherwise:
 
 - hash/read the input before mutation;
 - reject unsupported S0/P/C state;
@@ -68,97 +99,63 @@ Every generated candidate must:
 
 Where filesystem publication is used, the destination must be a separate nonexistent path; input aliases, existing destinations, repository destinations, and unsupported platform/filesystem boundaries fail closed.
 
-## Adopted delivery
+## Adopted delivery boundary retained from M4
 
 ### macOS
 
-The adopted macOS path provides:
+The adopted macOS path provides S0/P/C inspection and preview, CLI/audit delivery, localhost-only NiceGUI browser delivery, independently verified in-memory browser download, and staged/no-clobber new-file publication with adopted macOS fault/race tests.
 
-- S0/P/C inspection and preview;
-- CLI/audit delivery;
-- localhost-only NiceGUI browser delivery;
-- independently verified in-memory browser download;
-- staged/no-clobber new-file publication with the adopted macOS fault/race tests.
-
-PR #13 exact candidate `2612df5de7bac7a1ebce6650eb9ed69b440fbc4d` was merged as `4685edd4fa61d7e02a29d1cb6279e0e8858bdaa7` under the earlier explicit M4 IN PROGRESS authorization.
+PR #13 exact candidate `2612df5de7bac7a1ebce6650eb9ed69b440fbc4d` was merged as `4685edd4fa61d7e02a29d1cb6279e0e8858bdaa7`.
 
 ### Windows
 
 Semantic/in-memory/browser delivery is positively enabled only when the explicit host gate accepts validated Windows build `26200.9457`.
 
-Windows filesystem publication additionally requires:
-
-- actual Windows;
-- local fixed volume;
-- NTFS;
-- user-controlled destination directory under the adopted threat model;
-- no reparse-point component in the existing destination parent chain;
-- new `.sav` destination outside the repository;
-- no source/destination alias and no existing destination.
+Windows filesystem publication additionally requires actual Windows, a local fixed NTFS volume, a user-controlled destination directory under the adopted threat model, no reparse-point component in the existing destination parent chain, a new `.sav` destination outside the repository, and no input/output alias or existing destination.
 
 Network, removable, non-NTFS, reparse-parent, or unvalidated-build cases fail closed.
 
-The Windows publisher stages complete bytes in the destination directory, flushes the staged file, rereads and independently audits the staged bytes, rechecks source immutability, exposes the final name through a no-clobber same-directory hard link, rereads/audits the final bytes, and rechecks the source again. Post-publication cleanup removes a final entry only when it is still demonstrably the transaction-owned hard link.
-
 ### NiceGUI network boundary
 
-NiceGUI remains localhost-only:
+NiceGUI remains localhost-only: host `127.0.0.1`, `on_air=False`, no relay/LAN/public listener, no external private-save upload, and no automatic emulator live-save replacement.
 
-- host `127.0.0.1`;
-- `on_air=False`;
-- no relay/LAN/public listener;
-- no external private-save upload;
-- no automatic emulator live-save replacement.
+No M5 capability is automatically exposed through the UI merely because research identifies an offset. UI actions must continue to originate from adopted core capability authority.
 
-The browser exposes only actions returned by the core. Download becomes available only after the core mutation and independent receipt audit succeed.
+## M4 completion authority and evidence
 
-## M4 completion evidence
+Human authorization that completed the prior bounded slice:
 
-### Shared semantic/game evidence
+> `AUTHORIZE PR #14 BOUNDED WINDOWS ADOPTION AND M4 COMPLETION: adopt and merge exact candidate a2f61ac9fa34164a531b5a884a40102de3bc52cf as bounded Windows support—semantic/browser delivery only on validated Windows build 26200.9457 and filesystem publication only to user-controlled local fixed NTFS with reparse parents rejected; retain network/removable/non-NTFS, hostile concurrent path replacement, and power-loss final-name durability as unsupported/non-claimed; retain the existing retained-lineage party[0] markings 0↔1 scope and all private-data/localhost/fail-closed boundaries; after verifying the exact merge on canonical main and reconciling canonical records, mark M4 COMPLETE for this bounded first slice. Do not broaden save/build/capability scope`
 
-The repeated-use markings FAMILY has representative retained-lineage game-boundary evidence in both directions. A new game canary was not required merely because the delivery host changed; Windows validation targeted platform-specific publication, delivery, S0/P/C, and fail-closed behavior.
+PR #14 exact candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was merged as `2547650cf898c89450a1d95b5252cf9c52e0f634`. See `docs/m4-completion.md` for the exact prior completion record.
 
-### macOS evidence
+Recorded M4 evidence includes representative retained-lineage game-boundary evidence for the markings FAMILY, adopted macOS S0/P/C + browser/publication evidence, and actual Windows 11 build `26200.9457` validation. The integrated Windows suite recorded **88 tests OK with 12 macOS-only skips**. These are local execution results, not GitHub Actions reproduction.
 
-Adopted PR #13 records the retained-lineage S0/P/C implementation, repeated-use markings FAMILY, independent auditing, CLI path, localhost browser workflow, hardened new-file publication, and local regression results. These are local execution results, not GitHub Actions reproduction.
+## Unsupported / non-claimed surfaces unless later milestones prove them
 
-### Windows evidence
+The post-M4 expansion is a goal and roadmap authorization, **not a blanket support claim**. Until separately proven/adopted, the following remain unsupported or non-claimed:
 
-PR #14 records actual Windows 11 build `26200.9457` execution on local NTFS. The selected ROM/build and retained root were independently rehashed locally. A fresh Windows-local journal passed S0/P and returned only the bounded markings action under the validation gate.
-
-One private local-NTFS output was created during the validation phase. The normal receipt and a separate complete-byte audit passed; exactly the markings byte and one required section checksum byte changed, all section checksums passed, preserved regions stayed unchanged, and the source remained immutable. NiceGUI produced identical verified bytes without adding a duplicate lineage edge.
-
-After production integration, a read-only check reproduced the same preview/output identity through the production host gate and audit path without creating another private output or game canary.
-
-The recorded integrated Windows suite result is **88 tests OK with 12 macOS-only skips**, covering production core/CLI/NiceGUI, localhost listener, NTFS publication success, aliases/junctions, race/fault/process-exit cases, unsupported-volume decisions, and unvalidated-build rejection. These are local execution results, not GitHub Actions reproduction.
-
-See `docs/m4-windows-candidate-evidence.md` and `docs/m4-completion.md` for the detailed evidence labels and limits.
-
-## Explicit unsupported / non-claimed surface after M4 completion
-
-M4 completion does **not** authorize or claim:
-
-- arbitrary/non-lineage save support;
+- arbitrary/non-lineage saves;
 - broad PokemonStart build/version generalization;
 - arbitrary party indices or unrestricted values;
-- additional fields merely because offsets are known;
-- boxes/bags;
-- target-build catalogs/semantics for Tera type, held items, moves/PP/PP-Up, abilities, species/forms, or identity-related values;
-- broader hyper-training or EXP/level/stat coupling beyond the exact proven historical groups;
+- money writing beyond a future exact adopted M5A capability;
+- bags/items beyond a future adopted M5B capability;
+- species/forms, held items, moves/PP/PP-Up, abilities, level/EXP/hyper-training and other coupled Pokemon state beyond independently adopted M5C capabilities;
+- Pokédex writes;
+- general event/story/quest flag editing;
 - remote/LAN/public browser exposure;
 - automatic live-emulator save replacement;
 - network/removable/non-NTFS Windows filesystem publication;
 - support for Windows builds that fail the exact validated-host gate;
 - resistance to hostile concurrent parent-junction/final-name replacement after validation checks;
 - Windows directory-metadata or final-name persistence across sudden power loss;
-- general Windows filesystem safety beyond the adopted local fixed NTFS boundary;
-- actual Windows symlink-fixture execution where the validation account lacked that privilege.
+- public release/distribution guarantees.
 
 The application semantics of sectors 30/31 and parasite tails remain preservation-oriented rather than generally decoded. The external footer remains preservation-only for editor output and may change under a later normal game/emulator save according to the established policy.
 
 ## Authority chain
 
-Key durable authority/evidence records are:
+Key durable authority/evidence records now include:
 
 - `docs/evidence.md`
 - `docs/m3a-support-envelope-findings.md`
@@ -171,13 +168,19 @@ Key durable authority/evidence records are:
 - `docs/m4-windows-candidate-evidence.md`
 - `docs/m4-windows-bounded-integration-authorization.md`
 - `docs/m4-completion.md`
+- `docs/post-m4-strategy-and-m5a-money.md`
 
-The PR #14 completion authorization supersedes earlier statements that Windows write/download was disabled or that M4 remained IN PROGRESS, but only inside the exact bounded support contract above.
+## Authorization boundary after post-M4 expansion
 
-## Authorization boundary after M4
+The owner has authorized the **expanded North Star / milestone direction** and **M5A Money investigation**. This means source review, read-only characterization, private read-only differential analysis when inputs are provided, and canonical documentation of those findings are authorized.
 
-The completed first slice may be used and maintained within its adopted scope. Normal bug fixes, tests, and documentation that do not broaden writer authority remain bounded maintenance.
+It does **not** authorize:
 
-Any material expansion of writer capability, save provenance, supported builds/versions, party indices, editable fields, public distribution/release guarantees, network exposure, or threat model requires fresh evidence. If it exceeds existing Human authorization, present a decision surface with proposed change, evidence, benefit, risk/trade-off, and downstream impact before canonicalizing it.
+- implementation or execution of a money writer;
+- M5B inventory writer/research that mutates private saves;
+- M5C Pokemon writer implementation;
+- new supported save/build/version scope;
+- public distribution/release guarantees;
+- broader network/threat-model scope.
 
-No M5 or broader general-editor milestone is adopted merely because M4 is complete. The next milestone, if any, must be justified from a fresh canonical re-evaluation rather than inherited automatically from an old roadmap.
+After the M5A private differential is independently reproduced, present the exact bounded writer proof as a new decision surface with proposed transformation, evidence, benefit, risks/trade-offs, downstream impact, and human-canary burden. Stop for fresh Human authorization before writer implementation or repository-driven private save mutation.
