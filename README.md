@@ -20,15 +20,15 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M3C — COMPLETE.** The field-expansion milestone is closed with a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, explicit blocked/unsupported capabilities, and a formal exit assessment. Further field proofs require a new evidence-backed need rather than continuing M3C by default.
 
-**M4 — bounded usable-editor implementation is AUTHORIZED / IN PROGRESS.** PR #12 adopted the evidence-gated M4 design. The authorized first slice is retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, CLI/audit delivery, and a **localhost-only NiceGUI browser UI** with required private canaries. The earlier Tkinter delivery choice has been superseded by `docs/m4-delivery-correction.md`. Arbitrary/non-lineage save support, boxes/bags, unrestricted values, remote/browser exposure, and final implementation-PR merge remain unauthorized.
+**M4 — bounded usable-editor implementation is ADOPTED / IN PROGRESS.** PR #13 merged the macOS-proven bounded S0/P/C implementation, retained-lineage `party[0]` markings `0 ↔ 1` FAMILY, CLI/audit path, hardened macOS publication path, and localhost-only NiceGUI browser delivery. Windows remains unvalidated and write/download is fail-closed there; M4 is not complete. Arbitrary/non-lineage save support, boxes/bags, unrestricted values, broader build/version support, remote/browser exposure, and M4 completion remain outside the adopted scope.
 
-See `docs/m4-entry-decision.md` for the adopted design, `docs/m4-bounded-implementation-authorization.md` for the bounded implementation authority, and `docs/m4-delivery-correction.md` for the controlling GUI-delivery correction.
+See `docs/m4-entry-decision.md` for the adopted design, `docs/m4-bounded-implementation-authorization.md` for the bounded implementation authority, `docs/m4-delivery-correction.md` for the controlling GUI-delivery correction, and `docs/m4-pr13-adoption.md` for the exact PR #13 adoption/merge authority.
 
-The bounded M4 implementation is being developed on a feature branch. See `docs/m4-implementation-progress.md` for current evidence and `docs/m4-windows-validation.md` for the separate Windows proof plan. The M4 CLI and localhost-only NiceGUI browser adapter use the same S0/P/C core. The only exposed edit is the evidence-qualified party[0] markings `0 ↔ 1` FAMILY on the retained PokemonStart v0.15 lineage/build/environment. Unsupported saves expose no edit action. NiceGUI binds to `127.0.0.1`; it offers a verified browser download and never writes to an emulator live-save location. Write delivery is enabled only on the validated macOS host; unvalidated platforms retain read-only S0/P inspection and reject write actions pending platform validation.
+The bounded M4 implementation is now on canonical `main`. See `docs/m4-implementation-progress.md` for current evidence and `docs/m4-windows-validation.md` for the remaining Windows proof plan. The M4 CLI and localhost-only NiceGUI browser adapter use the same S0/P/C core. The only exposed edit is the evidence-qualified party[0] markings `0 ↔ 1` FAMILY on the retained PokemonStart v0.15 lineage/build/environment. Unsupported saves expose no edit action. NiceGUI binds to `127.0.0.1`; it offers a verified browser download and never writes to an emulator live-save location. Write delivery is enabled only on the validated macOS host; unvalidated platforms retain read-only S0/P inspection and reject write actions pending platform validation.
 
 Tkinter was the initial delivery experiment and is superseded by the canonical NiceGUI delivery correction. The old Tk adapter remains as historical reference and is not part of M4 acceptance.
 
-New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
+New private `.sav` proof outputs must be written outside this repository. The shared transaction/publication paths reject unsupported output behavior, and private saves/ROMs remain outside Git.
 
 The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. Malformed, ambiguous, or unsupported saves must fail closed.
 
@@ -44,13 +44,13 @@ The verifier accepts only `0x20000`-byte flash images or `0x20010`-byte files wi
 
 ## Bounded M4 local browser adapter
 
-The NiceGUI layer is optional and is kept separate from the standard-library save core and CLI. Install its pinned UI dependency from `requirements-m4-ui.txt`, then run `pokemonstart_m4_web.py` with the local private lineage journal, selected ROM/build, and matching environment ID. The server binds only to `127.0.0.1`. The browser returns a verified new `.sav` download; save it as a separate recovery copy and never choose an emulator live-save path.
+The NiceGUI layer is optional and is kept separate from the standard-library save core and CLI. Install its pinned UI dependency from `requirements-m4-ui.txt`, then run `pokemonstart_m4_web.py` with the local private lineage journal, selected ROM/build, and matching environment ID. The server binds only to `127.0.0.1`. On a validated macOS host, the browser returns a verified new `.sav` download; save it as a separate recovery copy and never choose an emulator live-save path. On an unvalidated platform such as the current Windows state, write actions remain disabled.
 
 This implementation is a bounded research slice for its retained lineage only. It does not provide a general save editor or general PokemonStart build support.
 
 ## Proof writers and transaction infrastructure
 
-The repository's proof writers and transaction tooling are research infrastructure, not a user-facing general editor. They must reject unsupported profiles/starting states, unexplained diffs, input/output path aliasing, in-repository private-save outputs, and existing output paths; generated files are re-verified and inputs remain immutable.
+The repository's proof writers and transaction tooling are research infrastructure, not a user-facing general editor. They must reject unsupported profiles/starting states, unexplained diffs, input/output path aliasing, in-repository private-save outputs, and existing output paths where filesystem publication is used; generated files are re-verified and inputs remain immutable.
 
 M3C preserved **field-level evidence** while reducing **human-level repetition**: fields were grouped by coupling/risk class, individual variants and combined canaries were prepared, and representative game round trips were used for each defensible group. Success remains bounded to the named transformations and retained v0.15 lineage.
 
@@ -64,7 +64,7 @@ Tests use synthetic save bytes. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, `docs/m3c-exit-assessment.md`, `docs/m4-entry-decision.md`, `docs/m4-bounded-implementation-authorization.md`, and `docs/m4-delivery-correction.md`.
+See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, `docs/m3c-exit-assessment.md`, `docs/m4-entry-decision.md`, `docs/m4-bounded-implementation-authorization.md`, `docs/m4-delivery-correction.md`, `docs/m4-implementation-progress.md`, `docs/m4-p-transition-model.md`, `docs/m4-windows-validation.md`, and `docs/m4-pr13-adoption.md`.
 
 ## Data boundary
 
