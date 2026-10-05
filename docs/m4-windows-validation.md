@@ -1,7 +1,7 @@
 # M4 Windows validation plan
 
-**Status: Windows synthetic validation candidate under review; private Windows
-validation NOT RUN; Windows production writes/downloads are disabled.** The current
+**Status: Windows synthetic and one retained private-input validation PASS on
+Draft PR #14; Windows production writes/downloads are disabled.** The current
 implementation permits read-only S0/P inspection on an unvalidated host. It
 returns no C write actions and rejects preview, core commit, browser commit, and
 browser download until Windows validation is completed and a later human

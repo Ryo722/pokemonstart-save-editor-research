@@ -80,12 +80,55 @@ Stronger path-race resistance, symlink fixture execution, unsupported-volume
 execution, and power-loss behavior remain unverified. The candidate is not
 ready to replace production publication or enable Windows write delivery.
 
-## Private gate and decision surface
+## Local private-input Windows verification
 
-Private Windows S0/P/C, local ROM/root hashes, Windows-local journal binding,
-one new private output, and private NiceGUI workflow are **not run**. The
-authorized ROM and retained save paths have not been supplied on this host.
-No additional game canary is required by the current evidence. A later
-decision must name the exact candidate commit SHA, resolve the above
-filesystem limits, supply private Windows evidence, and explicitly authorize
-any Windows enablement or merge. M4 completion criteria are not met.
+The user supplied exact Windows-local ROM and retained-save paths outside Git.
+Independent SHA-256 calculations matched the previously recorded retained
+ROM/build and M3C root identifiers. The save was 131,088 bytes. The input
+directory and new output directory passed the candidate's local-NTFS check.
+No private absolute paths or new private hashes are published here; a detailed
+hash/metadata report remains in the private Windows validation directory.
+
+The exact retained root passed S0, then P against a freshly enrolled
+Windows-local hash/metadata-only journal bound to the independently checked
+ROM and `windows11-ntfs-private-validation`. The production Windows gate still
+returned no C action. Under the explicit test-only gate, the core returned
+exactly one FAMILY capability: `party[0]` markings `1 -> 0`. The private
+runner used that returned capability without constructing its own.
+
+One new `.sav` was published in the private local NTFS directory through
+`core.commit` and the PR #14 candidate publisher. `audit_output` and a
+separate read-only execution of `m4_independent_markings_audit.py` passed.
+Full byte comparison showed **two changed bytes**: the party[0] markings
+byte and one necessary section-1 checksum byte. Structural verification and
+all section checksums passed. Active slot/counters, section permutation and
+metadata, other party semantics, inactive slot, sectors 28–31,
+checksum-excluded tails, and opaque footer remained unchanged. The source
+SHA-256 remained identical after filesystem publication and browser exercise.
+The new journal had exactly two nodes and one editor edge.
+
+The retained private input then passed `BrowserWorkflow` upload, S0/P,
+single-action preview, commit, independent receipt check, and download.
+Browser bytes equaled the verified filesystem candidate. Repeating the
+deterministic output did not add a duplicate journal node or edge. The
+application's server options remained `127.0.0.1`, `on_air=False`; no public
+or relay service was used. No emulator live-save path was written and no game
+load was performed. A repository test runner records the reproducible checks
+without embedding private paths: `tests/m4_windows_private_validation.py`.
+
+After the private gate, the complete actual-Windows synthetic suite with
+NiceGUI 3.17.0 ran **82 tests: OK, 12 macOS-only skips**. The separate private
+byte audit also passed.
+
+## Decision surface
+
+This validates the exact retained v0.15 root and one bounded `1 -> 0` output
+on a user-controlled local NTFS directory. It does not prove general Windows
+publication safety. Actual symlink creation, non-NTFS/network volume
+execution, concurrent hostile parent-junction replacement, and Windows
+directory-metadata/power-loss durability remain unresolved as stated above.
+The current candidate is sufficient for review of the bounded Windows
+validation result, but is **not yet sufficient to propose general Windows
+write/download enablement**. A later Human decision must address these limits
+and explicitly authorize any adoption or merge. M4 remains IN PROGRESS; no
+additional game canary is indicated by this Windows evidence.
