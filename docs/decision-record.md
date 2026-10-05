@@ -1,12 +1,24 @@
 # Canonical re-evaluation — 2026-10-05
 
+## M4 bounded implementation authorization
+
+PR #12 adopted `docs/m4-entry-decision.md` as the evidence-gated M4 entry design. Human authorization
+
+> `AUTHORIZE PR #12 DESIGN MERGE AND BOUNDED M4 IMPLEMENTATION: retained-lineage S0/P/C qualification, one bounded repeated-use party[0] markings family, new-file transaction hardening, thin Tkinter/CLI delivery, and required private canaries; no arbitrary-save support and no implementation PR merge without separate authorization.`
+
+moves the project from the M4 design boundary into a **bounded M4 implementation phase**.
+
+The authorized slice is limited to retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, a local/private lineage journal containing hashes and bounded metadata only, hardened new-file publication and independent verification, a Python standard-library core, CLI/audit adapter, thin Tkinter GUI, required synthetic/private/game-boundary proof work, macOS source-run validation, and preparation for later Windows validation.
+
+This authorization does **not** permit arbitrary/non-lineage saves, broad PokemonStart build/version generalization, unrestricted values, boxes/bags, automatic live-emulator save replacement, protected-data publication, or merging any M4 implementation PR into `main` without a later explicit human merge authorization. See `docs/m4-bounded-implementation-authorization.md` for the exact scope.
+
 ## M3C closure decision after derived-stat canary
 
 Canonical `main` before this closure merge is `c9ce00718e385571497b3a1d47cb74d7fa5fb1e3`, which contains the human-passed low-coupling friendship/markings/ball batch. The exact derived-state group on PR #11 then proved nature mint, Attack IV, HP EV, and the required cached stats/HP update as one coupled transformation on the retained private v0.15 lineage.
 
 The supplied combined-canary return save independently re-verifies at SHA-256 `ffd0d9d598c82af23adfe3a8a9ec5c0e9213fe3cddcd62796538c2353ae9ee86`, active slot 0/counter 6. All 28 ordinary section checksums validate; the old active slot, returned active party record, and sectors 28–31 are preserved as required; the external footer changed only under the established game-resave rule. The exact derived-state group is therefore PROVEN for the named retained-lineage transformation. Future private save outputs go outside the repository, enforced by the shared transaction writer.
 
-Human authorization `AUTHORIZE PR #11 MERGE AND M3C CLOSURE` adopts the M3C exit assessment and closes M3C after this PR is merged. This authorization does **not** authorize M4 implementation.
+Human authorization `AUTHORIZE PR #11 MERGE AND M3C CLOSURE` adopts the M3C exit assessment and closes M3C after this PR is merged. That historical authorization did not itself authorize M4; the later bounded M4 authorization recorded above supersedes that project boundary for the explicitly named slice only.
 
 ## Authority and evidence discipline
 
@@ -28,19 +40,19 @@ A GUI is a delivery layer only after save/profile eligibility and field capabili
 4. **M3B — bounded same-field transaction proof — COMPLETE.**
 5. **M3C-F1 — friendship field proof — COMPLETE.** `party[0] friendship 50 -> 51` survived sealed private preflight and a human game load + normal-save round trip; PR #9 merged as `ece114d0475691e34bf4c83de2f73a9e732dd34e`.
 6. **M3C — goal-driven bounded party-field expansion — COMPLETE.** Low-coupling friendship/markings/ball and the first nontrivial derived-state nature-mint/EV/IV/stat group survived representative game round trips. Remaining fields are explicitly BLOCKED/UNSUPPORTED rather than guessed.
-7. **M4 — usable editor / GUI — NOT AUTHORIZED.** The next boundary is an evidence-backed M4 entry/design decision, not automatic implementation.
+7. **M4 — usable editor / GUI — BOUNDED IMPLEMENTATION AUTHORIZED / IN PROGRESS.** The adopted first slice is the evidence-gated S0/P/C design from PR #12, one repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, and thin Tkinter/CLI delivery. Final implementation merge remains a separate human gate.
 
 ## Current position
 
-After PR #11 is merged under the explicit closure authorization, canonical `main` is **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; M3C COMPLETE; M4 authorization boundary.**
+Canonical `main` is **M1 COMPLETE; M2 COMPLETE; M3A COMPLETE; M3B COMPLETE; M3C COMPLETE; bounded M4 implementation AUTHORIZED / IN PROGRESS.**
 
-M3C is closed because it now has a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, successful low- and high-coupling game-boundary evidence, explicit unsupported capability handling, and a formal remaining-gap assessment. Additional field proofs are not required merely because more offsets exist.
+M3C is closed because it has a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, successful low- and high-coupling game-boundary evidence, explicit unsupported capability handling, and a formal remaining-gap assessment. M4 now addresses reusable retained-lineage eligibility, repeated-use capability proof, safe publication/recovery, and user-facing delivery without broadening unsupported save scope.
 
 ## Supported-save / writer-support boundary
 
 Writer-supported saves must pass structural eligibility, provenance/profile eligibility, and field-capability eligibility. Structural similarity alone does not prove PokemonStart build identity. Current write evidence remains limited to the retained private PokemonStart v0.15 lineage and the named exact transformations/hashes documented by the proof records.
 
-M3C completion does not promote these exact proofs into arbitrary values, party members, save hashes, builds, or versions.
+M3C completion does not promote these exact proofs into arbitrary values, party members, save hashes, builds, or versions. M4 must independently qualify any reusable P rule and capability FAMILY before private writes are exposed.
 
 ## Reusable transaction contract retained
 
@@ -111,7 +123,7 @@ M3C exit required a useful bounded party-edit capability set plus a final review
 6. remaining candidate capabilities are marked BLOCKED/UNSUPPORTED with reasons;
 7. the exit assessment finds diminishing value in additional exact-field canaries absent a specific player need.
 
-The North Star is demonstrated as a bounded proof foundation, but a general player-facing workflow is not yet delivered. That is the M4 problem.
+The North Star is demonstrated as a bounded proof foundation. M4 is the authorized bounded effort to turn that foundation into a repeatable, safe player-facing workflow.
 
 ## Remaining risks / blocked capability surface
 
@@ -120,25 +132,36 @@ The North Star is demonstrated as a bounded proof foundation, but a general play
 - target-build catalogs/semantics for Tera type, held items, moves/PP/PP-Up, abilities, species/forms, and identity-related values;
 - hyper-training and broader EXP/level/stat coupling beyond the proven exact derived-state case;
 - application semantics of sectors 30/31 and parasite tails beyond byte preservation;
-- user-facing supported-save eligibility, recovery UX, packaging, and cross-platform delivery remain unproven;
-- GUI readiness requires an M4 design decision rather than being inferred from M3C completion.
+- the proposed root-anchored/journaled P rule is still an implementation hypothesis until private transition evidence validates it;
+- the repeated-use markings FAMILY is not yet PROVEN across qualified hashes/both directions;
+- atomic/no-clobber publication semantics require platform-specific proof, especially Windows validation;
+- Tkinter/CLI source-run delivery and recovery UX remain to be implemented and tested.
 
-## Authorization boundary after M3C closure
+## Authorization boundary for bounded M4 implementation
 
-Human authorization `AUTHORIZE PR #11 MERGE AND M3C CLOSURE` permits:
+Human authorization `AUTHORIZE PR #12 DESIGN MERGE AND BOUNDED M4 IMPLEMENTATION: retained-lineage S0/P/C qualification, one bounded repeated-use party[0] markings family, new-file transaction hardening, thin Tkinter/CLI delivery, and required private canaries; no arbitrary-save support and no implementation PR merge without separate authorization.` permits:
 
-- the PR #11 derived-state evidence/transaction/test/docs merge;
-- canonical recording of the named derived-state group as PROVEN on the retained lineage;
-- canonical closure of M3C as COMPLETE.
+- canonical adoption of PR #12's M4 entry design;
+- implementation and testing of retained-lineage S0/P/C qualification;
+- local/private retained-lineage journal work using hashes and bounded metadata only;
+- research, implementation, and proof preparation for one bounded repeated-use `party[0]` markings family, nominally `0 <-> 1`, subject to fresh evidence;
+- hardened new-file transaction/publication and independent receipt verification;
+- Python stdlib core, CLI/audit adapter, and thin Tkinter GUI work;
+- synthetic/regression/fault tests;
+- local-private preflight and required representative private game/emulator canaries;
+- macOS source-run validation and preparation for later Windows validation;
+- feature branches, commits, documentation, and review-ready implementation PR preparation.
 
 It does **not** authorize:
 
-- M4 implementation or GUI work;
 - arbitrary/non-lineage save support or broad PokemonStart-version generalization;
-- new field capability implementation merely because a storage offset is known;
-- input overwrite;
-- box/bag editing;
+- unrestricted values or arbitrary party indices;
+- boxes/bags;
+- unrelated new field capabilities merely because offsets are known;
+- input overwrite or existing-destination overwrite;
+- automatic writing into emulator live-save locations;
 - protected-data publication;
-- execution of blocked/proprietary binaries.
+- execution of blocked/proprietary binaries;
+- merging any M4 implementation PR into `main` without a later explicit human merge authorization.
 
-The next mandatory project decision is **M4 entry/design**: determine the smallest useful delivery layer that exposes only positively supported saves and proven capabilities while preserving the fail-closed transaction/recovery model. M4 implementation requires separate human authorization.
+The next mandatory human gate is the smallest representative private game/emulator canary genuinely required to validate the proposed retained-lineage P rule and repeated-use C family, or an earlier consequential evidence/safety blocker. After bounded implementation evidence is complete, implementation-PR adoption/merge remains a separate explicit decision.
