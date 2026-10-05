@@ -1,5 +1,7 @@
 # M5A private money read audit — 2026-10-05
 
+> Historical pre-writer audit snapshot. The 2026-10-06 Human authorization and current first-round-trip / second-canary state are recorded in `docs/m5a-exact-max-money-canary.md`; see that record for superseding status.
+
 ## Scope and evidence label
 
 This record covers a **read-only** audit of a user-supplied retained private PokemonStart v0.15 save. No save bytes are committed to this repository and no writer was implemented or executed.

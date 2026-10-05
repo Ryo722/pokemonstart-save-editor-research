@@ -1,5 +1,7 @@
 # Post-M4 strategy and M5A money investigation — 2026-10-05
 
+> **Historical authorization snapshot.** Its original “writer not authorized” statements are superseded by the explicit 2026-10-06 Human authorization recorded in `docs/m5a-exact-max-money-canary.md`. Current canonical status: first `3000 -> 9,999,999` round trip game-proven; one sealed `9,999,999 -> 1,234,567` candidate generated and independently audited, awaiting its own game round trip; reusable arbitrary-money FAMILY not adopted; M4 provenance unchanged.
+
 ## Human authorization
 
 > `AUTHORIZE POST-M4 NORTH STAR EXPANSION AND M5A MONEY INVESTIGATION`
@@ -35,7 +37,7 @@ Each capability remains independently gated. One successful transformation does 
 
 ## M5A current status
 
-**M5A MONEY — INVESTIGATION IN PROGRESS; WRITER NOT AUTHORIZED.**
+**M5A MONEY — INVESTIGATION IN PROGRESS.** Historical pre-writer state below is superseded by the bounded 2026-10-06 execution record.
 
 A read-only hypothesis probe now exists as `pokemonstart_m5a_money_probe.py`. It delegates structural selection to the existing verifier, locates logical section 0/1 by section ID rather than physical position, reports the stored word, encryption key, XOR-decoded value, active slot/counter, and whether the value falls inside the source-derived candidate maximum. It does not expose any write path.
 

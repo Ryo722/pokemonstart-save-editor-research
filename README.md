@@ -16,7 +16,7 @@ Evidence-first research and tooling for a user-controlled PokemonStart save edit
 
 **M4 — bounded usable-editor first slice is COMPLETE.** PR #13 adopted the retained-lineage S0/P/C core, repeated-use `party[0]` markings `0 ↔ 1` FAMILY, CLI/audit path, hardened macOS publication, and localhost-only NiceGUI delivery. PR #14 exact candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was explicitly adopted and merged as `2547650cf898c89450a1d95b5252cf9c52e0f634`, adding the bounded Windows path. See `docs/m4-completion.md`.
 
-**M5A — Money capability is IN PROGRESS.** The exact retained input decodes to `3000`, matching the human-observed game display. Under explicit bounded authorization, a one-input `3000 -> 9,999,999` proof writer generated output SHA-256 `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`. The complete five-byte diff, checksums, preserved regions, source immutability, and an independent audit all pass. **Human game load/resave evidence is still required; no reusable arbitrary-money FAMILY is authorized or claimed.** See `docs/m5a-exact-max-money-canary.md`.
+**M5A — Money capability is IN PROGRESS.** The exact `3000 -> 9,999,999` transformation has a successful game round trip, freshly read-audited from return SHA-256 `1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4`. One sealed repeated-use proof writer has generated and independently audited a second exact candidate, `9,999,999 -> 1,234,567`, output SHA-256 `b232f80f82a0908e015d3bd948ec3e32c90dc44890865a5a1f920ee2e61677c7`. **The second candidate awaits a human game round trip. No reusable arbitrary-money FAMILY is adopted.** The early-game EventObjectTemplate/parasite differences are bounded observations and do not expand M4 provenance. See `docs/m5a-exact-max-money-canary.md`.
 
 The adopted M4 reusable write boundary remains intentionally narrow while M5 research proceeds:
 
@@ -50,7 +50,9 @@ For exact retained input SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f6396927
 
 The authorized exact canary writer then generated only one target: `9,999,999`. Its output SHA-256 is `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`. Only three money bytes and two section-checksum bytes differ; an independent complete-byte audit passed and the source remained immutable.
 
-This is **pre-game exact-canary evidence only**. The next step is to load that exact output in PokemonStart, confirm `9,999,999`, perform one normal in-game save, and return the resave for read-only audit. Do not generalize the exact proof to arbitrary amounts or other saves.
+The initial record below describes the evidence level before the return save was supplied; the current audit supersedes that status.
+
+Fresh read-only audit of the returned save confirms the exact `3000 -> 9,999,999` round trip: slot 1/counter 1 retains decoded `9,999,999`; slot 0/counter 2 is active after the normal save; and the early-game transition includes EventObjectTemplate-region initialization and a section 4 checksum-excluded parasite-tail change. These are observed bounded transition facts. M4 provenance masks and predicates remain unchanged. A second sealed writer accepts only that return SHA and changes `9,999,999 -> 1,234,567`; its output is generated and independently audited but has not been loaded in game. Details and limits are in the M5A canary record.
 
 ## Run the verifier
 
