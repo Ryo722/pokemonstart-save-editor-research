@@ -4,7 +4,7 @@
 
 This record covers a **read-only** audit of a user-supplied retained private PokemonStart v0.15 save. No save bytes are committed to this repository and no writer was implemented or executed.
 
-Evidence label: **local private-input verification**, with the source-derived money formula still requiring human display confirmation before it is treated as independently reproduced game semantics.
+Evidence label: **local private-input verification + human game observation**. The source-derived money formula has now been reproduced against this exact private save and independently matched the in-game displayed value.
 
 ## Input identity
 
@@ -57,23 +57,36 @@ For this private input, the independent read-only audit obtained:
 
 - encryption key: `0x00000000`
 - stored money word: `0x00000BB8`
-- XOR-decoded candidate money: **`3000`**
+- XOR-decoded money: **`3000`**
 
-Because the key is zero in this particular save, the stored and decoded values are identical. This does **not** justify assuming an unencrypted representation for later saves; the writer/read model must continue to use the key-derived XOR rule.
+The user then loaded this exact save in PokemonStart v0.15 and confirmed that the in-game displayed money is **`3000`**. This closes the current read-semantics hypothesis for this exact retained-lineage input: the source-derived XOR rule reproduced the value actually shown by the game.
 
-## Remaining confirmation and revised cheapest proof
+Because the key is zero in this particular save, the stored and decoded values are identical. This does **not** justify assuming an unencrypted representation for later saves; any future reader/writer must continue to use the key-derived XOR rule unless stronger evidence changes that rule.
 
-The user has not yet supplied an explicit human observation of the in-game displayed money for this exact save. Therefore `3000` is currently a strongly source-supported decoded candidate value, not yet an independently reproduced display-semantic proof.
+## Cheapest next proof
 
-If the game displays `3000` for this exact save, a game-generated purchase before/after differential is no longer required as the cheapest next proof. Instead, the project may propose a single exact bounded canary:
+A game-generated purchase before/after differential is no longer required as the cheapest next proof for this exact input. The next justified proof is a single exact bounded Max Money canary:
 
-- exact input hash above;
-- target displayed money `9,999,999`;
-- encode with the active SaveBlock2 key;
+- exact input SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`;
+- exact starting displayed/decoded money `3000`;
+- exact target displayed money `9,999,999`;
+- encode the target with the active SaveBlock2 encryption key;
 - mutate only the four-byte money word in logical section 1 plus the required logical-section-1 checksum bytes;
 - preserve every other byte under the existing transaction envelope;
-- write only to a new file;
-- independently audit the complete output;
-- human-load the candidate, confirm displayed money, perform one normal in-game save, and return the resave for read-only audit.
+- write only to a new file and never overwrite the source;
+- independently audit the full output, source immutability, section checksums, slot/counter state, footer, sectors 28–31, parasite tails, and every unexplained byte difference;
+- human-load the exact candidate in the same retained PokemonStart v0.15 environment, confirm displayed money `9,999,999`, perform one normal in-game save, and return the resave for read-only audit.
 
-That canary still requires fresh Human authorization before any money writer implementation or private-save mutation.
+This canary is intentionally an **exact one-input / one-target proof**, not reusable money-editor authority. A later reusable FAMILY would require additional evidence, including behavior across a nonzero encryption key or otherwise adequate cross-state evidence, range/negative testing, repeated-use evidence, and separate adoption.
+
+## Authorization boundary
+
+The current `AUTHORIZE POST-M4 NORTH STAR EXPANSION AND M5A MONEY INVESTIGATION` authorization does not permit implementation or execution of the Max Money writer above.
+
+Fresh Human authorization is required before:
+
+- implementing the exact bounded writer candidate;
+- producing a mutated private `.sav`;
+- treating the transformation as a writer proof.
+
+The appropriate next authorization is bounded to the exact input and target and must not authorize reusable arbitrary money editing, inventory editing, species editing, broader save/build support, or any other capability expansion.
