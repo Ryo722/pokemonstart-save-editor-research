@@ -11,9 +11,9 @@
 
 ## Implemented on `m4-bounded-editor-slice`
 
-- `pokemonstart_m4_core.py`: typed S0/P/C inspection, root-anchored JSON journal schema, private-root enrollment guard, modeled B→C transition check, two-state party[0] markings mutation plan, independent byte/semantic audit, rehash-on-commit, and computed C journal continuation after an explicit human game observation claim. `FAMILY_PROVEN` remains `False`; core returns no private edit capability.
+- `pokemonstart_m4_core.py`: typed S0/P/C inspection, root-anchored JSON journal schema with selected build hash and emulator environment ID, private-root enrollment guard, modeled B→C transition check, two-state party[0] markings mutation plan, independent byte/semantic audit, rehash-on-commit, and computed C journal continuation after an explicit human game observation claim. `FAMILY_PROVEN` remains `False`; core returns no private edit capability.
 - `pokemonstart_m4_publication.py`: macOS staged, flushed, fsynced, same-directory hard-link publication with no-clobber semantics and post-publication re-read. Windows fails closed until separately validated. The original stays untouched; the final pathname is absent before the complete staged file is linked.
-- `pokemonstart_m4_cli.py`: inspect, eligibility, capability list, preview, commit, and observed-return commands all call the core. The current evidence gate rejects preview and commit.
+- `pokemonstart_m4_cli.py`: inspect, eligibility, capability list, root enrollment, preview, commit, and observed-return commands all call the core. The current evidence gate rejects preview and commit. A user-selected `--environment` ID must match the journal for P.
 - `pokemonstart_m4_gui.py`: one-window select/inspect/preview/new-file/results flow over the core. Actions stay disabled when the core has none. The default Homebrew Python 3.13 lacks `_tkinter`; system `/usr/bin/python3` imports Tk 8.5. A displayed window has not yet been validated.
 - Existing proof writers remain exact-vector tools and were not promoted into FAMILY authority.
 
@@ -21,7 +21,7 @@ The journal must stay outside Git and stores only hashes and bounded metadata. I
 
 ## Current checks and remaining gates
 
-`python3 -m unittest discover -s tests -q`: **58/58 PASS** on macOS Homebrew Python 3.13 and system `/usr/bin/python3`. The publication tests cover complete output, no overwrite, symlink aliases, short write, link failure, source change, cleanup, and process exits immediately before and after the hard-link boundary. A crash at every possible machine instruction and a Windows run remain unverified. A minimal Tk root lifecycle passed under system Python, but an `EditorWindow` source-run hung in `root.update()` and was terminated; GUI display validation remains open.
+`python3 -m unittest discover -s tests -q`: **58/58 PASS** on macOS Homebrew Python 3.13 and system `/usr/bin/python3`. The publication tests cover complete output, no overwrite, symlink aliases, short write, link failure, source change, cleanup, and process exits immediately before and after the hard-link boundary. A crash at every possible machine instruction and a Windows run remain unverified. A minimal Tk root lifecycle and M4 `EditorWindow` widget construction both passed under system Python. An interactive `root.update()` source-run hung and was terminated; GUI interaction validation remains open.
 
 Before a private action is exposed: independently rehash the retained root and ROM/build; compare the retained normal-save transition corpus for both parities; settle the exact P transition rule; independently derive private markings 0→1 and 1→0 differentials from more than one P-qualified hash; perform representative actual game load/save; and then change the core authority gate with an evidence record. The present code intentionally cannot write the private root.
 

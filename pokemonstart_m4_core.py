@@ -163,6 +163,8 @@ def validate_journal(data: dict) -> None:
         raise EligibilityError("journal root/schema mismatch")
     if not isinstance(data.get("build_sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", data["build_sha256"]):
         raise EligibilityError("journal build binding missing")
+    if not isinstance(data.get("environment_id"), str) or not 1 <= len(data["environment_id"]) <= 100:
+        raise EligibilityError("journal environment binding missing")
     if not isinstance(data.get("nodes"), dict) or ROOT_SHA256 not in data["nodes"]:
         raise EligibilityError("journal root node missing")
     keys = {"sha256", "active_slot", "counter", "active_slot_sha256", "record0_sha256",
@@ -240,7 +242,7 @@ def check_game_transition(parent: dict, candidate_raw: bytes,
 
 
 def profile(raw: bytes, result: v.VerificationResult, journal: dict | None,
-            build_sha256: str | None) -> ProfileEligibility:
+            build_sha256: str | None, environment_id: str | None) -> ProfileEligibility:
     if journal is None:
         return ProfileEligibility(False, "local private lineage journal missing", None)
     try:
@@ -249,6 +251,8 @@ def profile(raw: bytes, result: v.VerificationResult, journal: dict | None,
         return ProfileEligibility(False, str(exc), None)
     if build_sha256 != journal["build_sha256"]:
         return ProfileEligibility(False, "selected ROM/build hash mismatch", None)
+    if environment_id != journal["environment_id"]:
+        return ProfileEligibility(False, "selected emulator environment mismatch", None)
     digest = result.file_sha256
     node = journal["nodes"].get(digest)
     if node is None:
@@ -261,9 +265,9 @@ def profile(raw: bytes, result: v.VerificationResult, journal: dict | None,
 
 
 def inspect(raw: bytes, journal: dict | None = None,
-            build_sha256: str | None = None) -> Inspection:
+            build_sha256: str | None = None, environment_id: str | None = None) -> Inspection:
     s0 = structural(raw)
-    p = profile(raw, s0.result, journal, build_sha256) if s0.eligible and s0.result else ProfileEligibility(False, "S0 failed", None)
+    p = profile(raw, s0.result, journal, build_sha256, environment_id) if s0.eligible and s0.result else ProfileEligibility(False, "S0 failed", None)
     capabilities: tuple[Capability, ...] = ()
     if s0.eligible and p.eligible and FAMILY_PROVEN:
         marking = s0.result.party[0].markings
@@ -328,8 +332,9 @@ def audit_output(source: bytes, output: bytes, plan: MutationPlan) -> Verificati
                                plan.capability.capability_id, diffs, True)
 
 
-def preview(raw: bytes, journal: dict, build_sha256: str, capability_id: str) -> MutationPlan:
-    found = inspect(raw, journal, build_sha256)
+def preview(raw: bytes, journal: dict, build_sha256: str, environment_id: str,
+            capability_id: str) -> MutationPlan:
+    found = inspect(raw, journal, build_sha256, environment_id)
     for capability in found.capabilities:
         if capability.capability_id == capability_id:
             return _derive_markings(raw, capability)[1]
@@ -353,7 +358,7 @@ def _write_journal(path: Path, journal: dict) -> None:
             staged.unlink()
 
 
-def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path) -> dict:
+def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path, environment_id: str) -> dict:
     """Enroll only the canonical observed root; this does not prove FAMILY."""
     if sha(raw) != ROOT_SHA256:
         raise EligibilityError("unknown root hash")
@@ -363,7 +368,10 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path) -> dict:
     path = Path(journal_path)
     if path.exists():
         raise EligibilityError("journal already exists")
+    if not 1 <= len(environment_id) <= 100:
+        raise EligibilityError("environment ID must be 1-100 characters")
     journal = {"version": 1, "root_sha256": ROOT_SHA256, "build_sha256": sha(rom),
+               "environment_id": environment_id,
                "nodes": {ROOT_SHA256: journal_fingerprint(raw, s0.result)}, "edges": []}
     if path.resolve().is_relative_to(Path(__file__).resolve().parent):
         raise EligibilityError("journal must be outside repository")
@@ -376,13 +384,13 @@ def enroll_root(raw: bytes, rom: bytes, journal_path: str | Path) -> dict:
 
 
 def commit(source_path: str | Path, destination_path: str | Path, journal_path: str | Path,
-           rom_path: str | Path, plan: MutationPlan) -> VerificationReceipt:
+           rom_path: str | Path, environment_id: str, plan: MutationPlan) -> VerificationReceipt:
     journal = load_journal(journal_path)
     build_hash = sha(Path(rom_path).read_bytes())
     raw = Path(source_path).read_bytes()
     if sha(raw) != plan.source_sha256:
         raise EligibilityError("stale MutationPlan: source hash changed")
-    current_plan = preview(raw, journal, build_hash, plan.capability.capability_id)
+    current_plan = preview(raw, journal, build_hash, environment_id, plan.capability.capability_id)
     if current_plan != plan:
         raise EligibilityError("stale MutationPlan: preview changed")
     output, _ = _derive_markings(raw, plan.capability)
@@ -402,13 +410,15 @@ def commit(source_path: str | Path, destination_path: str | Path, journal_path: 
 
 def record_observed_game_return(candidate_path: str | Path, journal_path: str | Path,
                                 rom_path: str | Path, parent_sha256: str,
-                                human_observed: bool) -> dict:
+                                environment_id: str, human_observed: bool) -> dict:
     """Journal a checked B -> C return after a human reports an actual save."""
     if not human_observed:
         raise EligibilityError("actual game load and normal save observation required")
     journal = load_journal(journal_path)
     if sha(Path(rom_path).read_bytes()) != journal["build_sha256"]:
         raise EligibilityError("selected ROM/build hash mismatch")
+    if environment_id != journal["environment_id"]:
+        raise EligibilityError("selected emulator environment mismatch")
     parent = journal["nodes"].get(parent_sha256)
     if parent is None or not any(edge.get("kind") == "editor" and edge.get("child") == parent_sha256
                                  for edge in journal["edges"]):

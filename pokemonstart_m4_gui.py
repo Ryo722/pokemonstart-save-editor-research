@@ -35,6 +35,7 @@ class EditorWindow:
         self.rom: Path | None = None
         self.inspection: core.Inspection | None = None
         self.action = tk.StringVar()
+        self.environment_id = tk.StringVar()
         self.status = tk.StringVar(value="Select a save, local journal, and checked ROM.")
         self.detail = tk.StringVar(value="Original save remains the rollback copy.")
         frame = ttk.Frame(root, padding=14)
@@ -43,16 +44,21 @@ class EditorWindow:
                                                    ("Select journal", self.select_journal),
                                                    ("Select ROM", self.select_rom))):
             ttk.Button(frame, text=label, command=callback).grid(row=row, column=0, sticky="ew", pady=3)
-        ttk.Label(frame, textvariable=self.status, wraplength=540, justify="left").grid(row=3, column=0, sticky="w", pady=8)
-        ttk.Label(frame, textvariable=self.detail, wraplength=540, justify="left").grid(row=4, column=0, sticky="w", pady=8)
+        ttk.Label(frame, text="Emulator environment ID used for this lineage:").grid(row=3, column=0, sticky="w")
+        entry = ttk.Entry(frame, textvariable=self.environment_id, width=40)
+        entry.grid(row=4, column=0, sticky="ew")
+        entry.bind("<Return>", lambda event: self.refresh())
+        entry.bind("<FocusOut>", lambda event: self.refresh())
+        ttk.Label(frame, textvariable=self.status, wraplength=540, justify="left").grid(row=5, column=0, sticky="w", pady=8)
+        ttk.Label(frame, textvariable=self.detail, wraplength=540, justify="left").grid(row=6, column=0, sticky="w", pady=8)
         self.menu = ttk.Combobox(frame, textvariable=self.action, state="disabled", width=36)
-        self.menu.grid(row=5, column=0, sticky="ew")
+        self.menu.grid(row=7, column=0, sticky="ew")
         self.preview_button = ttk.Button(frame, text="Preview", command=self.preview, state="disabled")
-        self.preview_button.grid(row=6, column=0, sticky="ew", pady=3)
+        self.preview_button.grid(row=8, column=0, sticky="ew", pady=3)
         self.commit_button = ttk.Button(frame, text="Save to new .sav", command=self.commit, state="disabled")
-        self.commit_button.grid(row=7, column=0, sticky="ew", pady=3)
+        self.commit_button.grid(row=9, column=0, sticky="ew", pady=3)
         ttk.Label(frame, text="Keep the original untouched. Restore it manually if the game rejects the copy.",
-                  wraplength=540).grid(row=8, column=0, sticky="w", pady=8)
+                  wraplength=540).grid(row=10, column=0, sticky="w", pady=8)
 
     def select_save(self):
         name = filedialog.askopenfilename(filetypes=[("Save files", "*.sav")])
@@ -83,7 +89,7 @@ class EditorWindow:
             raw = self.source.read_bytes()
             journal = core.load_journal(self.journal) if self.journal else None
             build_hash = core.sha(self.rom.read_bytes()) if self.rom else None
-            self.inspection = core.inspect(raw, journal, build_hash)
+            self.inspection = core.inspect(raw, journal, build_hash, self.environment_id.get())
             model = display_model(self.inspection)
             self.status.set(f"SHA-256: {model['source']}\nS0: {model['structure']}\nP: {model['profile']}")
             self.detail.set(f"party[0] markings: {model['markings']}; available PROVEN actions: {', '.join(model['actions']) or 'none'}")
@@ -100,7 +106,8 @@ class EditorWindow:
         try:
             raw = self.source.read_bytes()
             journal = core.load_journal(self.journal)
-            plan = core.preview(raw, journal, core.sha(self.rom.read_bytes()), self.action.get())
+            plan = core.preview(raw, journal, core.sha(self.rom.read_bytes()),
+                                self.environment_id.get(), self.action.get())
             self.detail.set(f"Preview: party[0] markings {plan.capability.before} → {plan.capability.after}; "
                             f"{len(plan.diffs)} changed bytes including checksum.\n"
                             f"Output SHA-256: {plan.output_sha256}\nOriginal is the rollback copy.")
@@ -121,8 +128,10 @@ class EditorWindow:
         try:
             raw = self.source.read_bytes()
             journal = core.load_journal(self.journal)
-            plan = core.preview(raw, journal, core.sha(self.rom.read_bytes()), self.action.get())
-            receipt = core.commit(self.source, Path(name), self.journal, self.rom, plan)
+            plan = core.preview(raw, journal, core.sha(self.rom.read_bytes()),
+                                self.environment_id.get(), self.action.get())
+            receipt = core.commit(self.source, Path(name), self.journal, self.rom,
+                                  self.environment_id.get(), plan)
             self.detail.set(f"Independently verified output: {receipt.output_sha256}\n"
                             f"Source: {receipt.source_sha256}\nKeep the original as rollback.")
             self.commit_button.configure(state="disabled")
