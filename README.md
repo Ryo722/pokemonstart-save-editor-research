@@ -16,9 +16,9 @@ Evidence-first research and tooling for a user-controlled PokemonStart save edit
 
 **M4 — bounded usable-editor first slice is COMPLETE.** PR #13 adopted the retained-lineage S0/P/C core, repeated-use `party[0]` markings `0 ↔ 1` FAMILY, CLI/audit path, hardened macOS publication, and localhost-only NiceGUI delivery. PR #14 exact candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was explicitly adopted and merged as `2547650cf898c89450a1d95b5252cf9c52e0f634`, adding the bounded Windows path. See `docs/m4-completion.md`.
 
-**M5A — Money capability is IN INVESTIGATION.** The post-M4 North Star has been explicitly expanded toward practical owner-use capabilities: money, inventory/items, and substantial party-Pokemon editing including eventual species transformation where its coupled state can be proven. General event/story/quest flag editing is out of scope; Pokédex editing is future work. M5A currently has only source/read-only investigation authority; **no money writer is authorized yet**. See `docs/post-m4-strategy-and-m5a-money.md`.
+**M5A — Money capability is IN PROGRESS.** The exact retained input decodes to `3000`, matching the human-observed game display. Under explicit bounded authorization, a one-input `3000 -> 9,999,999` proof writer generated output SHA-256 `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`. The complete five-byte diff, checksums, preserved regions, source immutability, and an independent audit all pass. **Human game load/resave evidence is still required; no reusable arbitrary-money FAMILY is authorized or claimed.** See `docs/m5a-exact-max-money-canary.md`.
 
-The adopted M4 write boundary remains intentionally narrow while M5 research proceeds:
+The adopted M4 reusable write boundary remains intentionally narrow while M5 research proceeds:
 
 - retained PokemonStart v0.15 lineage/build/environment only;
 - only `party[0]` markings `0 ↔ 1` is currently an adopted reusable write FAMILY;
@@ -33,20 +33,24 @@ The adopted M4 write boundary remains intentionally narrow while M5 research pro
 
 The expanded North Star is: build an evidence-first local editor for the owner's positively supported PokemonStart save lineage that can perform the common practical edits the owner actually wants while retaining fail-closed provenance/capability gates, separate outputs, independent verification, and recovery. The target sequence is money → inventory/items → practical party-Pokemon editing; Pokédex is future work and general progression/event flag editing is excluded.
 
-This roadmap is not a blanket support claim. Arbitrary saves, broader builds/versions, unrestricted values, boxes/bags, money writing, inventory writing, species changes, and every other unadopted capability remain unsupported until independently proven and explicitly adopted.
+This roadmap is not a blanket support claim. Arbitrary saves, broader builds/versions, unrestricted values, boxes/bags, reusable money writing, inventory writing, species changes, and every other unadopted capability remain unsupported until independently proven and explicitly adopted.
 
-## M5A Money investigation
+## M5A Money
 
-Pinned CFRU-JP source evidence places the candidate stored money word at SaveBlock1 offset `0x0290` and the SaveBlock2 encryption key at offset `0xF20`. CFRU-JP save mapping puts these in active logical sections 1 and 0 respectively, and CFRU-JP records a patch increasing maximum money to `9,999,999`.
+Pinned CFRU-JP source evidence places the stored money word at SaveBlock1 offset `0x0290` and the SaveBlock2 encryption key at offset `0xF20`. CFRU-JP save mapping puts these in active logical sections 1 and 0 respectively, and CFRU-JP records a patch increasing maximum money to `9,999,999`.
 
-The current source-derived hypothesis is:
+The read/write representation under investigation is:
 
 ```text
 money = LE32(active logical section 1 @ 0x0290)
         XOR LE32(active logical section 0 @ 0x0F20)
 ```
 
-This is **not yet a PokemonStart private-save proof**. The next required evidence is a controlled private before/after normal game save with a known displayed money change, analyzed read-only. A separate Human authorization is required before implementing or executing a money writer.
+For exact retained input SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, independent read-only analysis decoded `3000`, and the user confirmed the game display is `3000`.
+
+The authorized exact canary writer then generated only one target: `9,999,999`. Its output SHA-256 is `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`. Only three money bytes and two section-checksum bytes differ; an independent complete-byte audit passed and the source remained immutable.
+
+This is **pre-game exact-canary evidence only**. The next step is to load that exact output in PokemonStart, confirm `9,999,999`, perform one normal in-game save, and return the resave for read-only audit. Do not generalize the exact proof to arbitrary amounts or other saves.
 
 ## Run the verifier
 
@@ -95,6 +99,8 @@ Key records include:
 - `docs/m4-windows-bounded-integration-authorization.md`
 - `docs/m4-completion.md`
 - `docs/post-m4-strategy-and-m5a-money.md`
+- `docs/m5a-money-private-read-audit.md`
+- `docs/m5a-exact-max-money-canary.md`
 
 ## Data boundary
 
