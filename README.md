@@ -20,7 +20,9 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M3C — COMPLETE.** The field-expansion milestone is closed with a useful bounded party-edit capability set, a reusable fail-closed transaction envelope, explicit blocked/unsupported capabilities, and a formal exit assessment. Further field proofs require a new evidence-backed need rather than continuing M3C by default.
 
-**M4 — usable editor / GUI is NOT AUTHORIZED.** The next project boundary is an M4 entry/design decision. M3C completion does not authorize GUI implementation, arbitrary/non-lineage save support, boxes/bags, overwrite mode, or new unproven capabilities.
+**M4 — bounded usable-editor implementation is AUTHORIZED / IN PROGRESS.** PR #12 adopted the evidence-gated M4 design. The authorized first slice is retained-lineage S0/P/C qualification, one bounded repeated-use `party[0]` markings family, hardened new-file transaction/publication, independent verification, and thin Tkinter/CLI delivery with required private canaries. Arbitrary/non-lineage save support, boxes/bags, unrestricted values, and final implementation-PR merge remain unauthorized.
+
+See `docs/m4-entry-decision.md` for the adopted design and `docs/m4-bounded-implementation-authorization.md` for the exact authorization boundary.
 
 New private `.sav` proof outputs must be written outside this repository. The shared M3C transaction writer rejects output paths within the repository. Historical preflight files under ignored `work/` are not committed.
 
@@ -52,7 +54,7 @@ Tests use synthetic save bytes. No `.sav` fixture is committed.
 
 ## Evidence and scope
 
-See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, and `docs/m3c-exit-assessment.md`.
+See `docs/evidence.md`, `docs/decision-record.md`, `docs/m3a-support-envelope-findings.md`, `docs/m3b-proof-candidate.md`, `docs/m3c-f1-friendship-proof.md`, `docs/m3c-goal-batch-program.md`, `docs/m3c-batch-low-coupling.md`, `docs/m3c-derived-stats-canary.md`, `docs/m3c-exit-assessment.md`, `docs/m4-entry-decision.md`, and `docs/m4-bounded-implementation-authorization.md`.
 
 ## Data boundary
 
