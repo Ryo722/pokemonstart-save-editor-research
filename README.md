@@ -1,6 +1,6 @@
 # PokemonStart save editor research
 
-Evidence-first research and tooling for a future, user-controlled PokemonStart save editor. Protected game data is not part of this repository.
+Evidence-first research and tooling for a user-controlled PokemonStart save editor. Protected game data is not part of this repository.
 
 ## Current position
 
@@ -16,10 +16,12 @@ Evidence-first research and tooling for a future, user-controlled PokemonStart s
 
 **M4 — bounded usable-editor first slice is COMPLETE.** PR #13 adopted the retained-lineage S0/P/C core, repeated-use `party[0]` markings `0 ↔ 1` FAMILY, CLI/audit path, hardened macOS publication, and localhost-only NiceGUI delivery. PR #14 exact candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was explicitly adopted and merged as `2547650cf898c89450a1d95b5252cf9c52e0f634`, adding the bounded Windows path. See `docs/m4-completion.md`.
 
-The M4 completion boundary is intentionally narrow:
+**M5A — Money capability is IN INVESTIGATION.** The post-M4 North Star has been explicitly expanded toward practical owner-use capabilities: money, inventory/items, and substantial party-Pokemon editing including eventual species transformation where its coupled state can be proven. General event/story/quest flag editing is out of scope; Pokédex editing is future work. M5A currently has only source/read-only investigation authority; **no money writer is authorized yet**. See `docs/post-m4-strategy-and-m5a-money.md`.
+
+The adopted M4 write boundary remains intentionally narrow while M5 research proceeds:
 
 - retained PokemonStart v0.15 lineage/build/environment only;
-- only `party[0]` markings `0 ↔ 1` as the reusable FAMILY;
+- only `party[0]` markings `0 ↔ 1` is currently an adopted reusable write FAMILY;
 - malformed, ambiguous, unsupported, non-lineage, or capability-ineligible saves fail closed;
 - macOS uses the adopted staged/no-clobber publication path;
 - Windows semantic/browser delivery requires validated Windows build `26200.9457`;
@@ -29,11 +31,22 @@ The M4 completion boundary is intentionally narrow:
 - NiceGUI binds only to `127.0.0.1`, with no relay/LAN/public exposure;
 - the tool never automatically writes an emulator live-save path and never overwrites the source.
 
-This completion does **not** make the repository a general PokemonStart/PKHeX-style editor. Arbitrary saves, broader builds/versions, other party indices, unrestricted values, boxes/bags, and unproven fields remain outside scope.
+The expanded North Star is: build an evidence-first local editor for the owner's positively supported PokemonStart save lineage that can perform the common practical edits the owner actually wants while retaining fail-closed provenance/capability gates, separate outputs, independent verification, and recovery. The target sequence is money → inventory/items → practical party-Pokemon editing; Pokédex is future work and general progression/event flag editing is excluded.
 
-See `docs/decision-record.md` for the canonical milestone/current-state definition; `docs/m4-completion.md` for the exact M4 completion authority and evidence; `docs/m4-windows-candidate-evidence.md` for the Windows evidence packet; and the earlier M4 design/adoption records for the authority chain.
+This roadmap is not a blanket support claim. Arbitrary saves, broader builds/versions, unrestricted values, boxes/bags, money writing, inventory writing, species changes, and every other unadopted capability remain unsupported until independently proven and explicitly adopted.
 
-The refined North Star is: enable a PokemonStart player to inspect a positively supported save, make a small evidence-proven party edit into a separate output file, independently verify that output, and retain a reliable recovery path. That North Star is now demonstrated for the bounded M4 first slice above.
+## M5A Money investigation
+
+Pinned CFRU-JP source evidence places the candidate stored money word at SaveBlock1 offset `0x0290` and the SaveBlock2 encryption key at offset `0xF20`. CFRU-JP save mapping puts these in active logical sections 1 and 0 respectively, and CFRU-JP records a patch increasing maximum money to `9,999,999`.
+
+The current source-derived hypothesis is:
+
+```text
+money = LE32(active logical section 1 @ 0x0290)
+        XOR LE32(active logical section 0 @ 0x0F20)
+```
+
+This is **not yet a PokemonStart private-save proof**. The next required evidence is a controlled private before/after normal game save with a known displayed money change, analyzed read-only. A separate Human authorization is required before implementing or executing a money writer.
 
 ## Run the verifier
 
@@ -49,7 +62,7 @@ The verifier accepts only `0x20000`-byte flash images or `0x20010`-byte files wi
 
 The NiceGUI layer is optional and kept separate from the standard-library save core and CLI. Install the pinned dependency from `requirements-m4-ui.txt`, then run `pokemonstart_m4_web.py` with the local private lineage journal, selected ROM/build, and matching environment ID.
 
-The server binds only to `127.0.0.1`. A positively qualified host/save exposes only the core-returned bounded markings action. Output bytes are independently verified before browser download. Keep the original save as the recovery copy and never replace a live emulator save automatically.
+The server binds only to `127.0.0.1`. A positively qualified host/save currently exposes only the adopted bounded markings action. Output bytes are independently verified before browser download. Keep the original save as the recovery copy and never replace a live emulator save automatically.
 
 On Windows, an OS build outside the exact validated host gate remains fail closed for write delivery. Filesystem commit additionally rejects destinations outside the adopted local fixed NTFS boundary.
 
@@ -81,6 +94,7 @@ Key records include:
 - `docs/m4-windows-candidate-evidence.md`
 - `docs/m4-windows-bounded-integration-authorization.md`
 - `docs/m4-completion.md`
+- `docs/post-m4-strategy-and-m5a-money.md`
 
 ## Data boundary
 
