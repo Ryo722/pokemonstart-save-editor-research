@@ -51,6 +51,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         with self.assertRaises(core.EligibilityError):
             self.workflow.download()
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_capability_preview_commit_independent_receipt_and_download(self):
         report = self.workflow.upload(self.save_path.name, self.save_path.read_bytes())
         self.assertTrue(report.s0_eligible)
@@ -88,6 +89,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         self.assertEqual(after_repeat["nodes"], before_repeat["nodes"])
         self.assertEqual(after_repeat["edges"], before_repeat["edges"])
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_stale_plan_rejected_if_lineage_binding_changes(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         plan = self.workflow.preview(report.actions[0])
@@ -99,6 +101,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         with self.assertRaises(core.EligibilityError):
             self.workflow.download()
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_unvalidated_platform_disables_all_private_write_paths(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         plan = self.workflow.preview(report.actions[0])
@@ -108,6 +111,20 @@ class NiceGuiAdapterTests(unittest.TestCase):
         destination = self.directory / "must-not-exist.sav"
 
         with patch.object(core.sys, "platform", "win32"):
+            with patch.object(core.host, "validated_windows_host", return_value=False):
+                self._assert_unvalidated_platform(report, plan, journal_before, journal,
+                                                  build_hash, destination)
+
+        self.assertEqual(self.journal_path.read_bytes(), journal_before)
+        journal_after = core.load_journal(self.journal_path)
+        self.assertEqual(journal_after["nodes"], journal["nodes"])
+        self.assertEqual(journal_after["edges"], journal["edges"])
+        self.assertFalse(destination.exists())
+        self.assertIsNone(self.workflow.output_raw)
+        self.assertEqual(self.save_path.read_bytes(), self.source)
+
+    def _assert_unvalidated_platform(self, report, plan, journal_before, journal,
+                                     build_hash, destination):
             disabled = self.workflow.upload(self.save_path.name, self.source)
             self.assertTrue(disabled.s0_eligible)
             self.assertTrue(disabled.p_eligible)
@@ -129,14 +146,6 @@ class NiceGuiAdapterTests(unittest.TestCase):
             with self.assertRaisesRegex(core.EligibilityError, "disabled pending explicit validation"):
                 self.workflow.download()
 
-        self.assertEqual(self.journal_path.read_bytes(), journal_before)
-        journal_after = core.load_journal(self.journal_path)
-        self.assertEqual(journal_after["nodes"], journal["nodes"])
-        self.assertEqual(journal_after["edges"], journal["edges"])
-        self.assertFalse(destination.exists())
-        self.assertIsNone(self.workflow.output_raw)
-        self.assertEqual(self.save_path.read_bytes(), self.source)
-
     def test_macOS_write_delivery_remains_enabled(self):
         if core.sys.platform != "darwin":
             self.skipTest("this host is not macOS")
@@ -145,6 +154,7 @@ class NiceGuiAdapterTests(unittest.TestCase):
         self.assertEqual(report.actions, ("markings-0-to-1",))
         self.workflow.preview(report.actions[0])
 
+    @patch.object(core.sys, "platform", "darwin")
     def test_unsupported_filename_rejected_and_clears_prior_state(self):
         report = self.workflow.upload(self.save_path.name, self.source)
         self.assertTrue(report.actions)
@@ -152,6 +162,8 @@ class NiceGuiAdapterTests(unittest.TestCase):
             self.workflow.upload("source.gba", self.source)
         self.assertIsNone(self.workflow.source_raw)
 
+    @unittest.skipUnless(core.sys.platform == "darwin" or core.host.validated_windows_host(),
+                         "validated macOS or Windows browser host")
     def test_nicegui_browser_upload_preview_commit_and_download(self):
         if web.ui is None:
             self.skipTest("NiceGUI is an optional UI-only dependency")

@@ -148,7 +148,8 @@ class PublicationTests(unittest.TestCase):
 
 class UnsupportedPlatformTests(unittest.TestCase):
     def test_windows_path_fails_closed_before_read_or_write(self):
-        with patch.object(p.sys, "platform", "win32"):
+        with patch.object(p.sys, "platform", "win32"), \
+             patch.object(p.host, "validated_windows_host", return_value=False):
             with self.assertRaisesRegex(p.PublicationError, "unvalidated"):
                 p.publish_new("missing.sav", "new.sav", "0" * 64, b"candidate", lambda raw: None)
 
