@@ -1,3 +1,6 @@
+import asyncio
+import os
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -102,6 +105,51 @@ class NiceGuiAdapterTests(unittest.TestCase):
         with self.assertRaisesRegex(core.EligibilityError, "local .sav"):
             self.workflow.upload("source.gba", self.source)
         self.assertIsNone(self.workflow.source_raw)
+
+    def test_nicegui_browser_upload_preview_commit_and_download(self):
+        if web.ui is None:
+            self.skipTest("NiceGUI is an optional UI-only dependency")
+        from nicegui.elements.button import Button
+        from nicegui.elements.upload import Upload
+        from nicegui.elements.upload_files import SmallFileUpload
+        from nicegui.testing import user_simulation
+
+        async def exercise_browser():
+            expected, _ = core._derive_markings(
+                self.source, core.Capability("markings-0-to-1", "FAMILY", 0, 0, 1))
+            argv = ["m4_web_simulation_app.py", "--journal", str(self.journal_path),
+                    "--rom", str(self.rom_path), "--environment", "synthetic"]
+            with patch.object(sys, "argv", argv), patch.dict(
+                    os.environ, {"PYTEST_CURRENT_TEST": "m4 browser integration"}):
+                async with user_simulation(
+                        main_file=Path(__file__).with_name("m4_web_simulation_app.py")) as user:
+                    await user.open("/")
+                    await user.should_see("Select local .sav")
+                    upload = next(iter(user.find(kind=Upload).elements))
+                    await upload.handle_uploads([SmallFileUpload(
+                        "synthetic.sav", "application/octet-stream", self.source)])
+                    await user.should_see("S0: S0 valid")
+                    await user.should_see("P: journaled retained lineage")
+                    await user.should_see("markings-0-to-1")
+                    user.find(kind=Button, content="Preview").click()
+                    await user.should_see("Expected output SHA-256")
+                    user.find(kind=Button, content="Create verified download").click()
+                    await user.should_see("Independently verified output SHA-256")
+                    user.find(kind=Button, content="Save verified .sav").click()
+                    response = await user.download.next()
+                    self.assertEqual(response.content, expected)
+                    self.assertEqual(self.save_path.read_bytes(), self.source)
+
+                    unsupported = bytearray(self.source)
+                    unsupported[-1] ^= 1  # opaque footer keeps S0 but breaks retained P
+                    await upload.handle_uploads([SmallFileUpload(
+                        "unsupported.sav", "application/octet-stream", bytes(unsupported))])
+                    await user.should_see("PROVEN actions: none")
+                    for label in ("Preview", "Create verified download", "Save verified .sav"):
+                        button = next(iter(user.find(kind=Button, content=label).elements))
+                        self.assertFalse(button.enabled, f"{label} must stay disabled for unsupported input")
+
+        asyncio.run(exercise_browser())
 
 
 if __name__ == "__main__":
