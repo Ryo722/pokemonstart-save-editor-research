@@ -1,125 +1,123 @@
-# M4 Windows validation plan
+# M4 Windows validation — COMPLETE for bounded support
 
-**Status: Draft PR #14 contains a bounded Windows production-integration
-candidate; canonical `main` still disables Windows write/download.** The
-candidate's semantic/browser gate requires the exact validated Windows build.
-Filesystem commit has a separate destination gate requiring a local fixed NTFS
-volume with no reparse component in the parent chain. A later exact-candidate
-Human review and adoption decision is required before canonical support.
+**Status: COMPLETE / ADOPTED for the bounded Windows path merged in PR #14.**
 
-The executed Windows baseline, prior private validation, and integrated-path
-record is in
-[`m4-windows-candidate-evidence.md`](m4-windows-candidate-evidence.md). The
-earlier standalone Windows experiment has been promoted into production
-publication dispatch on PR #14. No integration code is on canonical `main`.
-The untouched source save remains the recovery anchor. Staged bytes are
-flushed before final-name exposure, but sudden power-loss persistence of the
-Windows directory entry is not claimed.
+PR #14 exact candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was explicitly authorized and merged as `2547650cf898c89450a1d95b5252cf9c52e0f634`.
 
-The remainder of this document preserves the validation plan and acceptance
-boundary. Executed results and explicit non-claims are in the evidence record.
+The adopted Windows boundary is deliberately narrow:
+
+- semantic/in-memory/browser delivery only when the explicit host gate accepts Windows build `26200.9457`;
+- filesystem publication only to a user-controlled local fixed NTFS destination;
+- every existing destination-parent component must be non-reparse;
+- destination must be a new `.sav` outside the repository and not alias the input;
+- network, removable, non-NTFS, reparse-parent, existing-destination, and unvalidated-build cases fail closed.
+
+This document records the validation disposition. Detailed executed evidence and labels are in `m4-windows-candidate-evidence.md`; exact completion authority is in `m4-completion.md`.
 
 ## Dependency and network boundary
 
-- Python 3.10+ runs the save-analysis, S0/P/C, transaction, receipt, and CLI
-  core. These do not import or require NiceGUI.
-- NiceGUI is an optional UI dependency only, pinned in
-  `requirements-m4-ui.txt`.
-- The NiceGUI service must bind only to `127.0.0.1`. The supported configuration
-  must set `on_air=False`; no relay, LAN/public listener, or remote hosting is
-  allowed. Private save and ROM/build bytes must remain on the local machine.
-- Windows source-run validation must confirm browser upload → S0/P/C inspection
-  → bounded preview → explicit commit → independent output audit → verified
-  browser download. Before Windows write delivery is adopted, the UI must show
-  that writes are disabled and keep preview, commit, and download unavailable.
+- Python 3.10+ runs the save-analysis, S0/P/C, transaction, receipt, and CLI core.
+- NiceGUI remains an optional UI dependency pinned in `requirements-m4-ui.txt`.
+- NiceGUI binds only to `127.0.0.1` with `on_air=False`.
+- No relay, LAN/public listener, remote hosting, or external private-save upload is supported.
+- Private save and ROM/build bytes stay local and outside Git.
 
-## Synthetic platform gate
+## Executed Windows platform evidence
 
-Run the full suite with the optional UI dependency installed and distinguish
-executed tests from skips:
+Actual Windows validation used Windows 11 build `26200.9457` on local NTFS.
 
-```text
-py -m unittest discover -s tests -v
-```
+The production-integrated Windows suite recorded **88 tests OK with 12 macOS-only skips**. Executed coverage included:
 
-The suite must prove that simulated `win32` keeps valid S0/P inspection
-read-only, returns no editable capability, and rejects both
-`core.commit_download` and filesystem `core.commit` even when given a plan
-created on macOS. It must also reject browser preview/commit/download at the
-workflow boundary. Verify that no journal node or edge is added, no destination
-file is created, and the source remains byte-identical. macOS write behavior
-must continue to pass unchanged.
+- exact Windows host gate and changed-build fail-closed behavior;
+- production S0/P/C core;
+- CLI preview/commit;
+- localhost NiceGUI browser simulation and listener configuration;
+- in-memory verified browser download independent from filesystem publication;
+- local-NTFS publication success;
+- existing destination and alias rejection;
+- hard-link alias rejection;
+- repository-destination rejection;
+- junction/reparse-parent rejection;
+- competing final-name creator no-clobber behavior;
+- short-write, staged-audit, link, source-mutation, and post-publication-audit failures;
+- preservation of a rival replacement rather than deleting a path no longer owned by the transaction;
+- process exit immediately before and immediately after final-link publication;
+- deterministic fail-closed decisions for network/removable/non-NTFS cases where an actual unsupported volume was unavailable.
 
-## Windows NTFS filesystem publication: CLI/core
+These are local execution results, not GitHub Actions reproduction.
 
-Before enabling filesystem publication on Windows, validate the intended
-new-file/no-clobber implementation on the selected filesystem, beginning with
-synthetic data in a private NTFS test directory outside the repository and any
-emulator live-save directory:
+## Private Windows S0/P/C validation
 
-1. Stage in the destination directory, write all bytes, flush the file, and
-   independently audit staged bytes before exposing a final name.
-2. Prove no-clobber creation against existing files, symlinks, hard links,
-   junctions/parent aliases, source aliases, repository destinations, and a
-   competing creator. Do not use replacing rename.
-3. Inject short writes, audit rejection, file/link failures, and process exits
-   immediately before and after publication. Before publication the final path
-   must be absent; after publication it must contain the complete audited
-   bytes. Preserve source and pre-existing destination bytes and record stage
-   cleanup.
-4. Validate atomicity and durability APIs on actual NTFS, including
-   permissions and directory-sync behavior. If only NTFS is proved, reject or
-   leave other filesystems unsupported.
-5. Confirm core/CLI fails before I/O on every unvalidated platform/filesystem.
+Using locally authorized private inputs outside Git:
 
-macOS `os.link` and fsync tests do not establish Windows behavior.
+1. the selected PokemonStart v0.15 ROM/build and retained private root were independently rehashed locally;
+2. a fresh Windows-local hash/metadata-only journal was created rather than treating the macOS journal as Windows proof;
+3. the retained root passed S0 and P;
+4. the core returned only the bounded `party[0]` markings `1 -> 0` action for that starting state;
+5. one new private `.sav` was published in a local NTFS private directory through the Windows validation path;
+6. the normal receipt and a separate complete-byte audit passed;
+7. exactly the markings byte and one required section checksum byte changed;
+8. all section checksums and preservation invariants passed;
+9. the source remained byte-identical;
+10. the private NiceGUI workflow returned bytes identical to the independently verified filesystem output without creating a duplicate lineage edge.
 
-## Windows private S0/P/C validation
+After production integration, a read-only private check confirmed the production host gate, S0/P/C inspection, preview hash, independent audit, and BrowserWorkflow preview matched the previously audited private result. It created no new private save and no new game canary.
 
-Only after synthetic platform checks pass, and only using locally authorized
-private inputs outside Git:
+## Filesystem publication contract
 
-1. Rehash the selected PokemonStart v0.15 ROM/build locally and validate the
-   retained private save's S0 structure on Windows.
-2. Independently establish the retained P binding for that host and verify the
-   bounded C family remains only party[0] markings `0 ↔ 1`. Keep any Windows
-   journal hash-only and private. Do not infer Windows eligibility from a
-   filename, save layout, macOS journal, or matching ROM hash alone.
-3. Confirm unsupported or unqualified private saves expose no edit action and
-   that all Windows write/download entry points remain disabled until the
-   platform proof is adopted.
-4. Do not repeat a game canary merely because the host platform changed. If
-   source/profile or semantic evidence reveals a material platform-specific
-   uncertainty, stop and seek the smallest controlled evidence needed.
+On adopted Windows filesystem commit:
 
-Keep saves, ROM/build data, and generated outputs outside Git, PR contents,
-logs, and release bundles. Do not overwrite the source or an emulator live-save
-path.
+1. destination boundary is checked;
+2. source identity and candidate audit are checked;
+3. a private same-directory stage is created;
+4. all candidate bytes are written, flushed, and `os.fsync` is called;
+5. stage bytes are reread and independently audited;
+6. source identity is checked again;
+7. a no-clobber same-directory hard link exposes the final name;
+8. final bytes are reread and independently audited;
+9. source identity is checked again;
+10. the transaction-owned stage is cleaned up on normal completion/failure;
+11. post-publication cleanup removes a final entry only when it is still demonstrably the transaction-owned link.
 
-## Windows NiceGUI browser/UI validation
+The untouched input is always the recovery anchor.
 
-On Windows, verify that the service starts only on `127.0.0.1`, with
-`on_air=False`, and that it cannot be reached through a LAN/public interface.
-Exercise synthetic supported-shaped and unsupported inputs first, then the
-authorized retained private input only after the S0/P/C checks above:
+Tested process exits before final-link creation left no final pathname and a complete private stage; tested exits immediately after link creation left a complete final file and stage.
 
-- unsupported/unqualified input displays S0/P results but no edit action;
-- the eligible preview describes only the core-returned markings action;
+## NiceGUI browser/UI result
+
+Windows NiceGUI validation established:
+
+- localhost-only startup on `127.0.0.1`;
+- `on_air=False`;
+- no dependency on NTFS publication for browser/in-memory delivery;
+- unsupported or unqualified input exposes no edit action;
+- eligible input exposes only the core-returned bounded markings action;
 - stale plans fail closed;
-- commit uses the existing core transaction and independent receipt audit;
-- download is exposed only after output verification and preserves source
-  bytes; no automatic write to an emulator path occurs;
-- host/network configuration contains no relay, `on_air`, or public binding.
+- commit uses the same core transaction and independent receipt audit;
+- download becomes available only after output verification;
+- input remains immutable;
+- no automatic emulator live-save write occurs.
 
-Record Windows browser results separately from filesystem publication results.
-Do not claim Windows UI write support until both the core gate and these checks
-are reviewed and explicitly adopted.
+## Explicit non-claims retained after adoption
 
-## Completion record
+The adopted Windows path does **not** claim:
 
-Record the OS/build, Python and NiceGUI versions, filesystem, exact tests run and
-skipped, source/build/journal verification outcome without publishing private
-file bytes or per-save hashes. A green cross-platform synthetic suite alone
-does not establish private Windows S0/P/C acceptance. M4 remains IN PROGRESS
-until the canonical cross-platform acceptance criteria are satisfied or a
-later human decision changes them.
+- support for Windows builds outside the exact validated host gate;
+- network/removable/non-NTFS filesystem publication;
+- general Windows filesystem safety outside local fixed NTFS;
+- protection against hostile concurrent parent-junction/final-name replacement after path validation;
+- Windows directory-metadata or final-name persistence across sudden power loss;
+- actual Windows symlink-fixture execution where the validation account lacked the necessary privilege;
+- arbitrary save, broader build/version, broader capability, or broader party-index support.
+
+These limits are part of the support contract rather than pending hidden proof obligations for the completed first slice.
+
+## Game-boundary disposition
+
+No additional game/emulator canary was required merely because the host OS changed. The bounded markings FAMILY already had representative retained-lineage game-boundary evidence in both directions. Windows validation targeted the OS-specific delivery, filesystem publication, private S0/P/C, and fail-closed boundaries instead.
+
+## Completion
+
+The Windows delivery gap identified at M4 entry is closed under the exact narrow boundary above. Together with the adopted macOS evidence, this satisfies the cross-platform acceptance requirement for the bounded first slice.
+
+M4 completion is recorded in `docs/m4-completion.md` and the canonical current state is defined in `docs/decision-record.md`.
