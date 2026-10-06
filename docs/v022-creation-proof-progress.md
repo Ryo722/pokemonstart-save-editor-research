@@ -4,8 +4,9 @@ Canonical base: `88d5981bb35ce379fd018986b013a522ab0340b3`.
 Review branch: `codex/v022-creation-proofs-gui-20261007`.
 
 The controlling scope remains `v022-creation-proofs-and-gui-prototype.md`.
-The paused Money candidate has not been imported. No canonical main mutation
-or capability adoption is claimed.
+The paused Money candidate has not been imported. The proof work was performed
+on the review branch without mutating canonical main; these proofs do not imply
+Stable capability adoption.
 
 ## Fresh private proof root
 
@@ -142,8 +143,9 @@ Launch with the existing UI dependency environment:
 .venv/bin/python pokemonstart_v022_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
 ```
 
-The default port is 8766. Host binding is fixed to 127.0.0.1. This branch is a
-review candidate, not canonical adoption, Stable support or a public release.
+The default port is 8766. Host binding is fixed to 127.0.0.1. This slice remains
+Fast Lab experimental and exact-input bounded; it does not establish Stable
+support or a public release.
 
 ## Controller macros
 

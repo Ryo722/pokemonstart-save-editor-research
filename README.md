@@ -44,7 +44,10 @@ Stable provenance work such as P-direct/P-reanchor remains separate and is not o
 - **FL1 — practical core editing slice: COMPLETE EXPERIMENTALLY.** Exact PokemonStart v0.22 evidence includes bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
 - **FL2-G0 — durable Fast Lab baseline reconciliation: COMPLETE / MERGED.** Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` was fast-forwarded into canonical `main`.
 - **FL2 — unified practical local CLI: COMPLETE / MERGED.** Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` was fast-forwarded into canonical `main`. The unified CLI now durably exposes inspect / preview / bounded write / verify for the already-evidenced Money / Party / Inventory operations without expanding capability ranges.
-- **Post-FL2 acceptance / reusable-envelope planning: ACTIVE.** Current write eligibility is still tied to retained exact input-save SHA-256 values. The next step is private acceptance of the merged CLI followed by reusable-envelope design/preregistration; broader writer eligibility still requires separate Human authorization.
+- **Post-FL2 acceptance: COMPLETE.** Current write eligibility remains tied to retained exact input-save SHA-256 values; broader writer eligibility still requires separate Human authorization.
+- **Money reusable qualification: PAUSED / INCOMPLETE.** Supporting work remains on the separate frozen branch `codex/money-reusable-qualification-20261007`; its candidate writer eligibility is not included here.
+- **Exact-v0.22 Party append + Inventory insertion: COMPLETE EXPERIMENTALLY.** Exact-input proofs passed load, normal SAVE and cold reload without broadening reusable eligibility.
+- **Localhost v0.22 GUI experimental slice: COMPLETE.** The bounded slice described below provides inspection, preview and verified separate downloads under the existing FL2 and exact-input creation gates.
 
 After FL2, profile broadening, GUI/delivery, and Stable promotion remain **usage-driven alternatives**, not a fixed mandatory sequence.
 
@@ -70,9 +73,9 @@ Current Fast Lab evidence includes:
 
 These are **Fast Lab experimental** claims only. They do not establish arbitrary-save support, nonzero-key support, broad item/pocket support, broad species/move/level support, another PokemonStart version, normal-save lifecycle support for each field, or public-release readiness.
 
-## Exact-input creation + GUI review candidate
+## Exact-input creation + GUI experimental slice
 
-This review branch adds two **Fast Lab experimental** operations on the fresh
+This slice provides two **Fast Lab experimental** operations on the fresh
 exact-v0.22 proof root only: Party count 3->4 by copying the complete existing
 slot0 record into slot3, and Antidote ID14 x1 into the game-observed regular slot2
 without changing Money. Both passed load, normal SAVE and cold reload.
@@ -90,7 +93,8 @@ preview and verified separate downloads, bound only to 127.0.0.1:
 Use the existing `requirements-m4-ui.txt` environment. See
 [`docs/v022-creation-proof-progress.md`](docs/v022-creation-proof-progress.md)
 and the sanitized evidence JSON for exact identities, proof limits and
-validation. This is independent-review material, not a canonical merge/adoption.
+validation. This slice remains exact-input bounded and does not establish Stable
+support or public-release readiness.
 
 ## Shared safeguards
 
