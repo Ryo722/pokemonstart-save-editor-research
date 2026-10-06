@@ -49,7 +49,16 @@
     },
     "experimental_output_sha256": "15bdac0d6635c6237549565c49e3752c167e85a33643b89ff722ed3c7d17d569",
     "evidence_level": "Fast Lab experimental",
-    "stable_proven": false
+    "stable_proven": false,
+    "reusable_qualification_candidate": {
+      "module": "pokemonstart_fastlab_v022_money_reusable.py",
+      "dispatch": "pokemonstart_fl2_core.py Money-only path",
+      "status": "review candidate; canonical adoption requires separate authorization",
+      "predicate": "exact v0.22 ROM/profile; two valid slots; counters 0..0x7ffffffe consecutive with parity; both key0; both Money 0..9999999 and party count 0..6; strict integer money=7654321; active noop rejected",
+      "transaction": "active logical section 1 Money LE32 and covered checksum only; all other bytes preserved; independent candidate equality and repository verification",
+      "party_inventory_eligibility": "unchanged exact-save gates",
+      "stable_proven": false
+    }
   },
   "party": {
     "structure_observations": {

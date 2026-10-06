@@ -1,0 +1,153 @@
+{
+  "disposition": "USER_REQUESTED_STOP / QUALIFICATION INCOMPLETE",
+  "canonical_base_sha": "f28c1099db6d3155d40db268b0b0fe42afb94d9f",
+  "supporting_reviewed_sha": "93c070215181bb9e1a83c1b1b0bc82110a726793",
+  "review_branch": "codex/money-reusable-qualification-20261007",
+  "gameplay_stopped": true,
+  "original_canary_regression": "PASS; legacy bytes and historical SHA identical",
+  "first_output_final_readonly_audit": {
+    "input_kind": "in-memory reversed source; full hash equals originally observed preregistered input",
+    "input_sha256": "b32abee33dc951c61068b4a83f4bc06215db8a86d880f07620a1aece82ccca50",
+    "output_sha256": "b9c2eabd41a48eeddf659a5653626bed8defef708bf532228b810fbf0e631650",
+    "active_slot": 0,
+    "counter": 2,
+    "source_money": 3032,
+    "target_money": 7654321,
+    "changed_offsets": [
+      12944,
+      12945,
+      12946,
+      16374,
+      16375
+    ],
+    "all_outside_envelope_preserved": true,
+    "signatures_checksums_sections_valid": true
+  },
+  "first_normal_save": {
+    "input_sha256": "b9c2eabd41a48eeddf659a5653626bed8defef708bf532228b810fbf0e631650",
+    "output_sha256": "b1ac6cc623791955b119937d75fe7a423d14edb4976cca3a53eb5b5a48d3d75b",
+    "old_slot": 0,
+    "new_slot": 1,
+    "old_counter": 2,
+    "new_counter": 3,
+    "money": 7654321,
+    "previous_active_slot_preserved": true,
+    "section_rotation": {
+      "0": [
+        2,
+        3
+      ],
+      "1": [
+        3,
+        4
+      ],
+      "2": [
+        4,
+        5
+      ],
+      "3": [
+        5,
+        6
+      ],
+      "4": [
+        6,
+        7
+      ],
+      "5": [
+        7,
+        8
+      ],
+      "6": [
+        8,
+        9
+      ],
+      "7": [
+        9,
+        10
+      ],
+      "8": [
+        10,
+        11
+      ],
+      "9": [
+        11,
+        12
+      ],
+      "10": [
+        12,
+        13
+      ],
+      "11": [
+        13,
+        0
+      ],
+      "12": [
+        0,
+        1
+      ],
+      "13": [
+        1,
+        2
+      ]
+    },
+    "extra_sectors_equal": true,
+    "footer_equal": false
+  },
+  "source_path_shutdown_observed_sha256": "b32abee33dc951c61068b4a83f4bc06215db8a86d880f07620a1aece82ccca50",
+  "source_path_later_observed_sha256": "fded760ba7a9707a9cb96c6aca3d720eff8018bcb756cb3da3a7854e5f27fe6b",
+  "source_immutability_entire_work_period": "NOT ESTABLISHED; later original path hash differs; cause unknown",
+  "source_rom_final_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+  "noop_rejection": "PASS",
+  "ordinary_money_change": "NOT PROVEN",
+  "second_qualification_reload_final_save": "NOT PERFORMED",
+  "full_suite": {
+    "total": 185,
+    "passed": 169,
+    "skipped": 16,
+    "failed": 0,
+    "errors": 0
+  },
+  "focused": {
+    "money": 8,
+    "fl2": 11,
+    "fast_lab": 21,
+    "mgba_harness": 11,
+    "result": "PASS"
+  },
+  "py_compile": {
+    "files": 73,
+    "result": "PASS"
+  },
+  "json_validation": {
+    "files": 2,
+    "result": "PASS"
+  },
+  "diff_check": "PASS",
+  "protected_artifact_scan": {
+    "candidate_paths_checked_before_this_record": 115,
+    "suffix_symlink_binary_magic_matches": 0,
+    "staged_changed_files": 10,
+    "staged_binary_files": 0
+  },
+  "secret_scan": "Gitleaks dir --redact: exit 0, no leaks; publication candidate rescanned before push",
+  "publication_exclusions": [
+    "ROMs",
+    "saves",
+    "packages",
+    "patches",
+    "executables",
+    "screenshots",
+    "private bytes",
+    "raw private logs",
+    "generated orchestration scripts",
+    "work/",
+    "__pycache__/",
+    ".venv/"
+  ],
+  "limitations": [
+    "Full qualification and repeated-use proof incomplete",
+    "No target Money UI display or cold reload claim",
+    "Synthetic races are controlled tests, not exhaustive filesystem security proof",
+    "No canonical adoption, Stable promotion or public release"
+  ]
+}

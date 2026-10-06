@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Unified bounded Fast Lab v0.22 workflow over already-evidenced editors.
+"""Exact-v0.22 workflow with preregistered Money qualification candidate.
 
-This module adds no field capability. It profiles the exact v0.22 ROM, reports
-which retained save canaries are writable, previews edits in memory, and writes
-only a separately verified output file.
+Party/Inventory retain exact-save membership. Money alone uses the conservative
+key0/two-valid-slot predicate, always with the fixed target and separate output.
 """
 from __future__ import annotations
 
@@ -16,6 +15,7 @@ from typing import Any, Mapping
 
 import pokemonstart_fastlab_v022_inventory_editor as inventory
 import pokemonstart_fastlab_v022_money as money
+import pokemonstart_fastlab_v022_money_reusable as reusable_money
 import pokemonstart_fastlab_v022_party_editor as party
 import pokemonstart_save_verifier as verifier
 
@@ -41,8 +41,10 @@ def _profile_rom_sha() -> str:
         value = profile["profile_key"]["patched_rom_sha256"]
     except (OSError, ValueError, KeyError, TypeError) as exc:
         raise FL2Error("v0.22 capability profile is unreadable") from exc
-    if schema != 1 or not isinstance(value, str):
+    if type(schema) is not int or schema != 1 or not isinstance(value, str):
         raise FL2Error("v0.22 capability profile schema is unsupported")
+    if profile.get("pokemonstart_version") != "v0.22 demo":
+        raise FL2Error("capability profile version disagrees with exact v0.22")
     return value
 
 
@@ -53,6 +55,8 @@ def _assert_module_contract() -> None:
     if not (money.PRIVATE_ROOT == inventory.PRIVATE_ROOT == party.PRIVATE_ROOT
             == PRIVATE_ROOT):
         raise FL2Error("Fast Lab modules disagree on the private workspace boundary")
+    if money.TARGET_MONEY != reusable_money.independent.TARGET or money.TARGET_MONEY != 7_654_321:
+        raise FL2Error("Money modules disagree on the fixed target")
 
 
 def _require_rom_hash(rom_sha256: str) -> str:
@@ -66,6 +70,9 @@ def _require_rom_hash(rom_sha256: str) -> str:
 
 
 def _private_file(path: str | Path, label: str, *, must_exist: bool) -> Path:
+    original = Path(path).absolute()
+    if original.is_symlink() or any(parent.is_symlink() for parent in original.parents):
+        raise FL2Error(f"{label} symlink paths are refused")
     resolved = Path(path).resolve(strict=must_exist)
     if not resolved.is_relative_to(PRIVATE_ROOT):
         raise FL2Error(f"{label} must be inside PokemonStart-private")
@@ -90,7 +97,7 @@ def _money_semantic(raw: bytes) -> dict[str, Any]:
 def _capability_status(save_sha256: str) -> dict[str, dict[str, Any]]:
     return {
         "money": {
-            "write_supported": save_sha256 == money.INPUT_SHA256,
+            "write_supported": False,
             "request": {"money": money.TARGET_MONEY},
             "scope": "exact retained Money canary only",
         },
@@ -108,11 +115,18 @@ def _capability_status(save_sha256: str) -> dict[str, dict[str, Any]]:
 
 
 def inspect_bytes(raw: bytes, rom_sha256: str) -> dict[str, Any]:
-    """Inspect structure and expose only exact-save write capability labels."""
+    """Inspect exact profile and family-specific fail-closed eligibility."""
     profile_hash = _require_rom_hash(rom_sha256)
     result = verifier.verify_bytes(raw)
     save_hash = result.file_sha256
     capabilities = _capability_status(save_hash)
+    try:
+        reusable_money.qualify(raw)
+    except ValueError as exc:
+        capabilities["money"].update(write_supported=False, rejection_reason=str(exc))
+    else:
+        capabilities["money"].update(write_supported=True)
+    capabilities["money"]["scope"] = "exact-v0.22 key0 consecutive two-slot fixed-target qualification candidate"
     supported = [name for name, item in capabilities.items() if item["write_supported"]]
     semantics: dict[str, Any] = {}
     if capabilities["money"]["write_supported"]:
@@ -170,9 +184,9 @@ def _preview_bytes(raw: bytes, rom_sha256: str, operation: str,
     semantic: dict[str, Any]
     if operation == "money":
         expected = {"money": money.TARGET_MONEY}
-        if request != expected:
+        if request != expected or type(request.get("money")) is not int:
             raise FL2Error(f"Money request is bounded to {expected}")
-        candidate, legacy = money.derive(raw)
+        candidate, legacy = reusable_money.derive(raw, request)
         semantic = {"money": {"from": legacy["source_money"],
                               "to": legacy["target_money"]}}
     elif operation == "party":
@@ -208,6 +222,8 @@ def _preview_bytes(raw: bytes, rom_sha256: str, operation: str,
         "repository_verifier_accepted": True,
         "source_write_performed": False,
     }
+    if operation == "money":
+        report["independent_money_audit"] = legacy
     return candidate, report
 
 
@@ -223,6 +239,8 @@ def inspect_file(input_save: str | Path, rom_path: str | Path = ROM_DEFAULT) -> 
     report = inspect_bytes(raw, rom_hash)
     if sha(source.read_bytes()) != report["save_sha256"]:
         raise FL2Error("input changed during inspection")
+    if _check_rom_file(rom_path) != rom_hash:
+        raise FL2Error("ROM changed during inspection")
     report["source_immutable"] = True
     return report
 
@@ -235,6 +253,8 @@ def preview_file(input_save: str | Path, rom_path: str | Path, operation: str,
     _, report = _preview_bytes(raw, rom_hash, operation, changes)
     if sha(source.read_bytes()) != report["source_sha256"]:
         raise FL2Error("input changed during preview")
+    if _check_rom_file(rom_path) != rom_hash:
+        raise FL2Error("ROM changed during preview")
     report["source_immutable"] = True
     return report
 
@@ -253,15 +273,21 @@ def write_file(input_save: str | Path, output_save: str | Path, rom_path: str | 
     candidate, report = _preview_bytes(raw, rom_hash, operation, changes)
     if sha(source.read_bytes()) != report["source_sha256"]:
         raise FL2Error("input changed before output creation")
+    if _check_rom_file(rom_path) != rom_hash:
+        raise FL2Error("ROM changed before output creation")
     try:
         fd = os.open(destination, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     except FileExistsError as exc:
         raise FL2Error("refusing to overwrite existing output") from exc
     try:
+        created = os.fstat(fd)
         with os.fdopen(fd, "wb") as handle:
             handle.write(candidate)
             handle.flush()
             os.fsync(handle.fileno())
+        current = destination.lstat()
+        if (current.st_dev, current.st_ino) != (created.st_dev, created.st_ino):
+            raise FL2Error("output path changed during publication")
         persisted = destination.read_bytes()
         if sha(persisted) != report["output_sha256"] or persisted != candidate:
             raise FL2Error("persisted output does not match previewed candidate")
@@ -270,9 +296,16 @@ def write_file(input_save: str | Path, output_save: str | Path, rom_path: str | 
             raise FL2Error("persisted output failed repository verification")
         if sha(source.read_bytes()) != report["source_sha256"]:
             raise FL2Error("input changed during output creation")
+        if _check_rom_file(rom_path) != rom_hash:
+            raise FL2Error("ROM changed during output creation")
+        current = destination.lstat()
+        if (current.st_dev, current.st_ino) != (created.st_dev, created.st_ino):
+            raise FL2Error("output path changed during verification")
     except Exception:
         try:
-            destination.unlink()
+            current = destination.lstat()
+            if (current.st_dev, current.st_ino) == (created.st_dev, created.st_ino):
+                destination.unlink()
         except OSError:
             pass
         raise

@@ -11,8 +11,15 @@ import pokemonstart_fl2_core as core
 
 
 def _changes(text: str) -> dict[str, Any]:
+    def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in result:
+                raise core.FL2Error("duplicate JSON request keys are refused")
+            result[key] = value
+        return result
     try:
-        value = json.loads(text)
+        value = json.loads(text, object_pairs_hook=unique_object)
     except json.JSONDecodeError as exc:
         raise core.FL2Error("--changes-json must be valid JSON") from exc
     if not isinstance(value, dict):

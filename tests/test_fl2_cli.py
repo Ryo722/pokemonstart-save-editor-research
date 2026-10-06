@@ -10,6 +10,10 @@ import pokemonstart_fl2_cli as cli
 
 
 class FL2CLITests(unittest.TestCase):
+    def test_duplicate_keys_are_rejected(self):
+        with self.assertRaises(ValueError):
+            cli._changes('{"money":1,"money":7654321}')
+
     def test_inspect_dispatches_to_core_and_prints_json(self):
         with mock.patch.object(cli.core, "inspect_file", return_value={"status": "SUPPORTED"}) as call:
             stream = io.StringIO()

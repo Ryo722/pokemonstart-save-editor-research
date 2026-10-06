@@ -11,7 +11,7 @@ import pokemonstart_fastlab_v022_party_editor as party
 import pokemonstart_fl2_core as core
 import pokemonstart_save_verifier as verifier
 from test_fastlab_v022_inventory_editor import inventory_synthetic
-from test_fastlab_v022_money import _save as money_save
+from test_money_reusable import save as money_save
 from test_m3c_derived_stats_writer import synthetic
 
 
@@ -20,24 +20,24 @@ class FL2CoreTests(unittest.TestCase):
         return mock.patch.object(core, "_profile_rom_sha",
                                  return_value=core.EXPECTED_ROM_SHA256)
 
-    def test_inspect_reports_only_exact_save_write_capabilities(self):
+    def test_inspect_reports_reusable_money_and_exact_party_capabilities(self):
         raw, _ = synthetic()
         with self.profile_gate(), mock.patch.object(
                 party, "SUPPORTED_INPUT_SHA256", core.sha(raw)):
             report = core.inspect_bytes(raw, core.EXPECTED_ROM_SHA256)
         self.assertEqual(report["status"], "SUPPORTED")
-        self.assertEqual(report["supported_write_operations"], ["party"])
+        self.assertEqual(report["supported_write_operations"], ["money", "party"])
         self.assertTrue(report["capabilities"]["party"]["write_supported"])
-        self.assertFalse(report["capabilities"]["money"]["write_supported"])
+        self.assertTrue(report["capabilities"]["money"]["write_supported"])
         self.assertIn("party", report["semantics"])
 
-    def test_structurally_valid_unknown_save_is_explicitly_unsupported(self):
+    def test_unknown_sha_can_qualify_only_money(self):
         raw, _ = synthetic()
         with self.profile_gate():
             report = core.inspect_bytes(raw, core.EXPECTED_ROM_SHA256)
-        self.assertEqual(report["status"], "UNSUPPORTED_SAVE_PROFILE")
-        self.assertEqual(report["supported_write_operations"], [])
-        self.assertEqual(report["semantics"], {})
+        self.assertEqual(report["status"], "SUPPORTED")
+        self.assertEqual(report["supported_write_operations"], ["money"])
+        self.assertEqual(set(report["semantics"]), {"money"})
 
     def test_wrong_rom_hash_fails_closed(self):
         raw, _ = synthetic()
