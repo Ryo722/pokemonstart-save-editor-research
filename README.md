@@ -20,11 +20,25 @@ The controlling strategy/next-work records are:
 - `docs/fast-lab-two-lane-adoption.md`
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
 
+## North Star
+
+For each currently supported PokemonStart build/profile, the owner should be able to take a save produced through ordinary gameplay, safely apply supported edits locally, return to the game, continue playing and saving, and later edit the newly progressed save again **without preregistering each individual save hash**.
+
+Unsupported builds, malformed or ambiguous saves, unsupported save states, and unsupported operations must fail closed rather than be guessed.
+
+The project optimizes for **continuous owner use on a supported current build**, not for maximizing isolated proofs or field count.
+
 ## Terminal goal
 
-Provide a **user-operable, recoverable, profile-bounded local editor for the owner's PokemonStart saves** that can inspect supported saves, preview supported edits, preserve the original input, write only a separate output, explain semantic/byte-level changes, verify the generated output, and reject unsupported cases rather than guess.
+For the currently selected PokemonStart build/profile (currently exact v0.22), provide a **user-operable, recoverable local editor** that supports repeated:
 
-The goal is not unlimited feature accumulation. All versions, all fields, PKHeX parity, generic CFRU support, and Stable promotion of every Fast Lab capability are not required terminal conditions.
+`edit -> play/save -> ordinary progress -> save -> edit`
+
+cycles on naturally progressed owner saves using build-specific and capability-specific eligibility predicates rather than exact-save-hash allowlists.
+
+The editor preserves original inputs, writes only separate outputs, previews semantic and byte-level changes, verifies generated outputs, and rejects unsupported cases rather than guess.
+
+Terminal completion does **not** require all PokemonStart versions, all save fields, PKHeX parity, generic CFRU support, public release, or Stable promotion of every Fast Lab capability. Later PokemonStart versions are onboarded separately from fresh ROM/save evidence when they become relevant.
 
 ## Current position
 
@@ -38,20 +52,21 @@ The goal is not unlimited feature accumulation. All versions, all fields, PKHeX 
 - **M4 — bounded usable-editor first slice: COMPLETE.**
 - **M5A — Money: FAMILY IMPLEMENTATION + LIFECYCLE CLOSURE EVIDENCE COMPLETE; MILESTONE ADOPTION NOT YET COMPLETE.**
 
-Stable provenance work such as P-direct/P-reanchor remains separate and is not on the Fast Lab critical path.
+Stable provenance work such as P-direct/P-reanchor remains separate and is not on the current practical terminal critical path.
 
 ### Fast Lab
 
 - **FL0 — exact-build private ROM preparation + harness: COMPLETE.**
 - **FL1 — practical core editing slice: COMPLETE EXPERIMENTALLY.** Exact PokemonStart v0.22 evidence includes bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
 - **FL2-G0 — durable Fast Lab baseline reconciliation: COMPLETE / MERGED.** Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` was fast-forwarded into canonical `main`.
-- **FL2 — unified practical local CLI: COMPLETE / MERGED.** Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` was fast-forwarded into canonical `main`. The unified CLI now durably exposes inspect / preview / bounded write / verify for the already-evidenced Money / Party / Inventory operations without expanding capability ranges.
-- **Post-FL2 acceptance: COMPLETE.** Current write eligibility remains tied to retained exact input-save SHA-256 values; broader writer eligibility still requires separate Human authorization.
-- **Money reusable qualification: PAUSED / INCOMPLETE.** Supporting work remains on the separate frozen branch `codex/money-reusable-qualification-20261007`; its candidate writer eligibility is not included here.
-- **Exact-v0.22 Party append + Inventory insertion: COMPLETE EXPERIMENTALLY.** Exact-input proofs passed load, normal SAVE and cold reload without broadening reusable eligibility.
+- **FL2 — unified practical local CLI: COMPLETE / MERGED.** Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` was fast-forwarded into canonical `main`. The unified CLI durably exposes inspect / preview / bounded write / verify for the already-evidenced Money / Party / Inventory operations without expanding capability ranges.
+- **Post-FL2 acceptance: COMPLETE for retained exact inputs.** Current write eligibility remains tied to retained exact input-save SHA-256 values unless a family has separately proven reusable eligibility.
+- **Money reusable qualification: PAUSED / INCOMPLETE.** Supporting work remains on the separate frozen branch `codex/money-reusable-qualification-20261007`; its candidate writer eligibility is not canonical.
+- **Exact-v0.22 Party append + Inventory insertion: COMPLETE EXPERIMENTALLY / ADOPTED.** Exact-input proofs passed load, normal SAVE and cold reload without broadening reusable eligibility.
+- **Exact-v0.22 composed Party append + Antidote insertion GUI transaction: COMPLETE EXPERIMENTALLY / ADOPTED.** The combined exact-root output passed independent composition checks, one normal SAVE/cold reload, and GUI/core byte equality.
 - **Localhost v0.22 GUI experimental slice: COMPLETE.** The bounded slice described below provides inspection, preview and verified separate downloads under the existing FL2 and exact-input creation gates.
 
-After FL2, profile broadening, GUI/delivery, and Stable promotion remain **usage-driven alternatives**, not a fixed mandatory sequence.
+The primary practical gap is now **reusable eligibility on naturally progressed exact-v0.22 owner saves**. The forward critical path is R1 reusable-save eligibility -> R2 practical reusable core -> R3 continuous-use GUI closure, as defined in `docs/decision-record.md`.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -141,11 +156,13 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 
 ## Canonical records
 
-- `docs/decision-record.md` — controlling milestone/authority state
+- `docs/decision-record.md` — controlling North Star, terminal goal, current milestone/authority state, and forward critical path
 - `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — historical/adopted post-FL2 acceptance and reusable-envelope plan
+- `docs/money-reusable-envelope-qualification.md` — historical bounded reusable-Money qualification record; currently paused/incomplete
 - `docs/v022-creation-proofs-and-gui-prototype.md` — authorization/scope record for the exact-v0.22 Party append, Inventory insertion and localhost GUI experimental slice
-- `docs/v022-composed-gui-transaction-proof.md` — controlling scope for the exact-root composed Party append + Antidote insertion GUI transaction proof
-- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — FL2-G0 and terminal-goal refinement
+- `docs/v022-composed-gui-transaction-proof.md` — scope record for the exact-root composed Party append + Antidote insertion GUI transaction proof
+- `docs/v022-composed-gui-transaction-progress.md` — composed proof/publication record
+- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — historical FL2-G0 and prior terminal-goal refinement
 - `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconstruction record
 - `docs/fl2-unified-cli-candidate.md` — merged FL2 implementation/validation record
 - `docs/fast-lab-two-lane-adoption.md` — controlling two-lane strategy and current v0.22 Fast Lab evidence
