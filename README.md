@@ -4,14 +4,24 @@ Evidence-first research and tooling for a user-controlled PokemonStart save edit
 
 ## Current strategy
 
-The project now uses a canonical **two-lane model**:
+The project uses a canonical **two-lane model**:
 
 - **Stable Lane** — durable supported capabilities require stronger lifecycle/provenance/recovery/delivery evidence and a separate adoption decision.
 - **Fast Lab Lane** — exact-build experimental capabilities may be developed rapidly on private, recoverable save copies while preserving immutable originals, separate outputs, explainable diffs, verifier acceptance, and exact-build live confirmation where practical.
 
 Fast Lab evidence does **not** imply Stable support.
 
-The controlling adoption record is [`docs/fast-lab-two-lane-adoption.md`](docs/fast-lab-two-lane-adoption.md).
+The controlling strategy/next-work records are:
+
+- `docs/decision-record.md`
+- `docs/fast-lab-two-lane-adoption.md`
+- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
+
+## Terminal goal
+
+Provide a **user-operable, recoverable, profile-bounded local editor for the owner's PokemonStart saves** that can inspect supported saves, preview supported edits, preserve the original input, write only a separate output, explain semantic/byte-level changes, verify the generated output, and reject unsupported cases rather than guess.
+
+The goal is not unlimited feature accumulation. All versions, all fields, PKHeX parity, generic CFRU support, and Stable promotion of every Fast Lab capability are not required terminal conditions.
 
 ## Current position
 
@@ -25,15 +35,16 @@ The controlling adoption record is [`docs/fast-lab-two-lane-adoption.md`](docs/f
 - **M4 — bounded usable-editor first slice: COMPLETE.**
 - **M5A — Money: FAMILY IMPLEMENTATION + LIFECYCLE CLOSURE EVIDENCE COMPLETE; MILESTONE ADOPTION NOT YET COMPLETE.**
 
-Existing Stable evidence and safety gates remain controlling for Stable adoption. The Fast Lab strategy does not mark M5A complete, implement P-direct/P-reanchor, broaden M4 provenance, or promote any v0.22 result into Stable support.
+Stable provenance work such as P-direct/P-reanchor remains separate and is not on the Fast Lab critical path.
 
 ### Fast Lab
 
 - **FL0 — exact-build private ROM preparation + harness: COMPLETE.**
-- **FL1 — practical core editing slice: COMPLETE EXPERIMENTALLY.** Exact PokemonStart v0.22 evidence now includes bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
-- **FL2 — unified practical local CLI: NEXT PROPOSED MILESTONE.** Consolidate already-evidenced operations behind one local inspect/preview/edit/verify workflow before treating GUI work as the next delivery step.
+- **FL1 — practical core editing slice: COMPLETE EXPERIMENTALLY.** Exact PokemonStart v0.22 evidence includes bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
+- **FL2 — unified practical local CLI: NEXT MILESTONE.**
+- **FL2-G0 — durable Fast Lab baseline reconciliation: NEXT EXECUTION STEP.** Before more CLI implementation accumulates, reconcile the already-existing local Fast Lab implementation/tests/profile into a fresh candidate based on current canonical `main`, review the full diff, run the full checks, and stop for Human merge authorization.
 
-Fast Lab work is ordered by practical value and evidence, not by a mandatory Inventory-before-Party sequence.
+After FL2, profile broadening, GUI/delivery, and Stable promotion are **usage-driven alternatives**, not a fixed mandatory sequence.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -83,7 +94,7 @@ The retained v0.15 lineage has two consecutive normal-save round trips:
 1. `3000 -> 9,999,999`
 2. `9,999,999 -> 1,234,567`
 
-The current bounded Stable FAMILY remains limited to its recorded v0.15 build/key/journal/macOS boundary and is not GUI-exposed. See the M5A canonical records for exact conditions.
+The current bounded Stable FAMILY remains limited to its recorded v0.15 build/key/journal/macOS boundary and is not GUI-exposed.
 
 ## Run the verifier
 
@@ -96,6 +107,7 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 ## Canonical records
 
 - `docs/decision-record.md` — controlling milestone/authority state
+- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — controlling FL2-G0 and terminal-goal refinement
 - `docs/fast-lab-two-lane-adoption.md` — controlling two-lane strategy and current v0.22 Fast Lab evidence
 - `docs/evidence.md`
 - `docs/m4-completion.md`
