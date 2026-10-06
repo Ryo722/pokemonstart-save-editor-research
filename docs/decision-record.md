@@ -2,29 +2,25 @@
 
 GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — FL2-G0 merged; FL2 unified practical CLI active
+## Controlling current decision — FL2 complete; post-FL2 private acceptance and reusable-envelope planning active
 
-The project retains the previously adopted Stable Lane + Fast Lab Lane architecture and refined terminal goal.
+The project retains the adopted Stable Lane + Fast Lab Lane architecture and refined terminal goal.
 
-Controlling prior authorizations:
+Controlling Human authorizations now include:
 
 > `AUTHORIZE FL2 DURABLE-BASELINE GATE AND TERMINAL-GOAL REFINEMENT`
 
 > `AUTHORIZE FL2-G0 MERGE 44c90e8217061cc8ac294a392984dfe73e622d80`
 
-The FL2-G0 reconciliation candidate was independently reviewed and then fast-forwarded into canonical `main` at exact commit `44c90e8217061cc8ac294a392984dfe73e622d80`.
+> `AUTHORIZE FL2 MERGE e44e85358be9a1e72e0cd84c65d446eec5bd81c2`
 
-The durable Fast Lab implementation/test/profile gap is therefore closed. FL2-G0 is complete and no longer the next-work blocker.
+> `AUTHORIZE POST-FL2 ACCEPTANCE AND REUSABLE-ENVELOPE PLAN`
 
-The active practical milestone is now **FL2 — unified practical local CLI**. FL2 must consolidate already-evidenced exact-v0.22 operations without silently broadening their capability ranges.
+FL2-G0 and FL2 are both complete and merged into canonical `main`. The current next-work boundary is defined by:
 
-Detailed controlling records remain:
+- `docs/post-fl2-acceptance-and-reusable-envelope-plan.md`
 
-- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
-- `docs/fast-lab-two-lane-adoption.md`
-- `docs/fl2-g0-reconciliation.md`
-
-Where older roadmap wording conflicts with this record, this later record controls.
+Where older roadmap/status wording conflicts with this record, this record controls.
 
 ## Terminal goal
 
@@ -32,15 +28,31 @@ Provide a **user-operable, recoverable, profile-bounded local editor for the own
 
 - inspect supported saves;
 - preview supported edits;
-- preserve the original input;
-- write only a separate output;
+- preserve original inputs;
+- write only separate outputs;
 - explain semantic and byte-level changes;
-- verify the generated output;
-- reject unsupported builds/fields rather than guess.
+- verify generated outputs;
+- reject unsupported builds/fields/saves rather than guess.
 
 Exact-build capability profiles define the supported envelope.
 
 The terminal goal does not require all PokemonStart versions, all save fields, PKHeX parity, generic CFRU support, GUI specifically, or Stable promotion of every Fast Lab capability.
+
+## Post-FL2 terminal-state assessment
+
+Status:
+
+> **TERMINAL GOAL PARTIALLY SATISFIED — PRACTICAL REUSE NOT YET PROVEN**
+
+FL2 now durably provides the coherent local inspect/preview/write/verify workflow required by the refined goal. However, current write eligibility remains tied to exact retained input-save SHA-256 canaries in the underlying bounded Fast Lab modules.
+
+Therefore current capability is intentionally fail-closed and is best described as:
+
+> **profile-bounded workflow with canary-snapshot-bounded write eligibility**
+
+A naturally changed but otherwise compatible exact-v0.22 owner save is not yet proven writable merely because its structure/semantics appear compatible.
+
+The next useful uncertainty is therefore reuse of already-evidenced capabilities, not accumulation of additional fields.
 
 ## Canonical two-lane architecture
 
@@ -50,7 +62,7 @@ Durable supported capabilities require capability-appropriate evidence such as s
 
 ### Fast Lab Lane
 
-Bounded exact-build experimental capabilities may progress rapidly when the exact build is identified, private source artifacts stay immutable, outputs are separate, diffs are explainable, required checksums/invariants hold, generated outputs re-verify, and unsupported coupling/coverage is recorded.
+Bounded exact-build experimental capabilities may progress rapidly when the exact build is identified, private source artifacts remain immutable, outputs are separate, diffs are explainable, required checksums/invariants hold, generated outputs re-verify, and unsupported coupling/coverage is recorded.
 
 Fast Lab evidence does not imply Stable support.
 
@@ -59,10 +71,10 @@ Fast Lab evidence does not imply Stable support.
 Both lanes retain these non-negotiable rules:
 
 1. original/private ROMs and source saves remain immutable;
-2. writers create new output files and do not overwrite sources;
+2. writers create new outputs and do not overwrite sources;
 3. malformed, ambiguous, and unsupported inputs fail closed;
 4. protected/private artifacts do not enter Git or public distribution;
-5. exact-build/version support is tracked by capability profile, not assumed across versions;
+5. exact-build/version support is tracked by capability profile rather than inferred across versions;
 6. editor diffs remain bounded and explainable;
 7. verifier/invariant checks run on generated outputs;
 8. emulator live-save state is never automatically replaced;
@@ -70,8 +82,6 @@ Both lanes retain these non-negotiable rules:
 10. Fast Lab and Stable evidence labels remain distinct.
 
 ## Stable Lane milestone state
-
-Existing Stable history is preserved:
 
 1. **M1 — reproducible read audit — COMPLETE.**
 2. **M2 — exact one-field writer proof — COMPLETE.**
@@ -96,37 +106,29 @@ Exact private v0.22 build SHA-256:
 
 ### FL1 — practical core editing slice — COMPLETE EXPERIMENTALLY
 
-Exact-v0.22 Fast Lab evidence covers:
-
-- Money editing;
-- practical/composed Party editing;
-- one bounded existing-item Inventory quantity edit.
-
-Detailed evidence and limitations remain in `docs/fast-lab-two-lane-adoption.md` and `docs/fast-lab-v022-capability.json`.
+Exact-v0.22 Fast Lab evidence covers bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
 
 ### FL2-G0 — durable Fast Lab baseline reconciliation — COMPLETE / MERGED
 
-Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` is canonical `main` history. The reconciled implementation, tests, capability profile, and evidence pointers are now durable.
+Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` is canonical history. The reconciled Fast Lab implementation/tests/capability profile are durable.
 
-This merge did **not** promote Fast Lab capabilities to Stable and did not broaden build/version/key/field support.
+### FL2 — unified practical local CLI — COMPLETE / MERGED
 
-### FL2 — unified practical local CLI — ACTIVE MILESTONE
+Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` is canonical history.
 
-FL2 must consolidate the already-evidenced operations into one local workflow with at least:
+The merged CLI provides:
 
-- exact profile/save inspection;
+- exact ROM/profile gating;
+- exact-save capability inspection;
 - semantic preview;
-- supported Money editing;
-- supported Party editing;
-- currently bounded Inventory quantity editing;
-- semantic and byte-diff preview;
-- separate-output write;
-- output verification;
-- explicit unsupported-build/save/field rejection.
+- semantic + byte-diff reporting;
+- already-evidenced bounded Money / Party / Inventory operations;
+- separate-output creation with exclusive create;
+- persisted-output byte equality checks;
+- repository-verifier revalidation;
+- explicit unsupported rejection.
 
-The implementation should delegate field derivation to the reconciled bounded Fast Lab modules rather than reimplement or generalize them.
-
-The current implementation candidate is developed on `codex/fl2-unified-cli` and is documented in `docs/fl2-unified-cli-candidate.md`. Candidate work is not canonical adoption until separately reviewed and merged.
+FL2 did not broaden any underlying Fast Lab capability range and did not promote any capability to Stable.
 
 ## Current v0.22 Fast Lab evidence summary
 
@@ -144,11 +146,7 @@ Ability-selector storage is decoded, but practical resolved-ability writing rema
 
 ### Inventory
 
-A same-file previous/current slot differential isolated Potion item ID `13`, quantity `1 -> 2` at logical section 13 relative offset `0xADC` under encryption key `0`.
-
-A separate-output edit changed that existing Potion slot `2 -> 3`; the verifier accepted it and exact v0.22 live RAM showed Potion ID `13`, quantity `3` in the same slot.
-
-This does not prove arbitrary item IDs, insertion, deletion, reordering, other pockets, nonzero-key handling, or complete pocket capacity.
+A same-file previous/current slot differential isolated Potion item ID `13`, quantity `1 -> 2` at logical section 13 relative offset `0xADC` under encryption key `0`. A separate-output edit changed that existing Potion slot `2 -> 3`; the verifier accepted it and exact v0.22 live RAM showed Potion ID `13`, quantity `3` in the same slot.
 
 ## Important caveats
 
@@ -156,45 +154,64 @@ This does not prove arbitrary item IDs, insertion, deletion, reordering, other p
 - Exact v0.22 startup/read/live-memory evidence is not broad save-migration or lifecycle proof.
 - Battle behavior after species/move edits, resolved ability behavior, evolution, Pokédex effects, move legality, and normal in-game resave behavior remain unproven unless separately recorded.
 - Nonzero-key Fast Lab support and other PokemonStart builds remain unsupported.
+- FL2 write support remains exact-retained-save gated; reusable owner-save eligibility has not yet been proven.
 
 ## Current authorization boundary
 
-The Human has explicitly authorized and completed the FL2-G0 merge. The subsequent instruction to continue permits bounded FL2 candidate implementation consistent with the already-adopted post-G0 plan.
+The Human has authorized **Phase A private acceptance** and **Phase B reusable-envelope design/preregistration** as specified in `docs/post-fl2-acceptance-and-reusable-envelope-plan.md`.
 
 Current work may:
 
-- create an FL2 implementation branch from exact canonical `main`;
-- consolidate existing bounded Money / Party / Inventory logic behind one local CLI;
-- add synthetic/focused tests and candidate documentation;
-- inspect and preview semantic/byte diffs;
-- preserve separate-output and verifier requirements.
+- fresh-read current canonical `main`;
+- execute merged FL2 locally against retained private exact-v0.22 ROM/save canaries;
+- run inspect/preview/write/verify on private canary copies;
+- compare unified outputs against existing bounded-module derivations and existing live-confirmed identities where applicable;
+- verify source immutability, no-overwrite behavior, output verification, focused/full tests and static/security checks;
+- record non-sensitive hashes/results/log summaries in a candidate/evidence record;
+- design and preregister field-family-specific semantic predicates for a future reusable exact-v0.22 save envelope;
+- compare candidate first reusable-envelope families by cost/value/coupling.
 
 Current work does **not** authorize:
 
-- merge/adoption of the FL2 candidate into canonical `main` without a separate review/authorization decision;
+- implementing broader reusable writer eligibility or removing exact-save SHA gates;
 - Stable promotion;
 - public release;
-- broader build/version/key support;
-- arbitrary-save write support;
-- ability write support or broader Inventory support;
+- GUI exposure;
+- broader build/version support;
+- nonzero-key Fast Lab support;
+- arbitrary Money/Party/Inventory capability;
+- ability writes;
 - protected-data publication;
 - unrelated new-field research.
 
+Any proposed reusable-envelope implementation must return as a bounded decision surface and receive separate Human authorization before implementation.
+
+## Local Codex execution policy for current work
+
+Private acceptance work should normally be delegated to local Codex because it can operate directly in the owner's private workspace without moving ROM/save bytes into ChatGPT or GitHub.
+
+Local Codex must still treat GitHub `main` as canonical, keep private/protected artifacts outside Git, avoid source overwrite, avoid broadening capability, and return exact command/result evidence that can be independently reviewed.
+
 ## Post-FL2 roadmap — usage driven
 
-After FL2, choose the next milestone from actual owner use rather than a fixed roadmap:
+After current acceptance/design work, choose the next milestone from actual owner use and new evidence:
 
-- capability expansion when a concrete missing capability blocks useful work;
-- delivery/GUI improvements when UX adds more value than another field;
-- Stable promotion when durable support justifies its extra evidence and lifecycle cost.
+- reusable-envelope capability implementation only when separately authorized;
+- additional field/build capability only when a concrete missing capability blocks useful work;
+- delivery/GUI improvements when UX adds more value than capability work;
+- Stable promotion when durable support justifies lifecycle/provenance/recovery cost.
+
+No fixed FL3 -> FL4 sequence is controlling.
 
 ## Authority chain
 
 Current key durable records:
 
 - `docs/decision-record.md` — controlling current milestone/authority state;
+- `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — current authorized next-work contract;
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — terminal-goal and FL2 design basis;
 - `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconciliation record;
+- `docs/fl2-unified-cli-candidate.md` — merged FL2 implementation and validation record;
 - `docs/fast-lab-two-lane-adoption.md` — two-lane adoption detail and v0.22 Fast Lab evidence;
 - `docs/fast-lab-v022-capability.json` — machine-readable exact-v0.22 capability profile;
 - `docs/evidence.md`;
@@ -204,4 +221,4 @@ Current key durable records:
 
 ## Current next step
 
-**Complete focused/full validation of the bounded FL2 unified CLI candidate, independently review its exact branch HEAD, and stop for separate Human merge authorization before changing canonical `main`.**
+**Delegate Phase A post-FL2 private acceptance to local Codex, then perform Phase B reusable-envelope design/preregistration from the resulting evidence. Stop before broader writer implementation.**
