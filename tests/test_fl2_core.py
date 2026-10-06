@@ -84,7 +84,9 @@ class FL2CoreTests(unittest.TestCase):
     def test_write_creates_new_verified_output_and_keeps_source_immutable(self):
         raw = inventory_synthetic()
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
+            # Resolve once so the mocked boundary matches _private_file()'s
+            # resolved paths on macOS (/var/... may canonicalize to /private/var/...).
+            root = Path(directory).resolve()
             source = root / "source.sav"
             output = root / "output.sav"
             source.write_bytes(raw)
