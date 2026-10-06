@@ -1,0 +1,1226 @@
+{
+  "canonical_head": "d4740a665d1a4f070a7540d8964e6838e393392b",
+  "environment": {
+    "python": "3.13.7 (main, Aug 14 2025, 11:12:11) [Clang 17.0.0 (clang-1700.0.13.3)]",
+    "platform": "macOS-26.6.2-arm64-arm-64bit-Mach-O"
+  },
+  "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+  "profile_sha256": "cb5f4ebc55df500c6dd739004c462e95a3a59741793da2704d1cc25f050d9cbf",
+  "source_and_all_retained_saves_immutable": true,
+  "results": [
+    {
+      "case": "money",
+      "operation": "money",
+      "request": {
+        "money": 7654321
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "15bdac0d6635c6237549565c49e3752c167e85a33643b89ff722ed3c7d17d569",
+      "changed_bytes": [
+        {
+          "offset": 74384,
+          "from": 135,
+          "to": 177
+        },
+        {
+          "offset": 74385,
+          "from": 214,
+          "to": 203
+        },
+        {
+          "offset": 74386,
+          "from": 18,
+          "to": 116
+        },
+        {
+          "offset": 77814,
+          "from": 25,
+          "to": 165
+        },
+        {
+          "offset": 77815,
+          "from": 231,
+          "to": 220
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    },
+    {
+      "case": "friendship",
+      "operation": "party",
+      "request": {
+        "friendship": 51
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "cb817b561c1eb29813b5e58524d8536dbdf42cb13065b90b5603a47a73f2a37d",
+      "changed_bytes": [
+        {
+          "offset": 73825,
+          "from": 50,
+          "to": 51
+        },
+        {
+          "offset": 77815,
+          "from": 231,
+          "to": 232
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    },
+    {
+      "case": "iv",
+      "operation": "party",
+      "request": {
+        "ivs": [
+          31,
+          0,
+          26,
+          23,
+          27,
+          29
+        ]
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "5a688c2c3f2e3f2ba4e9f73788ead12da715adaae861880aa0ef5f7faeb620de",
+      "changed_bytes": [
+        {
+          "offset": 73856,
+          "from": 191,
+          "to": 31
+        },
+        {
+          "offset": 73857,
+          "from": 235,
+          "to": 232
+        },
+        {
+          "offset": 73874,
+          "from": 9,
+          "to": 8
+        },
+        {
+          "offset": 77814,
+          "from": 25,
+          "to": 120
+        },
+        {
+          "offset": 77815,
+          "from": 231,
+          "to": 227
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    },
+    {
+      "case": "level",
+      "operation": "party",
+      "request": {
+        "level": 6
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "09e58a8cda8277ea107991cbf01ea99fa0d0724ce476330be45ef1d5456ed6dc",
+      "changed_bytes": [
+        {
+          "offset": 73820,
+          "from": 134,
+          "to": 179
+        },
+        {
+          "offset": 73868,
+          "from": 5,
+          "to": 6
+        },
+        {
+          "offset": 73870,
+          "from": 21,
+          "to": 23
+        },
+        {
+          "offset": 73872,
+          "from": 21,
+          "to": 23
+        },
+        {
+          "offset": 73874,
+          "from": 9,
+          "to": 11
+        },
+        {
+          "offset": 73876,
+          "from": 11,
+          "to": 13
+        },
+        {
+          "offset": 73878,
+          "from": 10,
+          "to": 12
+        },
+        {
+          "offset": 73880,
+          "from": 13,
+          "to": 16
+        },
+        {
+          "offset": 73882,
+          "from": 12,
+          "to": 15
+        },
+        {
+          "offset": 77814,
+          "from": 25,
+          "to": 87
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    },
+    {
+      "case": "species",
+      "operation": "party",
+      "request": {
+        "species": 2
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "fb0d649fe39e286a7bbe5c8bbd8e62e373b3dc8e6048b2405d8f1f647dc54f4f",
+      "changed_bytes": [
+        {
+          "offset": 73816,
+          "from": 1,
+          "to": 2
+        },
+        {
+          "offset": 73820,
+          "from": 134,
+          "to": 135
+        },
+        {
+          "offset": 73870,
+          "from": 21,
+          "to": 22
+        },
+        {
+          "offset": 73872,
+          "from": 21,
+          "to": 22
+        },
+        {
+          "offset": 73874,
+          "from": 9,
+          "to": 10
+        },
+        {
+          "offset": 73876,
+          "from": 11,
+          "to": 12
+        },
+        {
+          "offset": 73878,
+          "from": 10,
+          "to": 12
+        },
+        {
+          "offset": 73880,
+          "from": 13,
+          "to": 15
+        },
+        {
+          "offset": 73882,
+          "from": 12,
+          "to": 14
+        },
+        {
+          "offset": 77814,
+          "from": 25,
+          "to": 37
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    },
+    {
+      "case": "composed",
+      "operation": "party",
+      "request": {
+        "species": 2,
+        "level": 6,
+        "moves": {
+          "0": 1
+        },
+        "ivs": [
+          31,
+          0,
+          26,
+          23,
+          27,
+          29
+        ],
+        "evs": [
+          8,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "friendship": 53
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "29380e12b8c43df9dfd12f3070e2bbe2925e300e9b4a1f3fcafda9fef56ef0d5",
+      "changed_bytes": [
+        {
+          "offset": 73816,
+          "from": 1,
+          "to": 2
+        },
+        {
+          "offset": 73820,
+          "from": 134,
+          "to": 179
+        },
+        {
+          "offset": 73825,
+          "from": 50,
+          "to": 53
+        },
+        {
+          "offset": 73828,
+          "from": 33,
+          "to": 1
+        },
+        {
+          "offset": 73840,
+          "from": 0,
+          "to": 8
+        },
+        {
+          "offset": 73856,
+          "from": 191,
+          "to": 31
+        },
+        {
+          "offset": 73857,
+          "from": 235,
+          "to": 232
+        },
+        {
+          "offset": 73868,
+          "from": 5,
+          "to": 6
+        },
+        {
+          "offset": 73870,
+          "from": 21,
+          "to": 25
+        },
+        {
+          "offset": 73872,
+          "from": 21,
+          "to": 25
+        },
+        {
+          "offset": 73874,
+          "from": 9,
+          "to": 11
+        },
+        {
+          "offset": 73876,
+          "from": 11,
+          "to": 15
+        },
+        {
+          "offset": 73878,
+          "from": 10,
+          "to": 14
+        },
+        {
+          "offset": 73880,
+          "from": 13,
+          "to": 18
+        },
+        {
+          "offset": 73882,
+          "from": 12,
+          "to": 17
+        },
+        {
+          "offset": 77814,
+          "from": 25,
+          "to": 172
+        },
+        {
+          "offset": 77815,
+          "from": 231,
+          "to": 230
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    },
+    {
+      "case": "move",
+      "operation": "party",
+      "request": {
+        "moves": {
+          "0": 1
+        }
+      },
+      "source_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "75ecb4f2b95ff716524a66593ad4a24412aadf38578bdb451f93e5c172b646d4",
+      "changed_bytes": [
+        {
+          "offset": 73828,
+          "from": 33,
+          "to": 1
+        },
+        {
+          "offset": 77814,
+          "from": 25,
+          "to": 249
+        },
+        {
+          "offset": 77815,
+          "from": 231,
+          "to": 230
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": false,
+      "label": "local private-input verification",
+      "note": "Wrapper acceptance only: historical move live hash used prior IV-edited input, so not same request/input"
+    },
+    {
+      "case": "inventory",
+      "operation": "inventory",
+      "request": {
+        "slot": 0,
+        "item_id": 13,
+        "quantity": 3
+      },
+      "source_sha256": "b32abee33dc951c61068b4a83f4bc06215db8a86d880f07620a1aece82ccca50",
+      "output_sha256": "51129cdd5168f2f9f3d28966085bfdd4ae094c2a705052253001cc3d189c987b",
+      "changed_bytes": [
+        {
+          "offset": 6878,
+          "from": 2,
+          "to": 3
+        }
+      ],
+      "semantic_equal": true,
+      "bounded_bytes_equal": true,
+      "preview_no_publication": true,
+      "exclusive_no_overwrite": true,
+      "source_immutable": true,
+      "verifier_accepted": true,
+      "prior_live_identity_equal": true,
+      "label": "local private-input verification",
+      "note": "Exact prior live output bytes reproduced"
+    }
+  ],
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "money",
+        "--changes-json",
+        "{\"money\": 7654321}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "money",
+        "--changes-json",
+        "{\"money\": 7654321}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "money",
+        "--changes-json",
+        "{\"money\": 7654321}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "money",
+        "--changes-json",
+        "{\"money\": 7654321}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"friendship\": 51}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"friendship\": 51}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"friendship\": 51}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"friendship\": 51}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"ivs\": [31, 0, 26, 23, 27, 29]}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"ivs\": [31, 0, 26, 23, 27, 29]}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"ivs\": [31, 0, 26, 23, 27, 29]}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"ivs\": [31, 0, 26, 23, 27, 29]}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"level\": 6}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"level\": 6}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"level\": 6}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"level\": 6}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2, \"level\": 6, \"moves\": {\"0\": 1}, \"ivs\": [31, 0, 26, 23, 27, 29], \"evs\": [8, 0, 0, 0, 0, 0], \"friendship\": 53}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2, \"level\": 6, \"moves\": {\"0\": 1}, \"ivs\": [31, 0, 26, 23, 27, 29], \"evs\": [8, 0, 0, 0, 0, 0], \"friendship\": 53}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2, \"level\": 6, \"moves\": {\"0\": 1}, \"ivs\": [31, 0, 26, 23, 27, 29], \"evs\": [8, 0, 0, 0, 0, 0], \"friendship\": 53}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"species\": 2, \"level\": 6, \"moves\": {\"0\": 1}, \"ivs\": [31, 0, 26, 23, 27, 29], \"evs\": [8, 0, 0, 0, 0, 0], \"friendship\": 53}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"moves\": {\"0\": 1}}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"moves\": {\"0\": 1}}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"moves\": {\"0\": 1}}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"moves\": {\"0\": 1}}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "SUPPORTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "inventory",
+        "--changes-json",
+        "{\"slot\": 0, \"item_id\": 13, \"quantity\": 3}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "PREVIEW",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "inventory",
+        "--changes-json",
+        "{\"slot\": 0, \"item_id\": 13, \"quantity\": 3}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "GENERATED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "inventory",
+        "--changes-json",
+        "{\"slot\": 0, \"item_id\": 13, \"quantity\": 3}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "write",
+        "INPUT_SHA_IDENTIFIED",
+        "OUTPUT_SEPARATE_OR_REJECTION_TEST_PATH",
+        "--operation",
+        "inventory",
+        "--changes-json",
+        "{\"slot\": 0, \"item_id\": 13, \"quantity\": 3}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "inspect",
+        "INPUT_SHA_IDENTIFIED",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 0,
+      "status": "UNSUPPORTED_SAVE_PROFILE",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "money",
+        "--changes-json",
+        "{\"money\":7654321}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "party",
+        "--changes-json",
+        "{\"ability_selector\":1}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "money",
+        "--changes-json",
+        "{\"money\":1}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    },
+    {
+      "argv": [
+        "python3",
+        "pokemonstart_fl2_cli.py",
+        "preview",
+        "INPUT_SHA_IDENTIFIED",
+        "--operation",
+        "inventory",
+        "--changes-json",
+        "{\"slot\":0,\"item_id\":13,\"quantity\":2}",
+        "--rom",
+        "EXACT_PRIVATE_ROM"
+      ],
+      "exit": 2,
+      "status": "REJECTED",
+      "path_redaction_note": "Local private artifact paths replaced with roles; requests, exit codes and statuses preserved."
+    }
+  ],
+  "fail_closed_checks": true,
+  "phase_a_private_disposition": "PASS"
+}

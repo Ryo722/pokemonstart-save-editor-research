@@ -1,0 +1,77 @@
+{
+  "evidence_label": "reproduced in this execution; results recorded from actual command output",
+  "commands": [
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_fl2*.py'",
+      "exit": 0,
+      "tests": 10,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_fastlab*.py'",
+      "exit": 0,
+      "tests": 21,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_v022_readonly_probe.py'",
+      "exit": 0,
+      "tests": 2,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_prepare_private_build.py'",
+      "exit": 0,
+      "tests": 7,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_pks_inspector.py'",
+      "exit": 0,
+      "tests": 5,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests -p 'test_mgba_harness.py'",
+      "exit": 0,
+      "tests": 11,
+      "skipped": 0
+    },
+    {
+      "command": "python3 -m unittest discover -s tests",
+      "exit": 0,
+      "tests": 176,
+      "skipped": 16,
+      "passed": 160
+    },
+    {
+      "command": "py_compile.compile(..., doraise=True) for 70 canonical Python files",
+      "exit": 0,
+      "files": 70
+    },
+    {
+      "command": "json.load(docs/fast-lab-v022-capability.json)",
+      "exit": 0
+    },
+    {
+      "command": "git diff --check e44e85358be9a1e72e0cd84c65d446eec5bd81c2 origin/main",
+      "exit": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit": 0
+    },
+    {
+      "command": "git ls-tree -r --name-only origin/main; protected/executable suffix scan",
+      "exit": 0,
+      "files": 110,
+      "matches": 0
+    },
+    {
+      "command": "gitleaks dir /private/tmp/post-fl2-acceptance-20261007/canonical --redact --no-banner",
+      "exit": 0,
+      "leaks": 0
+    }
+  ],
+  "suite_scope_note": "The 16 skipped tests remain unexecuted; this run does not establish Windows/GUI or new gameplay acceptance. Fast Lab named modules: 21 tests; FL0 preparation/inspection/read-path checks: 14; total 35. Historical 34 is not asserted for this invocation."
+}

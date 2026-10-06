@@ -1,0 +1,109 @@
+{
+  "label": "independently reproduced read-only private audit; imports no repository writer/verifier",
+  "results": [
+    {
+      "case": "money",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "friendship",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "iv",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "level",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "species",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "composed",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "move",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    },
+    {
+      "case": "inventory",
+      "checksums_signatures_slots_preserved": true,
+      "inactive_extra_sectors_footer_equal": true,
+      "independent_diff_equal": true
+    }
+  ],
+  "source_structural_observations": [
+    {
+      "sha256": "b32abee33dc951c61068b4a83f4bc06215db8a86d880f07620a1aece82ccca50",
+      "size": 131088,
+      "active_slot": 0,
+      "slots": [
+        {
+          "slot": 0,
+          "state": "valid",
+          "counter": 2,
+          "key": 0,
+          "money": 3032,
+          "party_count": 1,
+          "section1_physical_sector": 3,
+          "section13_physical_sector": 1
+        },
+        {
+          "slot": 1,
+          "state": "valid",
+          "counter": 1,
+          "key": 0,
+          "money": 3000,
+          "party_count": 1,
+          "section1_physical_sector": 16,
+          "section13_physical_sector": 14
+        }
+      ]
+    },
+    {
+      "sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "size": 131088,
+      "active_slot": 1,
+      "slots": [
+        {
+          "slot": 0,
+          "state": "valid",
+          "counter": 2,
+          "key": 0,
+          "money": 1234567,
+          "party_count": 1,
+          "section1_physical_sector": 3,
+          "section13_physical_sector": 1
+        },
+        {
+          "slot": 1,
+          "state": "valid",
+          "counter": 3,
+          "key": 0,
+          "money": 1234567,
+          "party_count": 1,
+          "section1_physical_sector": 18,
+          "section13_physical_sector": 16
+        }
+      ]
+    }
+  ]
+}
