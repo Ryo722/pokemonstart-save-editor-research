@@ -2,7 +2,7 @@
 
 GitHub `main` is the only durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — exact-v0.22 creation + localhost GUI Fast Lab slice adopted
+## Controlling current decision — exact-v0.22 composed Party append + Inventory insertion GUI transaction proof active
 
 The project retains the adopted Stable Lane + Fast Lab Lane architecture and refined terminal goal.
 
@@ -22,14 +22,11 @@ Controlling Human authorizations include:
 
 > `AUTHORIZE EXACT-V0.22 CREATION + LOCALHOST GUI FAST-LAB ADOPTION 310a982cc41a6d254eb542e4a985545c4ee7960a`
 
-Exact candidate `310a982cc41a6d254eb542e4a985545c4ee7960a` was fast-forwarded into canonical `main` after independent review.
+> `AUTHORIZE EXACT-V0.22 PARTY-APPEND + INVENTORY-INSERTION COMPOSED GUI TRANSACTION PROOF`
 
-The adopted Fast Lab slice is bounded to the exact v0.22 profile and exact fresh proof root described in:
+The adopted exact-v0.22 creation + localhost GUI Fast Lab slice remains canonical history. The active next-work contract is now:
 
-- `docs/v022-creation-proofs-and-gui-prototype.md`
-- `docs/v022-creation-proof-progress.md`
-- `docs/v022-creation-proof-evidence.json`
-- `docs/fast-lab-v022-capability.json`
+- `docs/v022-composed-gui-transaction-proof.md`
 
 Where older roadmap/status wording conflicts with this record, this later record controls.
 
@@ -43,11 +40,11 @@ Exact-build capability profiles define the supported envelope. The terminal goal
 
 Status:
 
-> **TERMINAL GOAL PARTIALLY SATISFIED — USER-OPERABLE EXACT-INPUT GUI EXISTS; PRACTICAL COMPOSITION / REUSE REMAINS INCOMPLETE**
+> **TERMINAL GOAL PARTIALLY SATISFIED — USER-OPERABLE EXACT-INPUT GUI EXISTS; COMPOSED TRANSACTION PROOF ACTIVE; PRACTICAL REUSE REMAINS INCOMPLETE**
 
-The project now has a localhost-only v0.22 GUI slice that can inspect an exact supported input, preview bounded operations, and return verified separate outputs. Two creation primitives are experimentally proven on the exact fresh proof root and survive exact-v0.22 load, normal SAVE and cold reload.
+The project has a localhost-only v0.22 GUI slice that can inspect an exact supported input, preview bounded operations, and return verified separate outputs. Party append and Inventory insertion are each experimentally proven on the exact fresh proof root and survive exact-v0.22 load, normal SAVE and cold reload.
 
-The remaining gap is no longer absence of a usable GUI. The main practical limitation is that the newly proven Party append and Inventory insertion capabilities are exact-input bounded and currently operate as separate alternatives from the same root. Reusable composition on naturally progressed outputs is not yet proven.
+The active gap is whether those two already-adopted primitives can be composed safely into one exact-root output and one GUI transaction without broadening writer eligibility. Reusable editing of naturally progressed outputs remains a later, separately gated problem.
 
 ## Canonical two-lane architecture
 
@@ -133,34 +130,52 @@ Adopted experimental capability boundary:
 - GUI output for the two creation operations was byte-identical to the game-confirmed non-GUI core candidates;
 - Fast Lab experimental only; not Stable and not public release support.
 
+### Exact-v0.22 composed Party append + Inventory insertion GUI transaction proof — ACTIVE
+
+Controlling scope:
+
+- `docs/v022-composed-gui-transaction-proof.md`
+
+Authorized work is bounded to one exact composed transaction from the same adopted proof-root input:
+
+- Party append using the already-adopted exact-copy shape;
+- Inventory insertion using the already-adopted Antidote slot2 shape;
+- exact union-of-envelopes byte proof and independent order-independence proof;
+- one exact-v0.22 load -> normal SAVE -> cold reload persistence proof;
+- one explicit combined localhost GUI choice whose downloaded bytes equal the game-confirmed core candidate.
+
+This authorization does not create reusable writer eligibility and does not authorize a generic transaction engine.
+
 ## Current authorization boundary
 
-Current canonical code/evidence may be used to:
+Current work may:
 
-- run the adopted localhost v0.22 GUI against inputs that satisfy its exact existing gates;
-- inspect exact-v0.22 saves read-only;
-- use canonical FL2 Money/Party/Inventory operations only where their pre-existing exact gates pass;
-- use the adopted Party append and Inventory insertion operations only on the exact fresh proof-root save for which they are gated;
-- create only verified separate outputs;
-- run existing tests/auditors and review the adopted evidence.
+- fresh-read canonical `main` and reconstruct the two adopted creation primitives;
+- create a fresh work branch from canonical `main`;
+- implement exactly one composed Party-append + Inventory-insertion operation from the exact adopted proof root;
+- add an independent composed-candidate auditor and order-independence proof;
+- run exactly one private exact-v0.22 load/normal-save/cold-reload persistence proof for that composed candidate;
+- extend the localhost GUI with exactly one explicit combined operation;
+- run focused/regression/full/static/security validation;
+- push only sanitized source/tests/docs/evidence to a review branch.
 
-No further capability expansion is authorized yet.
+Current work does **not** authorize:
 
-In particular, current authorization does **not** permit canonical implementation/adoption of:
-
-- composition of Party append + Inventory insertion in one output;
 - applying either creation operation to its own output or another naturally progressed save;
-- arbitrary Pokémon synthesis or arbitrary templates;
-- arbitrary item IDs, quantities, pockets, slots, deletion or reorder;
+- reusable semantic eligibility for either creation operation;
+- arbitrary Pokémon synthesis/templates;
+- arbitrary item IDs, quantities, slots, pockets, deletion or reordering;
+- composition with Money or other FL2 Party/Inventory edits;
 - nonzero-key support;
-- broader PokemonStart versions/builds;
+- broader PokemonStart builds/versions;
 - Stable promotion;
 - public/LAN GUI exposure;
 - paused Money reusable candidate adoption;
-- protected-data publication.
+- protected-data publication;
+- canonical `main` merge/adoption of the composed candidate without separate Human authorization.
 
-## Review / next-work rule
+If the exact adopted envelopes cannot be composed without speculative coupling or predicate relaxation, stop with `BOUNDED_STOP_WITH_CONCRETE_EVIDENCE`.
 
-Before beginning the next capability expansion, fresh-read current `main` and independently decide whether the cheapest uncertainty-reducing step is still composition/reuse rather than broader field expansion.
+## Current next step
 
-A likely next candidate is **bounded composition of the already-proven Party append and Inventory insertion operations into one verified output and one GUI transaction**, but this is not yet authorized and must be presented as a separate Human decision surface.
+**Delegate the bounded exact-v0.22 Party-append + Inventory-insertion composed GUI transaction proof to local Codex. Require exact union-of-envelopes proof, independent candidate/order-independence audit, one game SAVE/cold-reload proof, GUI byte-equality proof, full validation and push-safe review-branch publication; then stop for independent review before any canonical merge/adoption.**
