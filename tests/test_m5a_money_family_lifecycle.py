@@ -169,11 +169,12 @@ class MoneyFamilyLifecycleClosureTests(unittest.TestCase):
 
             tampered = json.loads(json.dumps(journal))
             tampered["nodes"][self.root_hash]["money"] = 9_999_999
-            with self.assertRaisesRegex(f.MoneyFamilyError, "journal fingerprint mismatch"):
-                f.inspect(
-                    root.read_bytes(), tampered, self.build_hash,
-                    f.SUPPORTED_ENVIRONMENT_ID,
-                )
+            result = f.inspect(
+                root.read_bytes(), tampered, self.build_hash,
+                f.SUPPORTED_ENVIRONMENT_ID,
+            )
+            self.assertFalse(result["eligible"])
+            self.assertEqual(result["reason"], "journal fingerprint mismatch")
 
 
 if __name__ == "__main__":
