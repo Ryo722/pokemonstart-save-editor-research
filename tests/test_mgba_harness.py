@@ -43,8 +43,11 @@ class ProtocolTests(unittest.TestCase):
             with self.assertRaisesRegex(h.HarnessError, "inside repository"):
                 h.render_bridge("127.0.0.1", 12345, "a" * 64,
                                 h.REPO / "private.sav", Path(directory))
+            # Make the intended host-scope rejection deterministic. tempfile location
+            # varies with TMPDIR and may itself be inside HOST_SCOPE on macOS runners.
+            outside = h.HOST_SCOPE.parent / "pokemonstart-harness-outside"
             with self.assertRaisesRegex(h.HarnessError, "host workspace"):
-                h.prepare(Path(directory) / "outside.gba", Path(directory) / "outside.sav")
+                h.prepare(outside / "outside.gba", outside / "outside.sav")
 
     def test_command_limits_and_write_allowlist(self):
         self.assertTrue(h.ram_range(0x0203FFFC, 4))
