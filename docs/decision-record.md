@@ -2,23 +2,29 @@
 
 GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — FL2 durable-baseline gate + terminal-goal refinement adopted
+## Controlling current decision — FL2-G0 merged; FL2 unified practical CLI active
 
-Human authorization:
+The project retains the previously adopted Stable Lane + Fast Lab Lane architecture and refined terminal goal.
+
+Controlling prior authorizations:
 
 > `AUTHORIZE FL2 DURABLE-BASELINE GATE AND TERMINAL-GOAL REFINEMENT`
 
-This authorization follows the fresh milestone-boundary audit performed after canonical adoption of the Stable Lane + Fast Lab Lane architecture.
+> `AUTHORIZE FL2-G0 MERGE 44c90e8217061cc8ac294a392984dfe73e622d80`
 
-The detailed controlling record for this refinement is:
+The FL2-G0 reconciliation candidate was independently reviewed and then fast-forwarded into canonical `main` at exact commit `44c90e8217061cc8ac294a392984dfe73e622d80`.
+
+The durable Fast Lab implementation/test/profile gap is therefore closed. FL2-G0 is complete and no longer the next-work blocker.
+
+The active practical milestone is now **FL2 — unified practical local CLI**. FL2 must consolidate already-evidenced exact-v0.22 operations without silently broadening their capability ranges.
+
+Detailed controlling records remain:
 
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
-
-The prior two-lane adoption record remains controlling for current v0.22 Fast Lab evidence and lane semantics:
-
 - `docs/fast-lab-two-lane-adoption.md`
+- `docs/fl2-g0-reconciliation.md`
 
-Where older roadmap wording conflicts with these later decisions, the later records control.
+Where older roadmap wording conflicts with this record, this later record controls.
 
 ## Terminal goal
 
@@ -34,39 +40,19 @@ Provide a **user-operable, recoverable, profile-bounded local editor for the own
 
 Exact-build capability profiles define the supported envelope.
 
-The terminal goal is not to maximize feature count indefinitely. It does not require all PokemonStart versions, all save fields, PKHeX parity, generic CFRU support, or Stable promotion of every Fast Lab capability.
-
-Stable Lane remains the promotion path for selected mature capabilities, not a prerequisite for completing the practical Fast Lab editor.
+The terminal goal does not require all PokemonStart versions, all save fields, PKHeX parity, generic CFRU support, GUI specifically, or Stable promotion of every Fast Lab capability.
 
 ## Canonical two-lane architecture
 
 ### Stable Lane
 
-Durable supported capabilities require capability-appropriate evidence such as:
-
-- supported-save/build gates;
-- lifecycle/game-round-trip evidence where relevant;
-- provenance/continuity handling;
-- independent verification;
-- recovery path;
-- platform/delivery review;
-- explicit Human adoption.
+Durable supported capabilities require capability-appropriate evidence such as supported-save/build gates, lifecycle/game-round-trip evidence where relevant, provenance/continuity handling, independent verification, recovery, delivery review, and explicit Human adoption.
 
 ### Fast Lab Lane
 
-Bounded exact-build experimental capabilities may progress rapidly when materially relevant conditions hold:
+Bounded exact-build experimental capabilities may progress rapidly when the exact build is identified, private source artifacts stay immutable, outputs are separate, diffs are explainable, required checksums/invariants hold, generated outputs re-verify, and unsupported coupling/coverage is recorded.
 
-- exact ROM/build identity is recorded;
-- the save passes the structural verifier or equivalent bounded gate;
-- source ROM/save remains immutable;
-- output is separate;
-- byte/semantic diff is explainable;
-- required checksums/invariants are correct;
-- output re-verifies;
-- exact-build live confirmation is obtained where cheap and informative;
-- unsupported coupling/coverage is explicitly recorded.
-
-A normal in-game SAVE round trip is not mandatory for every Fast Lab field. Fast Lab evidence does not imply Stable support.
+Fast Lab evidence does not imply Stable support.
 
 ## Shared safety contract
 
@@ -96,17 +82,15 @@ Existing Stable history is preserved:
 7. **M4 — bounded usable-editor first slice — COMPLETE.**
 8. **M5A — Money Stable capability — FAMILY IMPLEMENTATION + LIFECYCLE CLOSURE EVIDENCE COMPLETE; MILESTONE ADOPTION NOT YET COMPLETE.**
 
-M5A remains bounded to its recorded v0.15 lineage/build/key/platform/journal envelope. Practical provenance continuity remains design-only. P-direct/P-reanchor are not implemented or adopted by the Fast Lab decisions.
-
-Stable provenance work is not on the Fast Lab critical path.
+M5A remains bounded to its recorded v0.15 lineage/build/key/platform/journal envelope. P-direct/P-reanchor remain unimplemented and are not on the Fast Lab critical path.
 
 ## Fast Lab milestone state
 
 ### FL0 — exact-build private ROM preparation and harness — COMPLETE
 
-Exact PokemonStart v0.22 package recovery, private ROM preparation, mGBA harness/bootstrap, read-path compatibility, and exact-build capability profile were established without committing protected artifacts.
+Exact PokemonStart v0.22 package recovery, private ROM preparation, mGBA harness/bootstrap, read-path compatibility, and exact-build capability profile are durably recorded.
 
-Current exact private v0.22 build SHA-256:
+Exact private v0.22 build SHA-256:
 
 `6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0`
 
@@ -118,35 +102,19 @@ Exact-v0.22 Fast Lab evidence covers:
 - practical/composed Party editing;
 - one bounded existing-item Inventory quantity edit.
 
-Detailed evidence and limitations are in `docs/fast-lab-two-lane-adoption.md`.
+Detailed evidence and limitations remain in `docs/fast-lab-two-lane-adoption.md` and `docs/fast-lab-v022-capability.json`.
 
-### FL2 — unified practical local CLI — NEXT MILESTONE
+### FL2-G0 — durable Fast Lab baseline reconciliation — COMPLETE / MERGED
 
-FL2 is retained as the next practical milestone, but it now begins with a mandatory durable-baseline gate.
+Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` is canonical `main` history. The reconciled implementation, tests, capability profile, and evidence pointers are now durable.
 
-#### FL2-G0 — durable Fast Lab baseline reconciliation — NEXT EXECUTION STEP
+This merge did **not** promote Fast Lab capabilities to Stable and did not broaden build/version/key/field support.
 
-Before additional CLI implementation accumulates, reconcile the already-existing local Fast Lab implementation into a fresh branch based on current canonical `main`.
+### FL2 — unified practical local CLI — ACTIVE MILESTONE
 
-Required outcomes:
+FL2 must consolidate the already-evidenced operations into one local workflow with at least:
 
-- fresh-read current `main` and the local Fast Lab branch;
-- reconstruct the exact local implementation/test/docs/capability-profile chain needed to reproduce FL1;
-- review the full reconciliation diff instead of assuming experimental success proves implementation quality;
-- preserve Stable semantics and Fast Lab experimental labels;
-- include no protected/private artifacts;
-- reconcile only the minimum implementation/tests/profile/evidence pointers needed for durable reconstruction;
-- run focused/full tests and applicable syntax/JSON/diff/protected-artifact checks;
-- produce an exact candidate commit for Human review;
-- **do not merge the candidate into `main` without separate explicit Human authorization.**
-
-The purpose of FL2-G0 is durability and reproducibility, not new capability discovery.
-
-#### FL2 implementation after G0
-
-After the durable baseline is accepted, consolidate already-evidenced operations into one local CLI with at least:
-
-- inspect save/profile;
+- exact profile/save inspection;
 - semantic preview;
 - supported Money editing;
 - supported Party editing;
@@ -154,21 +122,11 @@ After the durable baseline is accepted, consolidate already-evidenced operations
 - semantic and byte-diff preview;
 - separate-output write;
 - output verification;
-- explicit unsupported-build/field rejection.
+- explicit unsupported-build/save/field rejection.
 
-FL2 should reuse existing bounded logic and must not silently generalize capability ranges merely for completeness.
+The implementation should delegate field derivation to the reconciled bounded Fast Lab modules rather than reimplement or generalize them.
 
-## Post-FL2 roadmap — usage driven
-
-A fixed `FL3 profile broadening -> FL4 GUI` sequence is no longer controlling.
-
-After FL2, choose the next milestone from actual owner use:
-
-- **Capability expansion path:** broaden species, levels, moves, abilities, items/pockets, encryption-key handling, or later PokemonStart builds only when a concrete missing capability blocks useful work.
-- **Delivery path:** improve local UX/GUI when delivery adds more value than another field.
-- **Stable promotion path:** strengthen selected Fast Lab capabilities only when durable support is worth the lifecycle/provenance/recovery cost.
-
-These paths may occur in different orders. None is automatically required merely because it appears in a roadmap.
+The current implementation candidate is developed on `codex/fl2-unified-cli` and is documented in `docs/fl2-unified-cli-candidate.md`. Candidate work is not canonical adoption until separately reviewed and merged.
 
 ## Current v0.22 Fast Lab evidence summary
 
@@ -180,7 +138,7 @@ A disposable output changed Money from `1,234,567` to `7,654,321`, updated the r
 
 ### Party
 
-The retained party[0] 100-byte record matched offline decoding to live v0.22 memory. Successful bounded writes include friendship, IV/stat recalculation, move replacement/PP handling, level/EXP editing, Bulbasaur->Ivysaur transformation, and a composed multi-field edit whose full live party record matched offline output.
+The retained party[0] 100-byte record matched offline decoding to live v0.22 memory. Successful bounded writes include friendship, Attack IV/stat recalculation, move replacement/PP handling, level/EXP editing, Bulbasaur -> Ivysaur transformation, and the recorded composed canary.
 
 Ability-selector storage is decoded, but practical resolved-ability writing remains unproven.
 
@@ -188,44 +146,57 @@ Ability-selector storage is decoded, but practical resolved-ability writing rema
 
 A same-file previous/current slot differential isolated Potion item ID `13`, quantity `1 -> 2` at logical section 13 relative offset `0xADC` under encryption key `0`.
 
-A separate-output edit changed the same existing Potion slot `2 -> 3`; the verifier accepted it and exact v0.22 live RAM showed Potion ID `13`, quantity `3` in the same slot.
+A separate-output edit changed that existing Potion slot `2 -> 3`; the verifier accepted it and exact v0.22 live RAM showed Potion ID `13`, quantity `3` in the same slot.
 
 This does not prove arbitrary item IDs, insertion, deletion, reordering, other pockets, nonzero-key handling, or complete pocket capacity.
 
 ## Important caveats
 
-- The baseline retained party record contains stored level `5` with EXP `134`, while the source-derived Medium Slow threshold logic used for explicit level editing places level 5 at `135`; unrelated edits must preserve this pre-existing inconsistency rather than silently normalize it.
-- Exact v0.22 startup/read-path/live-memory evidence is not broad save-migration or lifecycle proof.
-- Battle behavior after species/move edits, ability resolution, evolution, Pokédex effects, move legality, and normal in-game resave behavior remain unproven unless separately recorded.
-- The local Fast Lab implementation branch is not yet durably reconciled into canonical `main`; closing that gap is FL2-G0.
+- The baseline retained party record contains stored level `5` with EXP `134`, while the source-derived Medium Slow threshold used for explicit level editing places level 5 at `135`; unrelated edits must preserve this pre-existing mismatch.
+- Exact v0.22 startup/read/live-memory evidence is not broad save-migration or lifecycle proof.
+- Battle behavior after species/move edits, resolved ability behavior, evolution, Pokédex effects, move legality, and normal in-game resave behavior remain unproven unless separately recorded.
+- Nonzero-key Fast Lab support and other PokemonStart builds remain unsupported.
 
 ## Current authorization boundary
 
-The current authorization permits:
+The Human has explicitly authorized and completed the FL2-G0 merge. The subsequent instruction to continue permits bounded FL2 candidate implementation consistent with the already-adopted post-G0 plan.
 
-- the terminal-goal refinement above;
-- FL2-G0 durable-baseline reconciliation candidate preparation;
-- fresh inspection/comparison of current `main` and the local Fast Lab branch under existing Fast Lab safety rules.
+Current work may:
 
-It does **not** by itself authorize:
+- create an FL2 implementation branch from exact canonical `main`;
+- consolidate existing bounded Money / Party / Inventory logic behind one local CLI;
+- add synthetic/focused tests and candidate documentation;
+- inspect and preview semantic/byte diffs;
+- preserve separate-output and verifier requirements.
 
-- automatic merge of the FL2-G0 candidate into `main`;
-- Stable promotion of Fast Lab capabilities;
+Current work does **not** authorize:
+
+- merge/adoption of the FL2 candidate into canonical `main` without a separate review/authorization decision;
+- Stable promotion;
 - public release;
-- GUI exposure;
-- arbitrary-save or broad-version support;
-- nonzero-key generalization;
+- broader build/version/key support;
+- arbitrary-save write support;
+- ability write support or broader Inventory support;
 - protected-data publication;
-- P-direct/P-reanchor implementation;
-- unrelated new-field research outside the FL2 critical path.
+- unrelated new-field research.
+
+## Post-FL2 roadmap — usage driven
+
+After FL2, choose the next milestone from actual owner use rather than a fixed roadmap:
+
+- capability expansion when a concrete missing capability blocks useful work;
+- delivery/GUI improvements when UX adds more value than another field;
+- Stable promotion when durable support justifies its extra evidence and lifecycle cost.
 
 ## Authority chain
 
 Current key durable records:
 
-- `docs/decision-record.md` — controlling milestone/authority state;
-- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — controlling FL2-G0 and terminal-goal refinement;
-- `docs/fast-lab-two-lane-adoption.md` — controlling two-lane adoption detail and current v0.22 Fast Lab evidence;
+- `docs/decision-record.md` — controlling current milestone/authority state;
+- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — terminal-goal and FL2 design basis;
+- `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconciliation record;
+- `docs/fast-lab-two-lane-adoption.md` — two-lane adoption detail and v0.22 Fast Lab evidence;
+- `docs/fast-lab-v022-capability.json` — machine-readable exact-v0.22 capability profile;
 - `docs/evidence.md`;
 - `docs/m4-completion.md`;
 - `docs/m5a-second-roundtrip-and-money-family.md`;
@@ -233,4 +204,4 @@ Current key durable records:
 
 ## Current next step
 
-**Begin the next execution in a fresh chat with FL2-G0 durable Fast Lab baseline reconciliation.**
+**Complete focused/full validation of the bounded FL2 unified CLI candidate, independently review its exact branch HEAD, and stop for separate Human merge authorization before changing canonical `main`.**
