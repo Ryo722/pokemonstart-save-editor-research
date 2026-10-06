@@ -251,10 +251,10 @@ and [load_save.c](https://github.com/pret/pokefirered/blob/master/src/load_save.
 the exact private-save differential and live result control this bounded
 location claim.
 
-## Milestone-boundary audit — proposal only
+## Historical milestone context
 
-See [`fast-lab-milestone-boundary-audit.md`](fast-lab-milestone-boundary-audit.md).
-It compares canonical main `5d81e77358f95394dea62f94ba993e3ba24a4197` with
-this human-authorized local Fast Lab branch. The recommendation is to adopt a
-two-lane strategy canonically in a future separately authorized change; no
-canonical document has been changed here.
+This document preserves package-inspection and experiment evidence as
+historical context; it is not current milestone or planning authority. Current
+milestone and authorization authority is recorded in
+[`fast-lab-two-lane-adoption.md`](fast-lab-two-lane-adoption.md) and
+[`fl2-durable-baseline-and-terminal-goal-refinement.md`](fl2-durable-baseline-and-terminal-goal-refinement.md).

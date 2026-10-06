@@ -8,7 +8,7 @@ The local source branch contained write support for inherited Party fields that 
 
 Verification on the candidate: focused FL0/FL1 tests **65 passed**; full repository suite **166 tests, 150 passed, 16 skipped**; `py_compile` **66 repository Python files passed**; capability-profile JSON validation passed; `git diff --check` passed; changed-path protected/executable suffix scan found no matches; Gitleaks scanned the candidate source/docs and found no leaks. No protected binary inputs were used or copied into the candidate.
 
-This is a reconciliation candidate only. The canonical `main` tree and remote were not modified. Human merge authorization remains required.
+This is a reconciliation candidate only. Candidate preparation did not modify canonical `main`; the review branch `codex/fl2-g0-durable-baseline` has since been pushed. Human merge authorization remains required.
 
 ## M5A exact money round trip and repeated-use canary — 2026-10-06
 

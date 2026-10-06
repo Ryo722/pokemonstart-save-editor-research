@@ -1,6 +1,6 @@
 # FL2-G0 durable Fast Lab baseline reconciliation — 2026-10-06
 
-Status: **candidate prepared for Human review; not merged or pushed**
+Status: **candidate branch pushed for Human review; not merged into canonical `main`**
 
 ## Canonical basis and local source
 
@@ -21,7 +21,7 @@ All Fast Lab operations remain labeled experimental and gated by the exact v0.22
 
 - `docs/fast-lab-milestone-boundary-audit.md` is omitted because it predates the adopted FL2-G0 boundary and duplicates an older roadmap snapshot.
 - No ROM, save, `.pks`, BPS/IPS, executable payload, copyrighted asset, or protected bytes are present in this candidate.
-- No new field research, capability range expansion, Stable adoption, unified CLI work, merge, or push is part of this reconciliation.
+- No new field research, capability range expansion, Stable adoption, unified CLI work, or merge into canonical `main` is part of this reconciliation.
 
 ## Review and verification record
 
