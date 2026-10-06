@@ -10,17 +10,17 @@ import pokemonstart_v022_web as web
 import pokemonstart_fastlab_v022_creation as core
 import pokemonstart_v022_creation_audit as audit
 import pokemonstart_save_verifier as verifier
-from test_v022_inventory_insertion import inventory_fixture
+from test_v022_composition import composed_fixture
 
 
 class V022WebTests(unittest.TestCase):
     def setUp(self):
-        self.raw=inventory_fixture()
+        self.raw=composed_fixture()
         self.temporary=tempfile.TemporaryDirectory()
         self.addCleanup(self.temporary.cleanup)
         self.source=Path(self.temporary.name)/'source.sav'
         self.source.write_bytes(self.raw)
-        for attr in ('PARTY_SOURCE_SHA256','INVENTORY_SOURCE_SHA256'):
+        for attr in ('PARTY_SOURCE_SHA256','INVENTORY_SOURCE_SHA256','COMPOSED_SOURCE_SHA256'):
             p=patch.object(core,attr,audit.sha(self.raw));p.start();self.addCleanup(p.stop)
         p=patch.object(core.fl2,'_check_rom_file',return_value=core.fl2.EXPECTED_ROM_SHA256)
         p.start();self.addCleanup(p.stop)

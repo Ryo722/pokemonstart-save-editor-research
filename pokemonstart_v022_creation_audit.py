@@ -217,3 +217,73 @@ def audit_insert(before: bytes, after: bytes) -> dict:
                 changed_offsets=[i for i,(x,y) in enumerate(zip(before,after)) if x!=y],
                 checksum_changed=False,money_preserved=True,party_preserved=True,
                 complete_candidate_equality=True)
+
+
+def independent_composed(raw: bytes) -> bytes:
+    """Direct construction independent of both product and primitive writers."""
+    p = parse(raw)
+    active = p['slots'][p['active']]
+    if p['count'] != 3 or p['money'] != 3032 or any(
+            struct.unpack_from('<I', slot['sections'][0], 0xF20)[0] for slot in p['slots']):
+        raise ValueError('composed source count/Money/key')
+    inventory = active['sections'][13]
+    if struct.unpack_from('<HHHH', inventory, 0xADC) != (13, 2, 533, 1) or any(inventory[0xAE4:0xFF4]):
+        raise ValueError('composed source Inventory shape')
+    start = active['positions'][1] * 4096
+    item = active['positions'][13] * 4096 + 0xAE4
+    out = bytearray(raw)
+    out[start + 0x34] = 4
+    out[start + 0x164:start + 0x1C8] = p['records'][0]
+    struct.pack_into('<HH', out, item, 14, 1)
+    struct.pack_into('<H', out, start + 0xFF6, checksum(out[start:start + 0xFF0]))
+    return bytes(out)
+
+
+def audit_composed(before: bytes, after: bytes) -> dict:
+    expected = independent_composed(before)
+    if after != expected:
+        raise ValueError('complete composed candidate inequality')
+    party, items = independent_append(before), independent_insert(before)
+    party_offsets = {i for i, (a, b) in enumerate(zip(before, party)) if a != b}
+    item_offsets = {i for i, (a, b) in enumerate(zip(before, items)) if a != b}
+    changes = {i for i, (a, b) in enumerate(zip(before, after)) if a != b}
+    if changes != party_offsets | item_offsets:
+        raise ValueError('composed offset union mismatch')
+    if independent_insert(party) != expected or independent_append(items) != expected:
+        raise ValueError('complete composed order inequality')
+    p, q = parse(before), parse(after)
+    if q['count'] != 4 or q['records'] != p['records'] + [p['records'][0]]:
+        raise ValueError('composed Party preservation')
+    old = p['slots'][p['active']]['sections'][13]
+    new = q['slots'][q['active']]['sections'][13]
+    if struct.unpack_from('<HHHHHH', new, 0xADC) != (13,2,533,1,14,1) or old[0xAE8:0xFF4] != new[0xAE8:0xFF4]:
+        raise ValueError('composed Inventory preservation')
+    if q['money'] != 3032 or q['key'] != 0:
+        raise ValueError('composed Money/key preservation')
+    return dict(source_sha256=sha(before),output_sha256=sha(after),
+                changed_offsets=sorted(changes),changed_byte_count=len(changes),
+                party_changed_offsets=sorted(party_offsets),inventory_changed_offsets=sorted(item_offsets),
+                offset_union_equality=True,complete_candidate_equality=True,
+                complete_byte_order_independence=True,party_count=[3,4],
+                original_party_records_preserved=True,slot3_equals_complete_slot0=True,
+                existing_items_order_preserved=True,remaining_inventory_tail_preserved=True,
+                money=3032,key=0,footer_counters_inactive_slot_unrelated_bytes_preserved=True)
+
+
+def composed_normal_save(root: bytes, candidate: bytes, returned: bytes) -> dict:
+    """Audit this round trip, reporting metadata and opaque changes as well."""
+    audit_composed(root, candidate)
+    if len(candidate) != len(returned):
+        raise ValueError('normal-save container size changed')
+    receipt = normal_save(candidate, returned)
+    p, q = parse(candidate), parse(returned)
+    old, new = p['slots'][p['active']], q['slots'][q['active']]
+    receipt.update(key_preserved=True, party_count=4, money=3032, key=0,
+                   section_mapping_before=old['positions'],section_mapping_after=new['positions'],
+                   logical_metadata_changed_offsets={sid:[i for i in range(0xFF4,0x1000)
+                       if old['sections'][sid][i] != new['sections'][sid][i]] for sid in range(14)},
+                   physical_changed_byte_count=sum(a != b for a,b in zip(candidate,returned)),
+                   footer_classification='opaque emulator footer; field semantics unqualified',
+                   extended_sectors_28_29_preserved=True,
+                   non_claim='one observed normal SAVE; no reusable volatility predicate')
+    return receipt

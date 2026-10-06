@@ -99,7 +99,9 @@ class BrowserWorkflow:
 DEFAULT_REQUESTS={'money':{'money':core.fl2.money.TARGET_MONEY},
                   'party':{'friendship':51},
                   'inventory':{'slot':0,'item_id':13,'quantity':3},
-                  'party_append':{},'inventory_insert':{}}
+                  'party_append':{},'inventory_insert':{},'party_append_inventory_insert':{}}
+
+OPERATION_LABELS = {'party_append_inventory_insert':'Party append + Antidote insertion'}
 
 
 def create_page(rom_path):
@@ -141,7 +143,7 @@ def create_page(rom_path):
             inspection.text=json.dumps({'semantics':report['semantics'],
                                         'capabilities':report['capabilities']},ensure_ascii=False,indent=2)
             choices=report['supported_write_operations']
-            operation.options=choices
+            operation.options={op:OPERATION_LABELS.get(op,op) for op in choices}
             operation.value=choices[0] if choices else None
             operation.update()
             preview_button.set_enabled(bool(choices))

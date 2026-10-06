@@ -80,8 +80,11 @@ This slice provides two **Fast Lab experimental** operations on the fresh
 exact-v0.22 proof root only: Party count 3->4 by copying the complete existing
 slot0 record into slot3, and Antidote ID14 x1 into the game-observed regular slot2
 without changing Money. Both passed load, normal SAVE and cold reload.
-Other saves, templates, items, slots, quantities and combined creation remain
-unsupported. Existing FL2 gates are unchanged; the paused Money reusable
+Other saves, templates, items, slots and quantities remain unsupported.
+This review branch additionally proves exactly one combined transaction from
+the same root: Party append + Antidote insertion, with one SAVE/cold-reload
+and GUI/core equality proof. It remains pending independent review and adoption;
+see [the composition evidence](docs/v022-composed-gui-transaction-progress.md). Existing FL2 gates are unchanged; the paused Money reusable
 candidate is not included.
 
 The localhost NiceGUI prototype provides upload, inspection, semantic/byte

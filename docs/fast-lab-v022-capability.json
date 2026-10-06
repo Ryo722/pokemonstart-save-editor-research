@@ -454,5 +454,22 @@
     "general_reusable_eligibility": false,
     "stable_proven": false,
     "evidence_record": "docs/v022-creation-proof-evidence.json"
+  },
+  "creation_composition_review_candidate": {
+    "status": "Fast Lab experimental review candidate; pending independent review/adoption",
+    "canonical_base_sha": "720f56dac8851e0fd17870dc3bd41c36cbf0f726",
+    "operation": "party_append_inventory_insert",
+    "request": {},
+    "source_sha256": "2d7ac8d6214e8b94018a3fe3f65c30270198098a9cb658318248b514242511ac",
+    "output_sha256": "96ce6b3a7c26e6116ce1150ebbf34d345209529f1ce7f192b735164c68f7c7fb",
+    "changed_byte_count": 54,
+    "independent_complete_candidate_equality": true,
+    "exact_offset_union_equality": true,
+    "exact_order_independence": true,
+    "load_one_normal_save_cold_reload": true,
+    "gui_core_byte_equality": true,
+    "general_reusable_eligibility": false,
+    "stable_proven": false,
+    "evidence_record": "docs/v022-composed-gui-transaction-evidence.json"
   }
 }

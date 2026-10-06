@@ -15,6 +15,7 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 import pokemonstart_fastlab_v022_creation as core
 import pokemonstart_v022_creation_audit as audit
 import pokemonstart_save_verifier as verifier
+from pokemonstart_v022_web import OPERATION_LABELS
 
 
 def run(url, source, rom, output_directory):
@@ -40,9 +41,14 @@ def run(url, source, rom, output_directory):
                 page.locator('input[type=file]').set_input_files(str(source))
                 page.get_by_text('SUPPORTED',exact=False).first.wait_for()
                 page.get_by_role('combobox').click()
-                page.get_by_role('option',name=operation,exact=True).click()
+                page.get_by_role('option',name=OPERATION_LABELS.get(operation,operation),exact=True).click()
                 page.get_by_role('button',name='プレビュー',exact=True).click()
                 page.get_by_text('PREVIEW — 元の save は変更していません。',exact=True).wait_for()
+                if operation=='party_append_inventory_insert':
+                    visible=page.locator('body').inner_text()
+                    for marker in ('"party_append": {','"inventory_insert": {',
+                                   '"append_slot": 3','"item_id": 14','"money_unchanged": true'):
+                        if marker not in visible:raise ValueError('combined semantic preview incomplete')
                 page.get_by_role('button',name='検証済み出力を作成',exact=True).click()
                 page.get_by_text('GENERATED — verified SHA-256:',exact=False).wait_for()
                 with page.expect_download() as download:
@@ -59,6 +65,7 @@ def run(url, source, rom, output_directory):
                                     output_sha256=audit.sha(output),real_browser=True,
                                     browser_version=browser.version,
                                     core_equality=True,independent_audit=receipt['independent_audit'],
+                                    combined_semantic_preview_checked=operation=='party_append_inventory_insert',
                                     verifier_accepted=True,source_immutable=True))
         finally:
             browser.close()
