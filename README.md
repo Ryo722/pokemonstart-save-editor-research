@@ -41,8 +41,8 @@ Stable provenance work such as P-direct/P-reanchor remains separate and is not o
 
 - **FL0 — exact-build private ROM preparation + harness: COMPLETE.**
 - **FL1 — practical core editing slice: COMPLETE EXPERIMENTALLY.** Exact PokemonStart v0.22 evidence includes bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
-- **FL2 — unified practical local CLI: NEXT MILESTONE.**
-- **FL2-G0 — durable Fast Lab baseline reconciliation: NEXT EXECUTION STEP.** Before more CLI implementation accumulates, reconcile the already-existing local Fast Lab implementation/tests/profile into a fresh candidate based on current canonical `main`, review the full diff, run the full checks, and stop for Human merge authorization.
+- **FL2-G0 — durable Fast Lab baseline reconciliation: COMPLETE / MERGED.** Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` was fast-forwarded into canonical `main`.
+- **FL2 — unified practical local CLI: ACTIVE MILESTONE.** Current candidate work consolidates the already-evidenced Money / Party / bounded Inventory operations behind one inspect/preview/write/verify workflow without expanding capability ranges.
 
 After FL2, profile broadening, GUI/delivery, and Stable promotion are **usage-driven alternatives**, not a fixed mandatory sequence.
 
@@ -108,7 +108,7 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 
 - `docs/decision-record.md` — controlling milestone/authority state
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — controlling FL2-G0 and terminal-goal refinement
-- `docs/fl2-g0-reconciliation.md` — candidate baseline reconstruction scope and review record
+- `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconstruction record
 - `docs/fast-lab-two-lane-adoption.md` — controlling two-lane strategy and current v0.22 Fast Lab evidence
 - `docs/evidence.md`
 - `docs/m4-completion.md`
