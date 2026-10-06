@@ -15,6 +15,7 @@ The controlling strategy/next-work records are:
 
 - `docs/decision-record.md`
 - `docs/post-fl2-acceptance-and-reusable-envelope-plan.md`
+- `docs/v022-creation-proofs-and-gui-prototype.md`
 - `docs/fast-lab-two-lane-adoption.md`
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
 
@@ -135,7 +136,8 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 ## Canonical records
 
 - `docs/decision-record.md` — controlling milestone/authority state
-- `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — current authorized next-work boundary
+- `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — historical/adopted post-FL2 acceptance and reusable-envelope plan
+- `docs/v022-creation-proofs-and-gui-prototype.md` — authorization/scope record for the exact-v0.22 Party append, Inventory insertion and localhost GUI experimental slice
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — FL2-G0 and terminal-goal refinement
 - `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconstruction record
 - `docs/fl2-unified-cli-candidate.md` — merged FL2 implementation/validation record
