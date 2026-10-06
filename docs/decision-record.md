@@ -2,211 +2,217 @@
 
 GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — M5A FAMILY closure complete; provenance continuity remains design-only
+## Controlling current decision — Stable Lane + Fast Lab Lane adopted
 
-Strategic Human authorization:
+Human authorization:
 
-> `AUTHORIZE POST-M4 NORTH STAR EXPANSION AND M5A MONEY INVESTIGATION`
+> `AUTHORIZE CANONICAL FAST-LAB TWO-LANE ADOPTION`
+>
+> Adopt the Human-authorized Stable Lane + Fast Lab Lane strategy into the durable canonical project records.
+>
+> Preserve all existing Stable-lane evidence and milestones, but update the North Star, milestone architecture, success criteria, current position, and authorization wording so that Stable capabilities continue to require stronger lifecycle/provenance/recovery/delivery evidence before adoption; Fast Lab capabilities may be developed and used experimentally on immutable-source / separate-output private saves under exact capability profiles; Fast Lab success does not require normal in-game SAVE proof for every field when verifier + bounded live confirmation is sufficient; experimental Fast Lab capability does not imply Stable support; Inventory and Party work may proceed by practical value and evidence rather than a mandatory M5B-before-M5C sequence; exact PokemonStart build support is tracked per ROM SHA/profile rather than generalized across versions; public/generic support claims remain prohibited without later review.
 
-Exact writer authorization:
+The exact adoption rationale, v0.22 Fast Lab evidence, capability limits, and next-milestone definition are recorded in `docs/fast-lab-two-lane-adoption.md`. That record controls where older roadmap wording conflicts with this adoption.
 
-> `AUTHORIZE M5A EXACT MAX-MONEY CANARY: implement and execute the bounded exact-input 3000-to-9999999 proof writer against SHA-256 fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b; write only a new output file; require complete independent diff/checksum/invariant audit and source immutability; do not generalize this proof to reusable arbitrary money editing or any other capability.`
+## North Star
 
-Repeated-use authorization:
+Build a practical local editor for the owner's PokemonStart saves that maximizes useful editing progress while preserving a separate Stable lane for durable supported behavior.
 
-> `AUTHORIZE M5A ROUND-TRIP ADOPTION AND REPEATED-USE CANARY: canonically record the successful exact 3000-to-9999999 game round trip and the observed early-game EventObjectTemplate/parasite transition without broadening the existing M4 provenance predicate; then implement and execute one bounded second money canary against exact return SHA-256 1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4, changing 9999999 to 1234567 into a new output only with complete independent audit. Do not yet adopt a reusable arbitrary-money FAMILY or broaden save/build/provenance scope.`
+The project intentionally separates two objectives:
 
-Bounded FAMILY authorization:
+- **Stable Lane:** mature capabilities under stronger lifecycle/provenance/recovery/delivery evidence and explicit adoption.
+- **Fast Lab Lane:** bounded exact-build experimental capabilities for the owner's private saves, optimized for rapid practical progress under immutable-input / separate-output / verifier / capability-profile safeguards.
 
-> `AUTHORIZE M5A SECOND ROUND-TRIP ADOPTION AND BOUNDED MONEY FAMILY CANDIDATE: canonically record the successful 9999999-to-1234567 game round trip; correct the independently reproduced M5A evidence-record discrepancies for the first EventObjectTemplate changed-byte count and opaque emulator-footer behavior; then design, implement, test, and independently audit a retained-lineage reusable money FAMILY candidate for values 0..9999999, initially fail-closed to the currently evidenced PokemonStart v0.15 build/environment and observed encryption-key boundary. Keep the existing M4 check_game_transition/provenance predicate unchanged. Any M5A-specific game-return continuation rule must be separately bounded to source-backed and independently evidenced normal-save behavior, including the observed section-4 parasite-tail evolution, and must fail closed outside that envelope. Do not expose money editing through the GUI yet, do not broaden save/build/version support, and do not begin M5B/M5C implementation.`
+Fast Lab is an evidence class, not a shortcut to Stable. Canonically recording a Fast Lab capability does not make it Stable.
 
-Current closure/design authorization:
+General event/story/quest editing remains out of scope. PKHeX parity, generic CFRU editing, arbitrary-save support, broad PokemonStart-version support, and feature-count parity are not goals by themselves.
 
-> `AUTHORIZE M5A FAMILY CLOSURE AND PROVENANCE-CONTINUITY DESIGN: from fresh current main, close the bounded Money FAMILY candidate evidence gaps without broadening writer capability by adding and executing end-to-end synthetic lifecycle coverage for bootstrap -> preview -> commit -> Human-observed game-return enrollment -> returned-save eligibility -> next preview/commit, plus negative journal/parent/duplicate/environment cases; fresh-run the full repository suite on the exact candidate and correct canonical environment wording so macos-mgba-0.10.5 is not overstated as machine-attested where it is only human-bound. In parallel, perform a design-only, evidence-first investigation of a practical retained-lineage provenance-continuity model that separates save ancestry from ordinary gameplay payload changes, using pinned CFRU-JP save-slot/counter/write behavior and independently reproduced round-trip evidence. Do not implement a broader provenance predicate, do not expose money through GUI, do not mark M5A COMPLETE, and do not begin M5B/M5C until the resulting decision surface is reviewed and separately authorized.`
+## Shared safety contract
 
-The controlling current M5A closure/design record is `docs/m5a-family-closure-and-provenance-continuity-design.md`. `docs/m5a-second-roundtrip-and-money-family.md` remains the controlling detailed record for the second round trip and current FAMILY implementation. Where older M5A prose conflicts with later independently reproduced corrections, the newer records control.
+Both lanes retain these non-negotiable rules:
 
-## Expanded North Star
+1. original/private ROMs and source saves remain immutable;
+2. writers create new output files and do not overwrite sources;
+3. malformed, ambiguous, and unsupported inputs fail closed;
+4. protected/private artifacts do not enter Git or public distribution;
+5. exact-build/version support is tracked by capability profile, not assumed across versions;
+6. editor diffs remain bounded and explainable;
+7. verifier/invariant checks run on generated outputs;
+8. emulator live-save state is never automatically replaced;
+9. public/generic support claims require later review;
+10. Fast Lab and Stable evidence labels remain distinct.
 
-Build an evidence-first local save editor for the owner's positively supported PokemonStart save lineage that performs the practical edits the owner actually wants while retaining fail-closed provenance/capability gates, separate-output publication, independent verification, and a reliable recovery path.
+## Lane-specific success criteria
 
-Target practical capability order:
+### Stable Lane
 
-1. money editing;
-2. inventory/item editing;
-3. practical party-Pokemon editing, ultimately including species transformation only where all required coupled state is proven;
-4. future bounded Pokédex editing if independently justified.
+Stable adoption continues to require capability-appropriate evidence such as:
 
-General event/story/quest flag editing is an explicit non-goal. PKHeX compatibility, generic CFRU editing, arbitrary-save support, broad PokemonStart version support, and feature-count parity are not goals by themselves.
+- supported-save/build gates;
+- lifecycle and/or game round trips where relevant;
+- provenance/continuity handling;
+- independent verification;
+- recovery path;
+- platform/delivery review;
+- explicit Human adoption.
 
-## Milestone architecture and current position
+Nothing in the Fast Lab adoption weakens existing Stable evidence or marks unadopted capabilities COMPLETE.
+
+### Fast Lab Lane
+
+A bounded Fast Lab capability may be treated as experimentally usable when all materially relevant conditions hold:
+
+- exact ROM/build identity is recorded;
+- the save passes the structural verifier or an equivalently bounded gate;
+- the source remains immutable;
+- output is written separately;
+- the byte/semantic diff is explainable;
+- required checksums/invariants are correct;
+- output re-verifies;
+- exact-build live confirmation is obtained where cheap and materially informative;
+- unsupported coupling/coverage is explicitly recorded.
+
+A normal in-game SAVE round trip is **not mandatory for every Fast Lab field**. It may still be required before Stable adoption.
+
+## Stable Lane milestone state
+
+Existing Stable history is preserved:
 
 1. **M1 — reproducible read audit — COMPLETE.**
 2. **M2 — exact one-field writer proof — COMPLETE.**
 3. **M3A — supported-save / reusable write-envelope characterization — COMPLETE.**
 4. **M3B — bounded same-field transaction proof — COMPLETE.**
 5. **M3C-F1 — friendship proof — COMPLETE.**
-6. **M3C — bounded party-field expansion — COMPLETE.** Friendship/markings/ball and first derived-state nature-mint/EV/IV/stat groups survived representative retained-lineage game round trips; unproven fields remain blocked.
-7. **M4 — bounded usable-editor first slice — COMPLETE.** Retained-lineage S0/P/C core, reusable `party[0] markings 0 <-> 1` FAMILY, macOS publication, localhost NiceGUI, and bounded exact-Windows support were adopted. Existing M4 provenance predicates remain unchanged by M5A.
-8. **M5A — Money capability — FAMILY IMPLEMENTATION + LIFECYCLE CLOSURE EVIDENCE COMPLETE; MILESTONE ADOPTION NOT YET COMPLETE.** Two consecutive exact money transformations are game-proven. The bounded FAMILY implementation supports integer targets `0..9,999,999` only inside its current journal/build/key/macOS boundary. End-to-end synthetic journal lifecycle coverage is now green and the full repository suite is freshly green. Practical provenance continuity during ordinary gameplay remains a design-only decision and therefore blocks GUI adoption / M5A COMPLETE.
-9. **M5B — Inventory capability — PLANNED, NOT AUTHORIZED.**
-10. **M5C — Practical Pokemon editing — PLANNED, NOT AUTHORIZED.**
-11. **Future — Pokédex — NOT AUTHORIZED.**
+6. **M3C — bounded party-field expansion — COMPLETE.**
+7. **M4 — bounded usable-editor first slice — COMPLETE.**
+8. **M5A — Money Stable capability — FAMILY IMPLEMENTATION + LIFECYCLE CLOSURE EVIDENCE COMPLETE; MILESTONE ADOPTION NOT YET COMPLETE.**
 
-## M5A proven money evidence
+The M5A Stable implementation remains bounded to its recorded v0.15 lineage/build/key/platform/journal envelope. Practical provenance continuity remains design-only. M5A is not GUI-exposed and is not marked COMPLETE by this adoption.
 
-Source-derived representation:
+The previous roadmap labels `M5B Inventory` and `M5C Practical Pokemon` are no longer a mandatory sequential execution order for Fast Lab. Stable adoption of Inventory or practical Pokemon capabilities remains future, capability-by-capability work.
 
-`money = LE32(active logical section 1 @ 0x0290) XOR LE32(active logical section 0 @ 0x0F20)`
+## Fast Lab milestone architecture
 
-Pinned CFRU-JP source places `SaveBlock1.money` at `0x0290`, `SaveBlock2.encryptionKey` at `0x0F20`, and records the 9,999,999 maximum-money patch. Public FireRed decomp source corroborates XOR decode/encode semantics.
+### FL0 — exact-build private ROM preparation and harness — COMPLETE
 
-Game-proven retained-lineage round trips:
+Exact PokemonStart v0.22 package recovery, private ROM preparation, mGBA harness/bootstrap, read-path compatibility, and exact-build capability profile were established without committing protected artifacts.
 
-- original input SHA `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`
-- first editor candidate SHA `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`
-- first return SHA `1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4`
-- semantic result `3000 -> 9,999,999`, displayed and retained after normal save
-- second editor candidate SHA `b232f80f82a0908e015d3bd948ec3e32c90dc44890865a5a1f920ee2e61677c7`
-- second return SHA / current FAMILY root `d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf`
-- semantic result `9,999,999 -> 1,234,567`, displayed and retained after normal save
-- second transition slot/counter `0/2 -> 1/3`, saved-game statistic `2 -> 3`, play time `151 -> 159`, party[0] unchanged, sectors 28–31 unchanged
+Current exact private v0.22 build SHA-256:
 
-Corrected early-game evidence remains:
+`6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0`
 
-- `eventObjectTemplates[64]` begins at SaveBlock1 `0x08E0`;
-- first-return additional initialization was limited to subrange `0x09E0..0x0ED9`, 85 bytes after excluding already-qualified runtime fields;
-- this initialization did not recur on the second return;
-- editor output preserves the opaque 16-byte footer, while normal game/emulator saves may change it;
-- both normal returns changed exactly section-4 checksum-excluded offsets `0xEDE`, `0xEDF`, `0xEE8`, `0xEE9`.
+### FL1 — practical core editing slice — COMPLETE EXPERIMENTALLY
 
-## Current bounded Money FAMILY implementation
+Exact-v0.22 Fast Lab experimental evidence now covers all three high-value practical areas:
 
-`pokemonstart_m5a_money_family.py` remains separate from M4 and does not alter `pokemonstart_m4_core.check_game_transition` or the M4 markings registry.
+- Money;
+- Party/composed Party editing;
+- one bounded existing-item Inventory quantity edit.
 
-Current positive boundary:
+Detailed exact evidence and limitations are in `docs/fast-lab-two-lane-adoption.md`.
 
-- FAMILY root SHA `d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf`
-- build SHA `48ecc0ef2df7fe9bbe389f0adbfbe7e277696a461ec631c65bcdf750898e4e12`
-- environment ID string `macos-mgba-0.10.5`
-- encryption key exactly `0x00000000`
-- target range integer `0..9,999,999`
-- journaled root-anchored lineage only
-- source immutable / separate new output / M4 hardened publication layer
-- GUI exposure none
+### FL2 — unified practical local CLI — NEXT PROPOSED MILESTONE
 
-### Environment semantics
+The cheapest next milestone is to consolidate already-working Fast Lab operations into a small local command-line workflow rather than discover another isolated field first.
 
-`macos-mgba-0.10.5` is a **Human-attested environment binding label**, not machine verification of the mGBA executable or version.
+Minimum target surface:
 
-The code machine-checks exact ROM/build SHA, exact environment-label equality, and actual macOS (`sys.platform == "darwin"`) at Money FAMILY publication. It does not hash/query the mGBA executable or prove version 0.10.5. The emulator/version part of the label comes from Human-observed environment evidence from the two successful round trips.
+- inspect save/profile;
+- preview semantic values;
+- edit supported Money;
+- edit supported Party fields;
+- edit the currently supported bounded Inventory quantity case;
+- show semantic and byte-diff preview;
+- write only a new output;
+- verify output;
+- clearly reject unsupported builds/fields.
 
-## FAMILY closure evidence
+FL2 should reuse existing bounded implementations and must not silently generalize their capability ranges.
 
-New closure tests in `tests/test_m5a_money_family_lifecycle.py` exercise:
+### FL3 — profile-driven broadening — LATER / EVIDENCE-DRIVEN
 
-`bootstrap -> preview -> commit -> Human-observed game-return enrollment -> returned-save eligibility -> next preview/commit`
+Broaden species, levels, moves, abilities, items/pockets, keys, save variants, or later PokemonStart builds only when exact evidence justifies each expansion.
 
-and negative journal/parent/duplicate/environment cases.
+### FL4 — practical GUI/delivery — LATER
 
-Fresh full-suite candidate:
+GUI becomes appropriate only after the practical edit contract, failure behavior, preview, and recovery workflow are coherent enough that GUI is only a delivery layer.
 
-- exact executable/test commit: `3209f3aadb3b4dacbfab146dddbb27925895ac63`
-- GitHub Actions Ubuntu 24.04 / Python 3.12
-- command: `python3 -m unittest discover -s tests -v`
-- result: **119 tests OK, 28 skipped, 0 failures/errors**
+## Current v0.22 Fast Lab evidence summary
 
-The first temporary run exposed one incorrect expectation in the newly added test; the implementation correctly failed closed with `eligible=False`. The test was corrected, then the full suite passed. The temporary workflow was removed and is not part of the intended canonical tree.
+Evidence class for this section: **Fast Lab experimental**, not Stable.
 
-## Provenance-continuity design result — NOT IMPLEMENTED
+### Money
 
-Pinned CFRU-JP `src/save.c` shows that a full normal save increments `gFirstSaveSector` by one, increments `gSaveCounter`, and writes all 14 logical chunks into the slot selected by counter parity. A single full save therefore leaves the prior active slot available as a byte-level ancestry witness; this behavior matches both private money round trips.
+A disposable output changed Money from `1,234,567` to `7,654,321`, updated the required checksum, passed the repository verifier, and was observed live under exact v0.22 as `7,654,321`.
 
-### P-direct — recommended first implementation candidate
+### Party
 
-For exactly one observed full normal save from a journaled parent, ancestry can be established independently of ordinary gameplay payload changes by requiring:
+The retained party[0] 100-byte record matched offline decoding to live v0.22 memory. Successful bounded writes include:
 
-- candidate S0 valid;
-- opposite active slot;
-- exact counter +1 with adopted wrap handling;
-- expected one-position section rotation;
-- previous active slot preserved byte-for-byte as the journaled parent active slot;
-- exact ROM/build binding;
-- explicit Human normal-save attestation.
+- friendship `50 -> 51`;
+- Attack IV `29 -> 0` with cached Attack `9 -> 8`;
+- move slot 0 Tackle `33 -> 1` (Pound) with coherent PP;
+- stored level `5`, EXP `134` -> level `6`, EXP `179` with cached-stat recomputation;
+- Bulbasaur `1 -> 2` (Ivysaur), with coherent EXP/stat recomputation;
+- a composed multi-field edit combining species, level/EXP, move, IV, EV, friendship, and cached stats, with the full live party record matching offline output.
 
-This would allow legitimate gameplay changes in the new active payload without pretending those bytes are editor-authorized mutations.
+Ability-selector storage is decoded, but practical resolved-ability writing is not proven.
 
-### P-reanchor — possible longer-gap manual continuation
+### Inventory
 
-After two or more full saves, the old editor-output slot may have been overwritten. Final save bytes alone can no longer prove exact ancestry to that older node.
+A same-file previous/current save-slot differential isolated Potion item ID `13`, quantity `1 -> 2` at logical section 13 relative offset `0xADC` under encryption key `0`.
 
-A practical longer-gap model therefore requires an explicit **Human-attested re-anchor**, with S0/build/key checks and stable player identity (player name/gender/trainer ID) plus counter plausibility as corroboration. These fields are not cryptographic provenance and automatic enrollment from them is rejected.
+A separate-output edit changed the same existing Potion slot `2 -> 3`; only the observed quantity byte changed, the repository verifier accepted the output, and exact v0.22 live RAM showed Potion ID `13`, quantity `3` in the same slot.
 
-### Rejected model
+This does not prove arbitrary item IDs, insertion, deletion, reordering, other pockets, nonzero-key handling, or complete pocket capacity.
 
-Do not automatically accept a save because checksums are valid, build is selected, trainer identity matches, counter looks newer, and key is 0. Those facts establish compatibility/plausibility, not ancestry.
+## Important Fast Lab caveats
 
-### Recommended decision
+- The baseline retained party record contains stored level `5` with EXP `134`, while the source-derived Medium Slow threshold logic used for explicit level editing places level 5 at `135`. Unrelated edits must preserve the pre-existing values rather than silently normalize them.
+- Exact v0.22 startup/read-path/live-memory evidence is not broad save-migration or lifecycle proof.
+- Battle behavior after species/move edits, ability resolution, evolution, Pokédex effects, move legality, and normal in-game resave behavior remain unproven unless separately recorded.
+- The local Fast Lab implementation branch and its commits are not automatically merged into `main` merely because the strategy/evidence record is canonicalized.
 
-Adopt a two-tier provenance model only under a separate authorization:
+## Existing M5A Stable provenance decision remains unchanged
 
-1. **P-direct** structural one-save descent first;
-2. **P-reanchor** explicit/manual Human-attested continuation only for longer ordinary-play gaps.
+Pinned CFRU-JP save behavior and reproduced round-trip evidence support a possible future two-tier provenance model:
 
-Keep current M4 transition logic unchanged. Do not implement broader payload-volatility masks as a substitute for ancestry evidence.
+- **P-direct:** one-save structural descent using the preserved prior slot as ancestry witness;
+- **P-reanchor:** explicit/manual Human-attested re-anchor for longer gaps.
 
-## Reusable transaction contract retained
+Neither is implemented or adopted by this Fast Lab strategy decision. Existing M4 provenance remains unchanged.
 
-Every adopted writer capability must continue to hash/read input before mutation; fail closed on unsupported S0/P/C; reject stale plans; mutate only authorized bytes; recompute only required checksums; explain every editor diff; independently reverify output; preserve source immutability; write only a separate new output; keep a recovery anchor; and never automatically overwrite emulator live-save state.
+## Authorization boundary after this adoption
 
-## Delivery boundary retained
+This adoption authorizes the two-lane architecture and durable recording of the existing v0.22 Fast Lab evidence.
 
-M4 markings delivery remains as previously adopted: bounded macOS publication; separately bounded Windows markings support; localhost-only NiceGUI; no relay/LAN/public exposure; no automatic live-save replacement.
+It does **not** by itself authorize or perform:
 
-M5A money currently does not inherit Windows delivery and is not GUI-exposed.
+- Stable promotion of any v0.22 Fast Lab capability;
+- marking M5A Stable COMPLETE;
+- P-direct or P-reanchor implementation;
+- merging the local Fast Lab implementation branch;
+- public release;
+- arbitrary-save or broad-version support;
+- nonzero-key generalization;
+- GUI exposure of experimental capabilities;
+- protected-data publication.
 
-## Unsupported / non-claimed
-
-Unless later independently proven and authorized:
-
-- arbitrary/non-lineage saves;
-- another PokemonStart build/version;
-- nonzero-key private Money FAMILY saves;
-- machine-attested mGBA version identity;
-- Windows M5A publication;
-- GUI money controls;
-- automatic longer-gap provenance inference;
-- inventory/item writes;
-- species/forms/moves/abilities/level/EXP and other unadopted Pokemon writes;
-- Pokédex writes;
-- general event/story/quest flag editing;
-- public/LAN/remote browser exposure;
-- public release/distribution guarantees.
+The next practical implementation step should remain bounded to the existing Fast Lab safeguards unless a later task materially expands scope.
 
 ## Authority chain
 
-Key current durable records:
+Key durable records now include:
 
-- `docs/evidence.md`
-- `docs/m4-p-transition-model.md`
-- `docs/m4-completion.md`
-- `docs/post-m4-strategy-and-m5a-money.md`
-- `docs/m5a-money-private-read-audit.md`
-- `docs/m5a-exact-max-money-canary.md`
-- `docs/m5a-second-roundtrip-and-money-family.md`
-- **`docs/m5a-family-closure-and-provenance-continuity-design.md` — controlling current M5A closure/design record**
+- `docs/decision-record.md` — controlling milestone/authority state;
+- `docs/fast-lab-two-lane-adoption.md` — controlling two-lane adoption details and exact v0.22 Fast Lab evidence;
+- `docs/evidence.md`;
+- `docs/m4-completion.md`;
+- `docs/m5a-second-roundtrip-and-money-family.md`;
+- `docs/m5a-family-closure-and-provenance-continuity-design.md`.
 
-## Current authorization boundary / next decision
+Where older roadmap prose says M5B/M5C are categorically not authorized or requires a mandatory Inventory-before-Party sequence, this decision supersedes that wording for the Fast Lab lane only. Stable adoption still requires its own evidence and decision.
 
-The present authorization is exhausted by lifecycle closure testing, fresh full-suite execution, environment wording correction, and design-only provenance investigation.
+## Current next step
 
-It does **not** authorize:
-
-- implementing P-direct or P-reanchor;
-- changing M4 provenance;
-- exposing Money through GUI;
-- marking M5A COMPLETE;
-- starting M5B or M5C;
-- broader save/build/version/key/platform support.
-
-The next Human decision should choose whether to implement the recommended two-tier provenance continuity, beginning with P-direct and keeping P-reanchor explicit/manual, or to retain the current canary-style strict continuation despite its ordinary-play usability cost.
+**FL2 — unified practical local CLI** is the cheapest next practical milestone.
