@@ -2,11 +2,11 @@
 
 GitHub `main` is the only durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — Money reusable-envelope qualification active
+## Controlling current decision — exact-v0.22 Party append + Inventory insertion proofs and localhost GUI prototype active
 
 The project retains the adopted Stable Lane + Fast Lab Lane architecture and refined terminal goal.
 
-Controlling Human authorizations now include:
+Controlling Human authorizations include:
 
 > `AUTHORIZE FL2 DURABLE-BASELINE GATE AND TERMINAL-GOAL REFINEMENT`
 
@@ -18,18 +18,20 @@ Controlling Human authorizations now include:
 
 > `AUTHORIZE EXACT-V0.22 KEY0 FIXED-TARGET MONEY REUSABLE-ENVELOPE QUALIFICATION`
 
-FL0, FL1, FL2-G0 and FL2 are complete for the current exact-v0.22 Fast Lab slice. Post-FL2 private acceptance passed and the reviewed Phase A/B packet selected Money as the cheapest meaningful first reusable-envelope family.
+> `AUTHORIZE EXACT-V0.22 FAST-LAB PARTY-APPEND + INVENTORY-INSERTION PROOFS AND LOCALHOST GUI PROTOTYPE`
 
-The controlling next-work record is now:
+The Money reusable-envelope qualification is now **PAUSED / INCOMPLETE** by Human choice and is not the active critical path. Its preserved review branch is:
 
-- `docs/money-reusable-envelope-qualification.md`
+- `codex/money-reusable-qualification-20261007`
+- exact pushed HEAD `909e3e50d4cb6a173188d6c97538f03aed464417`
 
-Supporting reviewed design/evidence branch:
+That branch is evidence/partial implementation only and is not canonical writer capability.
 
-- branch `codex/post-fl2-acceptance-design-20261007`
-- exact reviewed HEAD `93c070215181bb9e1a83c1b1b0bc82110a726793`
+The active next-work contract is now:
 
-Where older roadmap/status wording conflicts with this record, this record controls.
+- `docs/v022-creation-proofs-and-gui-prototype.md`
+
+Where older roadmap/status wording conflicts with this record, this later record controls.
 
 ## Terminal goal
 
@@ -41,13 +43,15 @@ Exact-build capability profiles define the supported envelope. The terminal goal
 
 Status remains:
 
-> **TERMINAL GOAL PARTIALLY SATISFIED — PRACTICAL REUSE NOT YET PROVEN**
+> **TERMINAL GOAL PARTIALLY SATISFIED — PRACTICAL CREATION/REUSE COVERAGE INCOMPLETE**
 
-The merged FL2 workflow has now passed private end-to-end acceptance on retained canaries, but reusable editing of naturally progressed owner saves is not yet proven.
+FL2 provides a coherent exact-v0.22 inspect/preview/write/verify workflow for its bounded existing operations, and post-FL2 private acceptance passed. However, practical user-facing creation is still missing: current Party support mutates an existing party[0] record, and current Inventory support changes only an existing Potion quantity on one retained shape.
 
-Current transition:
+The current critical path therefore asks whether two creation primitives can be proven safely and then exposed through a local GUI:
 
-`FL2 complete -> private acceptance PASS -> exact-v0.22 key0 fixed-target Money reusable-envelope qualification ACTIVE`
+1. append one party member by copying an existing valid 100-byte record into the first empty party slot and updating party count;
+2. insert one newly observed item type into a proven empty regular-items slot derived from a normal game differential;
+3. if both survive exact-v0.22 load + normal save, expose only those proven operations plus already-bounded supported operations through a localhost-only GUI prototype.
 
 ## Canonical two-lane architecture
 
@@ -97,7 +101,7 @@ Exact private v0.22 build SHA-256:
 
 ### FL1 — practical core editing slice — COMPLETE EXPERIMENTALLY
 
-Exact-v0.22 Fast Lab evidence covers bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
+Exact-v0.22 Fast Lab evidence covers bounded Money editing, practical/composed Party editing on existing party[0], and one bounded existing-item Inventory quantity edit.
 
 ### FL2-G0 — durable Fast Lab baseline — COMPLETE / MERGED
 
@@ -107,65 +111,72 @@ Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` is canonic
 
 Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` is canonical history. The merged workflow provides exact ROM/profile gating, inspect, semantic + byte-diff preview, bounded Money/Party/Inventory operations, separate-output creation, persisted-output equality checks, verifier revalidation, and explicit unsupported rejection.
 
-### Post-FL2 Phase A/B — COMPLETE FOR CURRENT GATE
+### Post-FL2 Phase A/B — COMPLETE FOR ITS GATE
 
-Reviewed evidence branch `93c070215181bb9e1a83c1b1b0bc82110a726793` reports `PASS_POST_FL2_PRIVATE_ACCEPTANCE`, with the unified CLI reproducing the bounded underlying derivations and the existing live-confirmed output identities where exact historical comparison exists. Money was selected as the first reusable-envelope candidate.
+Reviewed evidence branch `93c070215181bb9e1a83c1b1b0bc82110a726793` reported `PASS_POST_FL2_PRIVATE_ACCEPTANCE` and selected Money as a first reusable-envelope candidate. That did not broaden canonical writer eligibility.
 
-This acceptance/design evidence is Fast Lab/private-input evidence and does not itself broaden canonical writer eligibility.
+### Money reusable-envelope qualification — PAUSED / INCOMPLETE
 
-### Money reusable-envelope qualification — ACTIVE
+Preserved branch `909e3e50d4cb6a173188d6c97538f03aed464417` contains partial implementation/evidence. It established first non-canary qualification, independent audit, exact-v0.22 live acceptance, one normal save and extensive tests, but did not complete the ordinary-Money-change -> second qualification -> final repeated-use proof. It also documented unresolved custody/immutability of one previously used source pathname across the full work period.
 
-Authorized scope is exactly the bounded candidate in `docs/money-reusable-envelope-qualification.md`:
+Do not merge or reuse this partial candidate as canonical capability without a separate resume/review decision.
 
-- exact PokemonStart v0.22 profile only;
-- encryption key 0 in both valid slots;
-- fixed target Money `7,654,321` only;
-- conservative two-valid-slot ordinary-counter predicate;
-- Money-only replacement of exact-save SHA membership when all preregistered conditions pass;
-- Party and Inventory eligibility unchanged;
-- separate private outputs only;
-- independent audit + repeated editor -> game -> editor proof required before qualification is complete.
+### v0.22 creation proofs + GUI prototype — ACTIVE
+
+Controlling scope is `docs/v022-creation-proofs-and-gui-prototype.md`.
+
+Authorized sequence:
+
+1. fresh immutable private proof root from the current exact-v0.22 state;
+2. bounded Party append proof using an exact existing 100-byte party record copied into the first empty slot, with party count increment and checksum handling only;
+3. bounded Inventory insertion proof derived from a normal before/after acquisition differential for one previously absent regular item;
+4. exact-v0.22 load + normal-save persistence gates for both operations;
+5. only if both pass, a localhost-only NiceGUI v0.22 prototype exposing proven capabilities and fail-closing unsupported states.
 
 ## Current authorization boundary
 
 Current work may:
 
-- implement the exact preregistered Money-only semantic/invariant predicate on a fresh local work branch;
-- connect it only to the FL2 Money inspect/preview/write path;
-- add positive/negative tests and push-safe independent auditor code;
-- preserve the existing exact retained Money canary output as a regression identity;
-- execute the authorized private non-canary qualification proof against exact v0.22;
-- perform bounded load/live confirmation, normal resave, ordinary in-game Money change, second qualification/write, reload/live confirmation and repeated-use proof;
+- fresh-read current canonical `main` and current exact-v0.22 private state;
+- create fresh repo-external immutable/disposable proof snapshots after independent verification;
+- characterize the reported current three-Pokémon/shop-front starting state independently;
+- implement and test exactly one Party append primitive based on copying one existing valid record into the first empty party slot;
+- perform exact-v0.22 load/live/normal-save persistence proof for that append;
+- perform one ordinary in-game acquisition of an item type absent from the regular-items pocket to characterize insertion by differential;
+- implement and test exactly that observed Inventory insertion shape on an immutable pre-acquisition snapshot;
+- perform exact-v0.22 load/live/normal-save persistence proof for that insertion;
+- if both proofs pass, implement a localhost-only NiceGUI v0.22 prototype using the current v0.22/FL2/Fast Lab core and exposing only supported operations;
 - run focused/regression/full/static/security checks;
 - prepare and push a sanitized review branch containing code/tests/docs/evidence only.
 
 Current work does **not** authorize:
 
-- arbitrary Money values;
+- arbitrary Pokémon generation/synthesis;
+- arbitrary species/PID/OT/nickname/met-data generation;
+- box Pokémon creation;
+- arbitrary item IDs, quantities, pockets, insertion slots, deletion or reorder;
 - nonzero-key support;
-- Party or Inventory reusable eligibility;
-- combined reusable operations;
+- generic Party/Inventory reusable eligibility;
 - broader PokemonStart builds/versions;
 - Stable promotion;
-- GUI/public release;
+- public/LAN GUI exposure;
 - protected-data publication;
+- use of paused Money reusable candidate code as canonical basis;
 - canonical `main` merge/adoption.
 
-If the preregistered predicate is insufficient, do not relax it merely to pass the proof. Stop with `BOUNDED_STOP_WITH_CONCRETE_EVIDENCE` and return the exact discrepancy for Human review.
+If a proof requires speculative coupling beyond the bounded authorized primitive, stop with `BOUNDED_STOP_WITH_CONCRETE_EVIDENCE` rather than silently broadening scope.
 
 ## Local Codex / branch publication policy
 
 Local Codex is the default executor for private-input work. Push-safe work branches are encouraged because they permit independent remote review, provided protected/private artifacts stay outside Git.
 
-Allowed branch material includes source code, tests, push-safe independent auditor code, sanitized evidence/design records, hashes, sizes and non-sensitive structural/diff summaries.
+Allowed branch material includes source code, tests, push-safe independent auditor/differential tooling, sanitized evidence/design records, hashes, sizes and non-sensitive structural/diff summaries.
 
-Do not push ROMs, saves, `.pks`, BPS/IPS, executables, proprietary payloads, copyrighted assets, raw memory dumps, raw private command logs, or private/protected bytes.
+Do not push ROMs, saves, `.pks`, BPS/IPS, executables, proprietary payloads, copyrighted assets, screenshots/raw memory containing protected bytes, raw private command logs, or private/protected bytes.
 
 Branch push is not adoption. Canonical `main` mutation remains a separate Human decision.
 
 ## Review loop
-
-For this and subsequent bounded work units:
 
 1. Codex executes the Human-authorized Goal locally.
 2. Codex pushes only push-safe review material to an exact work branch.
@@ -175,4 +186,4 @@ For this and subsequent bounded work units:
 
 ## Current next step
 
-**Delegate the exact-v0.22 key0 fixed-target Money reusable-envelope qualification to local Codex. Require implementation + private repeated-use proof + validation + push-safe review-branch publication, then stop for independent review before any canonical merge/adoption.**
+**Delegate the exact-v0.22 Party-append + Inventory-insertion creation proofs to local Codex. Require fresh proof-root capture first. If and only if both creation proofs pass game/load/normal-save persistence gates, continue in the same Goal to the localhost-only v0.22 NiceGUI prototype, full validation and push-safe review-branch publication.**
