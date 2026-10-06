@@ -108,6 +108,7 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 
 - `docs/decision-record.md` — controlling milestone/authority state
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — controlling FL2-G0 and terminal-goal refinement
+- `docs/fl2-g0-reconciliation.md` — candidate baseline reconstruction scope and review record
 - `docs/fast-lab-two-lane-adoption.md` — controlling two-lane strategy and current v0.22 Fast Lab evidence
 - `docs/evidence.md`
 - `docs/m4-completion.md`

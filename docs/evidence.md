@@ -1,5 +1,15 @@
 # Evidence ledger
 
+## FL2-G0 durable Fast Lab baseline candidate — 2026-10-06
+
+Fresh canonical base: `13ecd37cc8817d5a5a3d4f9e38c8ba5f51f8b022`. The FL1 implementation/profile/test chain was reconciled onto a candidate based on this exact `main` HEAD. Candidate scope and exclusions are recorded in `docs/fl2-g0-reconciliation.md`; exact v0.22 capability bounds remain in `docs/fast-lab-v022-capability.json`.
+
+The local source branch contained write support for inherited Party fields that the canonical FL1 record classifies as candidate-only (ball, markings, nature mint, remaining IV/EV values). Reconciliation closes those paths, restricts reusable Party writes to the exact retained canary input and live-confirmed transitions/composition, and moves the needed stat calculation into a Fast Lab-only module. The Stable M3C derived-stat writer matches canonical `main` unchanged. No capability was promoted to Stable and no additional field was researched.
+
+Verification on the candidate: focused FL0/FL1 tests **65 passed**; full repository suite **166 tests, 150 passed, 16 skipped**; `py_compile` **66 repository Python files passed**; capability-profile JSON validation passed; `git diff --check` passed; changed-path protected/executable suffix scan found no matches; Gitleaks scanned the candidate source/docs and found no leaks. No protected binary inputs were used or copied into the candidate.
+
+This is a reconciliation candidate only. The canonical `main` tree and remote were not modified. Human merge authorization remains required.
+
 ## M5A exact money round trip and repeated-use canary — 2026-10-06
 
 Fresh `main` before this bounded work was `f76ae2dd512f6db6f22d6b0d893b851130c6a6ef`. The supplied private return save SHA-256 independently reproduced as `1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4` (131,088 bytes). The repository verifier accepted the supported `0x20000` flash + 16-byte opaque footer layout; all 28 saved sections have signature `0x08012025` and valid section-specific checksums. Slot 0/counter 2 is active; slot 1/counter 1 remains valid. The read-only money probe selected logical sections by ID, read key `0`, and decoded active money as `9,999,999`. The previous slot's logical section 1 party[0] record is byte-identical to active party[0]. Slot 1 retains `9,999,999` and the first candidate's counter-1 state; this is consistent with the exact `3000 -> 9,999,999` candidate being loaded and normally resaved. Evidence label: **game-proven exact transformation**, based on the returned normal-save state plus the human-reported game round trip; the return file alone does not reveal the displayed UI value.

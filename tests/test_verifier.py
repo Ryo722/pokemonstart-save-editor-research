@@ -5,7 +5,7 @@ import unittest
 import pokemonstart_save_verifier as v
 
 
-def _make_party_record(*, species=1, level=5, hp_iv=31):
+def _make_party_record(*, species=1, level=5, hp_iv=31, ability_num=0):
     record = bytearray(v.POKEMON_SIZE)
     struct.pack_into("<I", record, 0, 0x11223344)
     struct.pack_into("<I", record, 4, 0x55667788)
@@ -29,6 +29,8 @@ def _make_party_record(*, species=1, level=5, hp_iv=31):
     record[56:62] = bytes((1, 2, 3, 4, 5, 6))
     ivs = (hp_iv, 29, 26, 23, 27, 29)
     iv_word = sum(value << (5 * i) for i, value in enumerate(ivs))
+    if ability_num:
+        iv_word |= 1 << 31
     struct.pack_into("<I", record, 72, iv_word)
     struct.pack_into("<I", record, 80, 0)
     record[84] = level
@@ -89,10 +91,16 @@ class VerifierTests(unittest.TestCase):
         self.assertEqual(mon.pp, (35, 40, 0, 0))
         self.assertEqual(mon.evs, (1, 2, 3, 4, 5, 6))
         self.assertEqual(mon.ivs, (31, 29, 26, 23, 27, 29))
+        self.assertEqual(mon.ability_num, 0)
         self.assertEqual(mon.hp, 21)
         self.assertEqual(mon.max_hp, 21)
         self.assertEqual(sum(byte != 0 for byte in result.sector30), 1)
         self.assertEqual(sum(byte != 0 for byte in result.sector31), 0)
+
+    def test_party_ability_selector_is_iv_word_most_significant_bit(self):
+        mon = v._decode_party_record(_make_party_record(ability_num=1), 0)
+        self.assertEqual(mon.ability_num, 1)
+        self.assertEqual(mon.ivs, (31, 29, 26, 23, 27, 29))
 
     def test_section_permutation_and_newest_slot(self):
         perm0 = list(range(13, -1, -1))

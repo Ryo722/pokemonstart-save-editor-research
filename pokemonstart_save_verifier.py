@@ -105,6 +105,7 @@ class PartyRecord:
     pp: tuple[int, int, int, int]
     evs: tuple[int, int, int, int, int, int]
     ivs: tuple[int, int, int, int, int, int]
+    ability_num: int
     condition: int
     level: int
     pokerus_timer: int
@@ -268,6 +269,7 @@ def _decode_party_record(record: bytes, index: int) -> PartyRecord:
 
     iv_word = _u32(record, 72)
     ivs = tuple((iv_word >> (5 * i)) & 0x1F for i in range(6))
+    ability_num = (iv_word >> 31) & 1
     moves = tuple(_u16(record, 44 + 2 * i) for i in range(4))
     pp = tuple(record[52 + i] for i in range(4))
     evs = tuple(record[56 + i] for i in range(6))
@@ -295,6 +297,7 @@ def _decode_party_record(record: bytes, index: int) -> PartyRecord:
         pp=pp,  # type: ignore[arg-type]
         evs=evs,  # type: ignore[arg-type]
         ivs=ivs,  # type: ignore[arg-type]
+        ability_num=ability_num,
         condition=_u32(record, 80),
         level=record[84],
         pokerus_timer=record[85],

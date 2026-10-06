@@ -1,0 +1,421 @@
+{
+  "profile_schema": 1,
+  "profile_key": {
+    "patched_rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0"
+  },
+  "pokemonstart_version": "v0.22 demo",
+  "upstream": {
+    "repository": "onikoro334274-cell/PokemonStart",
+    "commit": "ddd054d46fc1bd0555badf738572620b1ee4670d",
+    "file": "PokemonStart_v0.22.pks",
+    "file_size": 12196990,
+    "git_blob_sha1": "95c34216bdab85a53ab39c170550f8680fcc7a00",
+    "sha256": "d22bc25d7427899e8d0b2e29e7fd6b604602781167b78cfa8a90c8a2da9e4060"
+  },
+  "patch": {
+    "member": "Pokemon.bps",
+    "offset_in_member": 0,
+    "size": 17533956,
+    "sha256": "a2bb3a1bddeeb6344cd45e139edb9ff35535deb41f8c38c0dc04eb4b1a7eab27",
+    "source_size": 16777216,
+    "source_crc32": "3b2056e9",
+    "target_size": 33554432,
+    "target_crc32": "b5d4df5c",
+    "patch_crc32": "6d0defb5",
+    "metadata": "PokemonStart v0.22 デモ版（カントー・ななしま・ホウエン）・2026-10-06 14:13 作成・git 4283b3a1"
+  },
+  "source_rom": {
+    "filename": "Pocket Monsters - FireRed (Japan).gba",
+    "sha256": "1e4af44b0c75cc8649bfb8649dc4ae5850bf5358bd6b9cd0bf779c99f9db1486",
+    "size": 16777216,
+    "crc32": "3b2056e9",
+    "sha256_before_after_equal": true
+  },
+  "save_layout_compatibility": {
+    "status": "read-compatible",
+    "evidence": [
+      "exact-save offline",
+      "mGBA live"
+    ],
+    "note": "Retained v0.15-lineage save loaded into exact v0.22 ROM; SaveBlock Money and complete party[0] record matched offline bytes. No migration was observed in the untouched disposable load."
+  },
+  "money": {
+    "offline_decode_compatibility": "confirmed: logical section 1 offset 0x0290 XOR logical section 0 offset 0x0F20",
+    "offline_write_compatibility": "Fast Lab experimental: 1234567 -> 7654321; active section checksum recomputed and repository verifier accepted",
+    "live_read_confirmation": {
+      "original_save_money": 1234567,
+      "experimental_save_money": 7654321,
+      "mGBA_address": "0x0202571c"
+    },
+    "experimental_output_sha256": "15bdac0d6635c6237549565c49e3752c167e85a33643b89ff722ed3c7d17d569",
+    "evidence_level": "Fast Lab experimental",
+    "stable_proven": false
+  },
+  "party": {
+    "structure_observations": {
+      "party_count": 1,
+      "party0_record_size": 100,
+      "party0_exact_live_bytes_match": true,
+      "fields": {
+        "species": 1,
+        "level": 5,
+        "experience": 134,
+        "friendship": 50,
+        "ball": 3,
+        "held_item": 0,
+        "moves": [
+          33,
+          45,
+          0,
+          0
+        ],
+        "ivs": [
+          31,
+          29,
+          26,
+          23,
+          27,
+          29
+        ],
+        "evs": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "ability_num": 0,
+        "ability_selector_storage": "bit 31 of u32 IV word at record offset 72; source-backed Gen III party schema, corroborated by retained save bytes"
+      },
+      "evidence": [
+        "exact-save offline",
+        "mGBA live"
+      ],
+      "evidence_classes": {
+        "record_schema": [
+          "exact-save offline",
+          "mGBA live"
+        ],
+        "direct_fields": [
+          "exact-ROM static",
+          "exact-save offline",
+          "mGBA live"
+        ]
+      }
+    },
+    "write_compatibility": {
+      "status": "Fast Lab experimental",
+      "field_tested": "friendship",
+      "transition": "50 -> 51",
+      "input_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "cb817b561c1eb29813b5e58524d8536dbdf42cb13065b90b5603a47a73f2a37d",
+      "record_offset": 41,
+      "live_confirmation": "v0.22 accepted save; party[0] live 100-byte record matched the offline output",
+      "evidence_classes": [
+        "exact-ROM static",
+        "exact-save offline",
+        "mGBA live",
+        "Fast Lab experimental write"
+      ],
+      "stable_proven": false
+    },
+    "derived_field_write_compatibility": {
+      "status": "FAST LAB EXPERIMENTAL V0.22 IV/EV/NATURE EDITING",
+      "tested_transformation": "Attack IV 29 -> 0",
+      "cached_attack": "9 -> 8",
+      "input_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "5a688c2c3f2e3f2ba4e9f73788ead12da715adaae861880aa0ef5f7faeb620de",
+      "reused_implementation": "pokemonstart_m3c_derived_stats_writer._expected and _stats",
+      "live_confirmation": "v0.22 accepted save; live party[0] 100-byte record matched offline, including IVs and all cached stats",
+      "evidence_classes": [
+        "pinned CFRU-JP source",
+        "exact-save offline",
+        "mGBA live",
+        "Fast Lab experimental write"
+      ],
+      "stable_proven": false
+    },
+    "move_write_compatibility": {
+      "status": "FAST LAB EXPERIMENTAL V0.22 MOVE EDITING",
+      "transition": "move[0] Tackle (33) -> Pound (1); PP 35 -> 35",
+      "pp_bonuses": 0,
+      "input_sha256": "5a688c2c3f2e3f2ba4e9f73788ead12da715adaae861880aa0ef5f7faeb620de",
+      "output_sha256": "ded29c2b307343b662ebcdf0889f7b2e24f0952a453e7622049b655e40891efb",
+      "live_confirmation": "v0.22 accepted save; live party[0] 100-byte record matched offline with move[0]=1, PP=35 and prior IV edit",
+      "representation": "move IDs are little-endian u16 at record offset 44 + 2*slot; PP is u8 at 52 + slot; PP bonuses are byte 40",
+      "evidence_classes": [
+        "exact-save offline",
+        "FireRed source baseline",
+        "mGBA live",
+        "Fast Lab experimental write"
+      ],
+      "stable_proven": false
+    },
+    "inherited_v015_writer_model_experimental_set": {
+      "status": "FAST LAB EXPERIMENTAL / INHERITED",
+      "fields": [
+        "friendship",
+        "markings",
+        "ball",
+        "nature_mint",
+        "EV",
+        "IV",
+        "cached party stats"
+      ],
+      "basis": "existing bounded M3C models, unchanged party layout, and live record confirmation of friendship, Attack IV, and an HP EV edit within the composed canary",
+      "limits": "Only friendship 50->51, Attack IV 29->0, and HP EV 0->8 (composed with other edits) were live-written on v0.22. Markings, ball, nature mint, remaining IV/EV values are inherited writer-model candidates, not individually v0.22 write-proven.",
+      "stable_proven": false
+    },
+    "level_exp_write_compatibility": {
+      "status": "FAST LAB EXPERIMENTAL V0.22 LEVEL/EXP EDITING",
+      "transition": "species 1, EXP 134/level 5 -> EXP 179/level 6",
+      "growth_rate": "Medium Slow; level 6 threshold computed from pinned FireRed/CFRU source formula; source baseline has EXP 134, one below the level-5 threshold 135",
+      "stats": "HP 21->23; Attack 9->11; Defense 11->13; Speed 10->12; Sp. Attack 13->16; Sp. Defense 12->15; current HP remained full at 23",
+      "output_sha256": "09e58a8cda8277ea107991cbf01ea99fa0d0724ce476330be45ef1d5456ed6dc",
+      "live_confirmation": "v0.22 accepted disposable output; full live 100-byte party record matched offline output",
+      "evidence_classes": [
+        "FireRed/CFRU source",
+        "exact-save offline",
+        "mGBA live",
+        "Fast Lab experimental write"
+      ],
+      "stable_proven": false,
+      "live_values": {
+        "species": 1,
+        "experience": 179,
+        "level": 6,
+        "stats": [
+          23,
+          23,
+          11,
+          13,
+          12,
+          16,
+          15
+        ],
+        "complete_record_match": true
+      }
+    },
+    "ability_selection": {
+      "status": "representation identified; no write attempted",
+      "representation": "ability selector is bit 31 of packed u32 at party record offset 72; selector value 0 on retained species 1",
+      "source_model": "FireRed party schema stores abilityNum in one bit and resolves through species ability data; v0.22 exact alternate species ability slot was not established",
+      "reason": "no exact-build-backed valid alternate for retained Bulbasaur was available; changing selector would be speculative",
+      "evidence_classes": [
+        "FireRed source schema",
+        "exact-save offline",
+        "mGBA live record corroboration"
+      ],
+      "stable_proven": false
+    },
+    "species_transformation": {
+      "status": "FAST LAB EXPERIMENTAL V0.22 SPECIES TRANSFORMATION",
+      "transition": "Bulbasaur (1) -> Ivysaur (2)",
+      "output_sha256": "fb0d649fe39e286a7bbe5c8bbd8e62e373b3dc8e6048b2405d8f1f647dc54f4f",
+      "coupled_changes": "species ID 1->2; EXP 134->135 to meet Medium Slow level-5 threshold; cached stats recomputed",
+      "stats": "HP 21->22; Attack 9->10; Defense 11->12; Speed 10->12; Sp. Attack 13->15; Sp. Defense 12->14",
+      "preserved": "level 5, ability selector 0, personality, backup species field, IVs, EVs, nature/mint, item, friendship, ball, moves and PP",
+      "live_confirmation": "v0.22 accepted disposable output; full live party[0] 100-byte record matched offline output",
+      "untested": "battle behavior, ability resolution, evolution/UI/Pokédex effects, move legality, normal in-game save",
+      "evidence_classes": [
+        "FireRed source species data",
+        "exact-save offline",
+        "mGBA live",
+        "Fast Lab experimental write"
+      ],
+      "stable_proven": false,
+      "live_values": {
+        "species": 2,
+        "experience": 135,
+        "level": 5,
+        "stats": [
+          22,
+          22,
+          10,
+          12,
+          12,
+          15,
+          14
+        ],
+        "ability_selector": 0,
+        "complete_record_match": true
+      }
+    },
+    "reusable_experimental_editor": {
+      "module": "pokemonstart_fastlab_v022_party_editor.py",
+      "status": "Fast Lab experimental; exact v0.22 ROM profile gated",
+      "read_fields": [
+        "species",
+        "level",
+        "experience",
+        "moves",
+        "PP",
+        "PP-Up bonuses",
+        "friendship",
+        "ball",
+        "markings",
+        "native nature",
+        "nature mint/effective nature",
+        "IVs",
+        "EVs",
+        "cached HP/stats",
+        "ability selector",
+        "held item"
+      ],
+      "write_fields": [
+        "exact retained canary save SHA-256 only",
+        "species Bulbasaur 1->Ivysaur 2",
+        "target level 5->6; species transition sets coherent EXP 134->135; explicit EXP write is limited to 134->179",
+        "move slot 0 Tackle 33->Pound 1",
+        "friendship 50->51; 50->53 only in the exact composed canary",
+        "Attack IV 29->0",
+        "HP EV 0->8 only in the exact composed canary"
+      ],
+      "fail_closed": [
+        "ability selector writes",
+        "other species/growth rates/forms",
+        "other levels",
+        "ball, markings, nature mint, other IV/EV values, and held-item writes",
+        "move changes other than slot 0 Tackle 33->Pound 1",
+        "hyper-training, other input saves, and unproven combinations"
+      ],
+      "level_exp_policy": "Only the exact retained canary input is writable. EXP and stored level are preserved unless the evidenced level 5->6 / EXP 134->179 transition is requested. Existing baseline EXP 134 / stored level 5 discrepancy is preserved for unrelated edits.",
+      "species_policy": "Only species 1 and 2; preserve level and other fields, set minimum coherent EXP when needed, preserve selector 0, recompute cached stats.",
+      "move_policy": "Only slot 0 Tackle 33->Pound 1 is writable; preserve PP-Up count and set PP to the evidenced maximum.",
+      "current_hp_policy": "Reuses M3C maximum-HP delta policy; preserves missing HP, keeps fainted HP zero, and rejects a max-HP decrease outside supported behavior.",
+      "checksum_policy": "Recompute active logical section 1 checksum only; active slot, counters, other bytes and footer preserved.",
+      "stable_proven": false
+    },
+    "composed_edit_canary": {
+      "status": "FAST LAB EXPERIMENTAL V0.22 COMPOSED PARTY EDITING",
+      "input_sha256": "d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf",
+      "output_sha256": "29380e12b8c43df9dfd12f3070e2bbe2925e300e9b4a1f3fcafda9fef56ef0d5",
+      "changes": "species 1->2; EXP 134->179; level 5->6; move[0] 33->1; Attack IV 29->0; HP EV 0->8; friendship 50->53",
+      "stats": "HP 21->25; Attack 9->11; Defense 11->15; Speed 10->14; Sp. Attack 13->18; Sp. Defense 12->17",
+      "live_confirmation": "v0.22 accepted disposable output; live species/EXP/level/stats and complete party[0] 100-byte record matched offline output",
+      "section1_checksum": "59161->59052",
+      "stable_proven": false
+    },
+    "field_level_evidence": {
+      "live_experimental_write": [
+        "friendship",
+        "Attack IV",
+        "HP EV (composed canary)",
+        "species 1->2",
+        "level/EXP",
+        "move slot 0"
+      ],
+      "cached_stats": "live-confirmed for Attack IV, level, species, and composed edits using M3C stat calculation",
+      "inherited_candidate_only": [
+        "markings",
+        "ball",
+        "nature mint",
+        "other IV values",
+        "other EV values"
+      ],
+      "read_only_unproven": [
+        "ability selector resolution and writes",
+        "held item write"
+      ],
+      "stable_proven": []
+    }
+  },
+  "inventory": {
+    "status": "FAST LAB EXPERIMENTAL V0.22 INVENTORY QUANTITY; one existing regular-pocket Potion slot read/edit/live-confirmed",
+    "normal_save_pair": {
+      "container_filename": "PokemonStart_v0.22_PRIVATE.sav",
+      "container_sha256": "b32abee33dc951c61068b4a83f4bc06215db8a86d880f07620a1aece82ccca50",
+      "before_slot": 1,
+      "before_counter": 1,
+      "before_money": 3000,
+      "after_slot": 0,
+      "after_counter": 2,
+      "after_money": 3032,
+      "same_file_both_slots_valid": true,
+      "lineage_evidence": "both slots verify independently; counters advance 1->2; old slot retained and section rotation observed"
+    },
+    "live_listing": {
+      "pocket": "regular items",
+      "base": "0x0203BA98",
+      "slots_scanned": 450,
+      "before_from_retained_slot": [
+        {
+          "slot": 0,
+          "item_id": 13,
+          "item_name": "Potion",
+          "quantity": 1
+        }
+      ],
+      "after_live": [
+        {
+          "slot": 0,
+          "item_id": 13,
+          "item_name": "Potion",
+          "quantity": 2
+        }
+      ]
+    },
+    "saved_representation": {
+      "logical_section_id": 13,
+      "section_relative_offset": "0x0ADC",
+      "before_bytes": "0d000100",
+      "after_bytes": "0d000200",
+      "fields": "little-endian u16 item ID followed by u16 encrypted quantity",
+      "encryption_key_before_after": 0,
+      "quantity_xor": "source-backed low-u16 quantity XOR; direct representation corroborated for observed key 0",
+      "entry_size_bytes": 4,
+      "observed_empty_shape": "following 4-byte entry and remainder through section payload end are zero",
+      "capacity": "not established; only live-correlated slot 0 with a single populated Potion is supported",
+      "checksum_covered": false,
+      "checksum_implication": "section 13 checksum covers 0x450 bytes; observed quantity at 0xADC is outside it, so no checksum field changed"
+    },
+    "differential": {
+      "method": "compare both checksum-validated slots after reconstructing payloads by logical section ID, not physical offsets",
+      "unique_inventory_transition": "section 13 offset 0xADC changes from {item 13, quantity 1} to {item 13, quantity 2}; next entry and remaining payload tail are zero in both slots",
+      "other_changes": "normal-save transition also changes Money 3000->3032, party/runtime/save bookkeeping and slot/counter rotation; these were retained, not masked",
+      "alternative_hits": "other raw item-ID-like sequences either do not transition 13/1->13/2 or lack the surrounding single-record shape"
+    },
+    "quantity_write": {
+      "input_sha256": "b32abee33dc951c61068b4a83f4bc06215db8a86d880f07620a1aece82ccca50",
+      "output_sha256": "51129cdd5168f2f9f3d28966085bfdd4ae094c2a705052253001cc3d189c987b",
+      "transition": "existing slot 0 Potion quantity 2->3",
+      "absolute_changed_offset": 6878,
+      "byte_diff": "one quantity low byte 0x02->0x03; item ID, slot, checksums, other bytes unchanged",
+      "verifier_accepted": true,
+      "live_confirmation": "exact v0.22 ROM accepted output; live slot 0 item ID 13 quantity 3; party record and Money matched offline; source ROM/save and probe working copy unchanged",
+      "stable_proven": false
+    },
+    "reusable_editor": {
+      "module": "pokemonstart_fastlab_v022_inventory_editor.py",
+      "interface": "inspect; set-quantity input output --slot 0 --item-id 13 --quantity N",
+      "limits": "exact v0.22 ROM SHA gate; exact retained Potion-bearing save SHA-256 only; key 0; existing Potion slot 0 quantity 2->3 only; rejects other entries and nonzero tail bytes; new output path only",
+      "checksum_policy": "section 13 checksum unchanged because edited field is outside covered payload; verifier rechecks all section checksums",
+      "stable_proven": false
+    },
+    "evidence_classes": [
+      "pinned/public source",
+      "exact-save offline",
+      "same-file normal-save differential",
+      "mGBA live",
+      "Fast Lab experimental write"
+    ],
+    "stable_proven": false
+  },
+  "rom_static_analysis": {
+    "scope": "save, money, party, inventory only",
+    "findings": [
+      "Exact v0.22 ROM retains the BPRJ FireRed header and demo documentation identifies CFRU-JP/DPE-JP as bases.",
+      "The verifier-supported section layout is corroborated at runtime by matching live Money, party count, and all 100 bytes of party[0].",
+      "No migration was visible in the disposable load; migration behavior beyond this retained save was not analyzed.",
+      "The live regular-items pocket is source-backed and the saved Potion quantity is located by a same-lineage slot differential; broader pocket capacity, item coverage, and key support remain unproven."
+    ]
+  },
+  "mgba": {
+    "version": "0.10.5 (26b7884bc25a5933960f3cdcd98bac1ae14d42e2)",
+    "bridge_bootstrap": "stable script MRU path loaded automatically",
+    "immutable_rom_and_save_sources": true
+  },
+  "evidence_level": "Fast Lab experimental",
+  "stable_proven": false
+}
