@@ -1,39 +1,39 @@
-# Canonical decision record — 2026-10-05
+# Canonical decision record — 2026-10-06
 
-GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or adopted here.
+GitHub `main` is the durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — post-M4 expansion and exact M5A max-money canary
+## Controlling current decision — M5A bounded money FAMILY candidate
 
 Strategic Human authorization:
 
 > `AUTHORIZE POST-M4 NORTH STAR EXPANSION AND M5A MONEY INVESTIGATION`
 
-Exact writer/canary Human authorization:
+First exact writer authorization:
 
 > `AUTHORIZE M5A EXACT MAX-MONEY CANARY: implement and execute the bounded exact-input 3000-to-9999999 proof writer against SHA-256 fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b; write only a new output file; require complete independent diff/checksum/invariant audit and source immutability; do not generalize this proof to reusable arbitrary money editing or any other capability.`
 
-The owner has identified a concrete practical unmet need: common PKHeX-like local edits such as money, inventory/items, and substantial party-Pokemon editing including species changes. General progression/event flag management is not desired; Pokédex editing is future work.
+Repeated-use authorization:
 
-The strategic expansion is recorded in `docs/post-m4-strategy-and-m5a-money.md`. The read-side money proof is recorded in `docs/m5a-money-private-read-audit.md`. First round-trip and second exact-canary evidence are recorded in `docs/m5a-exact-max-money-canary.md`.
+> `AUTHORIZE M5A ROUND-TRIP ADOPTION AND REPEATED-USE CANARY: canonically record the successful exact 3000-to-9999999 game round trip and the observed early-game EventObjectTemplate/parasite transition without broadening the existing M4 provenance predicate; then implement and execute one bounded second money canary against exact return SHA-256 1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4, changing 9999999 to 1234567 into a new output only with complete independent audit. Do not yet adopt a reusable arbitrary-money FAMILY or broaden save/build/provenance scope.`
 
-**Current position:** M1–M4 remain COMPLETE for their adopted bounded scopes, with the M4 provenance predicate unchanged. **M5A Money remains IN PROGRESS. The exact `3000 -> 9,999,999` transformation is game-proven by the freshly audited normal-save return. A second exact `9,999,999 -> 1,234,567` candidate is GENERATED / INDEPENDENTLY AUDITED and awaits its Human game round trip. No reusable arbitrary-money writer/FAMILY is adopted.**
+Current bounded FAMILY authorization:
+
+> `AUTHORIZE M5A SECOND ROUND-TRIP ADOPTION AND BOUNDED MONEY FAMILY CANDIDATE: canonically record the successful 9999999-to-1234567 game round trip; correct the independently reproduced M5A evidence-record discrepancies for the first EventObjectTemplate changed-byte count and opaque emulator-footer behavior; then design, implement, test, and independently audit a retained-lineage reusable money FAMILY candidate for values 0..9999999, initially fail-closed to the currently evidenced PokemonStart v0.15 build/environment and observed encryption-key boundary. Keep the existing M4 check_game_transition/provenance predicate unchanged. Any M5A-specific game-return continuation rule must be separately bounded to source-backed and independently evidenced normal-save behavior, including the observed section-4 parasite-tail evolution, and must fail closed outside that envelope. Do not expose money editing through the GUI yet, do not broaden save/build/version support, and do not begin M5B/M5C implementation.`
+
+The controlling detailed M5A evidence/candidate record is `docs/m5a-second-roundtrip-and-money-family.md`. Where older M5A prose conflicts with its independently reproduced corrections, that newer record controls.
 
 ## Expanded North Star
 
-Build an evidence-first local save editor for the owner's **positively supported PokemonStart save lineage** that performs the common practical edits the owner actually wants, while retaining fail-closed provenance/capability gates, separate-output publication, independent verification, and a reliable recovery path.
+Build an evidence-first local save editor for the owner's positively supported PokemonStart save lineage that performs the common practical edits the owner actually wants while retaining fail-closed provenance/capability gates, separate-output publication, independent verification, and a reliable recovery path.
 
-The target practical capability set is:
+Target practical capability order:
 
 1. money editing;
 2. inventory/item editing;
-3. practical party-Pokemon editing, ultimately including species changes and every coupled state that must be established for a safe transformation;
+3. practical party-Pokemon editing, ultimately including species transformation only where all required coupled state is proven;
 4. future bounded Pokédex editing if independently justified.
 
-General event/story/quest flag editing is an explicit non-goal. PKHeX compatibility, generic CFRU editing, arbitrary save support, broad PokemonStart version support, and feature-count parity are not goals by themselves.
-
-The North Star remains evidence-first: each field/capability must be proven independently, malformed/ambiguous/unsupported states fail closed, and a known offset or upstream struct does not by itself create writer authority.
-
-The completed M4 markings editor remains a valid bounded first slice and safety foundation. This expanded goal does not retroactively broaden any M1–M4 claim.
+General event/story/quest flag editing is an explicit non-goal. PKHeX compatibility, generic CFRU editing, arbitrary-save support, broad PokemonStart version support, and feature-count parity are not goals by themselves.
 
 ## Milestone architecture and current position
 
@@ -41,123 +41,115 @@ The completed M4 markings editor remains a valid bounded first slice and safety 
 2. **M2 — exact one-field writer proof — COMPLETE.**
 3. **M3A — supported-save / reusable write-envelope characterization — COMPLETE.**
 4. **M3B — bounded same-field transaction proof — COMPLETE.**
-5. **M3C-F1 — friendship field proof — COMPLETE.**
-6. **M3C — goal-driven bounded party-field expansion — COMPLETE.** Low-coupling friendship/markings/ball and the first nontrivial derived-state nature-mint/EV/IV/stat group survived representative game-boundary proofs; remaining fields were explicitly BLOCKED/UNSUPPORTED rather than guessed.
-7. **M4 — bounded usable editor / GUI first slice — COMPLETE.** PR #13 established the retained-lineage S0/P/C implementation and macOS delivery; PR #14 added the reviewed bounded Windows path under the exact host/filesystem limits below.
-8. **M5A — Money capability — IN PROGRESS.** The exact `3000 -> 9,999,999` transformation has a game-proven normal-save return. A second sealed exact-input writer has generated and independently audited `9,999,999 -> 1,234,567`; the second game round trip remains required. Reusable arbitrary-money FAMILY is not adopted.
-9. **M5B — Inventory capability — PLANNED, NOT AUTHORIZED.** Investigate only after M5A reaches a justified boundary; item catalog/pocket/encryption/add-remove semantics must be proven rather than inferred.
-10. **M5C — Practical Pokemon editing — PLANNED, NOT AUTHORIZED.** Prefer generalizing already-proven/low-coupling attributes first; treat level/EXP/stat coupling and species transformation as separate higher-risk capabilities.
-11. **Future — Pokédex — NOT AUTHORIZED.** Seen/caught editing may be evaluated as a dedicated semantic capability; this does not authorize a general flag editor.
+5. **M3C-F1 — friendship proof — COMPLETE.**
+6. **M3C — bounded party-field expansion — COMPLETE.** Friendship/markings/ball and first derived-state nature-mint/EV/IV/stat groups survived representative retained-lineage game round trips; unproven fields remain blocked.
+7. **M4 — bounded usable-editor first slice — COMPLETE.** Retained-lineage S0/P/C core, reusable `party[0] markings 0 <-> 1` FAMILY, macOS publication, localhost NiceGUI, and bounded exact-Windows support were adopted. Existing M4 provenance predicates remain unchanged by M5A.
+8. **M5A — Money capability — FAMILY CANDIDATE IMPLEMENTED / TESTED / INDEPENDENTLY AUDITED.** Two consecutive exact money transformations are game-proven: `3000 -> 9,999,999`, then `9,999,999 -> 1,234,567`. The reusable candidate supports integer targets `0..9,999,999` only within the retained root-anchored private money lineage, exact evidenced PokemonStart v0.15 build, explicit macOS+mGBA 0.10.5 environment binding, and observed encryption key `0`. It is not exposed through GUI yet and M5A is not declared broadly complete beyond this bounded candidate.
+9. **M5B — Inventory capability — PLANNED, NOT AUTHORIZED.**
+10. **M5C — Practical Pokemon editing — PLANNED, NOT AUTHORIZED.**
+11. **Future — Pokédex — NOT AUTHORIZED.**
 
-Owner-use hardening and packaging are supporting work rather than mandatory standalone milestones. They should be performed when they materially improve safe use of the currently proven capability set, not as a substitute for the requested practical features.
+## M5A independently reproduced game evidence
 
-## M5A controlling boundary
-
-Pinned CFRU-JP source evidence at `e24a16fe39e27ae162faf5b78596d1f3df18489d` places:
-
-- `SaveBlock1.money` at SaveBlock1 offset `0x0290`;
-- `SaveBlock2.encryptionKey` at SaveBlock2 offset `0xF20`;
-- logical section 0 as SaveBlock2 (`0xF24` bytes);
-- logical section 1 as the first SaveBlock1 chunk (`0xFF0` bytes);
-- an explicit CFRU-JP byte patch increasing maximum money to `9,999,999`.
-
-CFRU-JP also declares encrypted-data rekey helpers and links the original FireRed money routines. Public `pret/pokefirered` source corroborates that the corresponding FireRed representation is an XOR of the stored money word with the SaveBlock2 encryption key.
-
-The candidate/read rule is:
+Source-derived representation remains:
 
 `money = LE32(active logical section 1 @ 0x0290) XOR LE32(active logical section 0 @ 0x0F20)`
 
-For exact retained input SHA-256 `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`, independent read-only analysis obtained key `0`, stored word `0x00000BB8`, and decoded money `3000`; the user independently confirmed the game displays `3000` for that exact save.
+Pinned CFRU-JP source places `SaveBlock1.money` at `0x0290`, `SaveBlock2.encryptionKey` at `0x0F20`, and records the 9,999,999 maximum-money patch. Public FireRed decomp source corroborates XOR decode/encode semantics.
 
-Under the later exact canary authorization, the first candidate output SHA-256 was `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`. The returned save SHA-256 `1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4` freshly verifies with slot 0/counter 2 active, slot 1/counter 1 retained with money `9,999,999`, party[0] unchanged, expected section rotation, one saved-game increment, monotonic play time, and unchanged sectors 28–31. This records the exact first game round trip as game-proven.
+Exact first round trip:
 
-The same bounded return hash authorizes the single second canary only: `pokemonstart_m5a_repeated_money_canary.py` changes decoded `9,999,999 -> 1,234,567` and seals output SHA-256 `b232f80f82a0908e015d3bd948ec3e32c90dc44890865a5a1f920ee2e61677c7` with a five-byte complete diff. The independent audit passes; Human game load/display/normal-save evidence remains required for this second candidate. First-return early-game EventObjectTemplate-region initialization and section-4 parasite-tail changes are observed bounded evidence only. They make existing M4 `check_game_transition` reject the candidate; M4 predicates and masks are unchanged.
+- initial retained input SHA: `fcbdef7ac3e629ec3884def5df1894f108a267f639692791796bb5389783fe0b`
+- first editor candidate SHA: `e949a584c9a260030c0773bc34b117975e4e15f84ae589fa668812979f32ec69`
+- first normal-save return SHA: `1db3ec065a32b36c1d8aad5f24b7ffd1a86cef936a0a0df41f40b5cdb7363cb4`
+- semantic result: `3000 -> 9,999,999`, displayed in game and retained after normal save
 
-## Bounded M4 support contract retained as safety foundation
+Exact second round trip:
 
-Writer support in the completed M4 slice remains the conjunction of three independent gates:
+- second editor candidate SHA: `b232f80f82a0908e015d3bd948ec3e32c90dc44890865a5a1f920ee2e61677c7`
+- second normal-save return SHA: `d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf`
+- semantic result: `9,999,999 -> 1,234,567`, displayed in game and retained after normal save
+- slot/counter: `0/2 -> 1/3`
+- saved-game statistic: `2 -> 3`
+- play time: `151 -> 159` seconds
+- party[0] unchanged
+- sectors 28–31 unchanged
+- stable checksum-covered payload unchanged under the existing M4 volatile-field mask
 
-- **S0 — structural eligibility:** supported save size/layout, checksums, unique active slot, counter/parity, section permutation, and party structure;
-- **P — provenance/profile eligibility:** the retained, root-anchored private PokemonStart v0.15 lineage bound to the independently selected ROM/build and local environment through the private hash/metadata-only journal;
-- **C — capability eligibility:** only the separately proven reusable `party[0]` markings `0 <-> 1` FAMILY with exact starting-state preconditions.
+## Corrections controlling older M5A prose
 
-M5 research must reuse or deliberately extend this model with fresh evidence. Structural similarity alone does not prove PokemonStart build identity. A ROM hash alone does not prove arbitrary save provenance. Unknown or unjournaled saves remain read-only even if S0 passes.
+Pinned CFRU-JP `SaveBlock1.eventObjectTemplates[64]` begins at **`0x08E0`**. On the first very-early-game return, observed additional changes occurred only in subrange **`0x09E0..0x0ED9`**, totaling **85 bytes** after excluding already-qualified M4 EventObject runtime fields. These changes did not recur on the second return. Older M5A prose stating 89 bytes or placing the array start at `0x09E0` is superseded.
 
-## Reusable transaction contract
+Opaque emulator footer policy is also corrected: editor operations preserve it exactly; normal game/emulator saves may change it. First candidate -> first return and second candidate -> second return both changed footer hashes. Older M5A prose claiming footer equality across a normal game save is superseded.
 
-Every future generated candidate, including any eventual M5 capability, must preserve the already adopted transaction properties unless a separately authorized change proves otherwise:
+Both normal returns independently changed exactly logical-section-4 checksum-excluded offsets `0xEDE`, `0xEDF`, `0xEE8`, `0xEE9`. Pinned CFRU-JP source uses section 0/4/13 unchecked tails as parasite save storage.
 
-- hash/read the input before mutation;
-- reject unsupported S0/P/C state;
+## Bounded M5A reusable candidate
+
+`pokemonstart_m5a_money_family.py` is a candidate reusable capability, not a general save editor.
+
+Positive boundary:
+
+- FAMILY root SHA: `d707f51ddd96ad0570abce430e8b8daf138012f16f656e2f49872fdab9025caf`
+- build SHA: `48ecc0ef2df7fe9bbe389f0adbfbe7e277696a461ec631c65bcdf750898e4e12`
+- environment ID: `macos-mgba-0.10.5`
+- encryption key: exactly `0x00000000`
+- target range: integer `0..9,999,999`
+- journaled root-anchored lineage only
+- source immutable / separate new output / M4 hardened publication layer
+- GUI exposure: none
+
+The FAMILY root is deliberately the second game-proven return, after the one-time EventObjectTemplate initialization observed in the first return. That initialization is therefore not promoted to reusable normal-save volatility.
+
+The M5A-specific game-return continuation rule preserves the existing M4 checksum-covered stable-payload mask and additionally allows only logical-section-4 parasite-tail offsets `0xEDE`, `0xEDF`, `0xEE8`, `0xEE9` to vary across a normal save. It still requires opposite-slot transition, exact +1 counter, previous slot byte preservation, exact money retention, key `0`, party[0]/count preservation, saved-game +1, monotonic play time, sectors 28–31 preservation, and expected section rotation. The opaque footer may change only across the game/emulator return boundary.
+
+**The existing M4 `check_game_transition` implementation and M4 provenance model are unchanged.**
+
+Independent audit is implemented separately in `tests/m5a_independent_money_family_audit.py` and does not import the FAMILY implementation. Focused candidate construction tests recorded **15/15 PASS**; actual private second-candidate -> second-return transition also passed both the candidate rule and the independent auditor. This local execution evidence is not a GitHub Actions claim.
+
+## Reusable transaction contract retained
+
+Every adopted writer capability must continue to:
+
+- hash/read input before mutation;
+- fail closed on unsupported structure/provenance/capability state;
 - reject stale plans;
 - mutate only capability-authorized bytes;
-- recompute only required checksum(s);
-- explain every output byte difference;
-- preserve section metadata/permutation, counters, inactive slot, sectors 28–31, parasite tails, footer, and every other unqualified byte;
-- independently re-verify the output;
+- recompute only required checksums;
+- explain every diff;
+- preserve inactive slot, counters, section metadata/permutation, sectors 28–31, unqualified tails/footer, and every other unqualified byte;
+- independently re-verify output;
 - preserve source immutability;
-- retain the original input as the recovery anchor;
-- never automatically overwrite an emulator live-save path.
+- write only a separate new output;
+- retain an original recovery anchor;
+- never automatically overwrite emulator live-save state.
 
-Where filesystem publication is used, the destination must be a separate nonexistent path; input aliases, existing destinations, repository destinations, and unsupported platform/filesystem boundaries fail closed.
+## M4 delivery boundary retained
 
-## Adopted delivery boundary retained from M4
+M4 markings delivery remains as previously adopted: macOS bounded publication; Windows semantic/browser delivery only on exact validated Windows build `26200.9457` with filesystem publication additionally restricted to local fixed NTFS/no-reparse-parent boundary; NiceGUI localhost-only at `127.0.0.1`; no relay/LAN/public exposure; no automatic live-save replacement.
 
-### macOS
+M5A money FAMILY does **not** inherit Windows delivery merely because M4 markings supports it. Current M5A FAMILY publication is fail-closed to the evidenced macOS+mGBA environment only.
 
-The adopted macOS path provides S0/P/C inspection and preview, CLI/audit delivery, localhost-only NiceGUI browser delivery, independently verified in-memory browser download, and staged/no-clobber new-file publication with adopted macOS fault/race tests.
+## Unsupported / non-claimed surfaces
 
-PR #13 exact candidate `2612df5de7bac7a1ebce6650eb9ed69b440fbc4d` was merged as `4685edd4fa61d7e02a29d1cb6279e0e8858bdaa7`.
-
-### Windows
-
-Semantic/in-memory/browser delivery is positively enabled only when the explicit host gate accepts validated Windows build `26200.9457`.
-
-Windows filesystem publication additionally requires actual Windows, a local fixed NTFS volume, a user-controlled destination directory under the adopted threat model, no reparse-point component in the existing destination parent chain, a new `.sav` destination outside the repository, and no input/output alias or existing destination.
-
-Network, removable, non-NTFS, reparse-parent, or unvalidated-build cases fail closed.
-
-### NiceGUI network boundary
-
-NiceGUI remains localhost-only: host `127.0.0.1`, `on_air=False`, no relay/LAN/public listener, no external private-save upload, and no automatic emulator live-save replacement.
-
-No M5 capability is automatically exposed through the UI merely because research identifies an offset. UI actions must continue to originate from adopted core capability authority.
-
-## M4 completion authority and evidence
-
-Human authorization that completed the prior bounded slice:
-
-> `AUTHORIZE PR #14 BOUNDED WINDOWS ADOPTION AND M4 COMPLETION: adopt and merge exact candidate a2f61ac9fa34164a531b5a884a40102de3bc52cf as bounded Windows support—semantic/browser delivery only on validated Windows build 26200.9457 and filesystem publication only to user-controlled local fixed NTFS with reparse parents rejected; retain network/removable/non-NTFS, hostile concurrent path replacement, and power-loss final-name durability as unsupported/non-claimed; retain the existing retained-lineage party[0] markings 0↔1 scope and all private-data/localhost/fail-closed boundaries; after verifying the exact merge on canonical main and reconciling canonical records, mark M4 COMPLETE for this bounded first slice. Do not broaden save/build/capability scope`
-
-PR #14 exact candidate `a2f61ac9fa34164a531b5a884a40102de3bc52cf` was merged as `2547650cf898c89450a1d95b5252cf9c52e0f634`. See `docs/m4-completion.md` for the exact prior completion record.
-
-Recorded M4 evidence includes representative retained-lineage game-boundary evidence for the markings FAMILY, adopted macOS S0/P/C + browser/publication evidence, and actual Windows 11 build `26200.9457` validation. The integrated Windows suite recorded **88 tests OK with 12 macOS-only skips**. These are local execution results, not GitHub Actions reproduction.
-
-## Unsupported / non-claimed surfaces unless later milestones prove them
-
-The post-M4 expansion is a goal and roadmap authorization, **not a blanket support claim**. Until separately proven/adopted, the following remain unsupported or non-claimed:
+Unless later independently proven and authorized, unsupported/non-claimed includes:
 
 - arbitrary/non-lineage saves;
-- broad PokemonStart build/version generalization;
-- arbitrary party indices or unrestricted values;
-- reusable/arbitrary money writing beyond the exact pre-game M5A canary;
-- bags/items beyond a future adopted M5B capability;
-- species/forms, held items, moves/PP/PP-Up, abilities, level/EXP/hyper-training and other coupled Pokemon state beyond independently adopted M5C capabilities;
+- another PokemonStart build/version;
+- nonzero encryption-key private saves;
+- Windows M5A money FAMILY publication;
+- GUI money controls;
+- inventory/item writes;
+- species/forms, moves, abilities, level/EXP/hyper-training and other unadopted Pokemon writes;
 - Pokédex writes;
 - general event/story/quest flag editing;
-- remote/LAN/public browser exposure;
+- public/LAN/remote browser exposure;
 - automatic live-emulator save replacement;
-- network/removable/non-NTFS Windows filesystem publication;
-- support for Windows builds that fail the exact validated-host gate;
-- resistance to hostile concurrent parent-junction/final-name replacement after validation checks;
-- Windows directory-metadata or final-name persistence across sudden power loss;
-- public release/distribution guarantees.
-
-The application semantics of sectors 30/31 and parasite tails remain preservation-oriented rather than generally decoded. The external footer remains preservation-only for editor output and may change under a later normal game/emulator save according to the established policy.
+- broader threat-model/public-release guarantees.
 
 ## Authority chain
 
-Key durable authority/evidence records now include:
+Key durable records include:
 
 - `docs/evidence.md`
 - `docs/m3a-support-envelope-findings.md`
@@ -167,26 +159,14 @@ Key durable authority/evidence records now include:
 - `docs/m4-delivery-correction.md`
 - `docs/m4-pr13-adoption.md`
 - `docs/m4-windows-validation.md`
-- `docs/m4-windows-candidate-evidence.md`
-- `docs/m4-windows-bounded-integration-authorization.md`
 - `docs/m4-completion.md`
 - `docs/post-m4-strategy-and-m5a-money.md`
 - `docs/m5a-money-private-read-audit.md`
 - `docs/m5a-exact-max-money-canary.md`
+- **`docs/m5a-second-roundtrip-and-money-family.md` — controlling current M5A correction/evidence record**
 
-## Authorization boundary after exact M5A canary generation
+## Current authorization boundary
 
-This historical boundary was superseded by the Human authorization at the start of the 2026-10-06 bounded adoption/repeated-use task. The first exact `3000 -> 9,999,999` round trip is now game-proven; one exact `9,999,999 -> 1,234,567` candidate is generated and independently audited.
+The Human authorization above permits the bounded M5A FAMILY candidate implementation, testing, independent audit, and canonical evidence adoption. It does **not** authorize GUI exposure, M5B/M5C implementation, broader save/build/version/key scope, Windows M5A adoption, public release, or weakening M4 provenance.
 
-The current authorization does **not** authorize:
-
-- generalizing the exact canary to arbitrary money values or additional save hashes;
-- adopting a reusable money FAMILY before game-round-trip/repeated-use evidence;
-- exposing money editing through the GUI;
-- M5B inventory mutation;
-- M5C Pokemon writer implementation;
-- new supported save/build/version scope;
-- public distribution/release guarantees;
-- broader network/threat-model scope.
-
-The remaining Human step is limited to the second candidate: load it in the validated PokemonStart v0.15 environment, confirm `1,234,567`, perform one normal in-game save, and return the save for read-only audit. The current authorization does not adopt an arbitrary-money FAMILY or broaden save/build/provenance support.
+The next milestone decision must independently determine whether the bounded FAMILY candidate is sufficient to mark M5A complete and expose it through a delivery layer, or whether a narrower additional proof is required. Do not start M5B merely because the candidate implementation exists.
