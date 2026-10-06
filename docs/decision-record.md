@@ -2,7 +2,7 @@
 
 GitHub `main` is the only durable canonical authority for this project. Chat history, Memory, maker reasoning, local command logs, and old checkpoints are supporting context only unless reproduced or explicitly adopted here.
 
-## Controlling current decision — exact-v0.22 Party append + Inventory insertion proofs and localhost GUI prototype active
+## Controlling current decision — exact-v0.22 creation + localhost GUI Fast Lab slice adopted
 
 The project retains the adopted Stable Lane + Fast Lab Lane architecture and refined terminal goal.
 
@@ -20,16 +20,16 @@ Controlling Human authorizations include:
 
 > `AUTHORIZE EXACT-V0.22 FAST-LAB PARTY-APPEND + INVENTORY-INSERTION PROOFS AND LOCALHOST GUI PROTOTYPE`
 
-The Money reusable-envelope qualification is now **PAUSED / INCOMPLETE** by Human choice and is not the active critical path. Its preserved review branch is:
+> `AUTHORIZE EXACT-V0.22 CREATION + LOCALHOST GUI FAST-LAB ADOPTION 310a982cc41a6d254eb542e4a985545c4ee7960a`
 
-- `codex/money-reusable-qualification-20261007`
-- exact pushed HEAD `909e3e50d4cb6a173188d6c97538f03aed464417`
+Exact candidate `310a982cc41a6d254eb542e4a985545c4ee7960a` was fast-forwarded into canonical `main` after independent review.
 
-That branch is evidence/partial implementation only and is not canonical writer capability.
-
-The active next-work contract is now:
+The adopted Fast Lab slice is bounded to the exact v0.22 profile and exact fresh proof root described in:
 
 - `docs/v022-creation-proofs-and-gui-prototype.md`
+- `docs/v022-creation-proof-progress.md`
+- `docs/v022-creation-proof-evidence.json`
+- `docs/fast-lab-v022-capability.json`
 
 Where older roadmap/status wording conflicts with this record, this later record controls.
 
@@ -41,17 +41,13 @@ Exact-build capability profiles define the supported envelope. The terminal goal
 
 ## Current terminal-state assessment
 
-Status remains:
+Status:
 
-> **TERMINAL GOAL PARTIALLY SATISFIED — PRACTICAL CREATION/REUSE COVERAGE INCOMPLETE**
+> **TERMINAL GOAL PARTIALLY SATISFIED — USER-OPERABLE EXACT-INPUT GUI EXISTS; PRACTICAL COMPOSITION / REUSE REMAINS INCOMPLETE**
 
-FL2 provides a coherent exact-v0.22 inspect/preview/write/verify workflow for its bounded existing operations, and post-FL2 private acceptance passed. However, practical user-facing creation is still missing: current Party support mutates an existing party[0] record, and current Inventory support changes only an existing Potion quantity on one retained shape.
+The project now has a localhost-only v0.22 GUI slice that can inspect an exact supported input, preview bounded operations, and return verified separate outputs. Two creation primitives are experimentally proven on the exact fresh proof root and survive exact-v0.22 load, normal SAVE and cold reload.
 
-The current critical path therefore asks whether two creation primitives can be proven safely and then exposed through a local GUI:
-
-1. append one party member by copying an existing valid 100-byte record into the first empty party slot and updating party count;
-2. insert one newly observed item type into a proven empty regular-items slot derived from a normal game differential;
-3. if both survive exact-v0.22 load + normal save, expose only those proven operations plus already-bounded supported operations through a localhost-only GUI prototype.
+The remaining gap is no longer absence of a usable GUI. The main practical limitation is that the newly proven Party append and Inventory insertion capabilities are exact-input bounded and currently operate as separate alternatives from the same root. Reusable composition on naturally progressed outputs is not yet proven.
 
 ## Canonical two-lane architecture
 
@@ -111,79 +107,60 @@ Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` is canonic
 
 Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` is canonical history. The merged workflow provides exact ROM/profile gating, inspect, semantic + byte-diff preview, bounded Money/Party/Inventory operations, separate-output creation, persisted-output equality checks, verifier revalidation, and explicit unsupported rejection.
 
-### Post-FL2 Phase A/B — COMPLETE FOR ITS GATE
+### Post-FL2 private acceptance — COMPLETE
 
-Reviewed evidence branch `93c070215181bb9e1a83c1b1b0bc82110a726793` reported `PASS_POST_FL2_PRIVATE_ACCEPTANCE` and selected Money as a first reusable-envelope candidate. That did not broaden canonical writer eligibility.
+Reviewed evidence branch `93c070215181bb9e1a83c1b1b0bc82110a726793` reported `PASS_POST_FL2_PRIVATE_ACCEPTANCE`. That acceptance did not itself broaden canonical writer eligibility.
 
 ### Money reusable-envelope qualification — PAUSED / INCOMPLETE
 
-Preserved branch `909e3e50d4cb6a173188d6c97538f03aed464417` contains partial implementation/evidence. It established first non-canary qualification, independent audit, exact-v0.22 live acceptance, one normal save and extensive tests, but did not complete the ordinary-Money-change -> second qualification -> final repeated-use proof. It also documented unresolved custody/immutability of one previously used source pathname across the full work period.
+Preserved branch `909e3e50d4cb6a173188d6c97538f03aed464417` contains partial implementation/evidence. It is not canonical writer capability and remains frozen unless separately resumed.
 
-Do not merge or reuse this partial candidate as canonical capability without a separate resume/review decision.
+### Exact-v0.22 Party append + Inventory insertion + localhost GUI — COMPLETE EXPERIMENTALLY / ADOPTED
 
-### v0.22 creation proofs + GUI prototype — ACTIVE
+Canonical adopted candidate:
 
-Controlling scope is `docs/v022-creation-proofs-and-gui-prototype.md`.
+`310a982cc41a6d254eb542e4a985545c4ee7960a`
 
-Authorized sequence:
+Adopted experimental capability boundary:
 
-1. fresh immutable private proof root from the current exact-v0.22 state;
-2. bounded Party append proof using an exact existing 100-byte party record copied into the first empty slot, with party count increment and checksum handling only;
-3. bounded Inventory insertion proof derived from a normal before/after acquisition differential for one previously absent regular item;
-4. exact-v0.22 load + normal-save persistence gates for both operations;
-5. only if both pass, a localhost-only NiceGUI v0.22 prototype exposing proven capabilities and fail-closing unsupported states.
+- exact v0.22 ROM/profile only;
+- exact fresh proof-root save SHA only for the two creation operations;
+- Party append: party count `3 -> 4`, copy the complete existing slot0 100-byte record into slot3, no internal record synthesis;
+- Inventory insertion: insert Antidote ID14 quantity1 into the game-observed regular-items slot2 under key0, preserve Money and existing item order;
+- both creation operations passed independent complete-candidate audit, exact-v0.22 load, normal SAVE and cold reload;
+- localhost-only NiceGUI (`127.0.0.1`) exposes inspection, existing canonical FL2 operations under their unchanged gates, and the two exact creation operations;
+- GUI delivery is upload/in-memory preview/verified separate download only; no live-save overwrite path;
+- GUI output for the two creation operations was byte-identical to the game-confirmed non-GUI core candidates;
+- Fast Lab experimental only; not Stable and not public release support.
 
 ## Current authorization boundary
 
-Current work may:
+Current canonical code/evidence may be used to:
 
-- fresh-read current canonical `main` and current exact-v0.22 private state;
-- create fresh repo-external immutable/disposable proof snapshots after independent verification;
-- characterize the reported current three-Pokémon/shop-front starting state independently;
-- implement and test exactly one Party append primitive based on copying one existing valid record into the first empty party slot;
-- perform exact-v0.22 load/live/normal-save persistence proof for that append;
-- perform one ordinary in-game acquisition of an item type absent from the regular-items pocket to characterize insertion by differential;
-- implement and test exactly that observed Inventory insertion shape on an immutable pre-acquisition snapshot;
-- perform exact-v0.22 load/live/normal-save persistence proof for that insertion;
-- if both proofs pass, implement a localhost-only NiceGUI v0.22 prototype using the current v0.22/FL2/Fast Lab core and exposing only supported operations;
-- run focused/regression/full/static/security checks;
-- prepare and push a sanitized review branch containing code/tests/docs/evidence only.
+- run the adopted localhost v0.22 GUI against inputs that satisfy its exact existing gates;
+- inspect exact-v0.22 saves read-only;
+- use canonical FL2 Money/Party/Inventory operations only where their pre-existing exact gates pass;
+- use the adopted Party append and Inventory insertion operations only on the exact fresh proof-root save for which they are gated;
+- create only verified separate outputs;
+- run existing tests/auditors and review the adopted evidence.
 
-Current work does **not** authorize:
+No further capability expansion is authorized yet.
 
-- arbitrary Pokémon generation/synthesis;
-- arbitrary species/PID/OT/nickname/met-data generation;
-- box Pokémon creation;
-- arbitrary item IDs, quantities, pockets, insertion slots, deletion or reorder;
+In particular, current authorization does **not** permit canonical implementation/adoption of:
+
+- composition of Party append + Inventory insertion in one output;
+- applying either creation operation to its own output or another naturally progressed save;
+- arbitrary Pokémon synthesis or arbitrary templates;
+- arbitrary item IDs, quantities, pockets, slots, deletion or reorder;
 - nonzero-key support;
-- generic Party/Inventory reusable eligibility;
-- broader PokemonStart builds/versions;
+- broader PokemonStart versions/builds;
 - Stable promotion;
 - public/LAN GUI exposure;
-- protected-data publication;
-- use of paused Money reusable candidate code as canonical basis;
-- canonical `main` merge/adoption.
+- paused Money reusable candidate adoption;
+- protected-data publication.
 
-If a proof requires speculative coupling beyond the bounded authorized primitive, stop with `BOUNDED_STOP_WITH_CONCRETE_EVIDENCE` rather than silently broadening scope.
+## Review / next-work rule
 
-## Local Codex / branch publication policy
+Before beginning the next capability expansion, fresh-read current `main` and independently decide whether the cheapest uncertainty-reducing step is still composition/reuse rather than broader field expansion.
 
-Local Codex is the default executor for private-input work. Push-safe work branches are encouraged because they permit independent remote review, provided protected/private artifacts stay outside Git.
-
-Allowed branch material includes source code, tests, push-safe independent auditor/differential tooling, sanitized evidence/design records, hashes, sizes and non-sensitive structural/diff summaries.
-
-Do not push ROMs, saves, `.pks`, BPS/IPS, executables, proprietary payloads, copyrighted assets, screenshots/raw memory containing protected bytes, raw private command logs, or private/protected bytes.
-
-Branch push is not adoption. Canonical `main` mutation remains a separate Human decision.
-
-## Review loop
-
-1. Codex executes the Human-authorized Goal locally.
-2. Codex pushes only push-safe review material to an exact work branch.
-3. ChatGPT fresh-reads canonical `main` and the exact branch HEAD, independently reviews the complete diff/evidence and reconstructs current state.
-4. ChatGPT returns disposition and prepares the next bounded Human decision plus the next Codex Goal.
-5. No merge/adoption or material scope expansion occurs without explicit Human authorization.
-
-## Current next step
-
-**Delegate the exact-v0.22 Party-append + Inventory-insertion creation proofs to local Codex. Require fresh proof-root capture first. If and only if both creation proofs pass game/load/normal-save persistence gates, continue in the same Goal to the localhost-only v0.22 NiceGUI prototype, full validation and push-safe review-branch publication.**
+A likely next candidate is **bounded composition of the already-proven Party append and Inventory insertion operations into one verified output and one GUI transaction**, but this is not yet authorized and must be presented as a separate Human decision surface.
