@@ -417,5 +417,42 @@
     "immutable_rom_and_save_sources": true
   },
   "evidence_level": "Fast Lab experimental",
-  "stable_proven": false
+  "stable_proven": false,
+  "creation_review_candidate": {
+    "status": "Fast Lab experimental; review candidate; no Stable adoption",
+    "canonical_base_sha": "88d5981bb35ce379fd018986b013a522ab0340b3",
+    "source_sha256": "2d7ac8d6214e8b94018a3fe3f65c30270198098a9cb658318248b514242511ac",
+    "party_append": {
+      "template_slot": 0,
+      "destination_slot": 3,
+      "count_transition": [
+        3,
+        4
+      ],
+      "record_policy": "copy exact complete existing 100-byte record; no internal modifications",
+      "output_sha256": "e22309a73236504d201d393f8146f113eb261d2486527c66ca0fd8e8f4bf2a5b",
+      "changed_byte_count": 52,
+      "load_normal_save_cold_reload": true
+    },
+    "inventory_insert": {
+      "item_id": 14,
+      "slot": 2,
+      "quantity": 1,
+      "representation": "observed key0 u16 ID + u16 quantity at logical section13 offset0xAE4",
+      "output_sha256": "588b4cb5b96468cd2baf4d67c36f4048020f5205fa28ff57c3a094147409c596",
+      "changed_byte_count": 2,
+      "checksum_changed": false,
+      "money_preserved": true,
+      "load_normal_save_cold_reload": true
+    },
+    "gui": {
+      "module": "pokemonstart_v022_web.py",
+      "host": "127.0.0.1",
+      "delivery": "in-memory upload -> inspect -> preview -> verified separate download",
+      "eligibility": "exact creation source SHA only; canonical FL2 gates unchanged"
+    },
+    "general_reusable_eligibility": false,
+    "stable_proven": false,
+    "evidence_record": "docs/v022-creation-proof-evidence.json"
+  }
 }

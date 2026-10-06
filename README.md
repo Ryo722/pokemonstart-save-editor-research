@@ -70,6 +70,28 @@ Current Fast Lab evidence includes:
 
 These are **Fast Lab experimental** claims only. They do not establish arbitrary-save support, nonzero-key support, broad item/pocket support, broad species/move/level support, another PokemonStart version, normal-save lifecycle support for each field, or public-release readiness.
 
+## Exact-input creation + GUI review candidate
+
+This review branch adds two **Fast Lab experimental** operations on the fresh
+exact-v0.22 proof root only: Party count 3->4 by copying the complete existing
+slot0 record into slot3, and Antidote ID14 x1 into the game-observed regular slot2
+without changing Money. Both passed load, normal SAVE and cold reload.
+Other saves, templates, items, slots, quantities and combined creation remain
+unsupported. Existing FL2 gates are unchanged; the paused Money reusable
+candidate is not included.
+
+The localhost NiceGUI prototype provides upload, inspection, semantic/byte
+preview and verified separate downloads, bound only to 127.0.0.1:
+
+```bash
+.venv/bin/python pokemonstart_v022_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
+```
+
+Use the existing `requirements-m4-ui.txt` environment. See
+[`docs/v022-creation-proof-progress.md`](docs/v022-creation-proof-progress.md)
+and the sanitized evidence JSON for exact identities, proof limits and
+validation. This is independent-review material, not a canonical merge/adoption.
+
 ## Shared safeguards
 
 Both lanes retain the same non-negotiable boundaries:
