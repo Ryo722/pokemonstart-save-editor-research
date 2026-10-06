@@ -14,6 +14,7 @@ Fast Lab evidence does **not** imply Stable support.
 The controlling strategy/next-work records are:
 
 - `docs/decision-record.md`
+- `docs/post-fl2-acceptance-and-reusable-envelope-plan.md`
 - `docs/fast-lab-two-lane-adoption.md`
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
 
@@ -42,9 +43,10 @@ Stable provenance work such as P-direct/P-reanchor remains separate and is not o
 - **FL0 — exact-build private ROM preparation + harness: COMPLETE.**
 - **FL1 — practical core editing slice: COMPLETE EXPERIMENTALLY.** Exact PokemonStart v0.22 evidence includes bounded Money editing, practical/composed Party editing, and one bounded existing-item Inventory quantity edit.
 - **FL2-G0 — durable Fast Lab baseline reconciliation: COMPLETE / MERGED.** Human-authorized candidate `44c90e8217061cc8ac294a392984dfe73e622d80` was fast-forwarded into canonical `main`.
-- **FL2 — unified practical local CLI: ACTIVE MILESTONE.** Current candidate work consolidates the already-evidenced Money / Party / bounded Inventory operations behind one inspect/preview/write/verify workflow without expanding capability ranges.
+- **FL2 — unified practical local CLI: COMPLETE / MERGED.** Human-authorized candidate `e44e85358be9a1e72e0cd84c65d446eec5bd81c2` was fast-forwarded into canonical `main`. The unified CLI now durably exposes inspect / preview / bounded write / verify for the already-evidenced Money / Party / Inventory operations without expanding capability ranges.
+- **Post-FL2 acceptance / reusable-envelope planning: ACTIVE.** Current write eligibility is still tied to retained exact input-save SHA-256 values. The next step is private acceptance of the merged CLI followed by reusable-envelope design/preregistration; broader writer eligibility still requires separate Human authorization.
 
-After FL2, profile broadening, GUI/delivery, and Stable promotion are **usage-driven alternatives**, not a fixed mandatory sequence.
+After FL2, profile broadening, GUI/delivery, and Stable promotion remain **usage-driven alternatives**, not a fixed mandatory sequence.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -107,8 +109,10 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 ## Canonical records
 
 - `docs/decision-record.md` — controlling milestone/authority state
-- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — controlling FL2-G0 and terminal-goal refinement
+- `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — current authorized next-work boundary
+- `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — FL2-G0 and terminal-goal refinement
 - `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconstruction record
+- `docs/fl2-unified-cli-candidate.md` — merged FL2 implementation/validation record
 - `docs/fast-lab-two-lane-adoption.md` — controlling two-lane strategy and current v0.22 Fast Lab evidence
 - `docs/evidence.md`
 - `docs/m4-completion.md`
@@ -117,4 +121,4 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 
 ## Current non-claims
 
-Unless separately proven and authorized, the project does not claim generic arbitrary-save support, broad PokemonStart-version compatibility, nonzero-key Fast Lab support, Stable v0.22 support, resolved-ability editing, general Inventory insertion/deletion/reordering, Pokédex editing, event/story/quest editing, public/LAN delivery, or public release guarantees.
+Unless separately proven and authorized, the project does not claim generic arbitrary-save support, broad PokemonStart-version compatibility, nonzero-key Fast Lab support, Stable v0.22 support, resolved-ability editing, general Inventory insertion/deletion/reordering, Pokédex editing, event/story/quest editing, public/LAN delivery, public release guarantees, or reusable write eligibility for naturally changed owner saves.
