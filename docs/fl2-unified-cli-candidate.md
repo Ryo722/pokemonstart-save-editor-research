@@ -56,13 +56,23 @@ for the exact retained Potion-bearing save.
 
 ## Candidate files
 
+Implementation/tests:
+
 - `pokemonstart_fl2_core.py`
 - `pokemonstart_fl2_cli.py`
 - `tests/test_fl2_core.py`
 - `tests/test_fl2_cli.py`
 
+State/documentation synchronization on the candidate branch:
+
+- `README.md`
+- `docs/decision-record.md`
+- this record
+
+The documentation synchronization records the already-completed FL2-G0 merge and makes FL2 the active milestone; it does not change field capability or evidence classification.
+
 ## Verification status
 
-The four new Python files compile successfully with `py_compile` in the ChatGPT execution environment. Full repository/focused test execution still requires a repository-capable local runner before merge review; this candidate must not be adopted solely from syntax/static review.
+The four new Python files compile successfully with `py_compile` in the ChatGPT execution environment. The post-G0 stale wording in `README.md` and `docs/decision-record.md` has been synchronized on the candidate branch.
 
-Before any FL2 merge/adoption, the stale post-G0 wording in `README.md` / `docs/decision-record.md` must also be synchronized so canonical state says FL2-G0 is complete and FL2 is the active milestone.
+Full repository/focused test execution still requires a repository-capable local runner before merge review. This candidate must not be adopted solely from syntax/static review.
