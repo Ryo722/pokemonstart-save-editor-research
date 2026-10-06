@@ -1,10 +1,11 @@
-# Exact-v0.22 composed creation transaction — review candidate
+# Exact-v0.22 composed creation transaction — proof and publication record
 
-Canonical base: `720f56dac8851e0fd17870dc3bd41c36cbf0f726`.
-Review branch: `codex/v022-composed-gui-transaction-20261007`.
+Canonical base at proof time: `720f56dac8851e0fd17870dc3bd41c36cbf0f726`.
+Review branch at publication: `codex/v022-composed-gui-transaction-20261007`.
 Scope: [the controlling authorization](v022-composed-gui-transaction-proof.md).
-Disposition: `READY_FOR_INDEPENDENT_REVIEW`, subject to the accompanying
-validation/publication evidence. No canonical merge/adoption is performed.
+Disposition at proof publication: `READY_FOR_INDEPENDENT_REVIEW`, subject to the
+accompanying validation/publication evidence. The proof publication did not
+perform a canonical merge/adoption.
 
 ## Exact independent composition
 
@@ -113,4 +114,5 @@ deletion/reordering, Money or other FL2 composition, reusable progressed-save
 eligibility, self-application, nonzero keys, broader builds, arbitrary operation
 commutativity, normal-save volatility predicate, Stable promotion, LAN/public
 delivery or public release. The paused Money candidate remains excluded.
-Canonical main is unchanged; review and adoption remain separate Human gates.
+The proof publication left canonical main unchanged; canonical merge/adoption
+requires separate Human authorization.

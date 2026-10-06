@@ -455,8 +455,8 @@
     "stable_proven": false,
     "evidence_record": "docs/v022-creation-proof-evidence.json"
   },
-  "creation_composition_review_candidate": {
-    "status": "Fast Lab experimental review candidate; pending independent review/adoption",
+  "creation_composition_experimental_slice": {
+    "status": "Fast Lab experimental; exact-root composed transaction; not Stable",
     "canonical_base_sha": "720f56dac8851e0fd17870dc3bd41c36cbf0f726",
     "operation": "party_append_inventory_insert",
     "request": {},

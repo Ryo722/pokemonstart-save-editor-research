@@ -16,6 +16,7 @@ The controlling strategy/next-work records are:
 - `docs/decision-record.md`
 - `docs/post-fl2-acceptance-and-reusable-envelope-plan.md`
 - `docs/v022-creation-proofs-and-gui-prototype.md`
+- `docs/v022-composed-gui-transaction-proof.md`
 - `docs/fast-lab-two-lane-adoption.md`
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md`
 
@@ -81,11 +82,13 @@ exact-v0.22 proof root only: Party count 3->4 by copying the complete existing
 slot0 record into slot3, and Antidote ID14 x1 into the game-observed regular slot2
 without changing Money. Both passed load, normal SAVE and cold reload.
 Other saves, templates, items, slots and quantities remain unsupported.
-This review branch additionally proves exactly one combined transaction from
-the same root: Party append + Antidote insertion, with one SAVE/cold-reload
-and GUI/core equality proof. It remains pending independent review and adoption;
-see [the composition evidence](docs/v022-composed-gui-transaction-progress.md). Existing FL2 gates are unchanged; the paused Money reusable
-candidate is not included.
+The exact-root Party append + Antidote insertion composed transaction also has
+one normal SAVE + cold-reload proof and GUI/core byte equality. It is Fast Lab
+experimental, exact-input bounded, not Stable, and provides no reusable
+progressed-save eligibility. See
+[the composition evidence](docs/v022-composed-gui-transaction-progress.md).
+Existing FL2 gates are unchanged; the paused Money reusable candidate is not
+included.
 
 The localhost NiceGUI prototype provides upload, inspection, semantic/byte
 preview and verified separate downloads, bound only to 127.0.0.1:
@@ -141,6 +144,7 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 - `docs/decision-record.md` — controlling milestone/authority state
 - `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — historical/adopted post-FL2 acceptance and reusable-envelope plan
 - `docs/v022-creation-proofs-and-gui-prototype.md` — authorization/scope record for the exact-v0.22 Party append, Inventory insertion and localhost GUI experimental slice
+- `docs/v022-composed-gui-transaction-proof.md` — controlling scope for the exact-root composed Party append + Antidote insertion GUI transaction proof
 - `docs/fl2-durable-baseline-and-terminal-goal-refinement.md` — FL2-G0 and terminal-goal refinement
 - `docs/fl2-g0-reconciliation.md` — merged durable-baseline reconstruction record
 - `docs/fl2-unified-cli-candidate.md` — merged FL2 implementation/validation record
