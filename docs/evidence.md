@@ -258,3 +258,10 @@ sanitized hashes are in `docs/v022-product-sprint-completion-evidence.json` and
 The sprint candidate is experimental and pending fresh-context independent
 review. It has not been adopted on `main`, promoted to Stable or publicly
 released. Private ROM/save inputs remain outside Git.
+
+
+## E1/E2 Inventory adoption — 2026-10-07
+
+Fresh-context independent review approved exact candidate `9f86be5e339067f88b3f557e5587c93f5fd17c96` for Human adoption. The Human explicitly authorized adoption and merge with no release, Stable promotion, or scope expansion. PR #21 merged as `3eb756cb1b74fc0d58637b82e93542836fa0b290`.
+
+Canonical scope remains bounded to the reviewed exact-v0.22 restricted recovery-medicine editor. Human normal-game acceptance covered quantity edit, removal, addition, normal SAVE, returned-save verification, and preservation of unrelated Inventory, Party, Money, and re-edit eligibility. Broader item authority and Give All remain unsupported.

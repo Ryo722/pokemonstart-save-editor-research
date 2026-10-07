@@ -6,7 +6,7 @@ GitHub `main` is the only durable canonical authority for this project. Detailed
 
 The independently reviewed exact-v0.22 practical product candidate was explicitly authorized for adoption and merged to canonical `main` through PR #16 at merge commit `ab18419108eeed91288d440a6f154cac33a1cf2e`.
 
-The Human has now additionally adopted the **Exact-v0.22 PKHeX-like Practical Editor Expansion** as the forward product goal. The expansion contract is `docs/v022-pkhex-like-editor-expansion.md`. This is a substantive capability expansion beyond the completed R1-R4 terminal, so future expanded writer candidates remain separately review/adoption gated before merge.
+The Human has additionally adopted the **Exact-v0.22 PKHeX-like Practical Editor Expansion** as the forward product goal. E1/E2 Inventory expansion is now adopted on canonical `main` through PR #21 merge commit `3eb756cb1b74fc0d58637b82e93542836fa0b290`. Future expanded writer candidates remain separately review/adoption gated before merge.
 
 The preceding sprint authorization remains historical authority for the R1–R4 implementation work:
 
@@ -119,15 +119,15 @@ The forward critical path is now the E-series expansion defined in `docs/v022-pk
 
 The vNext goal, success characteristics, milestone sequence, Money maintenance status, safety boundaries and non-goals are canonical.
 
-### E1 — Inventory model qualification — ACTIVE
+### E1 — Inventory model qualification — COMPLETE / ADOPTED
 
 Establish a reusable exact-v0.22 model for supported ordinary-item pockets: boundaries, record encoding, quantity representation, empty-slot semantics, ordering/compaction, safe capacity, checksum/key behavior and a safe item catalog. Prefer multi-item generalization evidence and source/ROM corroboration over serial single-item canaries.
 
-### E2 — Practical Inventory editor
+### E2 — Practical Inventory editor — COMPLETE / ADOPTED
 
-Implement GUI add / set quantity / remove for the E1-supported ordinary-item model. Give All Supported Items is conditional on proven catalog + capacity/order semantics.
+Canonical exact-v0.22 GUI supports the independently reviewed recovery-medicine subset with add, quantity editing, and remove under fail-closed eligibility. Give All remains disabled.
 
-### E3 — General existing-Pokémon editor
+### E3 — General existing-Pokémon editor — ACTIVE
 
 Generalize existing-Party editing across the supported major fields: species, level/EXP, moves/PP, friendship, IV/EV, nature, ability when resolved safely, held item, and required cached/derived coherence.
 
@@ -211,4 +211,4 @@ The following still require separate justification/authorization as applicable:
 
 ## Next execution step
 
-Start E1 from fresh current `main`. Inventory current exact-v0.22 item evidence/code; inspect exact-build source/ROM evidence for pocket definitions, capacities, item metadata and key/quantity handling; design a small multi-item native-transition matrix; build a read-only generalized inventory decoder/auditor first; only then prepare bounded add/set/remove writer candidates. Keep Give All disabled until safe catalog + capacity/order semantics are established.
+Start E3 from fresh current `main`. Qualify the exact-v0.22 general existing-Pokémon edit model and required coupling/derived coherence before broader Party writer capability.

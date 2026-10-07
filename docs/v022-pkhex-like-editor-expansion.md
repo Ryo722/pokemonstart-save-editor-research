@@ -79,7 +79,7 @@ Success:
 - E1-E5 sequence and boundaries are canonical;
 - protected-data and fail-closed rules remain unchanged.
 
-### E1 — Inventory model qualification
+### E1 — Inventory model qualification — COMPLETE / ADOPTED
 
 Goal: replace one-item canaries with an independently supported exact-v0.22 regular-inventory model.
 
@@ -103,7 +103,7 @@ Success requires enough independent exact-v0.22 evidence to establish, for each 
 
 Use multiple native game transitions and/or exact-build source/ROM evidence to test the model. Do not infer general support from Potion/Antidote alone.
 
-### E2 — Practical Inventory editor
+### E2 — Practical Inventory editor — COMPLETE / ADOPTED
 
 Goal: turn E1's model into ordinary item editing.
 
@@ -121,7 +121,7 @@ At least multiple materially different supported items must independently surviv
 
 **Give All Supported Items** is allowed only if E1 establishes a safe catalog and sufficient pocket capacities/order semantics. It means supported ordinary items only; it must never blindly enumerate all item IDs or include unproven key/event/story items.
 
-### E3 — General existing-Pokémon editor
+### E3 — General existing-Pokémon editor — ACTIVE
 
 Goal: make existing ordinary Party Pokémon practically editable beyond the current canary models.
 
@@ -244,3 +244,8 @@ Cheapest uncertainty-reducing path:
 6. keep Give All disabled until catalog + capacity/order semantics are actually established.
 
 E1 implementation/evidence may proceed on a candidate branch. Merge of materially expanded writer capability into canonical `main` remains separately review/adoption gated.
+
+
+## E1/E2 adoption record — 2026-10-07
+
+PR #21 merged the independently reviewed exact E1/E2 Inventory candidate into canonical `main` as merge commit `3eb756cb1b74fc0d58637b82e93542836fa0b290`. Adopted scope remains the reviewed restricted exact-v0.22 recovery-medicine editor only. Give All, broader regular-item authority, other pockets as writers, cross-version support, Stable promotion, and public release remain outside this adoption.
