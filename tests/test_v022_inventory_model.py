@@ -15,11 +15,16 @@ def synthetic_rom():
     struct.pack_into('<I', data, 0x1C8, model.ITEM_TABLE)
     pairs = tuple(x for _, ram, cap, _ in model.POCKETS for x in (ram, cap))
     struct.pack_into('<10I', data, model.DESCRIPTOR - model.ROM_BASE, *pairs)
-    for item, pocket in ((13, 1), (14, 1), (15, 1), (533, 1), (267, 2), (4, 3), (289, 4), (142, 5)):
+    for item, pocket in tuple((i, 1) for i in range(13, 23)) + ((57, 1), (533, 1), (267, 2), (4, 3), (289, 4), (142, 5)):
         base = model.ITEM_TABLE - model.ROM_BASE + item * 40
         data[base:base + 10] = bytes([0x01, 0xFF]) + bytes(8)
         struct.pack_into('<H', data, base + 10, item)
         data[base + 22] = pocket
+        if 13 <= item <= 22:
+            data[base + 23] = 1
+            struct.pack_into('<I', data, base + 24, 0x080A29B5)
+            data[base + 28] = 1
+            struct.pack_into('<I', data, base + 32, 0x080A327D)
     return bytes(data)
 
 
@@ -173,6 +178,52 @@ class InventoryModelTests(unittest.TestCase):
         for first, second in zip(expected['pockets'], actual['pockets']):
             self.assertEqual([(x['slot'], x['item_id'], x['quantity']) for x in first['entries']],
                              [(x['slot'], x['item_id'], x['quantity']) for x in second['entries']])
+
+
+class RestrictedInventoryTests(unittest.TestCase):
+    setUpClass = InventoryModelTests.__dict__['setUpClass']
+    setUp = InventoryModelTests.setUp
+    put_at = InventoryModelTests.put_at
+
+    def check(self, valid=True):
+        for reader in (model.restricted, audit.restricted):
+            if valid:
+                self.assertTrue(reader(bytes(self.raw), self.rom)['restricted_eligible'])
+            else:
+                with self.assertRaises(ValueError):
+                    reader(bytes(self.raw), self.rom)
+
+    def test_empty_single_and_multiple(self):
+        self.check()
+        base = self.active.section(13).physical_sector * 4096 + 0xADC
+        for count, item in enumerate((13, 533, 14), 1):
+            self.put_at(base + (count - 1) * 4, item, count)
+            struct.pack_into('<H', self.raw, 0x1E716, count)
+            self.check()
+
+    def test_selector_clear_required_even_when_empty(self):
+        base = self.active.section(4).physical_sector * 4096
+        self.raw[base + 0xE09] |= 8
+        self.check(False)
+
+    def test_mixed_classification_rejection(self):
+        base = self.active.section(13).physical_sector * 4096 + 0xADC
+        self.put_at(base, 13, 1)
+        self.put_at(base + 4, 57, 1)
+        struct.pack_into('<H', self.raw, 0x1E716, 2)
+        self.check(False)
+
+    def test_hole_duplicate_and_cache_mismatch(self):
+        base = self.active.section(13).physical_sector * 4096 + 0xADC
+        self.put_at(base, 13, 1)
+        self.check(False)
+        struct.pack_into('<H', self.raw, 0x1E716, 1)
+        self.check()
+        self.put_at(base + 8, 14, 1)
+        struct.pack_into('<H', self.raw, 0x1E716, 2)
+        self.check(False)
+        self.put_at(base + 4, 13, 1)
+        self.check(False)
 
 
 if __name__ == '__main__':

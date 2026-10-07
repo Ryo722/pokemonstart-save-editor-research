@@ -20,6 +20,12 @@ CODE_REGIONS = (
     ('sanitizer', 0x090D29C0, 0x14), ('quantity_getter', 0x080997A8, 4),
     ('quantity_setter', 0x080997C4, 0x1C), ('space', 0x08099A08, 0x84),
     ('add', 0x08099A8C, 0x154), ('remove', 0x08099BE0, 0x88),
+    ('classification_callbacks', 0x090B8164, 0x8C),
+    ('classifier', 0x090B81F0, 0x70), ('partition_count', 0x090B8274, 0x130),
+    ('selector_clear_and_open_scan', 0x090B83F4, 0xB8),
+    ('store_counts', 0x090D3D74, 0xB4), ('list_builder', 0x090D43A8, 0x12E),
+    ('quantity_display', 0x08109150, 0x104),
+    ('medicine_use', 0x090E6818, 0x238),
 )
 
 
@@ -39,10 +45,18 @@ def qualify(rom_path: Path, save_paths: list[Path]) -> dict:
             if (tuples != secondary['entries'] or primary['holes'] != secondary['holes']
                     or primary['first_empty'] != secondary['first_empty']):
                 raise ValueError('independent inventory reconstruction mismatch')
+        eligible, rejection = True, None
+        try:
+            first, second = model.restricted(raw, rom), audit.restricted(raw, rom)
+            if first['menu_counts'] != second['menu_counts']:
+                raise ValueError('independent restricted count mismatch')
+        except ValueError as exc:
+            eligible, rejection = False, str(exc)
         snapshots.append({'snapshot': index + 1, 'sha256': model.sha(raw),
                           'counter': decoded['counter'], 'active_slot': decoded['active_slot'],
                           'state_supported': decoded['state_supported'],
                           'issues': decoded['issues'], 'independent_decode_equal': True,
+                          'restricted_eligible': eligible, 'restricted_rejection': rejection,
                           'pockets': [{'name': p['name'], 'capacity': p['capacity'],
                                       'occupied': p['occupied'], 'holes': p['holes']}
                                      for p in decoded['pockets']]})
@@ -53,7 +67,8 @@ def qualify(rom_path: Path, save_paths: list[Path]) -> dict:
                               'sha256': model.sha(rom[address - 0x08000000:address - 0x08000000 + length])}
                              for name, address, length in CODE_REGIONS],
             'writer_authorized': False, 'give_all_enabled': False,
-            'disposition': 'BOUNDED_STOP_WITH_CONCRETE_EVIDENCE'}
+            'disposition': 'READ_ONLY_RESTRICTED_INPUT_QUALIFICATION',
+            'semantic_contract': 'docs/e1-restricted-state-qualification.md'}
 
 
 def main() -> int:

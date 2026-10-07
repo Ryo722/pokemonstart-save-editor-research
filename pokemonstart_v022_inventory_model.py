@@ -41,6 +41,41 @@ FRAGMENTS = (
 PROPOSED_MEDICINES = frozenset(range(13, 23))
 
 
+def classification(item_id: int) -> int:
+    """Exact installed binary classifier 0x090B81F0, for catalog-valid IDs.
+
+    This mirrors its integer branches, not names or upstream categories.
+    Profile hashing bounds the rule to this ROM only.
+    """
+    return int(57 <= item_id <= 71 or 753 <= item_id <= 773
+               or 824 <= item_id <= 828 or item_id in (639, 640, 728, 729, 832, 836, 838))
+
+
+def restricted(raw: bytes, rom: bytes) -> dict:
+    """Read-only candidate eligibility; never repairs or writes an input."""
+    report = inspect(raw, rom)
+    if not report['state_supported']:
+        raise ValueError('malformed inventory records')
+    verified = verifier.verify_bytes(raw)
+    active = verified.slots[verified.active_slot]
+    if active.section(4).data[0xE09] & 8:
+        raise ValueError('classification selector flag unsupported')
+    regular = report['pockets'][0]
+    if regular['holes']:
+        raise ValueError('regular pocket must be compact')
+    if any(classification(e['item_id']) for e in regular['entries']):
+        raise ValueError('mixed or unsupported regular classification')
+    counts = struct.unpack_from('<3H', raw, 0x1E716)
+    for count, pocket in zip(counts, report['pockets'][:3]):
+        if count != pocket['occupied'] or pocket['holes']:
+            raise ValueError('persisted pocket menu count inconsistent')
+        if pocket['name'] != 'regular' and pocket['first_empty'] is None:
+            raise ValueError('unqualified full non-regular menu pocket')
+    report['restricted_eligible'] = True
+    report['menu_counts'] = list(counts)
+    return report
+
+
 def sha(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
