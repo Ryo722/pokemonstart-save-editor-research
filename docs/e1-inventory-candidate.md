@@ -2,6 +2,12 @@
 
 Disposition: **BOUNDED_STOP_WITH_CONCRETE_EVIDENCE**.
 
+Latest exact-ROM investigation: see
+[e1-count-cache-exact-results.md](e1-count-cache-exact-results.md).
+Sector30 `0x716` is a regular selected-classification menu count; an exact
+custom partition means it is not universally the total occupied count.
+That packet supersedes the unknown-field hypothesis below. E2 remains unstarted.
+
 Update: Human T1/T2/T3 snapshots have now been verified. See
 [e1-native-transition-results.md](e1-native-transition-results.md) for the
 updated evidence/matrix and [e1-chatgpt-handoff.md](e1-chatgpt-handoff.md) for
