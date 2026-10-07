@@ -37,7 +37,7 @@ class ProductPartyTests(unittest.TestCase):
         mon=v.verify_bytes(out).party[0]
         self.assertEqual((mon.species,mon.level,mon.experience),(2,6,179))
         self.assertEqual((mon.hp,mon.max_hp,mon.attack,mon.defense,mon.speed,mon.sp_attack,mon.sp_defense),
-                         (25,25,11,15,14,18,17))
+                         (25,25,10,14,13,17,16))
         self.assertTrue(p.capabilities(out,ROM,0)['stats'])
         again,_=p.derive(out,ROM,0,{'friendship':10})
         self.assertEqual(v.verify_bytes(again).party[0].friendship,10)
@@ -48,7 +48,7 @@ class ProductPartyTests(unittest.TestCase):
                         {'evs':[252]*6},{'moves':{1:1}},{'moves':{0:45}},
                         {'ability_selector':1},{'friendship':256},{'friendship':52}):
             with self.subTest(changes=changes),self.assertRaises(ValueError):p.derive(raw,ROM,0,changes)
-        bad=bytearray(raw);bad[5*4096+v.PARTY_OFFSET]=12
+        bad=bytearray(raw);bad[5*4096+v.PARTY_OFFSET]=11
         struct.pack_into('<H',bad,5*4096+0xFF6,v.calculate_save_checksum(bad[5*4096:5*4096+0xFF0]))
         bad=bytes(bad)
         with self.assertRaises(ValueError):p.derive(bad,ROM,0,{'level':6})
@@ -60,3 +60,16 @@ class ProductPartyTests(unittest.TestCase):
         bad=bytearray(raw);bad[5*4096+v.PARTY_OFFSET+90]+=1
         struct.pack_into('<H',bad,5*4096+0xFF6,v.calculate_save_checksum(bad[5*4096:5*4096+0xFF0]))
         with self.assertRaises(ValueError):p.derive(bytes(bad),ROM,0,{'evs':[8,0,0,0,0,0]})
+
+    def test_source_non_hp_plus_five_rejects_legacy_level6_cache(self):
+        raw=save()
+        output,_=p.derive(raw,ROM,0,{'level':6})
+        mon=v.verify_bytes(output).party[0]
+        self.assertEqual((mon.attack,mon.defense,mon.speed,mon.sp_attack,mon.sp_defense),(10,12,11,15,14))
+        # Legacy canary added level, yielding Attack 11 at level6. Do not
+        # silently qualify that cache for source-backed derived edits.
+        broken=bytearray(output);base=5*4096
+        struct.pack_into('<H',broken,base+v.PARTY_OFFSET+90,11)
+        struct.pack_into('<H',broken,base+0xFF6,v.calculate_save_checksum(broken[base:base+0xFF0]))
+        self.assertFalse(p.capabilities(bytes(broken),ROM,0)['stats'])
+        self.assertTrue(p.capabilities(bytes(broken),ROM,0)['friendship'])

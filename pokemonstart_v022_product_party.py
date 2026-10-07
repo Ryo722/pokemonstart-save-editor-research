@@ -5,7 +5,7 @@ import struct
 import pokemonstart_save_verifier as v
 import pokemonstart_fl2_core as profile
 import pokemonstart_fastlab_v022_party_editor as existing
-import pokemonstart_fastlab_v022_stats as calculations
+import pokemonstart_v022_product_stats as calculations
 from pokemonstart_fastlab_v022_level import medium_slow_exp, level_from_medium_slow_exp
 
 SPECIES = existing.SUPPORTED_SPECIES
