@@ -79,6 +79,40 @@ def independent_append(raw: bytes) -> bytes:
     return bytes(output)
 
 
+def independent_template_import(raw: bytes, record: bytes) -> bytes:
+    """Independent expected bytes for copying one complete opaque Party record."""
+    p = parse(raw)
+    if p['key'] != 0 or p['count'] != 4 or len(record) != 100:
+        raise ValueError('template import independent gate')
+    start = p['slots'][p['active']]['positions'][1] * 4096
+    dest = start + 0x38 + p['count'] * 100
+    output = bytearray(raw)
+    output[start + 0x34] = 5
+    output[dest:dest + 100] = record
+    struct.pack_into('<H', output, start + 0xFF6,
+                     checksum(output[start:start + LENGTHS[1]]))
+    return bytes(output)
+
+
+def audit_template_import(before: bytes, after: bytes, record: bytes) -> dict:
+    if after != independent_template_import(before, record):
+        raise ValueError('independent complete template candidate inequality')
+    p, q = parse(before), parse(after)
+    if q['records'] != p['records'] + [record]:
+        raise ValueError('template record/count transition')
+    changes = [i for i, (a, b) in enumerate(zip(before, after)) if a != b]
+    start = p['slots'][p['active']]['positions'][1] * 4096
+    dest = start + 0x38 + 400
+    allowed = {start + 0x34, *range(dest, dest + 100),
+               start + 0xFF6, start + 0xFF7}
+    if not set(changes) <= allowed:
+        raise ValueError('template import independent byte envelope')
+    return {'transition': [p['count'], q['count']], 'append_slot': 4,
+            'changed_byte_count': len(changes), 'changed_offsets': changes,
+            'all_outside_envelope_preserved': True,
+            'complete_candidate_equality': True}
+
+
 def audit_append(before: bytes, after: bytes) -> dict:
     if after != independent_append(before):
         raise ValueError('complete independent candidate inequality')

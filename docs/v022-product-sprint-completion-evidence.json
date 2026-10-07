@@ -1,0 +1,141 @@
+{
+  "schema": 1,
+  "date": "2026-10-07",
+  "canonical_main_sha": "7e7435c5507abfec183c3b370dcb1fa381b22186",
+  "candidate_branch": "codex/v022-practical-product-sprint",
+  "candidate_head_at_fresh_reconstruction": "e9883529e82571db9b34a006930db6c774e860a4",
+  "disposition": "TERMINAL_CANDIDATE_READY_FOR_INDEPENDENT_REVIEW",
+  "canonical_evidence": {
+    "source": "docs/decision-record.md on canonical main",
+    "terminal_criteria_count": 14,
+    "scope": "exact PokemonStart v0.22; practical local Party / Items / Money editor",
+    "adopted_on_main": false
+  },
+  "evidence_classes": {
+    "candidate_implementation": "Current candidate code and synthetic tests; not canonical adoption.",
+    "local_private_input_verification": "Fresh local read-only parsing, hashes, return/progress harness, and byte-level reconstruction. Protected files remain outside Git.",
+    "human_gameplay_attestation": "SESSION_NOTES.txt observations for game display, gameplay actions, normal saves, and emulator closure; separate from machine results.",
+    "upstream_source": "Pinned CFRU-JP commit e24a16fe39e27ae162faf5b78596d1f3df18489d; not asserted to be the exact integrated game revision.",
+    "hypothesis_or_unverified": "Stat-changing target output normal-save acceptance, nonzero keys, unknown item slots/capacity, and all excluded features remain unverified."
+  },
+  "r1_reusable_eligibility": {
+    "verdict": "PASS",
+    "basis": "Exact ROM profile and repository verifier are mandatory. Money checks two valid consecutive slots, supported counters/parity, key0, and decoded 0..9999999 values; save SHA is recorded but not used as allowlist. Cycle 2 unseen progressed SHA qualified. Party and Items use independent structural predicates.",
+    "fail_closed": "Malformed/ambiguous saves, incompatible profile, unsupported key/state/shape and unsupported request reject."
+  },
+  "r2_money": {
+    "verdict": "PASS",
+    "basis": "Normal GUI target range 0..9999999; bounded byte envelope and postconditions; actual two-cycle Money values loaded and normally saved in exact v0.22."
+  },
+  "r2_party": {
+    "verdict": "PASS_BOUNDED_USEFUL_SUBSET",
+      "basis": "Existing ordinary party members: reusable Friendship across structurally valid records; constrained Move 1 Pound/Tackle replacement; level-5-only Bulbasaur/Ivysaur stat edits with coherent cached stats. Level-6 stat-changing operations fail closed because the exact integrated formula is unresolved. R4 Human-tested Friendship twice. Native game-generated Rattata template record was imported, displayed, healed, used in battle, and normally saved.",
+      "limits": "No generic constructor. Level changes are read-only; EXP is restricted to the level-5 range when the level-5 stat predicate passes. Friendship and Move 1 remain independent of the stat model. No fresh normal-save round trip for stat-changing target output; no exact upstream integration revision claim."
+  },
+  "r2_inventory": {
+    "verdict": "PASS_BOUNDED_USEFUL_SUBSET",
+    "basis": "Reusable Potion x1..3 quantity plus Antidote x1 add/remove in observed slot 2 only when the immutable source has Potion x3, item #533 x1 and zero tail. Local native pre/delete/repurchase snapshots independently verified; API/UI use capability-specific shape checks without save SHA allowlist. R4 verified GUI Potion edit through game normal saves.",
+    "limits": "No capacity claim, later-slot compaction, arbitrary item/quantity, other pocket, or Give All. Antidote GUI edit itself has not received a separate editor-output game round trip."
+  },
+  "r3_gui": {
+    "verdict": "PASS",
+    "basis": "127.0.0.1-only NiceGUI app; Party/Items/Trainer surfaces; no JSON/hash/offset input; semantic preview, verified separate download, stale-control invalidation, fail-visible rejection, and Advanced details. Existing actual Chromium and simulation evidence verifies composed core/download equality, source/ROM immutability and stale rejection.",
+    "fresh_run": "Full verification run recorded in final candidate evidence after implementation changes."
+  },
+  "r4_two_cycle": {
+    "verdict": "PASS_COMBINED_MACHINE_PRIVATE_AND_HUMAN_EVIDENCE",
+    "cycle1": {
+      "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+      "export_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+      "returned_sha256": "6f96f92f2d9761059d2e97fccc649d8316d2784820e1d8a200d337d39fd2a492",
+      "counter_transition": [6, 7],
+      "machine_status": "STRUCTURAL_ROUNDTRIP_PASS_HUMAN_GAMEPLAY_ATTESTATION_REQUIRED",
+      "human_attestation": "Exact v0.22 load; Money 1234567, Friendship 180 and Potion x3 observed; normal SAVE completed."
+    },
+    "ordinary_progress": {
+      "previous_sha256": "6f96f92f2d9761059d2e97fccc649d8316d2784820e1d8a200d337d39fd2a492",
+      "progressed_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+      "counter_transition": [7, 9],
+      "machine_status": "NEW_SAVE_QUALIFIES_NOT_PROOF_OF_GAMEPLAY",
+      "human_attestation": "Normal-game Antidote deletion/save and repurchase/save; emulator closed/flushed. The separate native Rattata acquisition is not the Cycle 2 source."
+    },
+    "cycle2": {
+      "source_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+      "export_sha256": "a1584f2f5cb783f74d5d2638725ac9ce36a7554434190f9a8a69effbe6ae2387",
+      "returned_sha256": "606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea",
+      "counter_transition": [9, 10],
+      "retained_semantics": {"money": 7654321, "party1_friendship": 181, "potion": 2},
+      "machine_status": "STRUCTURAL_ROUNDTRIP_PASS_HUMAN_GAMEPLAY_ATTESTATION_REQUIRED",
+      "human_attestation": "Exact v0.22 load; Money/Potion observed, Party normal, normal SAVE completed, emulator fully exited.",
+      "post_flush_live_equals_frozen_snapshot": true
+    },
+    "harness_policy": "r4_complete remains false in software reports because metadata cannot attest Human gameplay. Combined evidence closes R4 in this candidate record."
+  },
+  "rattata_exact_record_template_import": {
+    "disposition": "GAME-ACCEPTED / NORMAL-SAVE-ACCEPTED",
+    "source_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+    "record_sha256": "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3",
+    "candidate_sha256": "3b31b0e89c8907c61f81af836c117de7fc1a0cfd77662a218c492de0192ab96c",
+    "returned_sha256": "256bf24dd9d3c2d6601d5203f56ff8b2f9ef4d59c5d8114f684e81be69dccdbe",
+    "party_count": [4, 5],
+    "changed_bytes": 47,
+    "independent_candidate_reconstruction": true,
+    "human_attestation": "Party slot5 displayed; summary/moves, healing, battle action/completion and normal SAVE observed.",
+    "returned_save_verification": "ACCEPTED; active counter 10; Party[4] species19/level3/EXP27 and record identity retained with expected battle PP/HP changes.",
+    "scope": "One complete game-generated record copied unchanged; not arbitrary synthesis, Pokédex automation, Box creation or a generic GUI feature."
+  },
+  "terminal_acceptance_matrix": [
+    {"criterion": 1, "verdict": "PASS", "evidence": "Exact v0.22 ROM/profile hash gate in product workflow."},
+    {"criterion": 2, "verdict": "PASS", "evidence": "Verifier plus unseen-SHA naturally progressed input accepted."},
+    {"criterion": 3, "verdict": "PASS", "evidence": "Money, Party and Items independent predicates; Money does not use input SHA allowlist."},
+    {"criterion": 4, "verdict": "PASS", "evidence": "Money GUI range 0..9999999 with exact v0.22 evidence."},
+    {"criterion": 5, "verdict": "PASS_BOUNDED", "evidence": "Useful existing-member Friendship/Move subset and level-5-only coherent stat model; level-6 stat-changing operations fail closed."},
+    {"criterion": 6, "verdict": "PASS_BOUNDED", "evidence": "Potion quantity and shape-gated Antidote insertion/removal; no extrapolated capacity."},
+    {"criterion": 7, "verdict": "PASS", "evidence": "Normal controls require no JSON, hashes, offsets or checksum knowledge."},
+    {"criterion": 8, "verdict": "PASS", "evidence": "GUI inspect/edit/preview/verified separate output and stale-state rejection."},
+    {"criterion": 9, "verdict": "PASS", "evidence": "Both actual GUI outputs loaded and received normal game SAVE."},
+    {"criterion": 10, "verdict": "PASS", "evidence": "Naturally changed unseen SHA qualified after progress; returned Cycle 2 save qualified again."},
+    {"criterion": 11, "verdict": "PASS", "evidence": "Two GUI transactions with intervening ordinary gameplay and saves."},
+    {"criterion": 12, "verdict": "PASS", "evidence": "Verifier and per-family predicates reject unsupported states; focused and full suite."},
+    {"criterion": 13, "verdict": "PASS", "evidence": "Immutable source files, separate output, preserved old active slot and retained originals; no live-save replacement."},
+    {"criterion": 14, "verdict": "PASS", "evidence": "No cross-version, Stable, public-release, Box, Pokédex/event/story or arbitrary synthesis prerequisite added."}
+  ],
+  "non_claims": [
+    "Stable-Lane support or canonical adoption",
+    "another PokemonStart version or generic CFRU compatibility",
+    "arbitrary Pokémon synthesis or general template import",
+    "Box, Pokédex, story, quest, event, RTC or resolved-ability editing",
+    "arbitrary items, full pocket capacity, later-slot compaction, Give All Items",
+    "public/LAN GUI, public release, or copyrighted asset distribution"
+  ],
+  "protected_data": {
+    "private_rom_and_saves_committed": false,
+    "raw_save_bytes_or_hexdumps_published": false,
+    "private_originals_modified": false,
+    "emulator_live_save_replaced": false
+  },
+  "remaining_post_terminal_qualification": [
+    "Fresh exact-v0.22 normal-save round trip for a stat-changing editor output.",
+    "Human game round trip of GUI-created Antidote insertion/removal output.",
+    "Broader item catalog, capacity and compaction only after exact evidence.",
+    "Give All Supported Ordinary Items, if safely derivable.",
+    "Broader source-backed Party models only with exact-build evidence."
+  ],
+  "verification": {
+    "focused_product_nicegui": {"run": 11, "passed": 11, "skipped": 0, "failures": 0},
+    "python3_unittest": {"run": 226, "passed": 208, "skipped": 18, "failures": 0},
+    "nicegui_environment_unittest": {"run": 226, "passed": 211, "skipped": 15, "failures": 0},
+    "python_compileall": "PASS",
+    "tracked_json_parse": "PASS; candidate completion JSON also parsed separately",
+    "git_diff_check": "PASS",
+    "protected_artifact_and_private_path_scan": "PASS on candidate changed paths: zero protected artifact files and zero absolute private-root references",
+    "gitleaks": "PASS; 204 commits scanned, zero leaks",
+    "real_chromium_smoke": "UNAVAILABLE in current environment because Playwright is not installed; NiceGUI simulation passed and prior Chromium evidence exists for the previous composed workflow."
+  },
+  "authority": {
+    "candidate_push_authorized": true,
+    "merge_main_authorized": false,
+    "public_release_authorized": false,
+    "stable_promotion_authorized": false
+  }
+}

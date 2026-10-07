@@ -1,0 +1,190 @@
+{
+  "schema": 1,
+  "canonical_base_sha": "7e7435c5507abfec183c3b370dcb1fa381b22186",
+  "implementation_head_at_evidence_reconstruction": "e9883529e82571db9b34a006930db6c774e860a4",
+  "candidate_branch": "codex/v022-practical-product-sprint",
+  "disposition": "TERMINAL_CANDIDATE_READY_FOR_INDEPENDENT_REVIEW",
+  "game_roundtrip_performed": true,
+  "r4_harness_self_attested": false,
+  "r4_combined_evidence_complete": true,
+  "unittest_python3": {
+    "run": 226,
+    "passed": 208,
+    "skipped": 18,
+    "failures": 0
+  },
+  "unittest_nicegui_environment": {
+    "run": 226,
+    "passed": 211,
+    "skipped": 15,
+    "failures": 0
+  },
+  "focused_product_nicegui": {
+    "run": 11,
+    "passed": 11,
+    "failures": 0
+  },
+  "private_nicegui": {
+    "workflow": "actual private NiceGUI simulation; no capability mocks",
+    "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+    "output_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+    "core_equality": true,
+    "source_immutable": true,
+    "rom_immutable": true,
+    "verifier_accepted": true,
+    "semantic_diff": [
+      "Money: 3,032 → 1,234,567",
+      "Party #1 Friendship: 59 → 180",
+      "Potion: x2 → x3"
+    ],
+    "game_roundtrip": false,
+    "human_observation_recorded_separately": true
+  },
+  "private_chromium": {
+    "workflow": "real Chromium private GUI composed transaction",
+    "browser_version": "153.0.8010.12",
+    "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+    "output_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+    "core_equality": true,
+    "source_immutable": true,
+    "rom_immutable": true,
+    "verifier_accepted": true,
+    "semantic_preview_checked": true,
+    "stale_controls_rejected": true,
+    "semantic_diff": [
+      "Money: 3,032 → 1,234,567",
+      "Party #1 Friendship: 59 → 180",
+      "Potion: x2 → x3"
+    ],
+    "game_roundtrip": false,
+    "human_observation_recorded_separately": true
+  },
+  "independent_basic_audit": {
+    "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+    "output_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+    "complete_candidate_equality": true,
+    "all_unrelated_bytes_preserved": true,
+    "active_slot": 0,
+    "changed_offsets": [
+      23262,
+      28769,
+      29328,
+      29329,
+      29330,
+      32758,
+      32759
+    ],
+    "game_roundtrip": false
+  },
+  "gui_listener": "verified IPv4 127.0.0.1:18867 only; owned server stopped after smoke",
+  "fresh_browser_smoke": "NOT RUN: Playwright package unavailable in current .venv; NiceGUI simulation passed. Prior Chromium evidence covers the existing three-family workflow.",
+  "source_formula": {
+    "upstream_commit": "e24a16fe39e27ae162faf5b78596d1f3df18489d",
+    "path": "src/build_pokemon.c",
+    "non_hp_addend": 5,
+    "legacy_addend": "level",
+    "candidate_only": true,
+    "new_target_normal_save_tested": false
+  },
+  "unsupported": [
+    "nonzero keys",
+    "Money counter wrap/sign boundary",
+    "Inventory behavior beyond Potion quantity and shape-gated Antidote x1 slot2 insertion/removal",
+    "full pocket capacity/mapping and later-slot compaction",
+    "Give All Items",
+    "Party stat-changing operations resulting in level 6 (fail-closed pending exact-build formula evidence)",
+    "other stat natures/mints/hyper-training",
+    "ability writing",
+    "unknown pockets/items",
+    "Box/Pokedex/story/event/RTC editing",
+    "other builds/versions"
+  ],
+  "safety": {
+    "source_immutable": true,
+    "output_separate": true,
+    "live_save_replaced": false,
+    "merge_performed": false,
+    "push_performed": false,
+    "public_release": false,
+    "stable_promotion": false
+  },
+  "static_validation": {
+    "python_compile_files": 97,
+    "json_parse_files": 4,
+    "protected_artifact_scan": "PASS",
+    "tracked_and_unignored_paths": 147,
+    "excluded_private_root": true,
+    "excluded_work": true,
+    "diff_check": "PASS",
+    "gitleaks_candidate_commits": "PASS: eight implementation commits, zero leaks",
+    "gitleaks_push_safe_directory": "PASS: source/tests/docs only, zero leaks",
+    "imports": "PASS: full suite and GUI smoke"
+  },
+  "r4_cycle1": {
+    "exact_v022_load_succeeded": true,
+    "normal_save_succeeded": true,
+    "check_return": "STRUCTURAL_ROUNDTRIP_PASS_HUMAN_GAMEPLAY_ATTESTATION_REQUIRED",
+    "counter": [
+      6,
+      7
+    ],
+    "requested_semantics_retained": true,
+    "subsequent_gameplay_progress_hash_is_new": true,
+    "progress_status": "NEW_SAVE_QUALIFIES_NOT_PROOF_OF_GAMEPLAY",
+    "cycle2_transaction_prepared": true,
+    "cycle2_game_roundtrip": true,
+    "cycle2_return_sha256": "606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea",
+    "cycle2_counter": [9, 10],
+    "human_attestation": "See SESSION_NOTES locally; exact v0.22 load, displayed requested values, normal SAVE and emulator close/flush observed."
+  },
+  "native_inventory_and_template_evidence": {
+    "document": "docs/v022-native-inventory-and-template-import-evidence-20261007.md",
+    "inventory_deletion": "slot 2 Antidote (14,1) zeroed in place; no compaction inferred",
+    "inventory_reinsertion": "slot 2 restored (14,1)",
+    "inventory_checksum_covered": false,
+    "reusable_scope": "observed Potion x3 / item #533 x1 / Antidote slot 2 with zero tail only",
+    "template_import": {
+      "source_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+      "template_record_sha256": "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3",
+      "candidate_sha256": "3b31b0e89c8907c61f81af836c117de7fc1a0cfd77662a218c492de0192ab96c",
+      "output": "private disposable candidate; not tracked",
+      "party_count": [
+        4,
+        5
+      ],
+      "changed_byte_count": 47,
+      "independent_expected_candidate_equal": true,
+      "outside_envelope_count": 0,
+      "verifier_accepted": true,
+    "human_game_roundtrip": true,
+      "returned_sha256": "256bf24dd9d3c2d6601d5203f56ff8b2f9ef4d59c5d8114f684e81be69dccdbe",
+      "independent_audit_complete_candidate_equal": true,
+      "independent_audit_unrelated_bytes_preserved": true
+    },
+    "exact_rom_wild_encounter_forcing": "not derived; no cheat address assumed"
+  },
+  "new_focused_tests": {
+    "run": 5,
+    "passed": 5,
+    "failures": 0
+  },
+  "correction_followup": {
+    "reviewed_predecessor_implementation": "7b84f7f940ea110f9839baa6fe14550a4f08e0bb",
+    "level6_stat_writes": "FAIL_CLOSED pending exact-build formula evidence; Friendship and Move 1 retain independent qualification",
+    "antidote_writer_key_gate": "key0 enforced in shared helper qualification for direct insert/remove and normal product paths",
+    "template_import_writer": "exact source SHA and exact complete-record SHA gates precede the only product construction path; generic builder removed from product module",
+    "evidence_ledger": "earlier no-R4 / Inventory-blocked paragraph explicitly labeled an interim superseded snapshot",
+    "new_human_gameplay_evidence": false,
+    "r4_evidence_changed": false,
+    "no_terminal_scope_added": true,
+    "focused_nicegui": {"run": 17, "passed": 17, "skipped": 0, "failures": 0},
+    "python3_unittest": {"run": 229, "passed": 209, "skipped": 20, "failures": 0},
+    "nicegui_environment_unittest": {"run": 229, "passed": 214, "skipped": 15, "failures": 0},
+    "tracked_python_compile": "PASS",
+    "tracked_json_parse": "PASS",
+    "git_diff_check": "PASS",
+    "changed_tracked_file_secret_scan": "PASS; no findings",
+    "whole_worktree_gitleaks": "3 findings only in ignored work/ browser dependency assets; no tracked candidate files involved",
+    "protected_artifact_and_private_path_scan": "PASS; no tracked protected suffixes and no private-root literal in correction diff"
+  }
+}

@@ -1,5 +1,40 @@
 # Evidence ledger
 
+## v0.22 practical product sprint candidate — 2026-10-07
+
+**Interim snapshot, superseded by the completion evidence below.** This entry
+was written before the R4 Human game cycles and Inventory evidence harvest.
+Its statements that R4 gameplay had not occurred and Antidote insertion/removal
+were blocked describe that earlier state only. See the later R4 and native
+Inventory/template-import evidence for the final candidate evidence classes.
+
+Candidate from fresh canonical `7e7435c5507abfec183c3b370dcb1fa381b22186`:
+[implementation record](v022-product-candidate.md) and
+[sanitized validation](v022-product-candidate-evidence.json). Exact-build Money,
+bounded Party/Potion reusable predicates, ordinary-controls NiceGUI, composed
+in-memory outputs and read-only R4 tooling are implemented candidate-only.
+Private non-canary input, actual NiceGUI/Chromium, core equality, independent
+basic transaction audit and source immutability were reproduced. R4 Human game
+cycles were not performed. Inventory insertion/removal/capacity remain blocked;
+canonical exact-root insertion is preserved. A newly reproduced pinned-source
+`+5` vs legacy `+level` stat formula discrepancy is documented, with corrected
+candidate arithmetic and explicit lack of new stat normal-SAVE evidence.
+No canonical adoption, Stable promotion or release is claimed.
+
+### Independent review corrections — candidate follow-up
+
+The source `+5` vs legacy `+level` discrepancy is unresolved for the exact
+integrated game revision. Candidate stat-changing writes now fail closed at
+level 6, including Level/EXP requests that would produce level 6. Level-5
+stat calculations remain enabled where their independent predicates pass;
+Friendship and Move 1 retain their separate predicates, including for level-6
+records. No new Human game cycle was needed for these code guards. The
+Antidote insert/remove helpers now enforce key0 in their shared qualification
+path. The template-import product writer has no generic record builder and
+remains gated by the exact source and complete record hashes. R4 evidence is
+retained without modification. These are candidate implementation/test
+claims, not canonical adoption or new game evidence.
+
 ## FL2-G0 durable Fast Lab baseline candidate — 2026-10-06
 
 Fresh canonical base: `13ecd37cc8817d5a5a3d4f9e38c8ba5f51f8b022`. The FL1 implementation/profile/test chain was reconciled onto a candidate based on this exact `main` HEAD. Candidate scope and exclusions are recorded in `docs/fl2-g0-reconciliation.md`; exact v0.22 capability bounds remain in `docs/fast-lab-v022-capability.json`.
@@ -188,3 +223,34 @@ M1's read-only reproduction gap is closed for the supplied v0.15 original/test/r
 M2's bounded repository-writer and fresh game round-trip evidence requirements are closed for the exact allowlisted v0.15 proof input and HP-IV 31→30 transformation. The proof is now canonical on `main` via PR #4.
 
 Broader gaps remain outside this milestone: exact distribution provenance, package hash/extraction transcript, exact PokemonStart/CFRU-JP integration revision, version/build generalization, emulator-footer semantics beyond opaque preservation/reporting, support for non-allowlisted saves, and field-specific writer coupling. No protected binary should enter this repository.
+
+## Exact-v0.22 practical product sprint — candidate evidence refresh — 2026-10-07
+
+The candidate branch independently reproduced the private Cycle 1 return
+(`6 -> 7`), naturally progressed save (`7 -> 9`), and Cycle 2 return
+(`9 -> 10`). Cycle 1 and Cycle 2 each passed the structural acceptance harness,
+preserved the prior active slot, retained requested semantics and remained
+eligible. The Cycle 2 return retained Money `7,654,321`, Friendship `181` and
+Potion x2. The live disposable save and frozen returned snapshot matched after
+mGBA was fully exited. The harness's `r4_complete=false` is retained because
+only a Human can attest the visual/gameplay actions.
+
+Human gameplay attestation is recorded separately: exact-v0.22 load and normal
+SAVE in both cycles; ordinary Inventory deletion/save and Antidote purchase/save
+between cycles; and, in the separate Rattata import check, summary/move display,
+healing, battle action, battle completion and normal SAVE. These observations
+are not inferred from counters or hashes.
+
+Local private-input verification independently rechecked the three Inventory
+record sequences and stable section13 checksum, the candidate's in-place
+Antidote remove/insert round-trip, the exact template-import candidate hash,
+Party count and byte envelope, and the returned Rattata structural identity.
+Candidate implementation evidence includes the corresponding fail-closed
+predicates and tests. The Rattata result remains one exact game-generated
+record import; it does not claim arbitrary Pokémon creation. Details and
+sanitized hashes are in `docs/v022-product-sprint-completion-evidence.json` and
+`docs/v022-native-inventory-and-template-import-evidence-20261007.md`.
+
+The sprint candidate is experimental and pending fresh-context independent
+review. It has not been adopted on `main`, promoted to Stable or publicly
+released. Private ROM/save inputs remain outside Git.
