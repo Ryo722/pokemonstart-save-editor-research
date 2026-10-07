@@ -76,6 +76,7 @@ class ProductWorkflow(LegacyWorkflow):
 
 
 SPECIES_NAMES={1:'Bulbasaur',2:'Ivysaur',25:'Pikachu',288:'Zigzagoon'}
+NATURE_NAMES=('Hardy','Lonely','Brave','Adamant','Naughty','Bold','Docile','Relaxed','Impish','Lax','Timid','Hasty','Serious','Jolly','Naive','Modest','Mild','Quiet','Bashful','Rash','Calm','Gentle','Sassy','Careful','Quirky')
 STAT_NAMES=('HP','Attack','Defense','Speed','Sp. Atk','Sp. Def')
 
 
@@ -101,12 +102,12 @@ def create_page(rom_path,export_directory=None):
         export_button.disable();download_button.disable()
 
     def number(label,value,lower,upper):
-        element=ui.number(label=label,value=value,min=lower,max=upper,step=1)
+        element=ui.number(label=label,value=value,min=lower,max=upper,step=1).classes('w-48')
         element.on_value_change(lambda _:invalidate())
         return element
 
     def select(label,options,value):
-        element=ui.select(options,label=label,value=value,with_input=True)
+        element=ui.select(options,label=label,value=value,with_input=True).classes('w-64')
         element.on_value_change(lambda _:invalidate())
         return element
 
@@ -123,10 +124,40 @@ def create_page(rom_path,export_directory=None):
                             with ui.card():ui.label(f'Party #{slot+1} — Empty')
                             continue
                         mon=report['party'][slot];cap=mon['capabilities'];fields={}
-                        with ui.expansion(f"Party #{slot+1} — {SPECIES_NAMES.get(mon['species'],'Species #'+str(mon['species']))} • Lv.{mon['level']} • HP {mon['cached_stats'][0]}/{mon['cached_stats'][1]}",value=slot==0).classes('w-full'):
+                        with ui.expansion(f"Party #{slot+1} — {mon.get('species_name') or SPECIES_NAMES.get(mon['species'],'Species #'+str(mon['species']))} • Lv.{mon['level']} • HP {mon['cached_stats'][0]}/{mon['cached_stats'][1]}",value=slot==0).classes('w-full'):
                             if mon.get('rejection'):ui.label('非対応: '+mon['rejection'])
                             if cap.get('friendship'):fields['friendship']=number(f'Friendship — Party #{slot+1}',mon['friendship'],0,255)
-                            if cap.get('stats'):
+                            if cap.get('e3') and cap.get('stats'):
+                                options=mon['options']
+                                fields['species']=select('Species',options['species'],mon['species'])
+                                fields['level']=number('Level',mon['level'],1,100)
+                                fields['experience']=number('EXP',mon['experience'],1,2000000)
+                                ui.label('Level の変更では EXP も再計算します。EXP も変更する場合は Level と一致させてください。')
+                                fields['ivs']=[];fields['evs']=[]
+                                for field,maximum in (('ivs',31),('evs',252)):
+                                    with ui.row():
+                                        for index,name in enumerate(STAT_NAMES):
+                                            fields[field].append(number(f'{name} {field.upper()}',mon[field][index],0,maximum))
+                                ui.label('EV 合計 ≤ 510。現在 HP を下回る最大 HP への減少は非対応です。')
+                                fields['effective_nature']=select('Effective nature',{i:name for i,name in enumerate(NATURE_NAMES)},mon['effective_nature'])
+                                def ability_choices(sid):
+                                    result={}
+                                    for label,aid in zip(('通常特性 1','通常特性 2','隠れ特性'),options['abilities'][sid]):
+                                        if aid:result.setdefault(aid,f'{label} (#{aid})')
+                                    return result
+                                fields['ability']=select('Ability',ability_choices(mon['species']),mon['resolved_ability'])
+                                def update_ability(event,fields=fields,mon=mon,options=options):
+                                    choices={}
+                                    for label,aid in zip(('通常特性 1','通常特性 2','隠れ特性'),options['abilities'][event.value]):
+                                        if aid:choices.setdefault(aid,f'{label} (#{aid})')
+                                    control=fields['ability'];control.options=choices
+                                    if control.value not in choices:control.value=next(iter(choices))
+                                    control.update();invalidate()
+                                fields['species'].on_value_change(update_ability)
+                                held=dict(options['held_item'])
+                                if mon['held_item'] not in held:held[mon['held_item']]=(mon.get('held_item_name') or str(mon['held_item']))+'（保持のみ）'
+                                fields['held_item']=select('Held item',held,mon['held_item'])
+                            elif cap.get('stats'):
                                 fields['species']=select('Species',core.party.SPECIES,mon['species'])
                                 ui.label('Level: 読み取り専用 — Level 6 の stat 計算は exact build で未確認です。')
                                 fields['experience']=number('EXP (Lv.5 range)',mon['experience'],135,178)
@@ -141,13 +172,19 @@ def create_page(rom_path,export_directory=None):
                                 for index,move in enumerate(mon['moves']):
                                     with ui.column():
                                         ui.label(f'Move {index+1}')
-                                        if index==0 and cap.get('moves'):
+                                        if cap.get('e3') and cap.get('moves'):
+                                            fields.setdefault('moves',{})[index]=select(f'Move {index+1}',mon['options']['moves'],move)
+                                            fields.setdefault('pp',{})[index]=number(f'PP {index+1}',mon['pp'][index],0,255)
+                                            fields.setdefault('pp_up',{})[index]=number(f'PP-Up {index+1}',(mon['pp_bonuses']>>(index*2))&3,0,3)
+                                        elif index==0 and cap.get('moves'):
                                             fields['move']=select('Move 1',core.party.MOVES,move)
                                         else:ui.label(core.party.MOVES.get(move,'Empty' if move==0 else f'Move #{move}'))
-                                        ui.label(f"PP {mon['pp'][index]} • PP-Up {(mon['pp_bonuses']>>(index*2))&3} (read-only)")
+                                        if not cap.get('e3') or not cap.get('moves'):
+                                            ui.label(f"PP {mon['pp'][index]} • PP-Up {(mon['pp_bonuses']>>(index*2))&3} (read-only)")
                             ui.label('Stats: '+', '.join(f'{name} {value}' for name,value in zip(STAT_NAMES,mon['cached_stats'][1:])))
                             ui.label(f"Nature #{mon['effective_nature']} • Held item #{mon['held_item']} • Ball #{mon['ball']} • Ability selector {mon['ability_selector']}")
-                            ui.label('Ability / nature / held item / ball: 読み取り専用。解決・結合規則が未確立。')
+                            if not cap.get('e3'):ui.label('Ability / nature / held item / ball: 読み取り専用。解決・結合規則が未確立。')
+                            if cap.get('e3'):ui.label('空技の未編集 PP は保持します。技変更時はその枠の PP を初期化します。Ball / identity は読み取り専用です。')
                         controls[slot]=fields
                 with ui.tab_panel(items_tab):
                     ui.label('通常の道具 — 対応する回復薬を編集できます。')
@@ -208,13 +245,21 @@ def create_page(rom_path,export_directory=None):
         edits=[]
         for mon in inspection.get('party',[]):
             fields=controls.get(mon['slot'],{});changes={}
-            for field in ('species','level','experience','friendship','ivs','evs'):
+            for field in ('species','level','experience','friendship','ivs','evs','effective_nature','ability','held_item'):
                 if field not in fields:continue
                 value=([control_integer(e.value) for e in fields[field]] if field in ('ivs','evs')
                        else control_integer(fields[field].value))
-                if value!=mon[field]:changes[field]=value
+                if value!=mon['resolved_ability' if field=='ability' else field]:changes[field]=value
             if 'move' in fields and fields['move'].value!=mon['moves'][0]:
                 changes['moves']={0:control_integer(fields['move'].value)}
+            for field in ('moves','pp','pp_up'):
+                if field not in fields:continue
+                mapping={}
+                for index,control in fields[field].items():
+                    value=control_integer(control.value)
+                    old=((mon['pp_bonuses']>>(2*index))&3) if field=='pp_up' else mon[field][index]
+                    if value!=old:mapping[index]=value
+                if mapping:changes[field]=mapping
             if changes:edits.append({'slot':mon['slot'],'changes':changes})
         if edits:result['party']=edits
         if inspection.get('items') and inspection['items'].get('e2'):

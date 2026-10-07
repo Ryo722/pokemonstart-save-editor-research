@@ -20,7 +20,17 @@ def inspect(raw, rom_sha256, *, rom_bytes=None):
     except ValueError as exc:report['rejections']['money']=str(exc)
     for slot,mon in enumerate(verified.party):
         record={'slot':slot,**party.existing._semantic(mon),'capabilities':{}}
-        try:record['capabilities']=party.capabilities(raw,rom_sha256,slot)
+        try:
+            if rom_bytes is not None:
+                _,_,_,tables,decoded,eligibility=party.ordinary_inspect(raw,rom_bytes,slot)
+                record.update(species_name=decoded['species_name'],held_item_name=decoded['held_item_name'],resolved_ability=decoded['resolved_ability'],
+                              hidden_ability=decoded['hidden_ability'],ordinary_eligibility=eligibility)
+                record['capabilities']={'e3':True,**{field:eligibility['eligible'] for field in
+                    ('friendship','moves','stats','level_exp','effective_nature','ability','held_item')},
+                    'stats_reason':'; '.join(eligibility['reasons'])}
+                record['options']=party.ordinary_options(tables)
+                record['ability_options']=sorted(set(x for x in tables.species[mon.species].abilities if x)) if 0<mon.species<len(tables.species) else []
+            else:record['capabilities']=party.capabilities(raw,rom_sha256,slot)
         except ValueError as exc:record['rejection']=str(exc)
         report['party'].append(record)
     try:report['items']=(medicine_items.inspect(raw,rom_bytes) if rom_bytes is not None
@@ -47,7 +57,7 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
             slot=edit['slot']
             if type(slot) is not int or slot in slots:raise ValueError('duplicate/invalid Party slot')
             slots.add(slot)
-            families.append((f'party_{slot}',*party.derive(raw,rom_sha256,slot,edit['changes'])))
+            families.append((f'party_{slot}',*party.derive(raw,rom_sha256,slot,edit['changes'],rom_bytes=rom_bytes)))
     if 'items' in request:
         family=(medicine_items.derive(raw,rom_bytes,request['items']) if rom_bytes is not None
                 else items.derive(raw,rom_sha256,request['items']))
@@ -73,17 +83,35 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
                 old,new=before.get(item_id,0),after.get(item_id,0)
                 if old!=new:semantics.append(f"{names[item_id]}: x{old} → x{new}")
         else:
+            e3_tables=None
+            if receipt.get('e3'):
+                e3_tables=party.ordinary_inspect(raw,rom_bytes,receipt['slot'])[3]
             for field,before in receipt['before'].items():
                 after=receipt['after'][field]
                 if after!=before:
+                    if e3_tables is not None and field in ('nature_mint','ability_selector','hidden_ability'):
+                        continue  # Storage details remain available in Advanced.
                     label={'species':'Species','level':'Level','experience':'EXP','friendship':'Friendship',
-                           'moves':'Moves','pp':'PP','ivs':'IVs','evs':'EVs','cached_stats':'Stats'}.get(field,field)
+                           'moves':'Moves','pp':'PP','ivs':'IVs','evs':'EVs','cached_stats':'Stats',
+                           'effective_nature':'Effective nature','resolved_ability':'Ability','held_item':'Held item',
+                           'pp_bonuses':'PP-Up'}.get(field,field)
+                    if e3_tables is not None and field=='effective_nature':
+                        from pokemonstart_v022_party_model import NATURE_NAMES
+                        before,after=NATURE_NAMES[before],NATURE_NAMES[after]
+                    if e3_tables is not None and field=='pp_bonuses':
+                        before,after=([((value>>(2*i))&3) for i in range(4)] for value in (before,after))
+                    if e3_tables is not None and field=='held_item':
+                        names={0:'None',**{i:x.name for i,x in e3_tables.items.items()}}
+                        before,after=names.get(before,before),names.get(after,after)
                     if field=='species':
-                        before=party.SPECIES.get(before,f'Species #{before}')
-                        after=party.SPECIES.get(after,f'Species #{after}')
+                        names=party.ordinary_options(e3_tables)['species'] if e3_tables is not None else party.SPECIES
+                        before=names.get(before,f'Species #{before}')
+                        after=names.get(after,f'Species #{after}')
                     if field=='moves':
                         for index,(old,new) in enumerate(zip(before,after)):
-                            if old!=new:semantics.append(f"Party #{receipt['slot']+1} Move {index+1}: {party.MOVES.get(old,old)} → {party.MOVES.get(new,new)}")
+                            if old!=new:
+                                names=party.ordinary_options(e3_tables)['moves'] if e3_tables is not None else party.MOVES
+                                semantics.append(f"Party #{receipt['slot']+1} Move {index+1}: {names.get(old,old)} → {names.get(new,new)}")
                     else:semantics.append(f"Party #{receipt['slot']+1} {label}: {before} → {after}")
     if not occupied:raise ValueError('transaction unchanged; no output')
     for section in verified.slots[verified.active_slot].sections:
@@ -97,7 +125,7 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
     offsets=[i for i,(a,b) in enumerate(zip(raw,candidate)) if a!=b]
     if not set(offsets)<=occupied|covered:raise ValueError('transaction envelope failed')
     # Recheck family-specific results after composition, not merely before it.
-    for name,_,receipt in families:
+    for name,family_candidate,receipt in families:
         if name=='money':
             if money.inspect(candidate,rom_sha256)['money']!=receipt['money']['to']:
                 raise ValueError('composed Money postcondition failed')
@@ -107,9 +135,20 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
             if current!=receipt['after']:
                 raise ValueError('composed Items postcondition failed')
         else:
-            if party.existing._semantic(result.party[receipt['slot']])!=receipt['after']:
+            if receipt.get('e3'):
+                section=result.slots[result.active_slot].section(1)
+                start=section.physical_sector*4096+v.PARTY_OFFSET+receipt['slot']*100
+                if candidate[start:start+100]!=family_candidate[start:start+100]:
+                    raise ValueError('composed ordinary Party postcondition failed')
+            elif party.existing._semantic(result.party[receipt['slot']])!=receipt['after']:
                 raise ValueError('composed Party postcondition failed')
-    return candidate,{'input_sha256':verified.file_sha256,'output_sha256':result.file_sha256,
+    independent=None
+    if any(receipt.get('e3') for _,_,receipt in families):
+        import pokemonstart_v022_product_audit as audit
+        independent=audit.audit_e3(raw,candidate,rom_bytes,request)
+    report={'input_sha256':verified.file_sha256,'output_sha256':result.file_sha256,
                       'request':copy.deepcopy(request),'semantic_diff':semantics,
                       'families':reports,'changed_offsets':offsets,'verifier_accepted':True,
                       'active_slot':verified.active_slot,'counter':verified.slots[verified.active_slot].counter}
+    if independent is not None:report['independent_e3_audit']=independent
+    return candidate,report

@@ -105,7 +105,8 @@ class PartyModelTests(unittest.TestCase):
         record = bytearray(self.record);struct.pack_into('<H', record, 44, 0)
         original = bytes(record)
         row = self.decode(record)
-        self.assertEqual(row['moves'][0]['issues'], ['empty slot retains nonzero PP'])
+        self.assertEqual(row['moves'][0]['issues'], [])
+        self.assertEqual(row['moves'][0]['pp'], 35)
         self.assertEqual(bytes(record), original)
 
     def test_invalid_mint_level_evs_hyper_and_forms_are_classified(self):
@@ -149,7 +150,7 @@ class PartyModelTests(unittest.TestCase):
         record = bytearray(self.record);struct.pack_into('<H', record, 34, 835)
         row = self.decode(record)
         self.assertIsNone(row['ordinary_expected_stats'])
-        self.assertIn('held item 835 modifies cached non-HP stats', row['capabilities']['cached_stats']['reasons'])
+        self.assertIn('held item 835 modifies cached HP and non-HP stats', row['capabilities']['cached_stats']['reasons'])
 
     def test_whole_save_reconstruction_and_checksum_rejection(self):
         from test_v022_product_core import save

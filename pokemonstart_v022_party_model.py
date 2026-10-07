@@ -29,6 +29,67 @@ STAT_DOUBLING_ITEM = 835
 # Native evidence covers these ordinary species. Other table entries remain
 # inspectable, but do not acquire practical qualification by analogy.
 NATIVE_SPECIES = frozenset((1, 19, 25, 288))
+# Deliberately bounded ordinary internal IDs, independently exercised against
+# every exceptional branch in this exact binary. No regional/Mega/battle forms.
+ORDINARY_SPECIES = frozenset(range(1, 152)) | {288}
+HELD_TARGET_METADATA = {139: (5, 0, 1, 1, 10), 142: (5, 0, 1, 1, 30),
+                        200: (1, 0, 4, 43, 10)}
+RETAINED_ITEM_METADATA = {**HELD_TARGET_METADATA, 202: (1, 0, 4, 45, 0)}
+NATURE_NAMES = ('Hardy','Lonely','Brave','Adamant','Naughty','Bold','Docile','Relaxed','Impish','Lax',
+                'Timid','Hasty','Serious','Jolly','Naive','Modest','Mild','Quiet','Bashful','Rash',
+                'Calm','Gentle','Sassy','Careful','Quirky')
+
+
+def held_eligibility(item_id: int, tables: Tables) -> dict:
+    item = tables.items.get(item_id)
+    metadata = ((item.pocket, item.importance, item.item_type,
+                 *tables.held_effects.get(item_id, (None, None))) if item else None)
+    retained = item_id == 0 or metadata == RETAINED_ITEM_METADATA.get(item_id) and metadata is not None
+    target = item_id == 0 or metadata == HELD_TARGET_METADATA.get(item_id) and metadata is not None
+    return {'metadata_decodable': item_id == 0 or item is not None,
+            'safe_retained_value': bool(retained), 'safe_new_target': bool(target),
+            'reasons': [] if retained else ['held item outside independently bounded retained subset']}
+
+
+def write_eligibility(record: bytes, tables: Tables, context: dict) -> dict:
+    """Candidate machine-qualified ordinary class, separate from read-only flags.
+
+    Context is mandatory. This is eligibility, not Human acceptance/adoption.
+    Operation-specific HP and move transition gates are checked by the writer.
+    """
+    mon = decode_record(record, 0, tables)
+    reasons = [x for x in mon['capabilities']['cached_stats']['reasons']
+               if x != 'species lacks retained ordinary native corroboration']
+    reasons += context['reasons']
+    if mon['species'] not in ORDINARY_SPECIES:
+        reasons.append('species outside exact-probed ordinary internal-ID subset')
+    if not mon['resolved_ability']:
+        reasons.append('ordinary resolved ability unavailable')
+    reasons += held_eligibility(mon['held_item'], tables)['reasons']
+    for row in mon['moves']:
+        reasons += row['issues']
+    reasons = list(dict.fromkeys(reasons))
+    return {'eligible': not reasons, 'reasons': reasons,
+            'held_item': held_eligibility(mon['held_item'], tables),
+            'hp_restriction': 'reject decreasing max HP when current HP exceeds target max HP',
+            'human_accepted': False}
+
+
+def saved_context(verified) -> dict:
+    """Exact expanded FlagGet/VarGet storage, selected by logical section ID.
+
+    These parasite tails are not covered by vanilla section checksums. Decode
+    their actual bytes; a checksum pass is not evidence of a false mode flag.
+    Reject every facility context, including tiers without altered base stats.
+    """
+    active = verified.slots[verified.active_slot]
+    flag = bool(active.section(0).data[0xF2A] & 1)
+    tier = int.from_bytes(active.section(4).data[0xEFC:0xEFE], 'little')
+    return {'flag_0x930': flag, 'variable_0x5018': tier,
+            'ordinary_saved_context': not flag,
+            'reasons': ['saved facility flag 0x930 is set'] if flag else [],
+            'checksum_covers_context': False,
+            'runtime_in_battle_reconstructed': False}
 
 
 def sha(raw: bytes) -> str:
@@ -117,10 +178,10 @@ def level_from_exp(experience: int, growth: int, tables: Tables) -> int | None:
 def maximum_pp(move: int, ups: int, tables: Tables) -> int | None:
     if not 0 <= move < len(tables.moves) or not 0 <= ups <= 3:
         return None
-    if move == 0:
-        return 0
     base = tables.moves[move].base_pp
-    # Exact CalculatePPWithBonus skips bonuses for move 996.
+    # Exact routine also reads ID0's entry; empty-slot retention is a separate
+    # policy and does not constrain stored PP to this computed value.
+    # CalculatePPWithBonus skips bonuses for move 996.
     return base if move == 996 else (base + base * ups // 5) & 255
 
 
@@ -168,7 +229,7 @@ def decode_record(record: bytes, slot: int, tables: Tables) -> dict:
     # Explicitly refuse contextual/special reconstruction instead of guessing.
     stat_reasons = list(reasons)
     if mon.held_item == STAT_DOUBLING_ITEM:
-        stat_reasons.append('held item 835 modifies cached non-HP stats')
+        stat_reasons.append('held item 835 modifies cached HP and non-HP stats')
     if mon.species == SHEDINJA or mon.species in ABILITY_EXCEPTIONS:
         stat_reasons.append('exceptional species/stat/form path')
     if species and effective is not None and 1 <= mon.level <= 100 and not mon.hyper_training and all(x <= 252 for x in mon.evs) and sum(mon.evs) <= 510:
@@ -188,10 +249,8 @@ def decode_record(record: bytes, slot: int, tables: Tables) -> dict:
         issues = []
         if limit is None or mid and tables.moves[mid].base_pp == 0:
             issues.append('move/base PP unresolved')
-        elif pp > limit:
-            issues.append('PP exceeds exact maximum' if mid else 'empty slot retains nonzero PP')
-        if mid == 0 and ups:
-            issues.append('empty slot retains PP-Ups')
+        elif mid and pp > limit:
+            issues.append('PP exceeds exact maximum')
         move_reasons.extend(f'move {index+1}: {x}' for x in issues)
         move_rows.append({'move_id': mid, 'name': tables.moves[mid].name if limit is not None else None,
                           'pp': pp, 'pp_up_count': ups, 'maximum_pp': limit, 'issues': issues})
@@ -246,6 +305,7 @@ def inspect(raw: bytes, rom: bytes) -> dict:
     base = verified.slots[verified.active_slot].section(1).physical_sector*4096 + verifier.PARTY_OFFSET
     return {'rom_sha256': sha(rom), 'save_sha256': sha(raw), 'active_slot': verified.active_slot,
             'counter': verified.slots[verified.active_slot].counter, 'tables': tables.hashes,
+            'saved_context': saved_context(verified),
             'writer_authorized': False,
             'party': [decode_record(raw[base+i*100:base+(i+1)*100], i, tables)
                       for i in range(verified.party_count)]}

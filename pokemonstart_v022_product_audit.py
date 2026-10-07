@@ -1,7 +1,7 @@
 """Independent stdlib auditor for the basic Money/friendship/observed-Items recipe.
 
-No writer, profile loader or repository verifier imports. It does not audit
-stat-changing requests or certify gameplay. Only sanitized metadata is returned.
+No writer, profile loader or repository verifier imports. audit_basic retains the original restricted contract; audit_e3 independently
+reconstructs composed ordinary Party edits. Neither certifies gameplay.
 """
 import hashlib
 import struct
@@ -84,3 +84,59 @@ def audit_basic(before,after,request):
     return {'input_sha256':hashlib.sha256(before).hexdigest(),'output_sha256':hashlib.sha256(after).hexdigest(),
             'complete_candidate_equality':True,'all_unrelated_bytes_preserved':True,
             'active_slot':active,'changed_offsets':offsets,'game_roundtrip':False}
+
+
+def audit_e3(before, after, rom, request):
+    """Complete composed reconstruction from independent families only."""
+    import pokemonstart_v022_party_audit as party
+    import pokemonstart_v022_inventory_audit as inventory
+    source = party.inspect(before,rom)
+    parsed = party.structure.parse(before)
+    section = parsed['slots'][parsed['active']]['positions'][1]*4096
+    expected = bytearray(before)
+    envelope = set()
+    seen = set()
+    for edit in request.get('party',[]):
+        slot = edit['slot']
+        if type(slot) is not int or slot in seen:
+            raise ValueError('independent duplicate/invalid slot')
+        seen.add(slot)
+        rebuilt, allowed = party.expected_edit(before,rom,slot,edit['changes'])
+        start = section+56+slot*100
+        expected[start:start+100] = rebuilt[start:start+100]
+        envelope.update(allowed)
+    if 'money' in request:
+        # Both slot/key/range predicates remain the established Money contract.
+        for slot in parsed['slots']:
+            key = int.from_bytes(slot['sections'][0][0xF20:0xF24],'little')
+            old_money = int.from_bytes(slot['sections'][1][0x290:0x294],'little')
+            if key or old_money > 9999999:
+                raise ValueError('independent Money source gate')
+        target = request['money']
+        if type(target) is not int or not 0 <= target <= 9999999:
+            raise ValueError('independent Money range')
+        expected[section+656:section+660] = target.to_bytes(4,'little')
+        envelope.update(range(section+656,section+660))
+    if 'items' in request:
+        # Remove Party/Money changes before passing the isolated inventory
+        # output to its established full independent auditor. It then admits
+        # exactly its own bytes, without borrowing a production family result.
+        isolated = bytearray(after)
+        isolated[section:section+4096] = before[section:section+4096]
+        inventory.audit_edit(before,bytes(isolated),rom,request['items'])
+        for i,(x,y) in enumerate(zip(before,isolated)):
+            if x != y:
+                if i in envelope:
+                    raise ValueError('independent family conflict')
+                expected[i] = y
+                envelope.add(i)
+    expected[section+4086:section+4088] = checksum(expected[section:section+4080]).to_bytes(2,'little')
+    envelope.update((section+4086,section+4087))
+    rebuilt = party.inspect(after,rom)
+    offsets = [i for i,(x,y) in enumerate(zip(before,after)) if x != y]
+    if bytes(expected) != after or not offsets or not set(offsets) <= envelope:
+        raise ValueError('independent complete composed output/envelope inequality')
+    if rebuilt['saved_context'] != source['saved_context']:
+        raise ValueError('independent context changed')
+    return {'complete_output_equal':True,'complete_postwrite_reconstruction':True,
+            'unrelated_bytes_preserved':True,'changed_offsets':offsets,'gameplay_acceptance':False}

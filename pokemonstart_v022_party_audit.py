@@ -72,7 +72,7 @@ def reconstruct(record: bytes, rom: bytes) -> dict:
         limit = None
         if mid < 998:
             pp = rom[0x14A3238 + mid*12+4]
-            limit = 0 if mid == 0 else pp if mid == 996 else (pp + pp*20*ups//100) % 256
+            limit = pp if mid == 996 else (pp + pp*20*ups//100) % 256
         moves.append({'move_id': mid, 'pp': record[52+j], 'pp_up_count': ups, 'maximum_pp': limit})
     # Exact catalog already supplies public-facing names on the production
     # path; independently reconstruct numeric held-item metadata here.
@@ -104,8 +104,18 @@ def inspect(raw: bytes, rom: bytes) -> dict:
     if len(rom) != 33554432 or hashlib.sha256(rom).hexdigest() != EXACT:
         raise ValueError('independent exact ROM identity')
     parsed = structure.parse(raw)
+    sections = parsed['slots'][parsed['active']]['sections']
+    # Independently join the serialized parasite; don't import model offsets.
+    image = sections[0][0xF24:0xFF0] + sections[4][0xD98:0xFF0] + sections[13][0x450:0xFF0]
+    flag = bool(image[6] & 1)
+    tier = int.from_bytes(image[560:562], 'little')
     return {'save_sha256': hashlib.sha256(raw).hexdigest(), 'active_slot': parsed['active'],
             'counter': parsed['slots'][parsed['active']]['counter'],
+            'saved_context': {'flag_0x930': flag, 'variable_0x5018': tier,
+                              'ordinary_saved_context': not flag,
+                              'reasons': ['saved facility flag 0x930 is set'] if flag else [],
+                              'checksum_covers_context': False,
+                              'runtime_in_battle_reconstructed': False},
             'party': [reconstruct(record, rom) for record in parsed['records']]}
 
 
@@ -113,6 +123,8 @@ def compare(production: dict, independent: dict) -> None:
     for key in ('save_sha256', 'active_slot', 'counter'):
         if production[key] != independent[key]:
             raise ValueError('independent save reconstruction disagreement: ' + key)
+    if 'saved_context' in production and production['saved_context'] != independent['saved_context']:
+        raise ValueError('independent saved context disagreement')
     if len(production['party']) != len(independent['party']):
         raise ValueError('independent occupancy disagreement')
     for candidate, rebuilt in zip(production['party'], independent['party']):
@@ -122,3 +134,202 @@ def compare(production: dict, independent: dict) -> None:
                 actual = [{k: row[k] for k in value[0]} for row in actual]
             if actual != value:
                 raise ValueError('independent Party reconstruction disagreement: ' + key)
+
+
+def ordinary_reasons(record: bytes, rom: bytes, context: dict) -> list:
+    row = reconstruct(record, rom)
+    reasons = []
+    if context['flag_0x930']:
+        reasons.append('facility context')
+    if record[19] != 2 or row['backup_species'] or row['is_egg'] or record[16]:
+        reasons.append('egg/form/hyper-training/sanity')
+    if row['species'] not in {*range(1, 152), 288}:
+        reasons.append('ordinary species subset')
+    if row['exp_derived_level'] != record[84] or not 1 <= record[84] <= 100:
+        reasons.append('level/EXP')
+    hp = row['cached_hp_stats']
+    if not 0 <= hp[0] <= hp[1] or not hp[1] or row['ordinary_expected_stats'] != hp[1:]:
+        reasons.append('HP/cache')
+    if not row['resolved_ability']:
+        reasons.append('ability')
+    if row['held_item']:
+        if not safe_item(row['held_item'], row['held_item_metadata'], retained=True):
+            reasons.append('retained item')
+    for move in row['moves']:
+        if move['maximum_pp'] is None or move['move_id'] and (
+                rom[0x14A3238+move['move_id']*12+4] == 0 or move['pp'] > move['maximum_pp']):
+            reasons.append('occupied move/PP')
+    return reasons
+
+
+def safe_item(item_id, metadata, *, retained=False):
+    if item_id == 0:
+        return True
+    expected = {139: (5,0,1,1,10), 142: (5,0,1,1,30), 200: (1,0,4,43,10)}
+    if retained:
+        expected[202] = (1,0,4,45,0)
+    return metadata is not None and tuple(metadata[k] for k in (
+        'pocket','importance','item_type','hold_effect','hold_effect_parameter')) == expected.get(item_id)
+
+
+def expected_edit(raw: bytes, rom: bytes, slot: int, changes: dict) -> tuple[bytes, set]:
+    """Independent complete expected save, never importing the production writer.
+
+    Duplicated contract is intentional: direct bytes, separate parser, separate
+    range checks, threshold walk, nature arithmetic and field envelope.
+    """
+    report = inspect(raw, rom)
+    parsed = structure.parse(raw)
+    def number(x, low, high):
+        if type(x) is not int or not low <= x <= high:
+            raise ValueError('independent integer/range')
+        return x
+    number(slot, 0, parsed['count']-1)
+    source = parsed['records'][slot]
+    if ordinary_reasons(source, rom, report['saved_context']):
+        raise ValueError('independent ordinary source gate')
+    permitted = {'species','level','experience','ivs','evs','effective_nature','ability',
+                 'held_item','friendship','moves','pp','pp_up'}
+    if not isinstance(changes, dict) or not changes or set(changes)-permitted:
+        raise ValueError('independent field contract')
+    old = report['party'][slot]
+    record = bytearray(source)
+    envelope = set()
+    if 'species' in changes:
+        sid = number(changes['species'], 1, 1488)
+        if sid not in {*range(1,152),288} or not all(rom[0x19B8B40+32*sid:0x19B8B40+32*sid+6]):
+            raise ValueError('independent target species')
+        record[32:34] = sid.to_bytes(2, 'little')
+        envelope.update((32,33))
+    sid = int.from_bytes(record[32:34], 'little')
+    growth = rom[0x19B8B40+sid*32+19]
+    thresholds = [int.from_bytes(rom[0x14C5D54+growth*1024+i*4:0x14C5D54+growth*1024+i*4+4], 'little')
+                  for i in range(101)]
+    level = number(changes.get('level', source[84]), 1, 100)
+    exp = changes.get('experience', old['experience'])
+    if 'experience' not in changes and (level != source[84] or growth != old['growth_rate']):
+        exp = thresholds[level]
+    number(exp, thresholds[1], thresholds[100])
+    actual_level = 1
+    while actual_level < 100 and exp >= thresholds[actual_level+1]:
+        actual_level += 1
+    if 'level' in changes and actual_level != level:
+        raise ValueError('independent level/EXP conflict')
+    if set(changes) & {'species','level','experience'}:
+        record[36:40] = exp.to_bytes(4,'little')
+        record[84] = actual_level
+        envelope.update((*range(36,40),84))
+    if 'friendship' in changes:
+        record[41] = number(changes['friendship'],0,255)
+        envelope.add(41)
+    for field, maximum in (('ivs',31),('evs',252)):
+        if field not in changes:
+            continue
+        values = changes[field]
+        if not isinstance(values,(tuple,list)) or len(values) != 6:
+            raise ValueError('independent six values')
+        for x in values:
+            number(x,0,maximum)
+        if field == 'evs':
+            if sum(values)>510:
+                raise ValueError('independent EV total')
+            record[56:62] = bytes(values)
+            envelope.update(range(56,62))
+        else:
+            packed = int.from_bytes(record[72:76],'little')//(1<<30)*(1<<30)
+            for i,x in enumerate(values):
+                packed += x*32**i
+            record[72:76] = packed.to_bytes(4,'little')
+            envelope.update(range(72,76))
+    if 'effective_nature' in changes:
+        nature = number(changes['effective_nature'],0,24)
+        if nature != old['effective_nature']:
+            record[15] = 0 if nature == old['native_nature'] else nature+1
+        envelope.add(15)
+    if 'held_item' in changes:
+        item = number(changes['held_item'],0,838)
+        record[34:36] = item.to_bytes(2,'little')
+        if not safe_item(item, reconstruct(record,rom)['held_item_metadata']):
+            raise ValueError('independent held target')
+        envelope.update((34,35))
+    if 'ability' in changes:
+        target = number(changes['ability'],1,65535)
+        possibilities = []
+        for selector in (0,1):
+            for hidden in (False,True):
+                test = bytearray(record)
+                test[71] = test[71]%16 + (16 if hidden else 0) + test[71]//32*32
+                test[75] = test[75]%128 + 128*selector
+                if reconstruct(test,rom)['resolved_ability'] == target:
+                    cost = int(selector != old['ability_selector']) + int(hidden != old['hidden_ability'])
+                    possibilities.append((cost,selector,hidden))
+        if not possibilities:
+            raise ValueError('independent unavailable ability')
+        _,selector,hidden = sorted(possibilities)[0]
+        record[71] = record[71]%16 + 16*hidden + record[71]//32*32
+        record[75] = record[75]%128 + 128*selector
+        envelope.update((71,75))
+    by_slot = {}
+    for field in ('moves','pp','pp_up'):
+        if field not in changes:
+            continue
+        mapping = changes[field]
+        if not isinstance(mapping,dict) or not mapping:
+            raise ValueError('independent slot map')
+        for index,value in mapping.items():
+            number(index,0,3)
+            by_slot.setdefault(index,{})[field] = value
+    for index, change in by_slot.items():
+        before = old['moves'][index]
+        move = number(change.get('moves',before['move_id']),0,997)
+        bonus = number(change.get('pp_up',before['pp_up_count']),0,3)
+        base_pp = rom[0x14A3238+12*move+4]
+        if move and not base_pp:
+            raise ValueError('independent unresolved move')
+        if move == 0:
+            if 'pp' in change or 'pp_up' in change:
+                raise ValueError('independent empty PP edit')
+            pp = base_pp if before['move_id'] != 0 else before['pp']
+        else:
+            maximum = base_pp if move == 996 else (base_pp*(5+bonus)//5)%256
+            resetting = move != before['move_id'] or bonus != before['pp_up_count']
+            pp = number(change.get('pp',maximum if resetting else before['pp']),0,maximum)
+        record[44+index*2:46+index*2] = move.to_bytes(2,'little')
+        record[52+index] = pp
+        old_bonus = record[40]//(4**index)%4
+        record[40] += (bonus-old_bonus)*4**index
+        if 'moves' in change:
+            envelope.update((44+2*index,45+2*index,52+index))
+        if 'pp' in change:
+            envelope.add(52+index)
+        if 'pp_up' in change:
+            envelope.update((40,52+index))
+    if set(changes) & {'species','level','experience','ivs','evs','effective_nature'}:
+        stats = reconstruct(record,rom)['ordinary_expected_stats']
+        current, maximum = old['cached_hp_stats'][:2]
+        if stats is None or stats[0] < maximum and current > stats[0]:
+            raise ValueError('independent context-sensitive HP decrease')
+        hp = current if stats[0] <= maximum or current == 0 else current+stats[0]-maximum
+        record[86:100] = struct.pack('<7H',hp,*stats)
+        envelope.update(range(86,100))
+    if ordinary_reasons(record,rom,report['saved_context']):
+        raise ValueError('independent output ordinary gate')
+    section = parsed['slots'][parsed['active']]['positions'][1]*4096
+    start = section+56+slot*100
+    expected = bytearray(raw)
+    expected[start:start+100] = record
+    expected[section+4086:section+4088] = structure.checksum(expected[section:section+4080]).to_bytes(2,'little')
+    return bytes(expected), {start+i for i in envelope} | {section+4086,section+4087}
+
+
+def audit_edit(before, after, rom, slot, changes):
+    expected, permitted = expected_edit(before,rom,slot,changes)
+    rebuilt = inspect(after,rom)
+    if expected != after or before == after:
+        raise ValueError('independent complete Party output inequality')
+    offsets = [i for i,(x,y) in enumerate(zip(before,after)) if x != y]
+    if not set(offsets) <= permitted:
+        raise ValueError('independent Party byte envelope')
+    return {'complete_output_equal':True,'unrelated_bytes_preserved':True,
+            'complete_postwrite_reconstruction':True,'changed_offsets':offsets,
+            'output_sha256': rebuilt['save_sha256'], 'gameplay_acceptance':False}
