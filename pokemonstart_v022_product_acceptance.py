@@ -184,8 +184,15 @@ def check_e3_return(source, returned, rom, receipt):
             or new['counter']!=old['counter']+1 or before['count']!=after['count']):
         raise ValueError('E3 expected exactly one normal SAVE, preserving Party count')
     prior=before['active']*14*4096
-    if output[prior:prior+14*4096]!=returned[prior:prior+14*4096] or output[0x20000:]!=returned[0x20000:]:
-        raise ValueError('E3 previous active slot/footer changed')
+    if output[prior:prior+14*4096]!=returned[prior:prior+14*4096]:
+        raise ValueError('E3 previous active slot changed')
+    # Canonical normal-resave policy: the optional 16-byte emulator trailer
+    # is opaque and may change after gameplay. Editor output still preserves
+    # it byte-for-byte through the independent full-output audit above.
+    footer={'changed':output[0x20000:]!=returned[0x20000:],
+            'before_sha256':core.profile.sha(output[0x20000:]),
+            'after_sha256':core.profile.sha(returned[0x20000:]),
+            'semantics':'opaque emulator trailer; canonical normal-resave policy'}
     for sid in range(14):
         if new['positions'][sid]%14!=(old['positions'][sid]%14+1)%14:
             raise ValueError('E3 section rotation')
@@ -224,7 +231,7 @@ def check_e3_return(source, returned, rom, receipt):
     _,repeat=core.derive(returned,digest,{'party':[{'slot':eligible['slot'],'changes':{'friendship':(eligible['friendship']+1)%256}}]},rom_bytes=rom)
     return {'status':'MACHINE_RECONSTRUCTION_PASS_HUMAN_ATTESTATION_AND_DRIFT_REVIEW_REQUIRED',
             'returned_sha256':core.profile.sha(returned),'counter':[old['counter'],new['counter']],
-            'previous_active_preserved':True,'independent_ordinary_reconstruction':True,
+            'previous_active_preserved':True,'emulator_footer':footer,'independent_ordinary_reconstruction':True,
             'reported_gameplay_drifts':drifts,'later_edit_reconstructed':repeat['independent_e3_audit']['complete_output_equal'],
             'gameplay_acceptance':False,'e3_adopted':False}
 

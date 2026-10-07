@@ -152,3 +152,15 @@ only reported ordinary EXP/EV/friendship/HP/PP/status progression and qualified
 berry consumption. Inventory and Money must match. Unexplained couplings reject.
 A later editor-cycle dry run is machine-only. Human attestation and drift review
 remain required; neither command promotes E3 automatically.
+
+## Human-return verifier correction
+
+The grouped Human return exposed an overly strict emulator-footer equality
+check in the return harness. Canonical normal-resave policy already allows the
+external opaque 16-byte trailer to change; editor output still preserves it.
+The correction records footer hashes/change without guessing its semantics and
+retains prior-active-slot equality, counter/rotation and complete Party checks.
+It changes no writer/GUI behavior. See the [sanitized review handoff](reviews/e3-existing-party-independent-review.md)
+for the played candidate identity, returned save, drift classification and
+the correction to the untouched Zigzagoon move3 description. No second
+gameplay canary or independent review is performed in the maker context.

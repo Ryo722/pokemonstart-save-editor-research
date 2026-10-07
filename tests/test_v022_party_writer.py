@@ -341,6 +341,16 @@ class GroupedAcceptanceTests(unittest.TestCase):
         self.assertFalse(result['gameplay_acceptance']);self.assertFalse(result['e3_adopted'])
         self.assertTrue(result['later_edit_reconstructed'])
         self.assertEqual(result['reported_gameplay_drifts'],[])
+        # The game/emulator may update only the opaque external trailer;
+        # changing the preserved previous active slot must still reject.
+        trailer_source=self.raw[:0x20000]+bytes(16)
+        trailer_packet=acceptance.prepare_e3(trailer_source,self.rom)
+        trailer_output,_=core.derive(trailer_source,self.digest,trailer_packet['transaction']['request'],rom_bytes=self.rom)
+        self.assertEqual(trailer_output[0x20000:],trailer_source[0x20000:])
+        trailer_return=resave(trailer_output)[:0x20000]+bytes(range(16))
+        self.assertTrue(acceptance.check_e3_return(trailer_source,trailer_return,self.rom,trailer_packet)['emulator_footer']['changed'])
+        old_slot_corrupt=bytearray(trailer_return);old_slot_corrupt[0xFFC:0x1000]=(12).to_bytes(4,'little')
+        with self.assertRaises(ValueError):acceptance.check_e3_return(trailer_source,bytes(old_slot_corrupt),self.rom,trailer_packet)
         with self.assertRaises(ValueError):acceptance.check_e3_return(self.raw,output,self.rom,packet)
         import copy
         bad=copy.deepcopy(packet);bad['transaction']['output_sha256']='0'*64
