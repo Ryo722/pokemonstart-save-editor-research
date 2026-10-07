@@ -1,5 +1,20 @@
 # Evidence ledger
 
+## v0.22 practical product sprint candidate — 2026-10-07
+
+Candidate from fresh canonical `7e7435c5507abfec183c3b370dcb1fa381b22186`:
+[implementation record](v022-product-candidate.md) and
+[sanitized validation](v022-product-candidate-evidence.json). Exact-build Money,
+bounded Party/Potion reusable predicates, ordinary-controls NiceGUI, composed
+in-memory outputs and read-only R4 tooling are implemented candidate-only.
+Private non-canary input, actual NiceGUI/Chromium, core equality, independent
+basic transaction audit and source immutability were reproduced. R4 Human game
+cycles were not performed. Inventory insertion/removal/capacity remain blocked;
+canonical exact-root insertion is preserved. A newly reproduced pinned-source
+`+5` vs legacy `+level` stat formula discrepancy is documented, with corrected
+candidate arithmetic and explicit lack of new stat normal-SAVE evidence.
+No canonical adoption, Stable promotion or release is claimed.
+
 ## FL2-G0 durable Fast Lab baseline candidate — 2026-10-06
 
 Fresh canonical base: `13ecd37cc8817d5a5a3d4f9e38c8ba5f51f8b022`. The FL1 implementation/profile/test chain was reconciled onto a candidate based on this exact `main` HEAD. Candidate scope and exclusions are recorded in `docs/fl2-g0-reconciliation.md`; exact v0.22 capability bounds remain in `docs/fast-lab-v022-capability.json`.

@@ -1,0 +1,119 @@
+{
+  "schema": 1,
+  "canonical_base_sha": "7e7435c5507abfec183c3b370dcb1fa381b22186",
+  "implementation_head_sha": "53b6282dda31347644a4358e18f607ae46374593",
+  "candidate_branch": "codex/v022-practical-product-sprint",
+  "disposition": "BOUNDED_STOP_WITH_CONCRETE_EVIDENCE",
+  "game_roundtrip_performed": false,
+  "r4_complete": false,
+  "unittest_python3": {
+    "run": 221,
+    "passed": 203,
+    "skipped": 18,
+    "failures": 0
+  },
+  "unittest_nicegui_environment": {
+    "run": 221,
+    "passed": 206,
+    "skipped": 15,
+    "failures": 0
+  },
+  "focused_product_nicegui": {
+    "run": 19,
+    "passed": 19,
+    "failures": 0
+  },
+  "private_nicegui": {
+    "workflow": "actual private NiceGUI simulation; no capability mocks",
+    "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+    "output_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+    "core_equality": true,
+    "source_immutable": true,
+    "rom_immutable": true,
+    "verifier_accepted": true,
+    "semantic_diff": [
+      "Money: 3,032 → 1,234,567",
+      "Party #1 Friendship: 59 → 180",
+      "Potion: x2 → x3"
+    ],
+    "game_roundtrip": false
+  },
+  "private_chromium": {
+    "workflow": "real Chromium private GUI composed transaction",
+    "browser_version": "153.0.8010.12",
+    "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+    "output_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+    "core_equality": true,
+    "source_immutable": true,
+    "rom_immutable": true,
+    "verifier_accepted": true,
+    "semantic_preview_checked": true,
+    "stale_controls_rejected": true,
+    "semantic_diff": [
+      "Money: 3,032 → 1,234,567",
+      "Party #1 Friendship: 59 → 180",
+      "Potion: x2 → x3"
+    ],
+    "game_roundtrip": false
+  },
+  "independent_basic_audit": {
+    "input_sha256": "274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24",
+    "output_sha256": "373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206",
+    "complete_candidate_equality": true,
+    "all_unrelated_bytes_preserved": true,
+    "active_slot": 0,
+    "changed_offsets": [
+      23262,
+      28769,
+      29328,
+      29329,
+      29330,
+      32758,
+      32759
+    ],
+    "game_roundtrip": false
+  },
+  "gui_listener": "verified IPv4 127.0.0.1:18867 only; owned server stopped after smoke",
+  "source_formula": {
+    "upstream_commit": "e24a16fe39e27ae162faf5b78596d1f3df18489d",
+    "path": "src/build_pokemon.c",
+    "non_hp_addend": 5,
+    "legacy_addend": "level",
+    "candidate_only": true,
+    "new_target_normal_save_tested": false
+  },
+  "unsupported": [
+    "nonzero keys",
+    "Money counter wrap/sign boundary",
+    "general Inventory insertion/removal",
+    "full pocket capacity/mapping",
+    "Give All Items",
+    "Party stat levels outside5/6",
+    "other stat natures/mints/hyper-training",
+    "ability writing",
+    "unknown pockets/items",
+    "Box/Pokedex/story/event/RTC editing",
+    "other builds/versions"
+  ],
+  "safety": {
+    "source_immutable": true,
+    "output_separate": true,
+    "live_save_replaced": false,
+    "merge_performed": false,
+    "push_performed": false,
+    "public_release": false,
+    "stable_promotion": false
+  },
+  "static_validation": {
+    "python_compile_files": 97,
+    "json_parse_files": 4,
+    "protected_artifact_scan": "PASS",
+    "tracked_and_unignored_paths": 147,
+    "excluded_private_root": true,
+    "excluded_work": true,
+    "diff_check": "PASS",
+    "gitleaks_candidate_commits": "PASS: eight implementation commits, zero leaks",
+    "gitleaks_push_safe_directory": "PASS: source/tests/docs only, zero leaks",
+    "imports": "PASS: full suite and GUI smoke"
+  }
+}

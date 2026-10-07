@@ -108,6 +108,22 @@ The existing NiceGUI prototype provides upload, inspection, preview and verified
 
 The R3 sprint work converts this research-oriented operation/JSON surface into the practical Party / Items / Trainer editor UI while retaining the same localhost and verified-output safety model unless fresh evidence justifies otherwise.
 
+## Product sprint candidate (not adopted)
+
+The candidate practical GUI is available with ordinary Party / Items / Trainer
+controls and composed verified downloads:
+
+```bash
+.venv/bin/python pokemonstart_v022_product_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
+```
+
+Money, bounded existing Party edits and Potion quantity no longer use input-save
+SHA allowlists under their independent predicates. General Inventory insertion /
+removal, pocket capacity and the actual Human two-cycle game acceptance remain
+incomplete. Antidote insertion retains the original exact-root gate. Give All
+Items is deferred. See [the candidate limits and evidence](docs/v022-product-candidate.md).
+The prior research GUI and bounded APIs retain their existing behavior.
+
 ## Shared safeguards
 
 Both lanes retain the same non-negotiable boundaries:
