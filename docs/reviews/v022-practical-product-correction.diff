@@ -1,0 +1,700 @@
+diff --git a/docs/evidence.md b/docs/evidence.md
+index a1f9d2d..de6404e 100644
+--- a/docs/evidence.md
++++ b/docs/evidence.md
+@@ -2,6 +2,12 @@
+ 
+ ## v0.22 practical product sprint candidate — 2026-10-07
+ 
++**Interim snapshot, superseded by the completion evidence below.** This entry
++was written before the R4 Human game cycles and Inventory evidence harvest.
++Its statements that R4 gameplay had not occurred and Antidote insertion/removal
++were blocked describe that earlier state only. See the later R4 and native
++Inventory/template-import evidence for the final candidate evidence classes.
++
+ Candidate from fresh canonical `7e7435c5507abfec183c3b370dcb1fa381b22186`:
+ [implementation record](v022-product-candidate.md) and
+ [sanitized validation](v022-product-candidate-evidence.json). Exact-build Money,
+@@ -15,6 +21,20 @@ canonical exact-root insertion is preserved. A newly reproduced pinned-source
+ candidate arithmetic and explicit lack of new stat normal-SAVE evidence.
+ No canonical adoption, Stable promotion or release is claimed.
+ 
++### Independent review corrections — candidate follow-up
++
++The source `+5` vs legacy `+level` discrepancy is unresolved for the exact
++integrated game revision. Candidate stat-changing writes now fail closed at
++level 6, including Level/EXP requests that would produce level 6. Level-5
++stat calculations remain enabled where their independent predicates pass;
++Friendship and Move 1 retain their separate predicates, including for level-6
++records. No new Human game cycle was needed for these code guards. The
++Antidote insert/remove helpers now enforce key0 in their shared qualification
++path. The template-import product writer has no generic record builder and
++remains gated by the exact source and complete record hashes. R4 evidence is
++retained without modification. These are candidate implementation/test
++claims, not canonical adoption or new game evidence.
++
+ ## FL2-G0 durable Fast Lab baseline candidate — 2026-10-06
+ 
+ Fresh canonical base: `13ecd37cc8817d5a5a3d4f9e38c8ba5f51f8b022`. The FL1 implementation/profile/test chain was reconciled onto a candidate based on this exact `main` HEAD. Candidate scope and exclusions are recorded in `docs/fl2-g0-reconciliation.md`; exact v0.22 capability bounds remain in `docs/fast-lab-v022-capability.json`.
+diff --git a/docs/reviews/v022-practical-product-independent-review.md b/docs/reviews/v022-practical-product-independent-review.md
+new file mode 100644
+index 0000000..e13d15b
+--- /dev/null
++++ b/docs/reviews/v022-practical-product-independent-review.md
+@@ -0,0 +1,168 @@
++# Fresh-context independent review packet: exact-v0.22 product candidate
++
++## Review target
++
++- Canonical base: `main` at `7e7435c5507abfec183c3b370dcb1fa381b22186`.
++- Candidate branch: `codex/v022-practical-product-sprint`.
++- Exact implementation candidate HEAD to review: `7b84f7f940ea110f9839baa6fe14550a4f08e0bb`.
++- Candidate tree at that HEAD: `62ec5ccd7fe7000d25055833a3e17a92251d0e62`.
++- The review packet is committed immediately after that implementation HEAD as documentation. Review the branch HEAD supplied with the review-start prompt, and confirm it descends from this target. The packet commit adds no product code.
++
++The implementation has **not** been independently reviewed in the maker context.
++This packet is a claim/evidence index, not a review conclusion or merge request.
++
++## Scope and authority
++
++Review the bounded local experimental editor for the exact PokemonStart v0.22
++profile: reusable Money, existing Party editing, observed regular-item editing,
++localhost GUI, fail-closed eligibility, and the two-cycle owner workflow.
++
++The controlling authorization is:
++
++`AUTHORIZE V0.22 PRACTICAL PRODUCT SPRINT REALIGNMENT AND BOUNDED R1-R4 IMPLEMENTATION`
++
++It authorizes candidate implementation, testing, private local verification,
++sanitized evidence, commits and candidate-branch push. It does not authorize
++merge to `main`, public release, Stable-Lane promotion, another PokemonStart
++version, generic CFRU editing, Box/Pokédex/story/quest/event/RTC editing,
++arbitrary Pokémon synthesis, unproven item behavior, or public/LAN GUI access.
++The review may recommend only within that boundary. It must not merge, publish,
++or treat review as Human adoption approval.
++
++## Start from fresh state
++
++Fetch GitHub `main` and the candidate branch, verify the SHAs above, and read
++the canonical `docs/decision-record.md` and
++`docs/v022-practical-product-sprint.md` from the exact base. Review the full
++candidate diff against `7e7435c5507abfec183c3b370dcb1fa381b22186`.
++
++Primary candidate evidence:
++
++- `docs/v022-product-candidate.md`
++- `docs/v022-product-candidate-evidence.json`
++- `docs/v022-product-sprint-completion-evidence.json`
++- `docs/v022-native-inventory-and-template-import-evidence-20261007.md`
++- `docs/evidence.md` candidate refresh section
++
++Relevant implementation:
++
++- `pokemonstart_v022_product_core.py` — immutable composed transaction and semantic receipt.
++- `pokemonstart_v022_product_money.py` — exact-profile, key0, two-slot reusable Money predicate/writer.
++- `pokemonstart_v022_product_party.py` — existing-member capability predicates, bounded field writers and coupled state checks.
++- `pokemonstart_v022_product_stats.py` — candidate `+5` non-HP stat calculator.
++- `pokemonstart_v022_product_inventory.py` — observed regular-item prefix, Potion quantity and shape-gated Antidote insertion/removal.
++- `pokemonstart_v022_product_template_import.py` — one exact game-generated Rattata record import proof.
++- `pokemonstart_v022_product_acceptance.py` — structural return/progress harness; deliberately cannot attest Human gameplay.
++- `pokemonstart_v022_product_web.py` — local GUI workflow and verified separate download.
++- `pokemonstart_v022_product_audit.py`, `pokemonstart_v022_creation_audit.py` — independent byte-envelope audits.
++
++Relevant tests:
++
++- `tests/test_v022_product_money.py`
++- `tests/test_v022_product_party.py`
++- `tests/test_v022_product_inventory.py`
++- `tests/test_v022_inventory_native_deltas.py`
++- `tests/test_v022_product_core.py`
++- `tests/test_v022_product_web.py`
++- `tests/test_v022_product_acceptance.py`
++- `tests/test_v022_template_import.py`
++- `tests/v022_product_browser_smoke.py`
++
++## Evidence summary and classifications
++
++Keep these classes distinct in the review:
++
++1. **Canonical evidence:** facts already adopted on `main`; use only the exact base records for this class.
++2. **Candidate implementation evidence:** source/tests on the candidate, not canonical adoption.
++3. **Local private-input verification:** re-hashed private saves/ROM, repository verifier and independent byte construction; protected bytes stay outside Git.
++4. **Human gameplay attestation:** actual visual game display, play actions, normal SAVE and emulator close/flush, recorded in the local session notes. Hashes/counters do not prove these actions.
++5. **Upstream source evidence:** pinned CFRU-JP commit `e24a16fe39e27ae162faf5b78596d1f3df18489d`, especially `src/build_pokemon.c`; it is not established as the exact integration revision of the patched game.
++6. **Hypothesis/unverified:** explicitly listed below; do not promote into proof.
++
++### R4: two GUI/game cycles
++
++- Cycle 1 input SHA: `274dece5fd8828710d2fccf470e4e2cf47cac6998ef306f114727f5d3565ec24`.
++- Cycle 1 verified GUI export SHA: `373cde959c3550d13cc01e5bace0e0446d372b589da48bde5f4b7b23caac5206`.
++- Cycle 1 returned normal-save SHA: `6f96f92f2d9761059d2e97fccc649d8316d2784820e1d8a200d337d39fd2a492`; counter `6 -> 7`.
++- Human observed exact-v0.22 load, Money 1,234,567, Friendship 180, Potion x3 and normal SAVE.
++- Subsequent ordinary Inventory deletion and Antidote repurchase were normally saved. Progressed SHA `935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985`; counter `7 -> 9`; it qualified for another transaction.
++- Cycle 2 verified GUI export SHA: `a1584f2f5cb783f74d5d2638725ac9ce36a7554434190f9a8a69effbe6ae2387`.
++- Cycle 2 returned SHA: `606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea`; counter `9 -> 10`.
++- Human observed exact-v0.22 load, Money 7,654,321, Potion x2, normal Party and normal SAVE. After mGBA fully exited, live disposable save and frozen snapshot hashes matched.
++- The structural harness reports `STRUCTURAL_ROUNDTRIP_PASS_HUMAN_GAMEPLAY_ATTESTATION_REQUIRED` and `r4_complete: false` by design. Evaluate the separate Human attestation as well; do not treat either source alone as the complete evidence.
++
++### Inventory
++
++Reproduced regular-item records at section13 offset `0xADC`:
++
++- pre-delete: `(13,3),(533,1),(14,1),(0,0)`, counter 7;
++- post-delete: `(13,3),(533,1),(0,0),(0,0)`, counter 8;
++- post-repurchase: `(13,3),(533,1),(14,1),(0,0)`, counter 9.
++
++The slot2 Antidote record was zeroed in place and reused; section13 checksum
++does not cover this region. No later occupied slot, capacity, general
++compaction/reordering, other item, other pocket or full bag mapping is proven.
++Candidate UI/API reuse only allows Potion x1..3 and Antidote x1 insertion/removal
++for the exact observed Potion x3 / item #533 x1 / slot2 / zero-tail shape.
++Review whether the proof is sufficient for this narrow reusable predicate and
++whether the absence of a GUI-created Antidote game round trip blocks terminal
++acceptance.
++
++### Rattata exact-record import
++
++- Native pre-acquisition source SHA: `935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985`.
++- Exact game-generated record SHA: `74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3`.
++- Candidate SHA: `3b31b0e89c8907c61f81af836c117de7fc1a0cfd77662a218c492de0192ab96c`.
++- Independent construction equality; Party count `4 -> 5`; 47 changed bytes limited to count, copied 100-byte record and checksum.
++- Returned normal-save SHA: `256bf24dd9d3c2d6601d5203f56ff8b2f9ef4d59c5d8114f684e81be69dccdbe`, verifier accepted, counter 10, Party count 5.
++- Human observed summary/moves, healing, battle action/completion and normal SAVE.
++- Disposition is **GAME-ACCEPTED / NORMAL-SAVE-ACCEPTED** for this one complete game-generated record only. It is not arbitrary Pokémon synthesis and is not a general GUI feature.
++
++The private snapshots remain under the host's `PokemonStart-private` local
++acceptance evidence area (the 2026-10-07 `evidence-harvest` set and separate
++template-import return). The filenames and hashes are in the sanitized
++candidate evidence files above. A reviewer with the authorized host access can
++re-read them; never copy them into the repository or upload them.
++
++## Terminal acceptance matrix
++
++The maker disposition is that all 14 exact-v0.22 terminal characteristics in
++the canonical decision record pass, with bounded scope. The criterion-by-
++criterion table is in `docs/v022-product-sprint-completion-evidence.json`.
++Independently challenge at least:
++
++- whether the current Party surface is actually useful to an owner, given broad Friendship, restricted Move 1, very narrow calculated stats and no generic constructor;
++- whether Potion x1..3 plus the observed Antidote x1 state is a useful regular-item subset or still only a canary;
++- whether exact-save SHA is fully absent from each reusable predicate that is claimed reusable;
++- whether source immutability, checksum envelopes, composition conflict handling and stale GUI state rejection are sound;
++- whether normal-save/counter evidence plus separately documented Human observations really closes R4;
++- whether the calculator's source revision uncertainty or missing new stat-changing game round trip is terminal or post-terminal qualification only.
++
++The source-backed stat discrepancy is explicitly bounded: legacy code used
++`+level`; pinned source uses `+5`. The candidate calculator uses `+5` and
++rejects source-cache disagreement. No fresh normal-save round trip of a
++stat-changing candidate output exists. The R4 edit changed Friendship, so did
++not exercise that calculator. Decide independently whether this is a terminal
++blocker under canonical wording.
++
++## Verification record
++
++At this candidate implementation HEAD:
++
++- `python3 -m unittest discover -s tests -v`: 226 run, 208 passed, 18 skipped, 0 failures.
++- `.venv/bin/python -m unittest discover -s tests -v`: 226 run, 211 passed, 15 skipped, 0 failures; NiceGUI simulation exercised GUI Antidote add and remove previews/downloads.
++- `python3 -m compileall -q .`: PASS.
++- Candidate JSON parse and `git diff --check`: PASS.
++- Gitleaks history scan: 204 commits, 0 leaks. Candidate changed-file scan: 0 leaks.
++- The no-git whole-worktree scan found 3 generic-key false positives only in ignored bundled Chromium/Playwright files under `work/`; none are in candidate diff. Candidate path scan found no protected artifact suffix or absolute private-root path.
++- Real Chromium smoke could not run in the current `.venv` because Playwright is not installed. Earlier actual Chromium evidence exists for the previous three-family workflow; current NiceGUI simulation covers the newly added Antidote controls.
++- No `.sav`, ROM, patch, executable, raw protected bytes or copyrighted assets are in the candidate diff.
++
++## Permitted review dispositions
++
++- `PASS_FOR_HUMAN_ADOPTION_DECISION` — evidence and scope satisfy the canonical terminal goal; this is only a recommendation to the Human.
++- `CHANGES_REQUESTED` — list exact files/criteria and the smallest bounded corrections; do not expand authorization.
++- `BOUNDED_STOP_WITH_CONCRETE_TERMINAL_BLOCKER` — identify the exact unmet canonical criterion, current evidence, cheapest missing proof/work, and whether Human gameplay is required.
++
++Do not execute another game procedure, expand item/species scope, merge, release,
++promote Stable, or change canonical `main` as part of this review.
+diff --git a/docs/v022-product-candidate-evidence.json b/docs/v022-product-candidate-evidence.json
+index 69eb2a2..58889a9 100644
+--- a/docs/v022-product-candidate-evidence.json
++++ b/docs/v022-product-candidate-evidence.json
+@@ -92,7 +92,7 @@
+     "Inventory behavior beyond Potion quantity and shape-gated Antidote x1 slot2 insertion/removal",
+     "full pocket capacity/mapping and later-slot compaction",
+     "Give All Items",
+-    "Party stat levels outside5/6",
++    "Party stat-changing operations resulting in level 6 (fail-closed pending exact-build formula evidence)",
+     "other stat natures/mints/hyper-training",
+     "ability writing",
+     "unknown pockets/items",
+@@ -167,5 +167,24 @@
+     "run": 5,
+     "passed": 5,
+     "failures": 0
++  },
++  "correction_followup": {
++    "reviewed_predecessor_implementation": "7b84f7f940ea110f9839baa6fe14550a4f08e0bb",
++    "level6_stat_writes": "FAIL_CLOSED pending exact-build formula evidence; Friendship and Move 1 retain independent qualification",
++    "antidote_writer_key_gate": "key0 enforced in shared helper qualification for direct insert/remove and normal product paths",
++    "template_import_writer": "exact source SHA and exact complete-record SHA gates precede the only product construction path; generic builder removed from product module",
++    "evidence_ledger": "earlier no-R4 / Inventory-blocked paragraph explicitly labeled an interim superseded snapshot",
++    "new_human_gameplay_evidence": false,
++    "r4_evidence_changed": false,
++    "no_terminal_scope_added": true,
++    "focused_nicegui": {"run": 17, "passed": 17, "skipped": 0, "failures": 0},
++    "python3_unittest": {"run": 229, "passed": 209, "skipped": 20, "failures": 0},
++    "nicegui_environment_unittest": {"run": 229, "passed": 214, "skipped": 15, "failures": 0},
++    "tracked_python_compile": "PASS",
++    "tracked_json_parse": "PASS",
++    "git_diff_check": "PASS",
++    "changed_tracked_file_secret_scan": "PASS; no findings",
++    "whole_worktree_gitleaks": "3 findings only in ignored work/ browser dependency assets; no tracked candidate files involved",
++    "protected_artifact_and_private_path_scan": "PASS; no tracked protected suffixes and no private-root literal in correction diff"
+   }
+ }
+diff --git a/docs/v022-product-candidate.md b/docs/v022-product-candidate.md
+index 729f49f..5e98ce0 100644
+--- a/docs/v022-product-candidate.md
++++ b/docs/v022-product-candidate.md
+@@ -37,10 +37,13 @@ gameplay.
+   `0..255` is editable when the record passes structural checks. Move 1 can
+   switch Pound/Tackle for records already using one of those moves, with zero
+   PP-Up bonuses and bounded PP; replacement sets PP to the evidenced base 35.
+-  Source-backed stat edits are limited to Bulbasaur/Ivysaur at levels 5/6,
++  Source-backed stat edits are limited to Bulbasaur/Ivysaur at level 5,
+   Serious/Modest nature, no mint or hyper-training, coherent EXP and cached
+-  stats, with bounded species/level/EXP/IV/EV requests and recomputed stats.
+-  Other fields remain read-only. Friendship is Human-tested in both R4 game
++  stats, with bounded species/EXP/IV/EV requests and recomputed stats. Level
++  changes are read-only; EXP remains within the level-5 range. Level-6
++  stat-changing requests fail closed because the exact integrated build's
++  formula is unresolved. Friendship and Move 1 use independent predicates and
++  remain available where qualified. Other fields remain read-only. Friendship is Human-tested in both R4 game
+   cycles. The source-backed target-stat writer has not had a new normal-save
+   round trip and remains a bounded qualification caveat for independent review.
+ - **Items / R2:** Potion quantity `1..3`, plus Antidote x1 insertion/removal
+@@ -95,11 +98,12 @@ and [native Inventory/template evidence](v022-native-inventory-and-template-impo
+ - The imported Rattata proof demonstrates only one exact complete record and
+   its Party-count/checksum envelope. It does not prove arbitrary template
+   imports are safe.
+-- The candidate calculator follows pinned CFRU-JP `e24a16fe39e27ae162faf5b78596d1f3df18489d`
+-  (`+5` non-HP stat formula). The pinned source is not established as the exact
+-  integration revision of the patched game. A fresh stat-changing game
+-  round-trip remains useful qualification work, but the R4 acceptance used
+-  friendship and did not depend on target-stat recalculation.
++- The candidate calculator's level-5 result is consistent with both the
++  pinned CFRU-JP `+5` and legacy `+level` formulas. That pinned revision is not
++  established as the exact integration revision of the patched game, and
++  level 6 differs between the formulas. The candidate rejects level-6
++  stat-changing writes. R4 used Friendship and did not depend on target-stat
++  recalculation.
+ - Fast Lab experimental candidate status does not imply Stable support,
+   canonical adoption, a public release or a merge authorization.
+ 
+diff --git a/docs/v022-product-sprint-completion-evidence.json b/docs/v022-product-sprint-completion-evidence.json
+index 40579d0..7f54829 100644
+--- a/docs/v022-product-sprint-completion-evidence.json
++++ b/docs/v022-product-sprint-completion-evidence.json
+@@ -29,8 +29,8 @@
+   },
+   "r2_party": {
+     "verdict": "PASS_BOUNDED_USEFUL_SUBSET",
+-    "basis": "Existing ordinary party members: reusable friendship across structurally valid records; constrained Move 1 Pound/Tackle replacement; source-backed Bulbasaur/Ivysaur level 5/6 stat model. R4 Human-tested Friendship twice. Native game-generated Rattata template record was imported, displayed, healed, used in battle, and normally saved.",
+-    "limits": "No generic constructor. Stat-changing target outputs have no fresh normal-save round trip; the pinned source integration revision is not independently established. This does not invalidate the friendship/move practical subset and remains an explicit qualification caveat."
++      "basis": "Existing ordinary party members: reusable Friendship across structurally valid records; constrained Move 1 Pound/Tackle replacement; level-5-only Bulbasaur/Ivysaur stat edits with coherent cached stats. Level-6 stat-changing operations fail closed because the exact integrated formula is unresolved. R4 Human-tested Friendship twice. Native game-generated Rattata template record was imported, displayed, healed, used in battle, and normally saved.",
++      "limits": "No generic constructor. Level changes are read-only; EXP is restricted to the level-5 range when the level-5 stat predicate passes. Friendship and Move 1 remain independent of the stat model. No fresh normal-save round trip for stat-changing target output; no exact upstream integration revision claim."
+   },
+   "r2_inventory": {
+     "verdict": "PASS_BOUNDED_USEFUL_SUBSET",
+@@ -89,7 +89,7 @@
+     {"criterion": 2, "verdict": "PASS", "evidence": "Verifier plus unseen-SHA naturally progressed input accepted."},
+     {"criterion": 3, "verdict": "PASS", "evidence": "Money, Party and Items independent predicates; Money does not use input SHA allowlist."},
+     {"criterion": 4, "verdict": "PASS", "evidence": "Money GUI range 0..9999999 with exact v0.22 evidence."},
+-    {"criterion": 5, "verdict": "PASS_BOUNDED", "evidence": "Useful existing-member Friendship/Move subset and bounded coherent stat model; see qualification caveat."},
++    {"criterion": 5, "verdict": "PASS_BOUNDED", "evidence": "Useful existing-member Friendship/Move subset and level-5-only coherent stat model; level-6 stat-changing operations fail closed."},
+     {"criterion": 6, "verdict": "PASS_BOUNDED", "evidence": "Potion quantity and shape-gated Antidote insertion/removal; no extrapolated capacity."},
+     {"criterion": 7, "verdict": "PASS", "evidence": "Normal controls require no JSON, hashes, offsets or checksum knowledge."},
+     {"criterion": 8, "verdict": "PASS", "evidence": "GUI inspect/edit/preview/verified separate output and stale-state rejection."},
+diff --git a/pokemonstart_v022_product_inventory.py b/pokemonstart_v022_product_inventory.py
+index 728c7d3..abd7bbf 100644
+--- a/pokemonstart_v022_product_inventory.py
++++ b/pokemonstart_v022_product_inventory.py
+@@ -12,7 +12,10 @@ def _observed_antidote_state(raw, rom_sha256, present):
+     """Qualify only the captured three-record bag shape and zero tail."""
+     profile._require_rom_hash(rom_sha256)
+     result = v.verify_bytes(raw)
+-    section = result.slots[result.active_slot].section(13)
++    active = result.slots[result.active_slot]
++    if struct.unpack_from('<I', active.section(0).data, 0xF20)[0] != 0:
++        raise ValueError('Antidote operations support observed key0 only')
++    section = active.section(13)
+     prefix = [struct.unpack_from('<HH', section.data, OFFSET + 4*i) for i in range(3)]
+     expected = (13, 3), (533, 1), ((14, 1) if present else (0, 0))
+     if tuple(prefix) != expected or any(section.data[OFFSET + 12:0xFF4]):
+diff --git a/pokemonstart_v022_product_party.py b/pokemonstart_v022_product_party.py
+index fa4c042..ebe0faf 100644
+--- a/pokemonstart_v022_product_party.py
++++ b/pokemonstart_v022_product_party.py
+@@ -45,10 +45,13 @@ def stat_eligible(mon):
+ def capabilities(raw, rom_sha256, slot):
+     _,mon=qualify(raw,rom_sha256,slot)
+     result={'friendship':True,'moves':mon.pp_bonuses == 0 and mon.moves[0] in MOVES
+-            and mon.pp[0] <= 35, 'stats':False, 'stats_reason':''}
++            and mon.pp[0] <= 35, 'stats':False, 'stats_reason':'', 'level_exp':False,
++            'level_exp_reason':'Level 6 stat formula is unqualified for this exact build.'}
+     try:
+         stat_eligible(mon)
+         result['stats']=True
++        result['level_exp']=True
++        result['level_exp_reason']='Level changes are disabled; EXP is limited to the supported level-5 range.'
+     except ValueError as exc:
+         result['stats_reason']=str(exc)
+     return result
+@@ -72,9 +75,9 @@ def derive(raw, rom_sha256, slot, changes):
+     if 'species' in requested and (type(requested['species']) is not int or requested['species'] not in SPECIES):
+         raise ValueError('species supports Bulbasaur/Ivysaur only')
+     if 'level' in requested:
+-        integer(requested['level'],5,6,'supported level')
++        integer(requested['level'],5,5,'supported level')
+     if 'experience' in requested:
+-        integer(requested['experience'],medium_slow_exp(5),medium_slow_exp(7)-1,'supported EXP')
++        integer(requested['experience'],medium_slow_exp(5),medium_slow_exp(6)-1,'supported level-5 EXP')
+     if ('level' in requested and 'experience' in requested
+             and level_from_medium_slow_exp(requested['experience']) != requested['level']):
+         raise ValueError('level/EXP conflict')
+@@ -88,6 +91,8 @@ def derive(raw, rom_sha256, slot, changes):
+         level=requested.get('level',mon.level)
+         exp=requested.get('experience',medium_slow_exp(level) if 'level' in requested else mon.experience)
+         level=level_from_medium_slow_exp(exp)
++        if level != 5:
++            raise ValueError('stat-changing requests must remain at level 5; level-6 stat formula is unqualified')
+         desired=replace(mon,species=requested.get('species',mon.species),level=level,experience=exp,
+                         ivs=requested.get('ivs',mon.ivs),evs=requested.get('evs',mon.evs))
+         stats=calculations.stats(desired)
+diff --git a/pokemonstart_v022_product_stats.py b/pokemonstart_v022_product_stats.py
+index 9555604..f0d3f3f 100644
+--- a/pokemonstart_v022_product_stats.py
++++ b/pokemonstart_v022_product_stats.py
+@@ -8,10 +8,12 @@ import pokemonstart_transaction as tx
+ 
+ 
+ def stats(mon):
+-    if (mon.species not in (1,2) or mon.level not in (5,6)
++    if mon.level == 6:
++        raise tx.TransactionError('Level 6 stat formula is unqualified for this exact build')
++    if (mon.species not in (1,2) or mon.level != 5
+             or mon.hyper_training!=0 or mon.nature_mint!=0
+             or mon.personality%25 not in (12,15)):
+-        raise tx.TransactionError('source-backed stats require Bulbasaur/Ivysaur level5/6, neutral Serious or Modest, no mint/hyper-training')
++        raise tx.TransactionError('source-backed stats require Bulbasaur/Ivysaur level5, neutral Serious or Modest, no mint/hyper-training')
+     if any(not 0<=x<=31 for x in mon.ivs) or any(not 0<=x<=252 for x in mon.evs) or sum(mon.evs)>510:
+         raise tx.TransactionError('IV/EV allocation invalid')
+     bases=(45,49,49,45,65,65) if mon.species==1 else (60,62,63,60,80,80)
+diff --git a/pokemonstart_v022_product_template_import.py b/pokemonstart_v022_product_template_import.py
+index e7a28e8..6abff52 100644
+--- a/pokemonstart_v022_product_template_import.py
++++ b/pokemonstart_v022_product_template_import.py
+@@ -10,48 +10,38 @@ TEMPLATE_SHA256 = '74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da67
+ ROM_SHA256 = '6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0'
+ 
+ 
+-def build_candidate(raw: bytes, record: bytes) -> tuple[bytes, dict]:
+-    """Copy an unchanged 100-byte template into the first unoccupied Party slot."""
+-    if len(record) != 100:
+-        raise ValueError('template record must be exactly 100 bytes')
+-    before = v.verify_bytes(raw)
+-    if before.party_count != 4 or before.party_count >= v.PARTY_SIZE:
+-        raise ValueError('template import proof requires Party count 4')
+-    active = before.slots[before.active_slot]
+-    section = active.section(1)
+-    base = section.physical_sector * v.SECTOR_SIZE
++def derive(raw: bytes, record: bytes, rom_sha256: str) -> tuple[bytes, dict]:
++    # Qualify the exact source and complete game-generated record before the
++    # only write-capable construction path below is reached.
++    profile._require_rom_hash(rom_sha256)
++    if hashlib.sha256(raw).hexdigest() != SOURCE_SHA256:
++        raise ValueError('template import requires the exact immutable pre-acquisition save')
++    if hashlib.sha256(record).hexdigest() != TEMPLATE_SHA256:
++        raise ValueError('template import requires the exact game-generated Rattata record')
++    report = v.verify_bytes(raw)
++    if report.party_count != 4:
++        raise ValueError('pre-acquisition Party count differs')
++    base = report.slots[report.active_slot].section(1).physical_sector * v.SECTOR_SIZE
+     count_offset = base + v.PARTY_COUNT_OFFSET
+-    dest = base + v.PARTY_OFFSET + before.party_count * 100
++    dest = base + v.PARTY_OFFSET + 4 * 100
+     output = bytearray(raw)
+-    output[count_offset] = before.party_count + 1
++    output[count_offset] = 5
+     output[dest:dest + 100] = record
+-    checksum = v.calculate_save_checksum(output[base:base + v.SECTION_LENGTHS[1]])
+-    struct.pack_into('<H', output, base + v.SECTION_CHECKSUM_OFFSET, checksum)
++    struct.pack_into('<H', output, base + v.SECTION_CHECKSUM_OFFSET,
++                     v.calculate_save_checksum(output[base:base + v.SECTION_LENGTHS[1]]))
+     candidate = bytes(output)
+     after = v.verify_bytes(candidate)
+     if after.party_count != 5 or candidate[dest:dest + 100] != record:
+-        raise ValueError('template import postcondition failed')
++        raise ValueError('exact template import postcondition failed')
+     allowed = {count_offset, *range(dest, dest + 100),
+                base + v.SECTION_CHECKSUM_OFFSET, base + v.SECTION_CHECKSUM_OFFSET + 1}
+     changed = [i for i, (a, b) in enumerate(zip(raw, candidate)) if a != b]
+     if not set(changed) <= allowed:
+-        raise ValueError('template import byte envelope mismatch')
+-    return candidate, {'transition': [4, 5], 'append_slot': 4,
+-                       'record_sha256': hashlib.sha256(record).hexdigest(),
+-                       'changed_offsets': changed, 'verifier_accepted': True,
+-                       'unrelated_bytes_preserved': True}
+-
+-
+-def derive(raw: bytes, record: bytes, rom_sha256: str) -> tuple[bytes, dict]:
+-    profile._require_rom_hash(rom_sha256)
+-    if hashlib.sha256(raw).hexdigest() != SOURCE_SHA256:
+-        raise ValueError('template import requires the exact immutable pre-acquisition save')
+-    if hashlib.sha256(record).hexdigest() != TEMPLATE_SHA256:
+-        raise ValueError('template import requires the exact game-generated Rattata record')
+-    report = v.verify_bytes(raw)
+-    if report.party_count != 4:
+-        raise ValueError('pre-acquisition Party count differs')
+-    candidate, receipt = build_candidate(raw, record)
++        raise ValueError('exact template import byte envelope mismatch')
++    receipt = {'transition': [4, 5], 'append_slot': 4,
++               'record_sha256': hashlib.sha256(record).hexdigest(),
++               'changed_offsets': changed, 'verifier_accepted': True,
++               'unrelated_bytes_preserved': True}
+     receipt.update({'source_sha256': SOURCE_SHA256, 'template_sha256': TEMPLATE_SHA256,
+                     'candidate_sha256': hashlib.sha256(candidate).hexdigest(),
+                     'operation': 'exact_game_generated_template_import'})
+diff --git a/pokemonstart_v022_product_web.py b/pokemonstart_v022_product_web.py
+index f46d691..fe1b1c1 100644
+--- a/pokemonstart_v022_product_web.py
++++ b/pokemonstart_v022_product_web.py
+@@ -111,9 +111,8 @@ def create_page(rom_path):
+                             if cap.get('friendship'):fields['friendship']=number(f'Friendship — Party #{slot+1}',mon['friendship'],0,255)
+                             if cap.get('stats'):
+                                 fields['species']=select('Species',core.party.SPECIES,mon['species'])
+-                                with ui.row():
+-                                    fields['level']=number('Level',mon['level'],5,6)
+-                                    fields['experience']=number('EXP',mon['experience'],135,235)
++                                ui.label('Level: 読み取り専用 — Level 6 の stat 計算は exact build で未確認です。')
++                                fields['experience']=number('EXP (Lv.5 range)',mon['experience'],135,178)
+                                 ui.label('IV / EV — 合計 EV ≤ 510。最大 HP の減少は非対応。')
+                                 fields['ivs']=[];fields['evs']=[]
+                                 for field,maximum in (('ivs',31),('evs',252)):
+diff --git a/tests/test_v022_inventory_native_deltas.py b/tests/test_v022_inventory_native_deltas.py
+index 56b1968..11d985f 100644
+--- a/tests/test_v022_inventory_native_deltas.py
++++ b/tests/test_v022_inventory_native_deltas.py
+@@ -49,6 +49,30 @@ class NativeInventoryDeltaTests(unittest.TestCase):
+             with self.assertRaises(ValueError):
+                 items.remove_observed_antidote(bytes(bad), ROM)
+ 
++    def test_direct_antidote_helpers_reject_nonzero_key(self):
++        source = self.source()
++        verified = v.verify_bytes(source)
++        section = verified.slots[verified.active_slot].section(0)
++        base = section.physical_sector * v.SECTOR_SIZE
++        keyed = bytearray(source)
++        struct.pack_into('<I', keyed, base + 0xF20, 1)
++        struct.pack_into('<H', keyed, base + v.SECTION_CHECKSUM_OFFSET,
++                         v.calculate_save_checksum(keyed[base:base + v.SECTION_LENGTHS[0]]))
++        keyed = bytes(keyed)
++        v.verify_bytes(keyed)
++        with self.assertRaisesRegex(ValueError, 'key0'):
++            items.remove_observed_antidote(keyed, ROM)
++        empty, _ = items.remove_observed_antidote(source, ROM)
++        verified = v.verify_bytes(empty)
++        section = verified.slots[verified.active_slot].section(0)
++        base = section.physical_sector * v.SECTOR_SIZE
++        keyed_empty = bytearray(empty)
++        struct.pack_into('<I', keyed_empty, base + 0xF20, 1)
++        struct.pack_into('<H', keyed_empty, base + v.SECTION_CHECKSUM_OFFSET,
++                         v.calculate_save_checksum(keyed_empty[base:base + v.SECTION_LENGTHS[0]]))
++        with self.assertRaisesRegex(ValueError, 'key0'):
++            items.insert_observed_antidote(bytes(keyed_empty), ROM)
++
+ 
+ if __name__ == '__main__':
+     unittest.main()
+diff --git a/tests/test_v022_product_party.py b/tests/test_v022_product_party.py
+index fabca57..8210e67 100644
+--- a/tests/test_v022_product_party.py
++++ b/tests/test_v022_product_party.py
+@@ -29,22 +29,22 @@ class ProductPartyTests(unittest.TestCase):
+             self.assertEqual(raw[14*4096:],out[14*4096:])
+         with self.assertRaises(ValueError):p.derive(raw,ROM,6,{'friendship':1})
+ 
+-    def test_composed_stats_and_repeat(self):
++    def test_level5_stats_and_repeat(self):
+         raw=save()
+-        changes={'species':2,'level':6,'ivs':[31,0,26,23,27,29],
++        changes={'species':2,'ivs':[31,0,26,23,27,29],
+                  'evs':[8,0,0,0,0,0],'friendship':53,'moves':{0:1}}
+         out,_=p.derive(raw,ROM,0,changes)
+         mon=v.verify_bytes(out).party[0]
+-        self.assertEqual((mon.species,mon.level,mon.experience),(2,6,179))
+-        self.assertEqual((mon.hp,mon.max_hp,mon.attack,mon.defense,mon.speed,mon.sp_attack,mon.sp_defense),
+-                         (25,25,10,14,13,17,16))
++        self.assertEqual((mon.species,mon.level,mon.experience),(2,5,135))
++        self.assertEqual(mon.friendship,53)
+         self.assertTrue(p.capabilities(out,ROM,0)['stats'])
+         again,_=p.derive(out,ROM,0,{'friendship':10})
+         self.assertEqual(v.verify_bytes(again).party[0].friendship,10)
+ 
+     def test_reject_unsupported_operations_independently(self):
+         raw=save()
+-        for changes in ({'level':7},{'level':True},{'species':3},{'ivs':[32]*6},
++        for changes in ({'level':6},{'level':7},{'level':True},{'experience':179},
++                        {'species':3},{'ivs':[32]*6},
+                         {'evs':[252]*6},{'moves':{1:1}},{'moves':{0:45}},
+                         {'ability_selector':1},{'friendship':256},{'friendship':52}):
+             with self.subTest(changes=changes),self.assertRaises(ValueError):p.derive(raw,ROM,0,changes)
+@@ -61,15 +61,19 @@ class ProductPartyTests(unittest.TestCase):
+         struct.pack_into('<H',bad,5*4096+0xFF6,v.calculate_save_checksum(bad[5*4096:5*4096+0xFF0]))
+         with self.assertRaises(ValueError):p.derive(bytes(bad),ROM,0,{'evs':[8,0,0,0,0,0]})
+ 
+-    def test_source_non_hp_plus_five_rejects_legacy_level6_cache(self):
++    def test_level6_stat_changes_fail_closed_but_friendship_remains_available(self):
+         raw=save()
+-        output,_=p.derive(raw,ROM,0,{'level':6})
+-        mon=v.verify_bytes(output).party[0]
+-        self.assertEqual((mon.attack,mon.defense,mon.speed,mon.sp_attack,mon.sp_defense),(10,12,11,15,14))
+-        # Legacy canary added level, yielding Attack 11 at level6. Do not
+-        # silently qualify that cache for source-backed derived edits.
+-        broken=bytearray(output);base=5*4096
+-        struct.pack_into('<H',broken,base+v.PARTY_OFFSET+90,11)
++        for changes in ({'level':6},{'experience':179},{'ivs':[29,29,26,23,27,29]}):
++            with self.subTest(changes=changes),self.assertRaises(ValueError):p.derive(raw,ROM,0,changes)
++        broken=bytearray(raw);base=5*4096
++        broken[base+v.PARTY_OFFSET+84]=6
++        struct.pack_into('<I',broken,base+v.PARTY_OFFSET+36,179)
+         struct.pack_into('<H',broken,base+0xFF6,v.calculate_save_checksum(broken[base:base+0xFF0]))
+-        self.assertFalse(p.capabilities(bytes(broken),ROM,0)['stats'])
+-        self.assertTrue(p.capabilities(bytes(broken),ROM,0)['friendship'])
++        broken=bytes(broken)
++        cap=p.capabilities(broken,ROM,0)
++        self.assertFalse(cap['stats'])
++        self.assertIn('Level 6',cap['stats_reason'])
++        self.assertTrue(cap['friendship'])
++        self.assertTrue(cap['moves'])
++        edited,_=p.derive(broken,ROM,0,{'friendship':77})
++        self.assertEqual(v.verify_bytes(edited).party[0].friendship,77)
+diff --git a/tests/test_v022_product_web.py b/tests/test_v022_product_web.py
+index fc1f9c8..d0b55c1 100644
+--- a/tests/test_v022_product_web.py
++++ b/tests/test_v022_product_web.py
+@@ -99,3 +99,51 @@ class ProductWebTests(unittest.TestCase):
+                     expected_removed,_=w.core.derive(with_antidote,ROM,{'items':{'remove_antidote':True}})
+                     self.assertEqual(removed.content,expected_removed)
+         asyncio.run(exercise())
++
++    def test_level5_gui_has_only_bounded_exp_and_no_level_control(self):
++        if w.ui is None:self.skipTest('NiceGUI optional dependency unavailable')
++        import asyncio,sys,os
++        from nicegui.elements.upload import Upload
++        from nicegui.elements.upload_files import SmallFileUpload
++        from nicegui.elements.number import Number
++        from nicegui.testing import user_simulation
++        from test_v022_product_party import save as party_save
++        async def exercise():
++            with patch.object(sys,'argv',['app','--rom','unused.gba']),patch.dict(os.environ,{'PYTEST_CURRENT_TEST':'level5 GUI capability'}):
++                async with user_simulation(main_file=Path(__file__).with_name('v022_product_simulation_app.py')) as user:
++                    await user.open('/')
++                    upload=next(iter(user.find(kind=Upload).elements))
++                    await upload.handle_uploads([SmallFileUpload('level5.sav','application/octet-stream',party_save())])
++                    await user.should_see('読み込み済み')
++                    labels=[field.label for field in user.find(kind=Number).elements]
++                    self.assertNotIn('Level',labels)
++                    self.assertIn('EXP (Lv.5 range)',labels)
++                    self.assertEqual(next(field for field in user.find(kind=Number).elements
++                                          if field.label=='EXP (Lv.5 range)').max,178)
++                    await user.should_see('Level: 読み取り専用')
++        asyncio.run(exercise())
++
++    def test_level6_gui_exposes_no_writable_level_or_exp(self):
++        if w.ui is None:self.skipTest('NiceGUI optional dependency unavailable')
++        import asyncio,sys,os,struct
++        from nicegui.elements.upload import Upload
++        from nicegui.elements.upload_files import SmallFileUpload
++        from nicegui.elements.number import Number
++        from nicegui.testing import user_simulation
++        from test_v022_product_party import save as party_save
++        level6=bytearray(party_save());base=5*4096
++        level6[base+w.core.v.PARTY_OFFSET+84]=6
++        struct.pack_into('<I',level6,base+w.core.v.PARTY_OFFSET+36,179)
++        struct.pack_into('<H',level6,base+0xFF6,w.core.v.calculate_save_checksum(level6[base:base+0xFF0]))
++        async def exercise():
++            with patch.object(sys,'argv',['app','--rom','unused.gba']),patch.dict(os.environ,{'PYTEST_CURRENT_TEST':'level6 GUI capability'}):
++                async with user_simulation(main_file=Path(__file__).with_name('v022_product_simulation_app.py')) as user:
++                    await user.open('/')
++                    upload=next(iter(user.find(kind=Upload).elements))
++                    await upload.handle_uploads([SmallFileUpload('level6.sav','application/octet-stream',bytes(level6))])
++                    await user.should_see('読み込み済み')
++                    labels=[field.label for field in user.find(kind=Number).elements]
++                    self.assertNotIn('Level',labels)
++                    self.assertNotIn('EXP (Lv.5 range)',labels)
++                    await user.should_see('Level 6 stat formula is unqualified')
++        asyncio.run(exercise())
+diff --git a/tests/test_v022_template_import.py b/tests/test_v022_template_import.py
+index c56fff4..6efd6ab 100644
+--- a/tests/test_v022_template_import.py
++++ b/tests/test_v022_template_import.py
+@@ -1,6 +1,7 @@
+ import hashlib
+ import struct
+ import unittest
++from unittest.mock import patch
+ import pokemonstart_save_verifier as v
+ import pokemonstart_v022_creation_audit as audit
+ import pokemonstart_v022_product_template_import as t
+@@ -8,7 +9,7 @@ from test_m3c_derived_stats_writer import synthetic
+ 
+ 
+ class TemplateImportTests(unittest.TestCase):
+-    def test_builder_copies_complete_opaque_record_and_limits_envelope(self):
++    def test_independent_audit_builder_copies_record_and_limits_envelope(self):
+         raw = bytearray(synthetic()[0])
+         base = 5 * v.SECTOR_SIZE
+         raw[base + v.PARTY_COUNT_OFFSET] = 4
+@@ -16,23 +17,38 @@ class TemplateImportTests(unittest.TestCase):
+                          v.calculate_save_checksum(raw[base:base + v.SECTION_LENGTHS[1]]))
+         raw = bytes(raw)
+         record = bytes((i * 37 + 11) & 255 for i in range(100))
+-        candidate, receipt = t.build_candidate(raw, record)
++        candidate = audit.independent_template_import(raw, record)
+         independent = audit.audit_template_import(raw, candidate, record)
+         result = v.verify_bytes(candidate)
+         self.assertEqual(result.party_count, 5)
+         self.assertEqual(candidate[base + v.PARTY_OFFSET + 400:base + v.PARTY_OFFSET + 500], record)
+-        self.assertEqual(receipt['record_sha256'], hashlib.sha256(record).hexdigest())
+-        self.assertTrue(receipt['unrelated_bytes_preserved'])
++        self.assertEqual(hashlib.sha256(record).hexdigest(), audit.sha(record))
+         self.assertTrue(independent['complete_candidate_equality'])
+         self.assertTrue(independent['all_outside_envelope_preserved'])
+-        self.assertTrue(set(receipt['changed_offsets']) <= {
++        self.assertFalse(hasattr(t, 'build_candidate'))
++        self.assertEqual(set(independent['changed_offsets']) <= {
+             base + v.PARTY_COUNT_OFFSET,
+             *range(base + v.PARTY_OFFSET + 400, base + v.PARTY_OFFSET + 500),
+-            base + v.SECTION_CHECKSUM_OFFSET, base + v.SECTION_CHECKSUM_OFFSET + 1})
++            base + v.SECTION_CHECKSUM_OFFSET, base + v.SECTION_CHECKSUM_OFFSET + 1}, True)
+ 
+     def test_wrong_exact_template_is_rejected(self):
+-        with self.assertRaises(ValueError):
+-            t.derive(b'wrong source', b'wrong record', t.ROM_SHA256)
++        raw = bytearray(synthetic()[0])
++        base = 5 * v.SECTOR_SIZE
++        raw[base + v.PARTY_COUNT_OFFSET] = 4
++        struct.pack_into('<H', raw, base + v.SECTION_CHECKSUM_OFFSET,
++                         v.calculate_save_checksum(raw[base:base + v.SECTION_LENGTHS[1]]))
++        raw = bytes(raw)
++        record = bytes(100)
++        with patch.object(t, 'SOURCE_SHA256', hashlib.sha256(raw).hexdigest()), \
++             patch.object(t, 'TEMPLATE_SHA256', hashlib.sha256(record).hexdigest()):
++            candidate, receipt = t.derive(raw, record, t.ROM_SHA256)
++            self.assertEqual(v.verify_bytes(candidate).party_count, 5)
++            self.assertEqual(receipt['transition'], [4, 5])
++        with self.assertRaisesRegex(ValueError, 'exact immutable'):
++            t.derive(raw + b'X', record, t.ROM_SHA256)
++        with patch.object(t, 'SOURCE_SHA256', hashlib.sha256(raw).hexdigest()):
++            with self.assertRaisesRegex(ValueError, 'exact game-generated'):
++                t.derive(raw, bytes([1]) + record[1:], t.ROM_SHA256)
+ 
+ 
+ if __name__ == '__main__':
