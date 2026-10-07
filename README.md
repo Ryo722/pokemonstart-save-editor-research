@@ -65,16 +65,9 @@ Stable provenance work remains separate and is not on the current practical term
 - **Exact-v0.22 Party append + Inventory insertion + localhost GUI: COMPLETE EXPERIMENTALLY / ADOPTED.**
 - **Exact-v0.22 composed Party append + Antidote insertion GUI transaction: COMPLETE EXPERIMENTALLY / ADOPTED.**
 
-The remaining practical gap is converting exact-canary capabilities into a reusable product for naturally progressed exact-v0.22 saves.
+The exact-v0.22 practical product is now **COMPLETE / ADOPTED on canonical `main`**. R1 reusable eligibility, R2 practical Party / Items / Money core, R3 localhost GUI, and R4 two-cycle naturally-progressed-save acceptance are complete under the bounded evidence recorded in the repository.
 
-The authorized forward sprint is:
-
-- **R1 — reusable exact-v0.22 eligibility**
-- **R2 — practical reusable Party / Items / Money core**
-- **R3 — PKHeX-familiar localhost GUI**
-- **R4 — two-cycle naturally-progressed-save product acceptance**
-
-See `docs/v022-practical-product-sprint.md` for the exact scope and stop conditions.
+See `docs/v022-practical-product-sprint.md` for the original scope and `docs/v022-product-sprint-completion-evidence.json` plus the review packets for the completed acceptance record.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -108,22 +101,15 @@ The existing NiceGUI prototype provides upload, inspection, preview and verified
 
 The R3 sprint work converts this research-oriented operation/JSON surface into the practical Party / Items / Trainer editor UI while retaining the same localhost and verified-output safety model unless fresh evidence justifies otherwise.
 
-## Product sprint candidate (not adopted)
+## Canonical exact-v0.22 practical product
 
-The candidate practical GUI is available with ordinary Party / Items / Trainer
-controls and composed verified downloads:
+The canonical practical GUI provides ordinary Party / Items / Trainer controls and composed verified downloads:
 
 ```bash
 .venv/bin/python pokemonstart_v022_product_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
 ```
 
-The candidate supports reusable Money, bounded existing Party edits, Potion
-quantity, and Antidote x1 insertion/removal for the exact observed regular-item
-record shape. A Human-verified two-cycle GUI/game workflow is recorded. The
-bounded candidate is ready for fresh-context independent review; it is not
-canonical adoption or Stable support. Pocket capacity, general item mapping and
-Give All Items remain unqualified. See [candidate limits and
-evidence](docs/v022-product-candidate.md).
+The canonical product supports reusable Money, bounded existing Party edits, Potion quantity, and Antidote x1 insertion/removal for the exact observed regular-item record shape. A Human-verified two-cycle GUI/game workflow is recorded. It remains exact-v0.22 bounded and is **not** a public release or Stable-promotion claim. Pocket capacity, general item mapping, Give All Items, broader Party models, and other versions remain unqualified. See [product limits and evidence](docs/v022-product-candidate.md).
 The prior research GUI and bounded APIs retain their existing behavior.
 
 ## Shared safeguards
