@@ -1,9 +1,9 @@
-# E1/E2 restricted medicine candidate — combined Human gate pending
+# E1/E2 restricted medicine candidate — accepted Human round trip
 
-Disposition: **E2_CANDIDATE_READY_FOR_HUMAN_ACCEPTANCE**.
+Disposition: **READY_FOR_INDEPENDENT_REVIEW**.
 E1: **E1_MODEL_QUALIFIED_FOR_E2_CANDIDATE**.
 This is an implementation candidate, not independent review or canonical adoption.
-PR #21 remains draft. Human E2 normal-game acceptance is **PENDING**.
+PR #21 remains draft. Human E2 normal-game acceptance is **PASSED**.
 
 ## Exact identity
 
@@ -18,7 +18,7 @@ The [restricted E1 qualification](e1-restricted-state-qualification.md) contains
 the rebuilt complete criterion matrix, exact addresses and bounded topology.
 The [sanitized machine packet](e1-e2-inventory-candidate-evidence.json) records
 fresh private-input qualification, exact function-region hashes, isolated
-execution, GUI/core/auditor equality and the pending acceptance recipe.
+execution, GUI/core/auditor equality and the completed acceptance recipe.
 Its nested read-only qualification retains `writer_authorized: false`: that
 field describes the diagnostic catalog/decoder, not the implemented E2 API.
 
@@ -121,7 +121,7 @@ of 700 distinct ordinary items in this ROM. Isolated probes do not establish
 global absence of custom game behavior. The bounded inspected topology and
 fail-closed predicate define the supported capability.
 
-## One combined Human acceptance gate
+## One combined Human acceptance gate — completed
 
 Private workspace was prepared with an immutable copy of the naturally
 progressed T3 save (counter14, SHA-256
@@ -137,15 +137,39 @@ the regular count remains three. Separate machine/native cases cover changing
 the derived count. The private machine reference is comparison evidence only;
 Human must export the composed GUI output and load that output in the game.
 
-Required: verify onscreen names/quantities, return to normal overworld, normal
-in-game SAVE, fully quit/flush mGBA, retain separate immutable returned .sav,
-SHA-256 and size. No savestate is persistence evidence. The exact local operator
-procedure is supplied separately and is not published in Git.
+The Human reports item editing and normal SAVE succeeded. The supplied retention
+command confirms mGBA fully closed before snapshot. Visual observations are
+Human testimony; machine reconstruction below is separate evidence.
 
-After Human completion, independently re-decode the return: add/set/remove
-survive, unsupported regular records and other pockets preserved, Party/Money
-preserved except specifically explained native effects, normal-save epoch and
-eligibility retained. Unexplained mutation requires a concrete stop, not repair.
+Returned snapshot: **131088 bytes**, mode400, SHA-256
+`39904e9943f594888af49f2deee7630f784154d148f63d6a47b471f52776f29a`.
+Both restricted decoder and independently reconstructed RAM auditor agree:
+
+- Exact regular sequence: Venusaurite1, Antidote7, Burn Heal11; Potion absent.
+- All five pocket record sequences and three menu counts unchanged from GUI output.
+- Complete 600-byte Party storage and count unchanged; all decoded Party equal.
+- Money unchanged at 7,653,721; no purchase/use effect needs explaining.
+- Returned save is E2-eligible with selector clear, neutral classification and
+  compact valid list; normal save epoch advances counter14→15.
+- Previous active slot remains byte-identical; all sections rotate one position;
+  all 28 checksums pass; checksum-excluded tails and sectors28–31 unchanged.
+- Saved-game statistic14→15; play time does not decrease. Every other logical
+  payload delta is classified by the existing independent normal-transition
+  model (`tests/m4_independent_game_transition_audit.py`), corroborated in
+  `docs/m4-p-transition-model.md`: section0 0x11/0x12 play-time fields;
+  section1 0x70C/0x71C/0x724/0x728/0x72C eventObjects[3] runtime flags,
+  current X, facing/movement direction, movement action, previous direction;
+  section2 0x210 saved-game statistic. No unexplained payload delta remains.
+- The emulator's external 16-byte footer changed; it remains opaque under the
+  existing normal-resave policy. No footer semantics are claimed.
+- Source ROM, original source save, editor snapshot and returned snapshot remain
+  unchanged by the read-only checks. Human input hash checks separately passed.
+
+The private verification imported the independent transition classifier and
+metadata reader, independently parsed sections, checked rotation/counters,
+classified every payload delta and compared all Party bytes. No proprietary
+byte values, payloads or private paths are published. These are implementation
+verification checks, not the separate independent review of this candidate.
 
 ## Complete changed-file inventory from canonical base
 
@@ -165,4 +189,4 @@ Tests: `tests/test_v022_inventory_editor.py`, `tests/test_v022_inventory_model.p
 
 No raw ROM/save/disassembly, proprietary table dump, patch, .pks or private
 absolute path is included. No independent-review disposition is asserted.
-Human acceptance and the final independent-review packet remain pending.
+Human acceptance has passed. Independent review and any adoption decision remain separate later contexts.

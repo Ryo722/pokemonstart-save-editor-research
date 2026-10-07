@@ -487,7 +487,7 @@
       }
     ],
     "source_and_rom_immutable": true,
-    "human_acceptance": "PENDING"
+    "human_acceptance": "PASSED"
   },
   "isolated_exact_probe": {
     "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
@@ -779,13 +779,13 @@
     "limit": "Isolated Thumb execution with allocator/FlagGet/memcpy/free intercepted; no gameplay proof."
   },
   "candidate_scope": {
-    "disposition": "E2_CANDIDATE_READY_FOR_HUMAN_ACCEPTANCE",
+    "disposition": "READY_FOR_INDEPENDENT_REVIEW",
     "e1": "E1_MODEL_QUALIFIED_FOR_E2_CANDIDATE",
     "canonical_base": "785e113fa1885ac17e19da842a74740f62a8e789",
     "tested_implementation": "ca564db324b41cdb326fcdbfd582a36521c67f24",
     "tested_tree": "e2570e3799045747ac8b1ffd1ba308f475d0a104",
     "independent_review": "NOT_PERFORMED",
-    "human_game_acceptance": "PENDING",
+    "human_game_acceptance": "PASSED",
     "canonical_adoption": false
   },
   "current_verification": {
@@ -799,5 +799,93 @@
     "protected_artifact_private_path_scan": "PASS",
     "redacted_secret_scan": "PASS",
     "diff_whitespace": "PASS"
+  },
+  "human_acceptance": {
+    "disposition": "HUMAN_E2_ACCEPTANCE_PASSED",
+    "source_sha256": "6e2c92c4e86b9436ca0647b6852b999eb107318d1356098a3cddafba11d8c55f",
+    "editor_sha256": "633dbfbdc95e6970c66de049bf44452e80a46e75afb89e22890ba89940b801fe",
+    "return_sha256": "39904e9943f594888af49f2deee7630f784154d148f63d6a47b471f52776f29a",
+    "size": 131088,
+    "return_read_only": true,
+    "human_attestation": "Human reports item editing and normal in-game SAVE succeeded. Retention command confirms mGBA closed before snapshot. No separate machine claim of visual observation.",
+    "regular": [
+      {
+        "name": "フシギバナイト",
+        "quantity": 1
+      },
+      {
+        "name": "どくけし",
+        "quantity": 7
+      },
+      {
+        "name": "やけどなおし",
+        "quantity": 11
+      }
+    ],
+    "all_five_pockets_equal_to_editor": true,
+    "both_decoders_equal": true,
+    "returned_e2_eligible": true,
+    "party_complete_600_bytes_and_count_equal": true,
+    "money_equal": true,
+    "money": 7653721,
+    "counter_transition": [
+      14,
+      15
+    ],
+    "saved_game_statistic_transition": [
+      14,
+      15
+    ],
+    "play_time_nondecreasing": true,
+    "previous_active_slot_byte_identical": true,
+    "all_sections_rotate_one": true,
+    "all_checksums_valid": true,
+    "checksum_excluded_tails_identical": true,
+    "sectors_28_31_identical": true,
+    "classified_native_payload_changes": [
+      {
+        "section": 0,
+        "offset": "0x11",
+        "semantic": "SaveBlock2.playTimeSeconds"
+      },
+      {
+        "section": 0,
+        "offset": "0x12",
+        "semantic": "SaveBlock2.playTimeVBlanks"
+      },
+      {
+        "section": 1,
+        "offset": "0x70c",
+        "semantic": "SaveBlock1.eventObjects[3].runtimeFlags[0]"
+      },
+      {
+        "section": 1,
+        "offset": "0x71c",
+        "semantic": "SaveBlock1.eventObjects[3].currentCoords.x"
+      },
+      {
+        "section": 1,
+        "offset": "0x724",
+        "semantic": "SaveBlock1.eventObjects[3].facingDirection/movementDirection"
+      },
+      {
+        "section": 1,
+        "offset": "0x728",
+        "semantic": "SaveBlock1.eventObjects[3].movementActionId"
+      },
+      {
+        "section": 1,
+        "offset": "0x72c",
+        "semantic": "SaveBlock1.eventObjects[3].previousMovementDirection"
+      },
+      {
+        "section": 2,
+        "offset": "0x210",
+        "semantic": "SaveBlock1.gameStats[GAME_STAT_SAVED_GAME]"
+      }
+    ],
+    "opaque_footer_changed": true,
+    "source_rom_and_snapshots_immutable": true,
+    "independent_review_performed": false
   }
 }
