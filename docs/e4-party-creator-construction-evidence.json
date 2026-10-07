@@ -1,0 +1,307 @@
+{
+  "canonical_base": "381bc80080919952c9a32bb7982dfcf24bc92ea5",
+  "disposition": "BOUNDED_STOP_WITH_CONCRETE_EVIDENCE",
+  "probe_source_sha256": "890c313f55a41b4b6aa6c557e9e7defd231d5cbc32846d47e01f2d0a6067dfb7",
+  "constructor_experiment": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+    "evidence_class": "exact-ROM isolated execution with partially reconstructed RAM",
+    "constructor_entry": "0x0803D1C0",
+    "box_constructor_entry": "0x09075150",
+    "baseline_cases": 1216,
+    "destination_fill_comparisons": 1216,
+    "ordinary_disagreements": [],
+    "baseline_constant_disagreements": [],
+    "runtime_variants": [
+      {
+        "controlled_byte": 1,
+        "changed_record_offsets": [],
+        "personality_equal": true
+      },
+      {
+        "controlled_byte": 2,
+        "changed_record_offsets": [],
+        "personality_equal": true
+      },
+      {
+        "controlled_byte": 255,
+        "changed_record_offsets": [],
+        "personality_equal": true
+      }
+    ],
+    "flag_variants": [
+      {
+        "flag": 2088,
+        "changed_record_offsets": [],
+        "personality_equal": true,
+        "native_shiny": false,
+        "species_equal": true
+      },
+      {
+        "flag": 2323,
+        "changed_record_offsets": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "personality_equal": false,
+        "native_shiny": true,
+        "species_equal": true
+      },
+      {
+        "flag": 2352,
+        "changed_record_offsets": [],
+        "personality_equal": true,
+        "native_shiny": false,
+        "species_equal": true
+      },
+      {
+        "flag": 4856,
+        "changed_record_offsets": [],
+        "personality_equal": true,
+        "native_shiny": false,
+        "species_equal": true
+      }
+    ],
+    "reference_native_shiny": false,
+    "unreconstructed_reads": [
+      {
+        "pc": "0x804448e",
+        "address": "0x3005040",
+        "size": 4
+      },
+      {
+        "pc": "0x806ddcc",
+        "address": "0x3005ed8",
+        "size": 1
+      },
+      {
+        "pc": "0x8099976",
+        "address": "0x20397e4",
+        "size": 2
+      },
+      {
+        "pc": "0x9075584",
+        "address": "0x203dfc0",
+        "size": 1
+      },
+      {
+        "pc": "0x9075590",
+        "address": "0x203dfd0",
+        "size": 1
+      },
+      {
+        "pc": "0x90758f4",
+        "address": "0x3003569",
+        "size": 1
+      }
+    ],
+    "flag_queries": [
+      2088,
+      2323,
+      2352,
+      4856
+    ],
+    "variable_queries": [
+      20504
+    ],
+    "stack_fill_comparisons": 152,
+    "complete_independent_constructor_established": false,
+    "writer_or_gui_creation_added": false,
+    "human_gameplay": false,
+    "limits": [
+      "runtime bag/key state and fishing state are not reconstructed",
+      "native default move algorithm not independently reconstructed",
+      "PID postprocessing and generated metadata not completely qualified",
+      "complete destination overwrite does not prove correct initialization"
+    ],
+    "sources_immutable": true
+  },
+  "stack_dependence": {
+    "affected_species_count": 152,
+    "offset_histogram": [
+      {
+        "offsets": [
+          12,
+          13,
+          14
+        ],
+        "species_count": 15
+      },
+      {
+        "offsets": [
+          13,
+          14
+        ],
+        "species_count": 52
+      },
+      {
+        "offsets": [
+          14
+        ],
+        "species_count": 85
+      }
+    ]
+  },
+  "aggregate": {
+    "growth_groups": [
+      0,
+      3,
+      4,
+      5
+    ],
+    "all_owner_ID_and_name_equal": true,
+    "all_primary_type_equal": true,
+    "all_baseline_fixed_personalities_preserved": true,
+    "ability2_present_species": 103,
+    "ability2_absent_species": 49
+  },
+  "selected_bounded_semantic_observations": {
+    "1": {
+      "growth": 3,
+      "ability2_present": false,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "19": {
+      "growth": 0,
+      "ability2_present": true,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "25": {
+      "growth": 0,
+      "ability2_present": false,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "63": {
+      "growth": 3,
+      "ability2_present": true,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "129": {
+      "growth": 5,
+      "ability2_present": false,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "133": {
+      "growth": 0,
+      "ability2_present": true,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "150": {
+      "growth": 5,
+      "ability2_present": false,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    },
+    "288": {
+      "growth": 0,
+      "ability2_present": true,
+      "tera_matches_primary_type": true,
+      "nickname_matches_ROM_prefix": false,
+      "language": 1,
+      "ball": 3,
+      "sanity": 2,
+      "pokerus_timer": 255,
+      "identity_preserved_in_all_cases": true
+    }
+  },
+  "canonical_template_fresh_reproduction": {
+    "evidence_class": "retained private inputs freshly reproduced; gameplay remains canonical Human attestation",
+    "source_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+    "native_acquisition_sha256": "c129892cd442fba6becd32db6dcb3061c9f8df9ea3d4550f53dff106b9abfbee",
+    "record_sha256": "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3",
+    "template_import_independent_complete_equality": true,
+    "template_import_all_outside_envelope_preserved": true,
+    "count_transition": [
+      4,
+      5
+    ],
+    "template_import_changed_byte_count": 47,
+    "returned_sha256": "256bf24dd9d3c2d6601d5203f56ff8b2f9ef4d59c5d8114f684e81be69dccdbe",
+    "returned_counter": 10,
+    "returned_party_count": 5,
+    "returned_Rattata": {
+      "species": 19,
+      "stored_level": 3,
+      "experience": 27,
+      "friendship": 50,
+      "ivs": [
+        30,
+        30,
+        9,
+        18,
+        31,
+        27
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "held_item": 0,
+      "cached_hp_stats": [
+        4,
+        15,
+        9,
+        7,
+        9,
+        7,
+        6
+      ],
+      "resolved_ability": 50
+    },
+    "source_before_after_identity": true
+  },
+  "non_claims": [
+    "not a complete independent 100-byte constructor",
+    "not creator machine qualification",
+    "no game-load/gameplay/normal-SAVE experiment in this work",
+    "no Human acceptance request",
+    "no adoption or merge"
+  ]
+}
