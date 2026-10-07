@@ -26,3 +26,16 @@ class ReusableMoneyTests(unittest.TestCase):
             with self.subTest(rom=rom),self.assertRaises(ValueError):m.qualify(raw,rom)
         raw=bytearray(save());raw[0]^=1
         with self.assertRaises(ValueError):m.qualify(bytes(raw),ROM)
+
+    def test_range_targets_full_preservation_and_repeat(self):
+        raw=save()
+        for target in (0,1,1234567,7654321,9999999):
+            out,report=m.derive(raw,ROM,target)
+            self.assertEqual(m.inspect(out,ROM)['money'],target)
+            self.assertEqual(raw[14*4096:],out[14*4096:])
+            self.assertEqual(out,m.derive(raw,ROM,target)[0])
+            self.assertTrue(report['verifier_accepted'])
+            again,_=m.derive(out,ROM,42)
+            self.assertEqual(m.inspect(again,ROM)['money'],42)
+        for target in (True,1.0,'1',-1,10000000,3032):
+            with self.assertRaises(ValueError):m.derive(raw,ROM,target)
