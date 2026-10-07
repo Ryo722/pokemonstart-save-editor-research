@@ -60,9 +60,11 @@ def derive(raw, rom_sha256, request):
         if name=='money':semantics.append(f"Money: {receipt['money']['from']:,} → {receipt['money']['to']:,}")
         elif name=='items':
             before={entry['item_id']:entry['quantity'] for entry in receipt['before']['entries']}
-            for entry in receipt['after']['entries']:
-                old=before.get(entry['item_id'],0)
-                if old!=entry['quantity']:semantics.append(f"{entry['name']}: x{old} → x{entry['quantity']}")
+            after={entry['item_id']:entry['quantity'] for entry in receipt['after']['entries']}
+            names={entry['item_id']:entry['name'] for entry in receipt['before']['entries']+receipt['after']['entries']}
+            for item_id in sorted(before.keys()|after.keys()):
+                old,new=before.get(item_id,0),after.get(item_id,0)
+                if old!=new:semantics.append(f"{names[item_id]}: x{old} → x{new}")
         else:
             for field,before in receipt['before'].items():
                 after=receipt['after'][field]

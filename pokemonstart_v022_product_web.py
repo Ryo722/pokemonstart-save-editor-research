@@ -143,10 +143,12 @@ def create_page(rom_path):
                                 if entry['editable']:controls['potion']=number('Quantity',entry['quantity'],1,3)
                                 else:ui.label(f"x{entry['quantity']} (read-only)")
                         if item_report['can_insert_antidote']:
-                            controls['insert']=ui.checkbox('Add Antidote x1（観測済み空き第3枠）')
+                            controls['insert']=ui.checkbox('Add Antidote x1（観測済み第3枠）')
                             controls['insert'].on_value_change(lambda _:invalidate())
-                        ui.button('Remove item — 非対応').disable()
-                        ui.label('Antidote 挿入は既存の正本 proof-root のみ。再利用時の重複確認・削除・整列・全容量は未確立。Give All Supported Ordinary Items は保留。')
+                        if item_report['can_remove_antidote']:
+                            controls['remove']=ui.checkbox('Remove Antidote x1（観測済み第3枠）')
+                            controls['remove'].on_value_change(lambda _:invalidate())
+                        ui.label('Antidote の追加・削除は Potion x1..3 / item #533 x1 / 第3枠とゼロ tail が一致する場合のみ対応。後続枠・容量・一般的な並べ替えは未確立。Give All Supported Ordinary Items は保留。')
                     else:ui.label('Items 非対応: '+report['rejections'].get('items',''))
                     ui.label('Balls / Medicine / Berries / TM / Key Items / その他の pocket: 未確立・編集非対応。')
                 with ui.tab_panel(trainer_tab):
@@ -185,6 +187,7 @@ def create_page(rom_path):
             quantity=control_integer(controls['potion'].value)
             if quantity!=inspection['items']['entries'][0]['quantity']:item_changes['potion_quantity']=quantity
         if 'insert' in controls and controls['insert'].value:item_changes['insert_antidote']=True
+        if 'remove' in controls and controls['remove'].value:item_changes['remove_antidote']=True
         if item_changes:result['items']=item_changes
         return result
 

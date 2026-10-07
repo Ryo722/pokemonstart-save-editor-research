@@ -58,27 +58,44 @@ class ProductWebTests(unittest.TestCase):
         from nicegui.elements.upload_files import SmallFileUpload
         from nicegui.elements.number import Number
         from nicegui.elements.button import Button
+        from nicegui.elements.checkbox import Checkbox
         from nicegui.testing import user_simulation
         async def exercise():
             with patch.object(sys,'argv',['app','--rom','unused.gba']),patch.dict(os.environ,{'PYTEST_CURRENT_TEST':'product simulation'}):
                 async with user_simulation(main_file=Path(__file__).with_name('v022_product_simulation_app.py')) as user:
                     await user.open('/')
                     upload=next(iter(user.find(kind=Upload).elements))
-                    await upload.handle_uploads([SmallFileUpload('source.sav','application/octet-stream',self.raw)])
+                    ui_source,_=w.core.derive(self.raw,ROM,{'items':{'potion_quantity':3}})
+                    await upload.handle_uploads([SmallFileUpload('source.sav','application/octet-stream',ui_source)])
                     await user.should_see('読み込み済み')
                     numbers=list(user.find(kind=Number).elements)
                     next(x for x in numbers if x.label=='Money').value=1234567
                     next(x for x in numbers if x.label=='Friendship — Party #1').value=200
                     next(x for x in numbers if x.label=='Quantity').value=3
+                    next(iter(user.find(kind=Checkbox).elements)).value=True
                     user.find(kind=Button,content='Preview').click()
                     await user.should_see('Money:')
                     user.find(kind=Button,content='検証して別 save を生成').click()
                     await user.should_see('検証済みの別 save を生成しました。')
                     user.find(kind=Button,content='検証済み .sav を保存').click()
                     download=await user.download.next()
-                    expected,_=w.core.derive(self.raw,ROM,{'money':1234567,
-                        'party':[{'slot':0,'changes':{'friendship':200}}],'items':{'potion_quantity':3}})
+                    expected,_=w.core.derive(ui_source,ROM,{'money':1234567,
+                        'party':[{'slot':0,'changes':{'friendship':200}}],
+                        'items':{'insert_antidote':True}})
                     self.assertEqual(download.content,expected)
                     next(x for x in numbers if x.label=='Money').value=42
                     self.assertFalse(next(iter(user.find(kind=Button,content='検証済み .sav を保存').elements)).enabled)
+                    with_antidote,_=w.core.derive(ui_source,ROM,{'items':{'insert_antidote':True}})
+                    await upload.handle_uploads([SmallFileUpload('with-antidote.sav','application/octet-stream',with_antidote)])
+                    await user.should_see('読み込み済み')
+                    remove_box=next(iter(user.find(kind=Checkbox).elements))
+                    remove_box.value=True
+                    user.find(kind=Button,content='Preview').click()
+                    await user.should_see('Antidote: x1 → x0')
+                    user.find(kind=Button,content='検証して別 save を生成').click()
+                    await user.should_see('検証済みの別 save を生成しました。')
+                    user.find(kind=Button,content='検証済み .sav を保存').click()
+                    removed=await user.download.next()
+                    expected_removed,_=w.core.derive(with_antidote,ROM,{'items':{'remove_antidote':True}})
+                    self.assertEqual(removed.content,expected_removed)
         asyncio.run(exercise())

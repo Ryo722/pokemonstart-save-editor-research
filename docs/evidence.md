@@ -203,3 +203,34 @@ M1's read-only reproduction gap is closed for the supplied v0.15 original/test/r
 M2's bounded repository-writer and fresh game round-trip evidence requirements are closed for the exact allowlisted v0.15 proof input and HP-IV 31→30 transformation. The proof is now canonical on `main` via PR #4.
 
 Broader gaps remain outside this milestone: exact distribution provenance, package hash/extraction transcript, exact PokemonStart/CFRU-JP integration revision, version/build generalization, emulator-footer semantics beyond opaque preservation/reporting, support for non-allowlisted saves, and field-specific writer coupling. No protected binary should enter this repository.
+
+## Exact-v0.22 practical product sprint — candidate evidence refresh — 2026-10-07
+
+The candidate branch independently reproduced the private Cycle 1 return
+(`6 -> 7`), naturally progressed save (`7 -> 9`), and Cycle 2 return
+(`9 -> 10`). Cycle 1 and Cycle 2 each passed the structural acceptance harness,
+preserved the prior active slot, retained requested semantics and remained
+eligible. The Cycle 2 return retained Money `7,654,321`, Friendship `181` and
+Potion x2. The live disposable save and frozen returned snapshot matched after
+mGBA was fully exited. The harness's `r4_complete=false` is retained because
+only a Human can attest the visual/gameplay actions.
+
+Human gameplay attestation is recorded separately: exact-v0.22 load and normal
+SAVE in both cycles; ordinary Inventory deletion/save and Antidote purchase/save
+between cycles; and, in the separate Rattata import check, summary/move display,
+healing, battle action, battle completion and normal SAVE. These observations
+are not inferred from counters or hashes.
+
+Local private-input verification independently rechecked the three Inventory
+record sequences and stable section13 checksum, the candidate's in-place
+Antidote remove/insert round-trip, the exact template-import candidate hash,
+Party count and byte envelope, and the returned Rattata structural identity.
+Candidate implementation evidence includes the corresponding fail-closed
+predicates and tests. The Rattata result remains one exact game-generated
+record import; it does not claim arbitrary Pokémon creation. Details and
+sanitized hashes are in `docs/v022-product-sprint-completion-evidence.json` and
+`docs/v022-native-inventory-and-template-import-evidence-20261007.md`.
+
+The sprint candidate is experimental and pending fresh-context independent
+review. It has not been adopted on `main`, promoted to Stable or publicly
+released. Private ROM/save inputs remain outside Git.

@@ -3,7 +3,6 @@ from __future__ import annotations
 import struct
 import pokemonstart_save_verifier as v
 import pokemonstart_fl2_core as profile
-import pokemonstart_fastlab_v022_creation as canonical_creation
 
 NAMES = {13:'Potion',14:'Antidote',533:'Preserved item #533'}
 OFFSET = 0xADC
@@ -64,35 +63,44 @@ def inspect(raw, rom_sha256):
             or prefix[2] not in ((0,0),(14,1)) or any(section.data[OFFSET+12:])):
         raise ValueError('Items requires observed Potion x1..3 / preserved #533 x1 / optional Antidote x1 prefix and zero tail')
     return {'entries':[{'slot':i,'item_id':item,'name':NAMES[item],'quantity':qty,
-                        'editable':item==13,'removable':False}
+                        'editable':item==13,'removable':item==14}
                        for i,(item,qty) in enumerate(prefix) if item],
-            'can_insert_antidote':prefix[2]==(0,0) and profile.sha(raw)==canonical_creation.INVENTORY_SOURCE_SHA256,'window_slots':3,
+            'can_insert_antidote':prefix[0]==(13,3) and prefix[2]==(0,0),
+            'can_remove_antidote':prefix[0]==(13,3) and prefix[2]==(14,1), 'window_slots':3,
             'capacity':'unqualified beyond observed three-record window',
-            'insertion':'exact canonical pre-purchase root only; reusable whole-pocket uniqueness unqualified',
-            'removal':'unsupported: exact-build removal/compaction behavior not established',
+            'insertion':'observed slot 2 only for exact Potion / item #533 prefix and zero tail',
+            'removal':'observed slot 2 only; zero in place, no compaction',
             'checksum_covered':False}
 
 
 def derive(raw, rom_sha256, changes):
     before=inspect(raw,rom_sha256)
-    if not isinstance(changes,dict) or not changes or set(changes)-{'potion_quantity','insert_antidote'}:
-        raise ValueError('unsupported Items operation; removal/capacity remain unqualified')
+    if not isinstance(changes,dict) or not changes or set(changes)-{'potion_quantity','insert_antidote','remove_antidote'}:
+        raise ValueError('unsupported Items operation; capacity beyond the observed window remains unqualified')
+    if 'insert_antidote' in changes and 'remove_antidote' in changes:
+        raise ValueError('cannot insert and remove Antidote in one transaction')
     result=v.verify_bytes(raw)
     section=result.slots[result.active_slot].section(13)
     base=section.physical_sector*4096+OFFSET
     output=bytearray(raw);allowed=set()
+    if 'insert_antidote' in changes:
+        if changes['insert_antidote'] is not True or not before['can_insert_antidote']:
+            raise ValueError('Antidote insertion requires the observed empty slot 2 and zero tail')
+        proven,_=insert_observed_antidote(bytes(output),rom_sha256)
+        output=bytearray(proven)
+        allowed.update(range(base+8,base+12))
+    if 'remove_antidote' in changes:
+        if changes['remove_antidote'] is not True or not before['can_remove_antidote']:
+            raise ValueError('Antidote removal requires the observed Antidote x1 in slot 2 and zero tail')
+        proven,_=remove_observed_antidote(bytes(output),rom_sha256)
+        output=bytearray(proven)
+        allowed.update(range(base+8,base+12))
     if 'potion_quantity' in changes:
         quantity=changes['potion_quantity']
         if type(quantity) is not int or not 1<=quantity<=3:
             raise ValueError('Potion quantity must be an integer in observed range 1..3')
         struct.pack_into('<H',output,base+2,quantity)
         allowed.update((base+2,base+3))
-    if 'insert_antidote' in changes:
-        if changes['insert_antidote'] is not True or not before['can_insert_antidote']:
-            raise ValueError('Antidote insertion requires exact canonical root; full-pocket uniqueness remains unqualified')
-        proven,_=canonical_creation.insert_inventory(raw,rom_sha256)
-        output[base+8:base+12]=proven[base+8:base+12]
-        allowed.update(range(base+8,base+12))
     candidate=bytes(output)
     after=inspect(candidate,rom_sha256)
     diffs=[i for i,(a,b) in enumerate(zip(raw,candidate)) if a!=b]
@@ -105,4 +113,6 @@ def derive(raw, rom_sha256, changes):
         raise ValueError('Potion quantity postcondition failed')
     if 'insert_antidote' in changes and after['can_insert_antidote']:
         raise ValueError('Antidote insertion postcondition failed')
+    if 'remove_antidote' in changes and after['can_remove_antidote']:
+        raise ValueError('Antidote removal postcondition failed')
     return candidate,{'before':before,'after':after,'changed_offsets':diffs,'verifier_accepted':True}

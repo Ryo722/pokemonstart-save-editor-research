@@ -70,19 +70,41 @@ The candidate writer accepts only the exact pre-acquisition save hash and the
 exact Rattata record hash. It copies that record unchanged to the first
 unoccupied Party slot, changes Party count 4→5, and recalculates the active
 logical section 1 checksum. No other state is copied from the post-capture
-save. The candidate verifier accepted it. An independent expected-byte
-construction compared equal; all changed bytes were confined to the count,
-100-byte destination record, and two checksum bytes (47 changed bytes in
-this instance). Every byte outside that envelope is identical to the
-pre-acquisition save.
+save. The repository verifier and independent complete-byte construction
+accepted the output. The 47 changed bytes are confined to the count, 100-byte
+destination record and two checksum bytes; every byte outside that envelope is
+identical to the pre-acquisition save.
 
-This is a template-import proof only. It does not establish arbitrary record
-synthesis, arbitrary species, Pokédex consistency, or that the game will
-accept the output. The next Human action is to load the disposable candidate
-with the exact v0.22 ROM, inspect Party[5]'s summary and moves, enter one safe
-battle to confirm it can participate, then perform a normal in-game SAVE and
-close/flush mGBA. Preserve the returned save separately for structural
-analysis. Do not use it as a live save.
+### Disposition: GAME-ACCEPTED / NORMAL-SAVE-ACCEPTED
+
+### Human game proof and returned-save verification
+
+The Human loaded the exact candidate in exact v0.22. Party slot 5 displayed
+the expected Lv3 Rattata; its summary and moves opened normally. The Rattata was
+healed at a Pokémon Center, entered a safe battle, performed an action, and the
+battle completed. A normal in-game SAVE succeeded and mGBA was closed/flushed.
+These observations are Human gameplay attestation, separate from machine
+verification.
+
+Returned snapshot SHA-256 is
+`256bf24dd9d3c2d6601d5203f56ff8b2f9ef4d59c5d8114f684e81be69dccdbe`.
+The repository verifier accepted it at active counter 10 with Party count 5.
+Party[4] remained species 19, level 3, EXP 27, friendship 50, moves 33/39,
+IVs 30/30/9/18/31/27 and zero EVs. PP and HP reflect ordinary healing/battle
+activity. This is machine verification of the returned save, separate from
+Human observation of the battle and normal SAVE.
+
+Supported conclusion: a complete valid game-generated 100-byte Pokémon Party
+record can be imported into an empty Party slot with the count change and
+required checksum update, without copying unrelated native capture/Pokédex/
+battle/event state, and exact v0.22 can load, display, heal, battle with and
+normally save that imported Pokémon.
+
+This remains one exact-record template-import proof. It does not establish
+arbitrary Pokémon synthesis, arbitrary species construction, automatic
+Pokédex consistency, Box creation, legality generation or generic Pokémon
+constructors. The operation remains experimental evidence and is not exposed
+as a general GUI feature.
 
 A local exact-ROM method to force a wild encounter species has not been
 derived. No known FireRed cheat address or downloaded code is evidence for
@@ -91,11 +113,29 @@ be a second ordinary game-native capture of a different species. Static
 ROM-backed encounter-table/runtime analysis can follow from a disposable ROM
 copy if a higher-diversity specimen is still needed.
 
-## R4 position
+## R4 disposition
 
-Human-attested Cycle 1 exact-v0.22 load and normal SAVE succeeded. The
-returned save passed `check-return`, retained requested semantics, advanced
-counter 6→7, and remained eligible. Normal gameplay produced a new save hash;
-`check-progress` accepted it as a new reusable input, and the progressed save
-produced a Cycle 2 transaction. Cycle 2 game round trip remains outstanding,
-so R4 is not complete.
+The R4 sequence used the actual product GUI twice. Cycle 1 began from a
+previously unseen save SHA, was loaded in exact v0.22 and normally saved. The
+returned save passed the acceptance harness, retained requested semantics,
+advanced counter 6→7 and remained eligible. Human gameplay then removed the
+last Antidote through the normal Inventory UI, normally saved, purchased one
+Antidote, normally saved again and closed/flushed the emulator. The resulting
+new SHA advanced the counter 7→9, qualified under the candidate predicates and
+produced the Cycle 2 GUI transaction.
+
+Cycle 2's exact GUI output loaded in exact v0.22. The Human observed Money
+7,654,321, Potion x2 and a normal Party, then completed a normal SAVE and
+closed/flushed mGBA. The returned snapshot SHA is
+`606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea`.
+Independent harness execution confirmed counter 9→10, preserved the previous
+active slot, retained Money/Friendship/Potion semantics and qualified the
+returned save for another edit. The live disposable save and frozen snapshot
+had identical SHA after mGBA fully exited.
+
+The harness deliberately continues to report
+`STRUCTURAL_ROUNDTRIP_PASS_HUMAN_GAMEPLAY_ATTESTATION_REQUIRED` and
+`r4_complete: false`: it cannot attest Human interaction. Combined machine,
+private-input and separately recorded Human evidence closes R4. The exact
+Rattata template-import experiment is a separate branch from the Cycle 2 source
+and does not contribute to the two-cycle acceptance sequence.

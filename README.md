@@ -117,11 +117,13 @@ controls and composed verified downloads:
 .venv/bin/python pokemonstart_v022_product_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
 ```
 
-Money, bounded existing Party edits and Potion quantity no longer use input-save
-SHA allowlists under their independent predicates. General Inventory insertion /
-removal, pocket capacity and the actual Human two-cycle game acceptance remain
-incomplete. Antidote insertion retains the original exact-root gate. Give All
-Items is deferred. See [the candidate limits and evidence](docs/v022-product-candidate.md).
+The candidate supports reusable Money, bounded existing Party edits, Potion
+quantity, and Antidote x1 insertion/removal for the exact observed regular-item
+record shape. A Human-verified two-cycle GUI/game workflow is recorded. The
+bounded candidate is ready for fresh-context independent review; it is not
+canonical adoption or Stable support. Pocket capacity, general item mapping and
+Give All Items remain unqualified. See [candidate limits and
+evidence](docs/v022-product-candidate.md).
 The prior research GUI and bounded APIs retain their existing behavior.
 
 ## Shared safeguards

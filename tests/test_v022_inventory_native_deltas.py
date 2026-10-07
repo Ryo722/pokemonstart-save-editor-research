@@ -27,6 +27,18 @@ class NativeInventoryDeltaTests(unittest.TestCase):
         self.assertEqual(restored, source)
         self.assertTrue(inserted['restored_observed_position'])
 
+    def test_product_operation_reuses_only_observed_empty_slot_shape(self):
+        source = self.source()
+        deleted, _ = items.derive(source, ROM, {'remove_antidote': True})
+        self.assertEqual(items.inspect(deleted, ROM)['entries'], [
+            {'slot': 0, 'item_id': 13, 'name': 'Potion', 'quantity': 3,
+             'editable': True, 'removable': False},
+            {'slot': 1, 'item_id': 533, 'name': 'Preserved item #533', 'quantity': 1,
+             'editable': False, 'removable': False},
+        ])
+        restored, _ = items.derive(deleted, ROM, {'insert_antidote': True})
+        self.assertEqual(restored, source)
+
     def test_rejects_changed_prefix_and_tail(self):
         source = self.source()
         active = v.verify_bytes(source).slots[v.verify_bytes(source).active_slot]
