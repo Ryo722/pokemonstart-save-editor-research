@@ -151,7 +151,7 @@ Success requires:
 
 Nickname, OT identity, gender, shiny/PID manipulation, ball, markings and other fields may remain later expansion unless evidence makes them cheap and safe. Do not let them block the practical major-field goal.
 
-### E4 — Pokémon creator — NEXT / NOT STARTED
+### E4 — Pokémon creator — COMPLETE / ADOPTED
 
 Goal: create a new ordinary Pokémon in the first empty Party slot from supported semantic parameters.
 
@@ -171,7 +171,7 @@ Success requires:
 
 When Party is full, fail closed with an explicit Box-not-supported reason.
 
-### E5 — PKHeX-like product UX and acceptance
+### E5 — PKHeX-like product UX and acceptance — NEXT / NOT STARTED
 
 Goal: make the supported capabilities feel like an ordinary save editor rather than a research interface.
 
@@ -230,11 +230,11 @@ The following are not prerequisites:
 9. Money is regression-protected, not a research priority.
 10. Re-evaluate the milestone sequence when genuinely new evidence changes the cheapest path; do not redesign merely because a bounded task is in progress.
 
-## Immediate next work — post-E3 boundary
+## Immediate next work — post-E4 boundary
 
-E3 is complete / adopted. Before any E4 implementation, fresh-read current canonical `main` and re-evaluate the milestone boundary: confirm current position, completed proofs, unresolved creation uncertainties, authorization boundary, protected-data boundary, and whether E4 remains the cheapest uncertainty-reducing next step.
+E4 is complete / adopted. Before any E5 implementation, fresh-read current canonical `main` and re-evaluate the milestone boundary: confirm current position, completed proofs, remaining product/UX acceptance gaps, authorization boundary, protected-data boundary, and whether E5 remains the cheapest goal-aligned next step.
 
-This E3 adoption action does **not** authorize E4 implementation. Any bounded E4 work must proceed only under the separately applicable project authorization boundary, with materially expanded writer adoption still independently reviewed and Human-gated.
+This E4 adoption action does **not** authorize E5 implementation. Any bounded E5 work must proceed only under the separately applicable project authorization boundary, with any materially expanded capability still independently reviewed and Human-gated.
 
 
 ## E1/E2 adoption record — 2026-10-07
@@ -247,3 +247,12 @@ PR #21 merged the independently reviewed exact E1/E2 Inventory candidate into ca
 PR #23 merged exact independently reviewed candidate `084f7e8089da2450521fb3069f6b0b62e85cc99b` into canonical `main` as merge commit `165dda2edbb94dca559cd426ba37189e7220f18e` after explicit Human adoption authorization. Human-played writer/GUI commit was `34517a6e8664a510a8a909725ad5cf59cdaeecfb`; the follow-up candidate changed returned-save verification for the opaque 16-byte emulator trailer without changing writer/model/core/GUI semantics.
 
 The grouped Human acceptance covered three materially different ordinary Party specimens plus Money/Inventory regression in one transaction. Returned-save verification recorded normal SAVE counter `10→11`, persistence of requested edits and regression state, Rattata recovery from `3/13` to `13/13`, explainable battle/heal drift, and continued ordinary eligibility. The fresh independent-review disposition was `APPROVED_FOR_HUMAN_ADOPTION_DECISION`, recorded as Human-attested fresh-review evidence. This adoption does not authorize E4, release, Stable promotion, cross-version expansion, Box/Pokédex/story/event scope, or protected-data publication.
+
+
+## E4 adoption record — 2026-10-08
+
+PR #24 merged exact independently reviewed reporting head `0ffa1fe5912201f51e4450d68205fcd51dee1e80` into canonical `main` as merge commit `146492eb2951ff10c9f7f9b83d634ac819e69993` after explicit Human adoption authorization. The Human-played implementation was `3fd7c9ca43b1190feb47e89d2b1684a6344617bd` with tree `74d0f559c8af542d8fc0d6d13a7cbc0ee95b37fe`; the reporting tree was `40d0e76edeff2df508d93405a878f2e70048c472`, and the implementation-to-reporting diff added only `docs/reviews/e4-party-creator-human-acceptance-handoff.md`.
+
+The grouped Human acceptance created two materially different ordinary Party Pokémon through the actual GUI: Bulbasaur Lv3 and Rattata Lv20. Human attestation reported summary/moves/ability/battle use normal, Leftovers correct on Rattata, existing Party normal, and no display anomaly or crash/freeze. Returned-save verification recorded normal SAVE counter `12→13`, invariant creation state persistence, explainable ordinary EXP/EV/PP/HP drift, Money/Inventory preservation, and full-Party Box-not-supported rejection. Exact-ROM/native/browser/private-save runs remain sanitized recorded machine evidence where protected inputs are unavailable to later reviewers; Human gameplay remains Human attestation.
+
+The fresh independent-review disposition was `APPROVED_FOR_HUMAN_ADOPTION_DECISION`, recorded as Human-attested fresh independent-review evidence. This adoption does not authorize E5 implementation, Box support, Pokédex/story/event/RTC expansion, release, Stable promotion, cross-version support, protected-data publication, or other scope expansion.
