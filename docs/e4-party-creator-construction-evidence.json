@@ -1,0 +1,290 @@
+{
+  "canonical_base": "381bc80080919952c9a32bb7982dfcf24bc92ea5",
+  "fresh_candidate_base": "69d1d5d9dcdfcdf16e4564204e61682992de205c",
+  "disposition": "E4_CANDIDATE_READY_FOR_HUMAN_ACCEPTANCE",
+  "e4_adopted": false,
+  "human_gameplay": false,
+  "source_file_sha256": {
+    "pokemonstart_v022_creation_probe.py": "62eaec2e1de5b85968a8886df1ef9a75dc34f1d4aab992f1109f98c43b0ec32a",
+    "pokemonstart_v022_creation_context_probe.py": "f238ed3b067fec793587813a97b3ffc951589331bbce3709fbf0b93dbf97d3b8",
+    "pokemonstart_v022_nickname_probe.py": "b43bd9b66442b2e82032d5dcbb4cc15759b62da03cda6166a05a2c958d0d942f",
+    "pokemonstart_v022_creation_qualification.py": "cdffad24f28d0fac212113e6038fa3b3afc50a28f347b447eee2f94121926485",
+    "pokemonstart_v022_creation_model.py": "815c33f4713a74f4686333290f87064f5b94fff6c1f08015b9921bf54a62dfd9",
+    "pokemonstart_v022_creation_baseline_audit.py": "5b716e070fe30296c7193b047c2547fbc470babd23bfcba843b062587ffb6898",
+    "pokemonstart_v022_creation_writer.py": "13d156aab64ea06fbb3a86da6756ad704a39534cd842a809dd10b732bbfb4f8e",
+    "pokemonstart_v022_creation_acceptance.py": "52576ee71940172eb7cb9ae8d130173529acf71837c087b7451b9ca679f07340",
+    "tests/v022_e4_browser_smoke.py": "f5589e718feedc884c7bfb8b049446814b565d7d98ba61ec856c00946ac52da1"
+  },
+  "nickname_downstream": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+    "evidence_class": "exact-ROM isolated downstream execution, common synthetic UI/battle runtime",
+    "species_cases": 152,
+    "nickname_closed": true,
+    "sources_immutable": true,
+    "limits": [
+      "bounded ordinary default-species names through traced summary, Party font, battle placeholder and evolution default-name paths; no rendered-pixel or whole-game attestation",
+      "serializer result covers Party RAM-to-SaveBlock1 component, not flash hardware execution",
+      "no arbitrary custom-name or link/trade/facility claim"
+    ],
+    "variants_per_species": 4,
+    "paths": {
+      "summary": {
+        "all_complete_output_equal": true,
+        "all_semantic_output_equal": true,
+        "all_intermediate_buffer_equal": false
+      },
+      "evolution_default_name": {
+        "all_complete_output_equal": true,
+        "all_semantic_output_equal": true,
+        "all_intermediate_buffer_equal": null
+      },
+      "battle": {
+        "all_complete_output_equal": true,
+        "all_semantic_output_equal": true,
+        "all_intermediate_buffer_equal": false
+      },
+      "serialization": {
+        "all_complete_output_equal": false,
+        "all_semantic_output_equal": true,
+        "all_intermediate_buffer_equal": null
+      },
+      "party": {
+        "all_complete_output_equal": true,
+        "all_semantic_output_equal": true,
+        "all_intermediate_buffer_equal": false
+      },
+      "ghost_predicate": {
+        "all_complete_output_equal": true,
+        "all_semantic_output_equal": true,
+        "all_intermediate_buffer_equal": false
+      }
+    },
+    "name_lengths": [
+      3,
+      4,
+      5
+    ],
+    "all_native_default_name_status_equal": true,
+    "all_visible_prefix_negative_controls_not_default": true,
+    "all_evolution_exact_fixed_field_normalization": true,
+    "actual_Party_font_EOS_checks": 608,
+    "all_font_EOS_no_tail_reads": true,
+    "all_serializer_preserves_input": true,
+    "canonical_padding": "Exact fixed7 species table name+terminator+FF tail, intentionally written by native evolution default-name setter"
+  },
+  "complete_baseline_native_matrix": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+    "evidence_class": "exact-ROM isolated private-input machine qualification",
+    "complete_100_byte_cases": 2432,
+    "all_25_nature_identity_cases": 15200,
+    "complete_record_agreement": true,
+    "maximum_native_outcome_attempts": 11,
+    "gender_classes": [
+      0,
+      254,
+      255
+    ],
+    "growth_groups": [
+      0,
+      3,
+      4,
+      5
+    ],
+    "name_lengths": [
+      3,
+      4,
+      5
+    ],
+    "qualified_map_groups": 76,
+    "native_origin_cases": 1022,
+    "synthetic_owner_shiny_predicate_cases": 99,
+    "native_type_outcome_cases": 4864,
+    "independent_override_native_recalculation_cases": 32,
+    "native_predicates_agree": true,
+    "unexplained_creator_bytes": 0,
+    "human_gameplay": false,
+    "limits": [
+      "ordinary standalone RAM context; no game-load or full UI rendering",
+      "excluded map groups and regionFF fail closed; no global map-count claim",
+      "explicit moves replace automatic learnsets; no arbitrary nickname/identity controls"
+    ],
+    "sources_immutable": true
+  },
+  "saved_runtime_creation_predicate": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+    "evidence_class": "exact-ROM private-input execution with synthetic saved-mode/runtime controls",
+    "complete_record_context_cases": 128,
+    "complete_record_saved_bag_presence_cases": 16,
+    "maximum_native_outcome_attempts": 2,
+    "flag_storage": [
+      {
+        "flag": "0x828",
+        "section": 1,
+        "offset": "0xfe5",
+        "mask": 1,
+        "saved_native_agree": true
+      },
+      {
+        "flag": "0x913",
+        "section": 0,
+        "offset": "0xf26",
+        "mask": 8,
+        "saved_native_agree": true
+      },
+      {
+        "flag": "0x930",
+        "section": 0,
+        "offset": "0xf2a",
+        "mask": 1,
+        "saved_native_agree": true
+      },
+      {
+        "flag": "0x12f8",
+        "section": 4,
+        "offset": "0xe0b",
+        "mask": 1,
+        "saved_native_agree": true
+      }
+    ],
+    "actual_native_saved_bag_queries": [
+      {
+        "item_id": 471,
+        "present": true
+      },
+      {
+        "item_id": 833,
+        "present": true
+      }
+    ],
+    "native_helpers_reached": [
+      "0x8099948",
+      "0x90b7380",
+      "0x90b7e6c"
+    ],
+    "observed_runtime_reads": [
+      "0x20397e4",
+      "0x203dfc0",
+      "0x203dfd0",
+      "0x3005ed8"
+    ],
+    "region_return_controls": [
+      {
+        "loaded_region": 0,
+        "native_return_equal": true
+      },
+      {
+        "loaded_region": 88,
+        "native_return_equal": true
+      },
+      {
+        "loaded_region": 89,
+        "native_return_equal": true
+      },
+      {
+        "loaded_region": 255,
+        "native_return_equal": true
+      }
+    ],
+    "saved913_false_ordinary_true_shiny_discriminator": true,
+    "human_gameplay": false,
+    "limits": [
+      "routing03005ED8=0 is supported ordinary standalone context; alternate routes are excluded",
+      "valid bag pointer is reconstructed, not adversarial garbage admitted",
+      "fishing/live-battle controls may affect RNG branches; only accepted non-shiny/primary outcomes qualified",
+      "no global runtime irrelevance or complete game-load reconstruction claim"
+    ],
+    "sources_immutable": true
+  },
+  "second_retained_context_native_matrix": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+    "evidence_class": "exact-ROM isolated private-input machine qualification",
+    "complete_100_byte_cases": 160,
+    "all_25_nature_identity_cases": 1000,
+    "complete_record_agreement": true,
+    "maximum_native_outcome_attempts": 9,
+    "gender_classes": [
+      0,
+      254,
+      255
+    ],
+    "growth_groups": [
+      0,
+      3,
+      5
+    ],
+    "name_lengths": [
+      4,
+      5
+    ],
+    "qualified_map_groups": 76,
+    "native_origin_cases": 1022,
+    "synthetic_owner_shiny_predicate_cases": 99,
+    "native_type_outcome_cases": 320,
+    "independent_override_native_recalculation_cases": 32,
+    "native_predicates_agree": true,
+    "unexplained_creator_bytes": 0,
+    "human_gameplay": false,
+    "limits": [
+      "ordinary standalone RAM context; no game-load or full UI rendering",
+      "excluded map groups and regionFF fail closed; no global map-count claim",
+      "explicit moves replace automatic learnsets; no arbitrary nickname/identity controls"
+    ],
+    "sources_immutable": true
+  },
+  "retained_creator_contexts": [
+    {
+      "source_sha256": "99e5f1d04a41d26fa95faf0ffba74a3c9bdc59a27919a9a7ca56c5c81a8d580e",
+      "count": 5,
+      "creator_eligible": true,
+      "independent_output_agrees": true
+    },
+    {
+      "source_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+      "count": 5,
+      "creator_eligible": true,
+      "independent_output_agrees": true
+    },
+    {
+      "source_sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+      "count": 4,
+      "creator_eligible": true,
+      "independent_output_agrees": true,
+      "grouped_prepared": true,
+      "grouped_count": 2
+    }
+  ],
+  "synthetic_full_suite": {
+    "discovered": 305,
+    "passed": 290,
+    "skipped": 15,
+    "skip_reason": "Windows-specific host checks",
+    "exact_pushed_candidate_rerun_required": true
+  },
+  "protected_data_scan": {
+    "checked_files": 19,
+    "issues": [],
+    "no_binary_or_private_paths": true
+  },
+  "gitleaks": "changed-file snapshot scanned; no leaks",
+  "historical_checkpoint": "Earlier stopped results retained at fresh_candidate_base; old bag, global-primary-type and regionFF-fallback conclusions are superseded",
+  "publication_boundary": "No ROM/save/raw records/raw ROM tables/instructions/private identity/private paths/assets/executables/secrets",
+  "remaining_gate": "Grouped Human gameplay+returned save, then fresh independent review and separate adoption authorization",
+  "real_Chromium": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "source_sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+    "output_sha256": "1cac20037f8a2c276763a4ebdcdc6ec8439828bec1673929cf5270978d88ab49",
+    "browser_version": "153.0.8010.12",
+    "created_count": 2,
+    "semantic_preview_equal": true,
+    "independent_full_output_equal": true,
+    "sources_immutable": true,
+    "loopback_only": true,
+    "stale_controls_rejected": true,
+    "download_reopened_full_Party_rejected": true,
+    "gameplay_acceptance": false
+  }
+}

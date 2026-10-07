@@ -172,27 +172,19 @@ def safe_item(item_id, metadata, *, retained=False):
         'pocket','importance','item_type','hold_effect','hold_effect_parameter')) == expected.get(item_id)
 
 
-def expected_edit(raw: bytes, rom: bytes, slot: int, changes: dict) -> tuple[bytes, set]:
-    """Independent complete expected save, never importing the production writer.
-
-    Duplicated contract is intentional: direct bytes, separate parser, separate
-    range checks, threshold walk, nature arithmetic and field envelope.
-    """
-    report = inspect(raw, rom)
-    parsed = structure.parse(raw)
+def expected_record(source: bytes, rom: bytes, context: dict, changes: dict):
+    """Independent adopted E3 record arithmetic, reusable by creator audit."""
     def number(x, low, high):
         if type(x) is not int or not low <= x <= high:
             raise ValueError('independent integer/range')
         return x
-    number(slot, 0, parsed['count']-1)
-    source = parsed['records'][slot]
-    if ordinary_reasons(source, rom, report['saved_context']):
+    if len(source) != 100 or ordinary_reasons(source, rom, context):
         raise ValueError('independent ordinary source gate')
     permitted = {'species','level','experience','ivs','evs','effective_nature','ability',
                  'held_item','friendship','moves','pp','pp_up'}
     if not isinstance(changes, dict) or not changes or set(changes)-permitted:
         raise ValueError('independent field contract')
-    old = report['party'][slot]
+    old = reconstruct(source, rom)
     record = bytearray(source)
     envelope = set()
     if 'species' in changes:
@@ -312,8 +304,28 @@ def expected_edit(raw: bytes, rom: bytes, slot: int, changes: dict) -> tuple[byt
         hp = current if stats[0] <= maximum or current == 0 else current+stats[0]-maximum
         record[86:100] = struct.pack('<7H',hp,*stats)
         envelope.update(range(86,100))
-    if ordinary_reasons(record,rom,report['saved_context']):
+    if ordinary_reasons(record,rom,context):
         raise ValueError('independent output ordinary gate')
+    return bytes(record), envelope
+
+
+def expected_edit(raw: bytes, rom: bytes, slot: int, changes: dict) -> tuple[bytes, set]:
+    """Independent complete expected save, never importing the production writer.
+
+    Duplicated contract is intentional: direct bytes, separate parser, separate
+    range checks, threshold walk, nature arithmetic and field envelope.
+    """
+    report = inspect(raw, rom)
+    parsed = structure.parse(raw)
+    def number(x, low, high):
+        if type(x) is not int or not low <= x <= high:
+            raise ValueError('independent integer/range')
+        return x
+    number(slot, 0, parsed['count']-1)
+    source = parsed['records'][slot]
+    if ordinary_reasons(source, rom, report['saved_context']):
+        raise ValueError('independent ordinary source gate')
+    record, envelope = expected_record(source, rom, report['saved_context'], changes)
     section = parsed['slots'][parsed['active']]['positions'][1]*4096
     start = section+56+slot*100
     expected = bytearray(raw)

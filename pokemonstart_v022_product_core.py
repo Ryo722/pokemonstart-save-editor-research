@@ -36,13 +36,22 @@ def inspect(raw, rom_sha256, *, rom_bytes=None):
     try:report['items']=(medicine_items.inspect(raw,rom_bytes) if rom_bytes is not None
                          else items.inspect(raw,rom_sha256))
     except ValueError as exc:report['rejections']['items']=str(exc)
+    if rom_bytes is not None:
+        import pokemonstart_v022_creation_model as creation
+        try:
+            creator=creation.Creator(raw,rom_bytes)
+            report['creator']={'eligible':True,'first_slot':verified.party_count,
+                               'capacity':6-verified.party_count,'options':creator.options,
+                               'friendship_defaults':{i:rom_bytes[0x19B8B40+i*32+18] for i in creator.options['species']}}
+        except ValueError as exc:
+            report['creator']={'eligible':False,'reason':str(exc)}
     return report
 
 
 def derive(raw, rom_sha256, request, *, rom_bytes=None):
     profile._require_rom_hash(rom_sha256)
     if rom_bytes is not None:profile._require_rom_hash(profile.sha(rom_bytes))
-    if not isinstance(request,dict) or not request or set(request)-{'money','party','items'}:
+    if not isinstance(request,dict) or not request or set(request)-{'money','party','items','create'}:
         raise ValueError('unsupported or empty product transaction')
     verified=v.verify_bytes(raw)
     families=[]
@@ -62,6 +71,10 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
         family=(medicine_items.derive(raw,rom_bytes,request['items']) if rom_bytes is not None
                 else items.derive(raw,rom_sha256,request['items']))
         families.append(('items',*family))
+    if 'create' in request:
+        if rom_bytes is None:raise ValueError('creation requires exact ROM bytes')
+        import pokemonstart_v022_creation_writer as creation
+        families.append(('create',*creation.derive(raw,rom_bytes,request['create'])))
     output=bytearray(raw)
     occupied=set();covered=set();checksums=set();reports={};semantics=[]
     for name,candidate,receipt in families:
@@ -75,6 +88,14 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
             occupied.add(offset);output[offset]=new
         reports[name]=receipt
         if name=='money':semantics.append(f"Money: {receipt['money']['from']:,} → {receipt['money']['to']:,}")
+        elif name=='create':
+            import pokemonstart_v022_party_model as model
+            options=party.ordinary_options(model.extract_tables(rom_bytes))
+            for row in receipt['created']:
+                semantics.append(f"Create Pokémon — Party #{row['slot']+1}: {row['species_name']} • Lv.{row['level']}")
+                moves=', '.join(options['moves'][move] for move in row['moves'])
+                semantics.append(f"Nature: {model.NATURE_NAMES[row['nature']]}; IVs: {row['ivs']}; EVs: {row['evs']}; Moves: {moves}; Ability: #{row['ability']}; Held item: {options['held_item'][row['held_item']]}; Friendship: {row['friendship']}")
+                semantics.append(row['identity_policy'])
         elif name=='items':
             before={entry['item_id']:entry['quantity'] for entry in receipt['before']['entries']}
             after={entry['item_id']:entry['quantity'] for entry in receipt['after']['entries']}
@@ -129,6 +150,14 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
         if name=='money':
             if money.inspect(candidate,rom_sha256)['money']!=receipt['money']['to']:
                 raise ValueError('composed Money postcondition failed')
+        elif name=='create':
+            if result.party_count!=receipt['party_count']['to']:
+                raise ValueError('composed creation count postcondition failed')
+            section=result.slots[result.active_slot].section(1)
+            start=section.physical_sector*4096+v.PARTY_OFFSET+verified.party_count*100
+            end=start+100*len(receipt['created'])
+            if candidate[start:end]!=family_candidate[start:end]:
+                raise ValueError('composed creation record postcondition failed')
         elif name=='items':
             current=(medicine_items.inspect(candidate,rom_bytes) if rom_bytes is not None
                      else items.inspect(candidate,rom_sha256))
@@ -143,12 +172,13 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
             elif party.existing._semantic(result.party[receipt['slot']])!=receipt['after']:
                 raise ValueError('composed Party postcondition failed')
     independent=None
-    if any(receipt.get('e3') for _,_,receipt in families):
+    if any(receipt.get('e3') or receipt.get('e4') for _,_,receipt in families):
         import pokemonstart_v022_product_audit as audit
         independent=audit.audit_e3(raw,candidate,rom_bytes,request)
     report={'input_sha256':verified.file_sha256,'output_sha256':result.file_sha256,
                       'request':copy.deepcopy(request),'semantic_diff':semantics,
                       'families':reports,'changed_offsets':offsets,'verifier_accepted':True,
                       'active_slot':verified.active_slot,'counter':verified.slots[verified.active_slot].counter}
-    if independent is not None:report['independent_e3_audit']=independent
+    if independent is not None:
+        report['independent_e4_audit' if 'create' in request else 'independent_e3_audit']=independent
     return candidate,report
