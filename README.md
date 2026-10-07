@@ -64,13 +64,13 @@ Stable provenance work remains separate and is not on the current practical term
 The exact-v0.22 practical product is **COMPLETE / ADOPTED on canonical `main`**. The project has now entered the adopted vNext expansion path:
 
 - **E0 — expansion contract: COMPLETE / ADOPTED**
-- **E1 — Inventory model qualification: ACTIVE**
-- **E2 — Practical Inventory editor**
-- **E3 — General existing-Pokémon editor**
+- **E1 — Inventory model qualification: COMPLETE / ADOPTED**
+- **E2 — Practical Inventory editor: COMPLETE / ADOPTED**
+- **E3 — General existing-Pokémon editor: ACTIVE**
 - **E4 — Pokémon creator (Party-only initial scope)**
 - **E5 — PKHeX-like product UX and acceptance**
 
-Money is DONE / maintenance-only for this expansion. See `docs/v022-pkhex-like-editor-expansion.md`.
+Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is now canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon generalization is now active. See `docs/v022-pkhex-like-editor-expansion.md`.
 
 ## Exact v0.22 Fast Lab profile
 
