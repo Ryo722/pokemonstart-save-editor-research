@@ -2,15 +2,17 @@
 
 GitHub `main` is the only durable canonical authority for this project. Detailed proof history lives in the linked evidence/scope records; this file intentionally keeps only the current decision state.
 
-## Controlling Human authorization
+## Current Human decision
+
+The independently reviewed exact-v0.22 practical product candidate was explicitly authorized for adoption and merged to canonical `main` through PR #16 at merge commit `ab18419108eeed91288d440a6f154cac33a1cf2e`.
+
+The preceding sprint authorization remains historical authority for the R1–R4 implementation work:
 
 > `AUTHORIZE V0.22 PRACTICAL PRODUCT SPRINT REALIGNMENT AND BOUNDED R1-R4 IMPLEMENTATION`
 
-This authorization adopts a bounded exact-v0.22 practical product sprint covering R1–R4 implementation on a candidate branch. It permits autonomous in-scope implementation, testing, refactoring, and coherent subgoal commits without a new Human approval at every internal step.
+Canonical adoption does **not** imply public release, Stable promotion, support for another PokemonStart version, public/LAN GUI exposure, protected-data publication, or speculative capability expansion. Those remain separately gated.
 
-It does **not** authorize candidate merge into `main`, public release, broader PokemonStart versions, Stable promotion, protected-data publication, public/LAN GUI exposure, or speculative writes outside independently supported exact-v0.22 semantics.
-
-The detailed sprint contract is `docs/v022-practical-product-sprint.md`.
+The detailed sprint contract remains `docs/v022-practical-product-sprint.md`.
 
 ## North Star
 
@@ -80,7 +82,7 @@ Stable promotion/provenance work remains available where justified, but it is no
 - Exact-v0.22 Party append + Inventory insertion + localhost GUI: complete experimentally / adopted.
 - Exact-v0.22 composed Party append + Antidote insertion GUI transaction: complete experimentally / adopted.
 
-The primary practical gap is no longer absence of writers or UI. It is converting exact-canary capabilities into a **reusable practical product** for naturally progressed exact-v0.22 saves.
+The reusable exact-v0.22 practical product is now **canonical and adopted on `main`**. R1–R4 and the current-build terminal objective are complete. Remaining work is optional qualification, maintenance, packaging, or separately authorized capability expansion.
 
 ## Goal-aligned milestone path
 
@@ -90,13 +92,13 @@ Historical M/FL milestones remain canonical evidence history. The forward critic
 
 The terminal objective is repeatable exact-v0.22 owner use, not isolated proofs or broad field count.
 
-### R1 — reusable exact-v0.22 eligibility
+### R1 — reusable exact-v0.22 eligibility — COMPLETE / ADOPTED
 
 Replace exact-input-save SHA membership as the primary write gate for the first useful capability family, initially favoring Money if fresh evidence still makes it the cheapest path. Eligibility must remain exact-build and capability-specific, independently checkable, and fail closed.
 
 The frozen Money branch may be inspected but may not be adopted wholesale without reconciliation.
 
-### R2 — practical reusable core
+### R2 — practical reusable core — COMPLETE / ADOPTED
 
 Build the useful Party / Items / Money core:
 
@@ -107,11 +109,11 @@ Build the useful Party / Items / Money core:
 
 Each capability family owns its own predicate; support is never inferred by analogy.
 
-### R3 — PKHeX-familiar continuous-use GUI
+### R3 — PKHeX-familiar continuous-use GUI — COMPLETE / ADOPTED
 
 Turn the localhost GUI from a research operation/JSON surface into an ordinary editor UI with Party, Items, Trainer/Money, semantic preview, verified export, and Advanced diagnostics. Keep the server on `127.0.0.1` and preserve stale-state rejection, source immutability, separate outputs, and verification.
 
-### R4 — product acceptance / repeated-use closure
+### R4 — product acceptance / repeated-use closure — COMPLETE / ADOPTED
 
 Close a real two-cycle workflow through the GUI:
 
@@ -119,9 +121,9 @@ Close a real two-cycle workflow through the GUI:
 
 Use a composed practical edit across Money / Party / Inventory where each predicate independently passes. Human emulator/game interaction may remain the final bounded acceptance gate after the agent completes all non-human implementation/tests/audits/docs.
 
-### TERMINAL — exact-v0.22 practical editor
+### TERMINAL — exact-v0.22 practical editor — COMPLETE / ADOPTED
 
-The product satisfies the terminal success characteristics above. Further fields, Stable promotion, public release, another PokemonStart version, Box support, or broader PKHeX parity become optional maintenance/expansion work.
+The canonical product satisfies the terminal success characteristics above. The reviewed product candidate was merged through PR #16. Further fields, Stable promotion, public release, another PokemonStart version, Box support, or broader PKHeX parity are optional maintenance/expansion work and are not required to preserve terminal completion.
 
 ## Shared safety contract
 
@@ -137,25 +139,20 @@ The product satisfies the terminal success characteristics above. Further fields
 
 ## Current authorization boundary
 
-R1–R4 implementation is authorized on a dedicated candidate branch under `docs/v022-practical-product-sprint.md`.
+The exact-v0.22 practical editor is now canonical on `main`. No additional merge is pending for R1–R4.
 
-Inside that sprint the implementation agent may refactor, test, use private inputs locally, and commit coherent subgoals without repeatedly stopping for Human approval.
+The following still require separate justification/authorization as applicable:
 
-The authorization stops before:
-
-- merging the candidate into canonical `main`;
 - public release / release artifact publication;
 - Stable promotion;
 - another PokemonStart build/version;
 - generic CFRU editor scope;
 - Box, Pokédex, story, quest, event-flag, RTC, or unrelated save-system editing;
-- arbitrary Pokémon synthesis/templates as a terminal requirement;
-- unproven item pockets or unsafe all-items behavior;
+- arbitrary Pokémon synthesis or broad template/catalog features;
+- unproven item pockets, capacities, compaction, or unsafe all-items behavior;
 - public/LAN GUI exposure;
 - protected/private data publication.
 
-A fresh-context candidate review and explicit Human merge/adoption decision are required before implementation becomes canonical.
-
 ## Next execution step
 
-Start from fresh current `main` in the local repository, create a dedicated product-sprint candidate branch, reconcile the frozen Money work as non-canonical evidence, then execute R1 -> R2 -> R3 -> R4 as one autonomous sprint with coherent subgoal commits and full-suite verification before the final Human game-round-trip gate.
+No terminal-critical implementation remains for exact v0.22. Default next work is to use the canonical editor in ordinary owner use and only open new work when concrete evidence justifies it. High-value optional follow-ups are: packaging/run ergonomics, a fresh stat-changing normal-save proof if wider Party stat support is desired, a GUI-created Antidote round trip, broader regular-item semantics only after exact evidence, and future-version onboarding when a new PokemonStart version actually matters.
