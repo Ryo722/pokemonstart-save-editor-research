@@ -66,11 +66,11 @@ The exact-v0.22 practical product is **COMPLETE / ADOPTED on canonical `main`**.
 - **E0 — expansion contract: COMPLETE / ADOPTED**
 - **E1 — Inventory model qualification: COMPLETE / ADOPTED**
 - **E2 — Practical Inventory editor: COMPLETE / ADOPTED**
-- **E3 — General existing-Pokémon editor: ACTIVE**
-- **E4 — Pokémon creator (Party-only initial scope)**
+- **E3 — General existing-Pokémon editor: COMPLETE / ADOPTED**
+- **E4 — Pokémon creator (Party-only initial scope): NEXT / NOT STARTED**
 - **E5 — PKHeX-like product UX and acceptance**
 
-Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is now canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon generalization is now active. See `docs/v022-pkhex-like-editor-expansion.md`.
+Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon generalization is now COMPLETE / ADOPTED through PR #23. E4 is the next milestone but has not been started by this adoption action. See `docs/v022-pkhex-like-editor-expansion.md`.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -88,9 +88,9 @@ No ROM, save, package, BPS/IPS, executable payload, or copyrighted game asset is
 Current Fast Lab evidence includes:
 
 - **Money:** disposable output edit with verifier acceptance and live v0.22 confirmation.
-- **Party:** friendship, IV/stat recalculation, move replacement/PP handling, bounded level/EXP editing, bounded Bulbasaur→Ivysaur species transformation, and composed multi-field editing.
-- **Inventory:** bounded existing-item quantity editing plus exact-input insertion evidence.
-- **Ability:** selector storage is decoded, but practical resolved-ability writing remains unsupported.
+- **Party:** the adopted E3 ordinary-class writer supports the independently qualified exact-v0.22 subset of species, level/EXP, moves/PP/PP-Up, friendship, IV/EV, effective nature, ordinary ability resolution/selection, conservative held items, and required cached-stat/HP coherence under fail-closed predicates.
+- **Inventory:** the adopted E1/E2 restricted recovery-medicine subset remains available and regression-protected.
+- **Ability:** practical ordinary ability editing is supported only inside E3's qualified predicate; special override species/states remain rejected.
 
 These remain experimental until capability-specific reusable predicates and lifecycle evidence are established.
 
@@ -112,7 +112,7 @@ The canonical practical GUI provides ordinary Party / Items / Trainer controls a
 .venv/bin/python pokemonstart_v022_product_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
 ```
 
-The canonical product supports reusable Money, bounded existing Party edits, Potion quantity, and Antidote x1 insertion/removal for the exact observed regular-item record shape. A Human-verified two-cycle GUI/game workflow is recorded. It remains exact-v0.22 bounded and is **not** a public release or Stable-promotion claim. Pocket capacity, general item mapping, Give All Items, broader Party models, and other versions remain unqualified. See [product limits and evidence](docs/v022-product-candidate.md).
+The canonical product supports reusable Money, the adopted E1/E2 restricted recovery-medicine Inventory subset, and the adopted E3 ordinary existing-Party editor under its exact-v0.22 capability predicates. E3 acceptance includes one grouped GUI/game transaction with returned-save verification and independent reconstruction. It remains exact-v0.22 bounded and is **not** a public release or Stable-promotion claim. Give All Items, broader item authority, unsupported Party states, E4 creation, Box support, and other versions remain outside current adopted capability. See `docs/e3-existing-party-writer-qualification.md` and `docs/reviews/e3-existing-party-independent-review.md`.
 The prior research GUI and bounded APIs retain their existing behavior.
 
 ## Shared safeguards
