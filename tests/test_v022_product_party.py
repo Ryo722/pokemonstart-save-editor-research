@@ -29,22 +29,22 @@ class ProductPartyTests(unittest.TestCase):
             self.assertEqual(raw[14*4096:],out[14*4096:])
         with self.assertRaises(ValueError):p.derive(raw,ROM,6,{'friendship':1})
 
-    def test_composed_stats_and_repeat(self):
+    def test_level5_stats_and_repeat(self):
         raw=save()
-        changes={'species':2,'level':6,'ivs':[31,0,26,23,27,29],
+        changes={'species':2,'ivs':[31,0,26,23,27,29],
                  'evs':[8,0,0,0,0,0],'friendship':53,'moves':{0:1}}
         out,_=p.derive(raw,ROM,0,changes)
         mon=v.verify_bytes(out).party[0]
-        self.assertEqual((mon.species,mon.level,mon.experience),(2,6,179))
-        self.assertEqual((mon.hp,mon.max_hp,mon.attack,mon.defense,mon.speed,mon.sp_attack,mon.sp_defense),
-                         (25,25,10,14,13,17,16))
+        self.assertEqual((mon.species,mon.level,mon.experience),(2,5,135))
+        self.assertEqual(mon.friendship,53)
         self.assertTrue(p.capabilities(out,ROM,0)['stats'])
         again,_=p.derive(out,ROM,0,{'friendship':10})
         self.assertEqual(v.verify_bytes(again).party[0].friendship,10)
 
     def test_reject_unsupported_operations_independently(self):
         raw=save()
-        for changes in ({'level':7},{'level':True},{'species':3},{'ivs':[32]*6},
+        for changes in ({'level':6},{'level':7},{'level':True},{'experience':179},
+                        {'species':3},{'ivs':[32]*6},
                         {'evs':[252]*6},{'moves':{1:1}},{'moves':{0:45}},
                         {'ability_selector':1},{'friendship':256},{'friendship':52}):
             with self.subTest(changes=changes),self.assertRaises(ValueError):p.derive(raw,ROM,0,changes)
@@ -61,15 +61,19 @@ class ProductPartyTests(unittest.TestCase):
         struct.pack_into('<H',bad,5*4096+0xFF6,v.calculate_save_checksum(bad[5*4096:5*4096+0xFF0]))
         with self.assertRaises(ValueError):p.derive(bytes(bad),ROM,0,{'evs':[8,0,0,0,0,0]})
 
-    def test_source_non_hp_plus_five_rejects_legacy_level6_cache(self):
+    def test_level6_stat_changes_fail_closed_but_friendship_remains_available(self):
         raw=save()
-        output,_=p.derive(raw,ROM,0,{'level':6})
-        mon=v.verify_bytes(output).party[0]
-        self.assertEqual((mon.attack,mon.defense,mon.speed,mon.sp_attack,mon.sp_defense),(10,12,11,15,14))
-        # Legacy canary added level, yielding Attack 11 at level6. Do not
-        # silently qualify that cache for source-backed derived edits.
-        broken=bytearray(output);base=5*4096
-        struct.pack_into('<H',broken,base+v.PARTY_OFFSET+90,11)
+        for changes in ({'level':6},{'experience':179},{'ivs':[29,29,26,23,27,29]}):
+            with self.subTest(changes=changes),self.assertRaises(ValueError):p.derive(raw,ROM,0,changes)
+        broken=bytearray(raw);base=5*4096
+        broken[base+v.PARTY_OFFSET+84]=6
+        struct.pack_into('<I',broken,base+v.PARTY_OFFSET+36,179)
         struct.pack_into('<H',broken,base+0xFF6,v.calculate_save_checksum(broken[base:base+0xFF0]))
-        self.assertFalse(p.capabilities(bytes(broken),ROM,0)['stats'])
-        self.assertTrue(p.capabilities(bytes(broken),ROM,0)['friendship'])
+        broken=bytes(broken)
+        cap=p.capabilities(broken,ROM,0)
+        self.assertFalse(cap['stats'])
+        self.assertIn('Level 6',cap['stats_reason'])
+        self.assertTrue(cap['friendship'])
+        self.assertTrue(cap['moves'])
+        edited,_=p.derive(broken,ROM,0,{'friendship':77})
+        self.assertEqual(v.verify_bytes(edited).party[0].friendship,77)

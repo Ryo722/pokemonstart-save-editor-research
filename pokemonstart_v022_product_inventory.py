@@ -12,7 +12,10 @@ def _observed_antidote_state(raw, rom_sha256, present):
     """Qualify only the captured three-record bag shape and zero tail."""
     profile._require_rom_hash(rom_sha256)
     result = v.verify_bytes(raw)
-    section = result.slots[result.active_slot].section(13)
+    active = result.slots[result.active_slot]
+    if struct.unpack_from('<I', active.section(0).data, 0xF20)[0] != 0:
+        raise ValueError('Antidote operations support observed key0 only')
+    section = active.section(13)
     prefix = [struct.unpack_from('<HH', section.data, OFFSET + 4*i) for i in range(3)]
     expected = (13, 3), (533, 1), ((14, 1) if present else (0, 0))
     if tuple(prefix) != expected or any(section.data[OFFSET + 12:0xFF4]):

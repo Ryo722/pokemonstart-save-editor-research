@@ -92,7 +92,7 @@
     "Inventory behavior beyond Potion quantity and shape-gated Antidote x1 slot2 insertion/removal",
     "full pocket capacity/mapping and later-slot compaction",
     "Give All Items",
-    "Party stat levels outside5/6",
+    "Party stat-changing operations resulting in level 6 (fail-closed pending exact-build formula evidence)",
     "other stat natures/mints/hyper-training",
     "ability writing",
     "unknown pockets/items",
@@ -167,5 +167,24 @@
     "run": 5,
     "passed": 5,
     "failures": 0
+  },
+  "correction_followup": {
+    "reviewed_predecessor_implementation": "7b84f7f940ea110f9839baa6fe14550a4f08e0bb",
+    "level6_stat_writes": "FAIL_CLOSED pending exact-build formula evidence; Friendship and Move 1 retain independent qualification",
+    "antidote_writer_key_gate": "key0 enforced in shared helper qualification for direct insert/remove and normal product paths",
+    "template_import_writer": "exact source SHA and exact complete-record SHA gates precede the only product construction path; generic builder removed from product module",
+    "evidence_ledger": "earlier no-R4 / Inventory-blocked paragraph explicitly labeled an interim superseded snapshot",
+    "new_human_gameplay_evidence": false,
+    "r4_evidence_changed": false,
+    "no_terminal_scope_added": true,
+    "focused_nicegui": {"run": 17, "passed": 17, "skipped": 0, "failures": 0},
+    "python3_unittest": {"run": 229, "passed": 209, "skipped": 20, "failures": 0},
+    "nicegui_environment_unittest": {"run": 229, "passed": 214, "skipped": 15, "failures": 0},
+    "tracked_python_compile": "PASS",
+    "tracked_json_parse": "PASS",
+    "git_diff_check": "PASS",
+    "changed_tracked_file_secret_scan": "PASS; no findings",
+    "whole_worktree_gitleaks": "3 findings only in ignored work/ browser dependency assets; no tracked candidate files involved",
+    "protected_artifact_and_private_path_scan": "PASS; no tracked protected suffixes and no private-root literal in correction diff"
   }
 }

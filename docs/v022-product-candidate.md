@@ -37,10 +37,13 @@ gameplay.
   `0..255` is editable when the record passes structural checks. Move 1 can
   switch Pound/Tackle for records already using one of those moves, with zero
   PP-Up bonuses and bounded PP; replacement sets PP to the evidenced base 35.
-  Source-backed stat edits are limited to Bulbasaur/Ivysaur at levels 5/6,
+  Source-backed stat edits are limited to Bulbasaur/Ivysaur at level 5,
   Serious/Modest nature, no mint or hyper-training, coherent EXP and cached
-  stats, with bounded species/level/EXP/IV/EV requests and recomputed stats.
-  Other fields remain read-only. Friendship is Human-tested in both R4 game
+  stats, with bounded species/EXP/IV/EV requests and recomputed stats. Level
+  changes are read-only; EXP remains within the level-5 range. Level-6
+  stat-changing requests fail closed because the exact integrated build's
+  formula is unresolved. Friendship and Move 1 use independent predicates and
+  remain available where qualified. Other fields remain read-only. Friendship is Human-tested in both R4 game
   cycles. The source-backed target-stat writer has not had a new normal-save
   round trip and remains a bounded qualification caveat for independent review.
 - **Items / R2:** Potion quantity `1..3`, plus Antidote x1 insertion/removal
@@ -95,11 +98,12 @@ and [native Inventory/template evidence](v022-native-inventory-and-template-impo
 - The imported Rattata proof demonstrates only one exact complete record and
   its Party-count/checksum envelope. It does not prove arbitrary template
   imports are safe.
-- The candidate calculator follows pinned CFRU-JP `e24a16fe39e27ae162faf5b78596d1f3df18489d`
-  (`+5` non-HP stat formula). The pinned source is not established as the exact
-  integration revision of the patched game. A fresh stat-changing game
-  round-trip remains useful qualification work, but the R4 acceptance used
-  friendship and did not depend on target-stat recalculation.
+- The candidate calculator's level-5 result is consistent with both the
+  pinned CFRU-JP `+5` and legacy `+level` formulas. That pinned revision is not
+  established as the exact integration revision of the patched game, and
+  level 6 differs between the formulas. The candidate rejects level-6
+  stat-changing writes. R4 used Friendship and did not depend on target-stat
+  recalculation.
 - Fast Lab experimental candidate status does not imply Stable support,
   canonical adoption, a public release or a merge authorization.
 

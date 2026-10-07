@@ -99,3 +99,51 @@ class ProductWebTests(unittest.TestCase):
                     expected_removed,_=w.core.derive(with_antidote,ROM,{'items':{'remove_antidote':True}})
                     self.assertEqual(removed.content,expected_removed)
         asyncio.run(exercise())
+
+    def test_level5_gui_has_only_bounded_exp_and_no_level_control(self):
+        if w.ui is None:self.skipTest('NiceGUI optional dependency unavailable')
+        import asyncio,sys,os
+        from nicegui.elements.upload import Upload
+        from nicegui.elements.upload_files import SmallFileUpload
+        from nicegui.elements.number import Number
+        from nicegui.testing import user_simulation
+        from test_v022_product_party import save as party_save
+        async def exercise():
+            with patch.object(sys,'argv',['app','--rom','unused.gba']),patch.dict(os.environ,{'PYTEST_CURRENT_TEST':'level5 GUI capability'}):
+                async with user_simulation(main_file=Path(__file__).with_name('v022_product_simulation_app.py')) as user:
+                    await user.open('/')
+                    upload=next(iter(user.find(kind=Upload).elements))
+                    await upload.handle_uploads([SmallFileUpload('level5.sav','application/octet-stream',party_save())])
+                    await user.should_see('読み込み済み')
+                    labels=[field.label for field in user.find(kind=Number).elements]
+                    self.assertNotIn('Level',labels)
+                    self.assertIn('EXP (Lv.5 range)',labels)
+                    self.assertEqual(next(field for field in user.find(kind=Number).elements
+                                          if field.label=='EXP (Lv.5 range)').max,178)
+                    await user.should_see('Level: 読み取り専用')
+        asyncio.run(exercise())
+
+    def test_level6_gui_exposes_no_writable_level_or_exp(self):
+        if w.ui is None:self.skipTest('NiceGUI optional dependency unavailable')
+        import asyncio,sys,os,struct
+        from nicegui.elements.upload import Upload
+        from nicegui.elements.upload_files import SmallFileUpload
+        from nicegui.elements.number import Number
+        from nicegui.testing import user_simulation
+        from test_v022_product_party import save as party_save
+        level6=bytearray(party_save());base=5*4096
+        level6[base+w.core.v.PARTY_OFFSET+84]=6
+        struct.pack_into('<I',level6,base+w.core.v.PARTY_OFFSET+36,179)
+        struct.pack_into('<H',level6,base+0xFF6,w.core.v.calculate_save_checksum(level6[base:base+0xFF0]))
+        async def exercise():
+            with patch.object(sys,'argv',['app','--rom','unused.gba']),patch.dict(os.environ,{'PYTEST_CURRENT_TEST':'level6 GUI capability'}):
+                async with user_simulation(main_file=Path(__file__).with_name('v022_product_simulation_app.py')) as user:
+                    await user.open('/')
+                    upload=next(iter(user.find(kind=Upload).elements))
+                    await upload.handle_uploads([SmallFileUpload('level6.sav','application/octet-stream',bytes(level6))])
+                    await user.should_see('読み込み済み')
+                    labels=[field.label for field in user.find(kind=Number).elements]
+                    self.assertNotIn('Level',labels)
+                    self.assertNotIn('EXP (Lv.5 range)',labels)
+                    await user.should_see('Level 6 stat formula is unqualified')
+        asyncio.run(exercise())

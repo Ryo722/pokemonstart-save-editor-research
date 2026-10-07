@@ -49,6 +49,30 @@ class NativeInventoryDeltaTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 items.remove_observed_antidote(bytes(bad), ROM)
 
+    def test_direct_antidote_helpers_reject_nonzero_key(self):
+        source = self.source()
+        verified = v.verify_bytes(source)
+        section = verified.slots[verified.active_slot].section(0)
+        base = section.physical_sector * v.SECTOR_SIZE
+        keyed = bytearray(source)
+        struct.pack_into('<I', keyed, base + 0xF20, 1)
+        struct.pack_into('<H', keyed, base + v.SECTION_CHECKSUM_OFFSET,
+                         v.calculate_save_checksum(keyed[base:base + v.SECTION_LENGTHS[0]]))
+        keyed = bytes(keyed)
+        v.verify_bytes(keyed)
+        with self.assertRaisesRegex(ValueError, 'key0'):
+            items.remove_observed_antidote(keyed, ROM)
+        empty, _ = items.remove_observed_antidote(source, ROM)
+        verified = v.verify_bytes(empty)
+        section = verified.slots[verified.active_slot].section(0)
+        base = section.physical_sector * v.SECTOR_SIZE
+        keyed_empty = bytearray(empty)
+        struct.pack_into('<I', keyed_empty, base + 0xF20, 1)
+        struct.pack_into('<H', keyed_empty, base + v.SECTION_CHECKSUM_OFFSET,
+                         v.calculate_save_checksum(keyed_empty[base:base + v.SECTION_LENGTHS[0]]))
+        with self.assertRaisesRegex(ValueError, 'key0'):
+            items.insert_observed_antidote(bytes(keyed_empty), ROM)
+
 
 if __name__ == '__main__':
     unittest.main()

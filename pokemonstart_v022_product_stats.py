@@ -8,10 +8,12 @@ import pokemonstart_transaction as tx
 
 
 def stats(mon):
-    if (mon.species not in (1,2) or mon.level not in (5,6)
+    if mon.level == 6:
+        raise tx.TransactionError('Level 6 stat formula is unqualified for this exact build')
+    if (mon.species not in (1,2) or mon.level != 5
             or mon.hyper_training!=0 or mon.nature_mint!=0
             or mon.personality%25 not in (12,15)):
-        raise tx.TransactionError('source-backed stats require Bulbasaur/Ivysaur level5/6, neutral Serious or Modest, no mint/hyper-training')
+        raise tx.TransactionError('source-backed stats require Bulbasaur/Ivysaur level5, neutral Serious or Modest, no mint/hyper-training')
     if any(not 0<=x<=31 for x in mon.ivs) or any(not 0<=x<=252 for x in mon.evs) or sum(mon.evs)>510:
         raise tx.TransactionError('IV/EV allocation invalid')
     bases=(45,49,49,45,65,65) if mon.species==1 else (60,62,63,60,80,80)

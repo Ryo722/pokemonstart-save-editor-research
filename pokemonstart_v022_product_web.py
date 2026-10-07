@@ -111,9 +111,8 @@ def create_page(rom_path):
                             if cap.get('friendship'):fields['friendship']=number(f'Friendship — Party #{slot+1}',mon['friendship'],0,255)
                             if cap.get('stats'):
                                 fields['species']=select('Species',core.party.SPECIES,mon['species'])
-                                with ui.row():
-                                    fields['level']=number('Level',mon['level'],5,6)
-                                    fields['experience']=number('EXP',mon['experience'],135,235)
+                                ui.label('Level: 読み取り専用 — Level 6 の stat 計算は exact build で未確認です。')
+                                fields['experience']=number('EXP (Lv.5 range)',mon['experience'],135,178)
                                 ui.label('IV / EV — 合計 EV ≤ 510。最大 HP の減少は非対応。')
                                 fields['ivs']=[];fields['evs']=[]
                                 for field,maximum in (('ivs',31),('evs',252)):

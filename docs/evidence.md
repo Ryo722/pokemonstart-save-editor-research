@@ -2,6 +2,12 @@
 
 ## v0.22 practical product sprint candidate — 2026-10-07
 
+**Interim snapshot, superseded by the completion evidence below.** This entry
+was written before the R4 Human game cycles and Inventory evidence harvest.
+Its statements that R4 gameplay had not occurred and Antidote insertion/removal
+were blocked describe that earlier state only. See the later R4 and native
+Inventory/template-import evidence for the final candidate evidence classes.
+
 Candidate from fresh canonical `7e7435c5507abfec183c3b370dcb1fa381b22186`:
 [implementation record](v022-product-candidate.md) and
 [sanitized validation](v022-product-candidate-evidence.json). Exact-build Money,
@@ -14,6 +20,20 @@ canonical exact-root insertion is preserved. A newly reproduced pinned-source
 `+5` vs legacy `+level` stat formula discrepancy is documented, with corrected
 candidate arithmetic and explicit lack of new stat normal-SAVE evidence.
 No canonical adoption, Stable promotion or release is claimed.
+
+### Independent review corrections — candidate follow-up
+
+The source `+5` vs legacy `+level` discrepancy is unresolved for the exact
+integrated game revision. Candidate stat-changing writes now fail closed at
+level 6, including Level/EXP requests that would produce level 6. Level-5
+stat calculations remain enabled where their independent predicates pass;
+Friendship and Move 1 retain their separate predicates, including for level-6
+records. No new Human game cycle was needed for these code guards. The
+Antidote insert/remove helpers now enforce key0 in their shared qualification
+path. The template-import product writer has no generic record builder and
+remains gated by the exact source and complete record hashes. R4 evidence is
+retained without modification. These are candidate implementation/test
+claims, not canonical adoption or new game evidence.
 
 ## FL2-G0 durable Fast Lab baseline candidate — 2026-10-06
 

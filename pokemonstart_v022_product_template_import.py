@@ -10,39 +10,9 @@ TEMPLATE_SHA256 = '74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da67
 ROM_SHA256 = '6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0'
 
 
-def build_candidate(raw: bytes, record: bytes) -> tuple[bytes, dict]:
-    """Copy an unchanged 100-byte template into the first unoccupied Party slot."""
-    if len(record) != 100:
-        raise ValueError('template record must be exactly 100 bytes')
-    before = v.verify_bytes(raw)
-    if before.party_count != 4 or before.party_count >= v.PARTY_SIZE:
-        raise ValueError('template import proof requires Party count 4')
-    active = before.slots[before.active_slot]
-    section = active.section(1)
-    base = section.physical_sector * v.SECTOR_SIZE
-    count_offset = base + v.PARTY_COUNT_OFFSET
-    dest = base + v.PARTY_OFFSET + before.party_count * 100
-    output = bytearray(raw)
-    output[count_offset] = before.party_count + 1
-    output[dest:dest + 100] = record
-    checksum = v.calculate_save_checksum(output[base:base + v.SECTION_LENGTHS[1]])
-    struct.pack_into('<H', output, base + v.SECTION_CHECKSUM_OFFSET, checksum)
-    candidate = bytes(output)
-    after = v.verify_bytes(candidate)
-    if after.party_count != 5 or candidate[dest:dest + 100] != record:
-        raise ValueError('template import postcondition failed')
-    allowed = {count_offset, *range(dest, dest + 100),
-               base + v.SECTION_CHECKSUM_OFFSET, base + v.SECTION_CHECKSUM_OFFSET + 1}
-    changed = [i for i, (a, b) in enumerate(zip(raw, candidate)) if a != b]
-    if not set(changed) <= allowed:
-        raise ValueError('template import byte envelope mismatch')
-    return candidate, {'transition': [4, 5], 'append_slot': 4,
-                       'record_sha256': hashlib.sha256(record).hexdigest(),
-                       'changed_offsets': changed, 'verifier_accepted': True,
-                       'unrelated_bytes_preserved': True}
-
-
 def derive(raw: bytes, record: bytes, rom_sha256: str) -> tuple[bytes, dict]:
+    # Qualify the exact source and complete game-generated record before the
+    # only write-capable construction path below is reached.
     profile._require_rom_hash(rom_sha256)
     if hashlib.sha256(raw).hexdigest() != SOURCE_SHA256:
         raise ValueError('template import requires the exact immutable pre-acquisition save')
@@ -51,7 +21,27 @@ def derive(raw: bytes, record: bytes, rom_sha256: str) -> tuple[bytes, dict]:
     report = v.verify_bytes(raw)
     if report.party_count != 4:
         raise ValueError('pre-acquisition Party count differs')
-    candidate, receipt = build_candidate(raw, record)
+    base = report.slots[report.active_slot].section(1).physical_sector * v.SECTOR_SIZE
+    count_offset = base + v.PARTY_COUNT_OFFSET
+    dest = base + v.PARTY_OFFSET + 4 * 100
+    output = bytearray(raw)
+    output[count_offset] = 5
+    output[dest:dest + 100] = record
+    struct.pack_into('<H', output, base + v.SECTION_CHECKSUM_OFFSET,
+                     v.calculate_save_checksum(output[base:base + v.SECTION_LENGTHS[1]]))
+    candidate = bytes(output)
+    after = v.verify_bytes(candidate)
+    if after.party_count != 5 or candidate[dest:dest + 100] != record:
+        raise ValueError('exact template import postcondition failed')
+    allowed = {count_offset, *range(dest, dest + 100),
+               base + v.SECTION_CHECKSUM_OFFSET, base + v.SECTION_CHECKSUM_OFFSET + 1}
+    changed = [i for i, (a, b) in enumerate(zip(raw, candidate)) if a != b]
+    if not set(changed) <= allowed:
+        raise ValueError('exact template import byte envelope mismatch')
+    receipt = {'transition': [4, 5], 'append_slot': 4,
+               'record_sha256': hashlib.sha256(record).hexdigest(),
+               'changed_offsets': changed, 'verifier_accepted': True,
+               'unrelated_bytes_preserved': True}
     receipt.update({'source_sha256': SOURCE_SHA256, 'template_sha256': TEMPLATE_SHA256,
                     'candidate_sha256': hashlib.sha256(candidate).hexdigest(),
                     'operation': 'exact_game_generated_template_import'})

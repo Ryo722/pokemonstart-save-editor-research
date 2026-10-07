@@ -29,8 +29,8 @@
   },
   "r2_party": {
     "verdict": "PASS_BOUNDED_USEFUL_SUBSET",
-    "basis": "Existing ordinary party members: reusable friendship across structurally valid records; constrained Move 1 Pound/Tackle replacement; source-backed Bulbasaur/Ivysaur level 5/6 stat model. R4 Human-tested Friendship twice. Native game-generated Rattata template record was imported, displayed, healed, used in battle, and normally saved.",
-    "limits": "No generic constructor. Stat-changing target outputs have no fresh normal-save round trip; the pinned source integration revision is not independently established. This does not invalidate the friendship/move practical subset and remains an explicit qualification caveat."
+      "basis": "Existing ordinary party members: reusable Friendship across structurally valid records; constrained Move 1 Pound/Tackle replacement; level-5-only Bulbasaur/Ivysaur stat edits with coherent cached stats. Level-6 stat-changing operations fail closed because the exact integrated formula is unresolved. R4 Human-tested Friendship twice. Native game-generated Rattata template record was imported, displayed, healed, used in battle, and normally saved.",
+      "limits": "No generic constructor. Level changes are read-only; EXP is restricted to the level-5 range when the level-5 stat predicate passes. Friendship and Move 1 remain independent of the stat model. No fresh normal-save round trip for stat-changing target output; no exact upstream integration revision claim."
   },
   "r2_inventory": {
     "verdict": "PASS_BOUNDED_USEFUL_SUBSET",
@@ -89,7 +89,7 @@
     {"criterion": 2, "verdict": "PASS", "evidence": "Verifier plus unseen-SHA naturally progressed input accepted."},
     {"criterion": 3, "verdict": "PASS", "evidence": "Money, Party and Items independent predicates; Money does not use input SHA allowlist."},
     {"criterion": 4, "verdict": "PASS", "evidence": "Money GUI range 0..9999999 with exact v0.22 evidence."},
-    {"criterion": 5, "verdict": "PASS_BOUNDED", "evidence": "Useful existing-member Friendship/Move subset and bounded coherent stat model; see qualification caveat."},
+    {"criterion": 5, "verdict": "PASS_BOUNDED", "evidence": "Useful existing-member Friendship/Move subset and level-5-only coherent stat model; level-6 stat-changing operations fail closed."},
     {"criterion": 6, "verdict": "PASS_BOUNDED", "evidence": "Potion quantity and shape-gated Antidote insertion/removal; no extrapolated capacity."},
     {"criterion": 7, "verdict": "PASS", "evidence": "Normal controls require no JSON, hashes, offsets or checksum knowledge."},
     {"criterion": 8, "verdict": "PASS", "evidence": "GUI inspect/edit/preview/verified separate output and stale-state rejection."},

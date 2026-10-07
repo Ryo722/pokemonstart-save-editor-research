@@ -45,10 +45,13 @@ def stat_eligible(mon):
 def capabilities(raw, rom_sha256, slot):
     _,mon=qualify(raw,rom_sha256,slot)
     result={'friendship':True,'moves':mon.pp_bonuses == 0 and mon.moves[0] in MOVES
-            and mon.pp[0] <= 35, 'stats':False, 'stats_reason':''}
+            and mon.pp[0] <= 35, 'stats':False, 'stats_reason':'', 'level_exp':False,
+            'level_exp_reason':'Level 6 stat formula is unqualified for this exact build.'}
     try:
         stat_eligible(mon)
         result['stats']=True
+        result['level_exp']=True
+        result['level_exp_reason']='Level changes are disabled; EXP is limited to the supported level-5 range.'
     except ValueError as exc:
         result['stats_reason']=str(exc)
     return result
@@ -72,9 +75,9 @@ def derive(raw, rom_sha256, slot, changes):
     if 'species' in requested and (type(requested['species']) is not int or requested['species'] not in SPECIES):
         raise ValueError('species supports Bulbasaur/Ivysaur only')
     if 'level' in requested:
-        integer(requested['level'],5,6,'supported level')
+        integer(requested['level'],5,5,'supported level')
     if 'experience' in requested:
-        integer(requested['experience'],medium_slow_exp(5),medium_slow_exp(7)-1,'supported EXP')
+        integer(requested['experience'],medium_slow_exp(5),medium_slow_exp(6)-1,'supported level-5 EXP')
     if ('level' in requested and 'experience' in requested
             and level_from_medium_slow_exp(requested['experience']) != requested['level']):
         raise ValueError('level/EXP conflict')
@@ -88,6 +91,8 @@ def derive(raw, rom_sha256, slot, changes):
         level=requested.get('level',mon.level)
         exp=requested.get('experience',medium_slow_exp(level) if 'level' in requested else mon.experience)
         level=level_from_medium_slow_exp(exp)
+        if level != 5:
+            raise ValueError('stat-changing requests must remain at level 5; level-6 stat formula is unqualified')
         desired=replace(mon,species=requested.get('species',mon.species),level=level,experience=exp,
                         ivs=requested.get('ivs',mon.ivs),evs=requested.get('evs',mon.evs))
         stats=calculations.stats(desired)
