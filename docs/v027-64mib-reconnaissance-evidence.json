@@ -1,0 +1,413 @@
+{
+ "schema": "pokemonstart-v027-reconnaissance/1",
+ "status": "INVESTIGATION_RECORD_NOT_CANONICAL_NOT_ADOPTED",
+ "date": "2026-10-08",
+ "canonical_base": {
+  "repository_main": "381bc80080919952c9a32bb7982dfcf24bc92ea5",
+  "e4_branch_observed": "69d1d5d9dcdfcdf16e4564204e61682992de205c"
+ },
+ "upstream_pokemonstart": {
+  "repository": "onikoro334274-cell/PokemonStart",
+  "head_at_check": "23007d4ef95ae1dc8788fbb34c8f1d93118231d1",
+  "newer_than_v027": false,
+  "packages": {
+   "v0.22": {
+    "commit": "ddd054d46fc1bd0555badf738572620b1ee4670d",
+    "pks_sha256": "d22bc25d7427899e8d0b2e29e7fd6b604602781167b78cfa8a90c8a2da9e4060",
+    "bps_sha256": "a2bb3a1bddeeb6344cd45e139edb9ff35535deb41f8c38c0dc04eb4b1a7eab27",
+    "target_size": 33554432,
+    "target_crc32": "B5D4DF5C",
+    "patch_crc32": "6D0DEFB5",
+    "build_git": "4283b3a1",
+    "has_migration_html": false
+   },
+   "v0.23": {
+    "commit": "f5a4555b5221",
+    "pks_sha256": "0f4f3d7d3a9855c6d5c39134986ff4566694a701a11836bb0d20c9fae169c7ae",
+    "bps_sha256": "f3b03f616c194b3ea46ba38befb6d620e6a9a479774605af719de2774b2b444a",
+    "target_size": 33554432,
+    "target_crc32": "D3407DC3",
+    "patch_crc32": "1B8FBF9E",
+    "build_git": "5ccbb9fe",
+    "has_migration_html": true
+   },
+   "v0.26": {
+    "commit": "faf63dd08b3b",
+    "pks_sha256": "4e1fe86131257db506e028c7cb9cad2701d34c46c94d189481de0b46d010fb3f",
+    "bps_sha256": "f12848a94cb0d43ff26f67fa3e0121335c008ba518cf9969d4f46020853d0076",
+    "target_size": 33554432,
+    "target_crc32": "C3720FB2",
+    "patch_crc32": "10798B85",
+    "build_git": "913e9ced",
+    "has_migration_html": true
+   },
+   "v0.27": {
+    "commit": "23007d4ef95ae1dc8788fbb34c8f1d93118231d1",
+    "pks_git_blob": "359a097ef2b78f00ec37fa45633165c173d68000",
+    "pks_sha256": "d81b965d5194195055ca704cc487bf89f61a1f2cb9f741077bd9273ff8fe5a90",
+    "payload_sha256": "e4b4283126eca27897e9519eadebf353f59b5dc6123628c14327876174e44f40",
+    "members": [
+     "Pokemon.bps",
+     "readme txt",
+     "strategy memo html",
+     "save migration html"
+    ],
+    "bps_sha256": "64cadabd2a399b1c3c7eb1b48973580d4f4fe4cab53b54d9d369e5f2976b6535",
+    "source_size": 16777216,
+    "source_crc32": "3B2056E9",
+    "target_size": 67108864,
+    "target_crc32": "84202DAB",
+    "patch_crc32": "A5CDD611",
+    "patch_crc_valid": true,
+    "build_git": "312547f4",
+    "has_migration_html": true,
+    "readme_states_previous_sav_usable_when_renamed": true
+   }
+  },
+  "migration_html_sha256_v023_v026_v027_identical": "141920a25726cc42eb22cf0496e3231261b6207212f475d955064580c9358dfc"
+ },
+ "owned_source_rom_sha256_unchanged": "1e4af44b0c75cc8649bfb8649dc4ae5850bf5358bd6b9cd0bf779c99f9db1486",
+ "rom_private_derivation_identifiers": {
+  "v0.22": {
+   "size": 33554432,
+   "crc32": "B5D4DF5C",
+   "sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0"
+  },
+  "v0.23": {
+   "size": 33554432,
+   "crc32": "D3407DC3",
+   "sha256": "e3178c826e4d3fe10059a7fdecf9d683af5b94fbe0f4491a03eebfc2bb3a1f81"
+  },
+  "v0.26": {
+   "size": 33554432,
+   "crc32": "C3720FB2",
+   "sha256": "7b0c8ed2d525286e99ec0d6ff49e0839514d71e0a9b80acb308ea11a7d592837"
+  },
+  "v0.27": {
+   "size": 67108864,
+   "crc32": "84202DAB",
+   "sha256": "455f5294af9cb728ea577cafea3f8a27d5efc18e8f1371e1a76492e79d3781ac",
+   "lower_32MiB_sha256": "97046f25e50d9dea01d520cbe65151f93af883b6203f3d7f15f76698a0cfbd7f",
+   "upper_32MiB_sha256": "7f8503121ac71f1605e8b0f8f3dfb39f4d33403eba56d5cbf1e33b1c44f828e3"
+  }
+ },
+ "rom64_runtime": {
+  "repository": "onikoro334274-cell/mGBA_celio_edition",
+  "branch": "rom64",
+  "head": "770ab0bb8a19fdd11303ea4c42be0f9b81fb6959",
+  "base": "Exormeter/mGBA_celio_edition tag 2.0.0 (3da13060a586)",
+  "code_commit": "4857dec695a7",
+  "files_changed_by_code_commit": [
+   "src/gba/gba.c",
+   "src/gba/memory.c",
+   "version.cmake"
+  ],
+  "activation": "ROM file size exactly 0x04000000 and header byte 0xAC != 'M'",
+  "mapping": {
+   "0x08000000-0x09FFFFFF": "file 0x0000000-0x1FFFFFF",
+   "0x0A000000-0x0BFFFFFF": "file 0x2000000-0x3FFFFFF",
+   "0x0C000000-0x0DFFFFFF": "file 0x0000000-0x1FFFFFF (mirror)"
+  },
+  "mechanism": "address decode: ROM mask widened to 0x03FFFFFF; no banking/mapper",
+  "unchanged": [
+   "waitstate tables",
+   "savedata/flash/sram/eeprom",
+   "RTC/GPIO",
+   "savestate format",
+   "Celio link"
+  ],
+  "notes": [
+   "romCrc32 computed over 64 MiB (savestate cross-load warns only)",
+   "GBAApplyPatch still rejects outputs > 32 MiB",
+   "cheat ROM hooks keep 32 MiB mask",
+   "core memory block cart1 returns ROM base pointer"
+  ]
+ },
+ "upper_half": {
+  "used_range": [
+   "0x0A000000",
+   "0x0A163393"
+  ],
+  "rest": "0xFF fill",
+  "container_magic": "PKSPICS1",
+  "container_entry_count": 2804,
+  "referencing_tables_v027": {
+   "0x0982002C": {
+    "entries": 1865,
+    "into_upper": 1488
+   },
+   "0x097D60EC": {
+    "entries": 1484,
+    "into_upper": 1483
+   }
+  },
+  "same_tables_v026": [
+   "0x09982190",
+   "0x09938250"
+  ],
+  "upper_blobs_byte_equal_to_v026_lower_blobs": "2152 of 2193 by estimated length",
+  "classification": "compressed Pokemon picture data only; no executable-code evidence"
+ },
+ "v027_new_code": {
+  "lz77_wrapper_branch": "0x09022A84 (+0x20 bytes): src>>25==5 -> 0x090BAAFC",
+  "iwram_arm_payload": "0x09030B14 size 0x520 -> IWRAM 0x03003720",
+  "thumb_block": [
+   "0x090BA128",
+   "0x090BABBE"
+  ],
+  "strings": [
+   "SDTEST.BIN",
+   "PKSPICS.BIN"
+  ],
+  "io_constants": [
+   "0x09800000",
+   "0x09FFFFFF"
+  ],
+  "flash_0x0E_literals_in_new_code": 0,
+  "selection_logic": "HYPOTHESIS_UNVERIFIED"
+ },
+ "save_architecture": {
+  "slots": "5 sections per slot, sectors 0-4 / 5-9 by counter parity",
+  "section_checksum_lengths_unchanged": true,
+  "shel": {
+   "sb1_offset": "0x1400",
+   "magic": "SHEL (0x4C454853)",
+   "counter_offset": "0x1404",
+   "page_sector_table": [
+    "0x1408",
+    "0x1419"
+   ],
+   "rom_constants_v027": [
+    "0x4C454853",
+    "0x1408",
+    "0x1419",
+    "0x0D2B",
+    "copy 0x0203B40C..0x0203BFAC -> page+0x18B"
+   ],
+   "native_new_game_table": "0xFF (unassigned)",
+   "load_accepts_page_sectors": [
+    10,
+    31
+   ],
+   "load_validates": [
+    "id 0x40+p",
+    "signature",
+    "checksum 0xFF0"
+   ]
+  },
+  "pages": {
+   "ids": [
+    "0x40",
+    "0x50"
+   ],
+   "count": 17,
+   "migration_sectors": [
+    10,
+    26
+   ],
+   "checksum_length": "0xFF0",
+   "copies": 1,
+   "page0": {
+    "storage_header": "0x0",
+    "tail_a": "0x4 (0x98)",
+    "tail_b": "0x9C (0xEF)",
+    "former_section13_parasite": "0x18B (0xBA0)",
+    "box_mons": "0xD2B (12 x 58)"
+   },
+   "pages_1_14": "70 x 58-byte box mons each",
+   "page15": "former sector 30",
+   "page16": "former sector 31"
+  },
+  "ram_fragments_unchanged_v022_v027": [
+   "0x0203B0E8",
+   "0x0203B1B4",
+   "0x0203B40C",
+   "0x0203BFAC",
+   "0x0203CF9C"
+  ],
+  "save_closure_v023_v026_to_v027": {
+   "functions": 193,
+   "differing": [
+    "0x09022A84 (LZ77 wrapper only)"
+   ]
+  }
+ },
+ "editor_relevant_rom_semantics": {
+  "tables_content_identical_v022_v026_v027": [
+   "gBaseStats",
+   "species names",
+   "moves",
+   "move names",
+   "EXP",
+   "nature",
+   "level-up learnsets (1489 species)"
+  ],
+  "tables_equal_modulo_pointers": [
+   "items",
+   "item pocket descriptor"
+  ],
+  "table_addresses": {
+   "gBaseStats": {
+    "v0.22": "0x099B8B40",
+    "v0.26": "0x0993B0D8",
+    "v0.27": "0x097D8F74"
+   },
+   "species_names": {
+    "v0.22": "0x096570A4",
+    "v0.26": "0x096570A4",
+    "v0.27": "0x096570D4"
+   },
+   "moves": {
+    "v0.22": "0x094A3238",
+    "v0.26": "0x09419920",
+    "v0.27": "0x0941A840"
+   },
+   "move_names": {
+    "v0.22": "0x0911A74C",
+    "v0.26": "0x0911CA84",
+    "v0.27": "0x0911D9A4"
+   },
+   "exp": {
+    "v0.22": "0x094C5D54",
+    "v0.26": "0x0943C43C",
+    "v0.27": "0x0943D35C"
+   },
+   "nature": {
+    "all": "0x0820F550"
+   },
+   "items": {
+    "v0.22": "0x095199C8",
+    "v0.26": "0x094900B0",
+    "v0.27": "0x09490FD0"
+   },
+   "item_descriptor": {
+    "v0.22": "0x09490E68",
+    "v0.26": "0x094074E0",
+    "v0.27": "0x09408400"
+   },
+   "learnset_pointer_table": {
+    "v0.22": "0x09A0792C",
+    "v0.26": "0x09989EC4",
+    "v0.27": "0x09827D60"
+   },
+   "map_group_table": {
+    "v0.22": "0x089A3D6C",
+    "v0.23": "0x0894AA3C",
+    "v0.26": "0x08962120",
+    "v0.27": "0x08962120"
+   }
+  },
+  "map_region_section_ids": {
+   "maps_parsed": 1190,
+   "groups": 80,
+   "changed_v022_to_v027": 0
+  },
+  "vanilla_region_v026_to_v027": "pointer updates only (2130 aligned + unaligned script pointers)",
+  "vanilla_code_v022_to_v027": {
+   "new_hook_stubs": [
+    "0x08040694",
+    "0x08050770",
+    "0x08058330",
+    "0x08058388",
+    "0x0808CD48",
+    "0x0808D858",
+    "0x080DB394",
+    "0x080DB3C0",
+    "0x080DB3F4",
+    "0x080DB41C"
+   ],
+   "box_count_constants": "0x18/0x19 -> 0x26/0x27 (25 -> 39 boxes)",
+   "hall_of_fame_call_removed": "0x0809CAE8"
+  },
+  "e3_e4_root_closure": {
+   "roots": [
+    "0x0803d1c0",
+    "0x0803f354",
+    "0x0803f4b0",
+    "0x0803fbc4",
+    "0x0803dbe8",
+    "0x0803df30",
+    "0x0804042c",
+    "0x080406c4",
+    "0x0804070c",
+    "0x0803e0d0",
+    "0x08120ad0",
+    "0x0806dec4",
+    "0x0806de74",
+    "0x0806dd5c",
+    "0x08055b20"
+   ],
+   "functions": 125,
+   "v022_vs_v027_differing": [
+    [
+     "0x090b774c",
+     "0x090b96c4"
+    ],
+    [
+     "0x090b7788",
+     "0x090b96f0"
+    ],
+    [
+     "0x090b7936",
+     "0x090b9840"
+    ]
+   ],
+   "v026_vs_v027_differing": []
+  },
+  "closure_difference_interpretation": "held-item 835 / species 303 stat-doubling helpers: GetMonData(field 12) replaced by direct u16 at record+0x22; judged semantically equivalent",
+  "function_address_map": {
+   "CreateMon": {
+    "v0.22": "0x0803d1c0",
+    "v0.27": "0x0803d1c0",
+    "normalized_body_equal_v022_v027": true,
+    "v0.26": "0x0803d1c0"
+   },
+   "CFRU CreateBoxMon target": {
+    "v0.22": "0x09075150",
+    "v0.27": "0x09075920",
+    "normalized_body_equal_v022_v027": true,
+    "v0.26": "0x090753dc"
+   },
+   "CFRU CalculateMonStats hook target": {
+    "v0.22": "0x090756f4",
+    "v0.27": "0x09075ec4",
+    "normalized_body_equal_v022_v027": true,
+    "v0.26": "0x09075980"
+   },
+   "CFRU helper querying flag 0x828": {
+    "v0.22": "0x090b7380",
+    "v0.27": "0x090b9188",
+    "normalized_body_equal_v022_v027": true,
+    "v0.26": "0x090b8c44"
+   },
+   "CFRU helper querying flag 0x12F8 / item 833": {
+    "v0.22": "0x090b7e6c",
+    "v0.27": "0x090baa4c",
+    "normalized_body_equal_v022_v027": true,
+    "v0.26": "0x090b9c08"
+   },
+   "held-item-835 stat helper A": {
+    "v0.22": "0x090b774c",
+    "v0.27": "0x090b96c4",
+    "normalized_body_equal_v022_v027": false,
+    "v0.26": "0x090b9180"
+   },
+   "held-item-835 stat helper B": {
+    "v0.22": "0x090b7788",
+    "v0.27": "0x090b96f0",
+    "normalized_body_equal_v022_v027": false,
+    "v0.26": "0x090b91ac"
+   }
+  },
+  "givemon_hook_0x08040284": {
+   "v0.22_vs_v0.27": "differs (new Box storage path)",
+   "v0.26_vs_v0.27": "identical"
+  }
+ },
+ "limits": [
+  "static recursive-descent closure does not follow jump tables or data-driven callbacks (lower bound)",
+  "Unicorn differential execution blocked in the sandbox (SIGILL, no JIT); tool prepared, not run",
+  "no private save was read for this investigation",
+  "real-save page allocation / counter behaviour unobserved"
+ ]
+}
