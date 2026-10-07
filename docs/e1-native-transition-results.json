@@ -1,0 +1,198 @@
+{
+  "candidate_head": "98173a4dc0a2cd84710ea1110d6138f4899f80c3",
+  "canonical_base_at_candidate": "785e113fa1885ac17e19da842a74740f62a8e789",
+  "scope": "Read-only verification of Human T1/T2/T3 snapshots; no implementation or GitHub mutation",
+  "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+  "original_source_sha256": "606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea",
+  "snapshots": [
+    {
+      "snapshot": "E1_T1_PRE.sav",
+      "sha256": "c3ccabd5891d701ca2247649700e96087cb26281738995d9f88b8191fdc03366",
+      "size": 131088,
+      "read_only": true,
+      "active_slot": 1,
+      "counter": 11,
+      "saved_statistic": 11,
+      "money": 7654321,
+      "party_count": 4,
+      "regular_entries": [
+        {
+          "slot": 0,
+          "item_id": 13,
+          "quantity": 2
+        },
+        {
+          "slot": 1,
+          "item_id": 533,
+          "quantity": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 14,
+          "quantity": 1
+        }
+      ],
+      "regular_holes": [],
+      "independent_decode_equal": true,
+      "state_supported": true
+    },
+    {
+      "snapshot": "E1_T1_POST_DELETE.sav",
+      "sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+      "size": 131088,
+      "read_only": true,
+      "active_slot": 0,
+      "counter": 12,
+      "saved_statistic": 12,
+      "money": 7654321,
+      "party_count": 4,
+      "regular_entries": [
+        {
+          "slot": 0,
+          "item_id": 533,
+          "quantity": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 14,
+          "quantity": 1
+        }
+      ],
+      "regular_holes": [],
+      "independent_decode_equal": true,
+      "state_supported": true
+    },
+    {
+      "snapshot": "E1_T2_POST_ACQUIRE.sav",
+      "sha256": "369842f20634df82bad9f0a2e54048dd7ecb88e26ed01893f91f44a53616b9e6",
+      "size": 131088,
+      "read_only": true,
+      "active_slot": 1,
+      "counter": 13,
+      "saved_statistic": 13,
+      "money": 7654121,
+      "party_count": 4,
+      "regular_entries": [
+        {
+          "slot": 0,
+          "item_id": 533,
+          "quantity": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 14,
+          "quantity": 1
+        },
+        {
+          "slot": 2,
+          "item_id": 13,
+          "quantity": 1
+        }
+      ],
+      "regular_holes": [],
+      "independent_decode_equal": true,
+      "state_supported": true
+    },
+    {
+      "snapshot": "E1_T3_POST_STACK.sav",
+      "sha256": "6e2c92c4e86b9436ca0647b6852b999eb107318d1356098a3cddafba11d8c55f",
+      "size": 131088,
+      "read_only": true,
+      "active_slot": 0,
+      "counter": 14,
+      "saved_statistic": 14,
+      "money": 7653721,
+      "party_count": 4,
+      "regular_entries": [
+        {
+          "slot": 0,
+          "item_id": 533,
+          "quantity": 1
+        },
+        {
+          "slot": 1,
+          "item_id": 14,
+          "quantity": 3
+        },
+        {
+          "slot": 2,
+          "item_id": 13,
+          "quantity": 1
+        }
+      ],
+      "regular_holes": [],
+      "independent_decode_equal": true,
+      "state_supported": true
+    }
+  ],
+  "transitions": [
+    {
+      "transition": "T1",
+      "counter_increment": 1,
+      "saved_statistic_increment": 1,
+      "prior_active_slot_preserved": true,
+      "all_logical_sections_rotate_one": true,
+      "other_pocket_records_preserved": true,
+      "complete_party_records_preserved": true,
+      "money_delta": 0,
+      "section13_logical_diff_offsets": [
+        "0xadc",
+        "0xadd",
+        "0xade",
+        "0xae0",
+        "0xae1",
+        "0xae4",
+        "0xae6"
+      ],
+      "sector30_changed_offsets": [
+        "0x716"
+      ],
+      "sector31_preserved": true
+    },
+    {
+      "transition": "T2",
+      "counter_increment": 1,
+      "saved_statistic_increment": 1,
+      "prior_active_slot_preserved": true,
+      "all_logical_sections_rotate_one": true,
+      "other_pocket_records_preserved": true,
+      "complete_party_records_preserved": true,
+      "money_delta": -200,
+      "section13_logical_diff_offsets": [
+        "0xae4",
+        "0xae6"
+      ],
+      "sector30_changed_offsets": [
+        "0x716"
+      ],
+      "sector31_preserved": true
+    },
+    {
+      "transition": "T3",
+      "counter_increment": 1,
+      "saved_statistic_increment": 1,
+      "prior_active_slot_preserved": true,
+      "all_logical_sections_rotate_one": true,
+      "other_pocket_records_preserved": true,
+      "complete_party_records_preserved": true,
+      "money_delta": -400,
+      "section13_logical_diff_offsets": [
+        "0xae2"
+      ],
+      "sector30_changed_offsets": [],
+      "sector31_preserved": true
+    }
+  ],
+  "human_attestation": "Human reports following supplied native-game procedure; unexpected actions absent to the best of their recollection. Separate from machine verification.",
+  "source_and_snapshot_immutability": true,
+  "remaining_uncertainty": [
+    "Sector30 offset 0x716 changes during T1/T2 within the non-pocket gap; meaning and required writer coupling not qualified.",
+    "Compaction is observed by the post-SAVE snapshot; exact runtime timing is not established.",
+    "Native data qualifies small Potion/Antidote quantities; full proposed writer quantity range and behavior for other ordinary IDs remain unqualified.",
+    "Global custom/anti-cheat behavior and alternate sorting configurations remain unqualified."
+  ],
+  "e1_disposition": "BOUNDED_STOP_WITH_CONCRETE_EVIDENCE",
+  "e2_started": false,
+  "independent_review_performed": false,
+  "publication_note": "Sanitized documentation follow-up to the exact inspected candidate; no implementation change. Snapshot verification identity remains recorded separately."
+}

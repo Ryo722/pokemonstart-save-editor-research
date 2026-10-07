@@ -2,6 +2,13 @@
 
 Disposition: **BOUNDED_STOP_WITH_CONCRETE_EVIDENCE**.
 
+Update: Human T1/T2/T3 snapshots have now been verified. See
+[e1-native-transition-results.md](e1-native-transition-results.md) for the
+updated evidence/matrix and [e1-chatgpt-handoff.md](e1-chatgpt-handoff.md) for
+the requested broader planning discussion. Statements below about missing
+T1/T2/T3 and no newly performed gameplay describe the initial checkpoint.
+E1 remains incomplete; no writer qualification is implied.
+
 Canonical starting point: GitHub `main`
 `785e113fa1885ac17e19da842a74740f62a8e789`, fetched afresh for Issue #20.
 Candidate branch: `codex/e1-v022-inventory-model-qualification`.
