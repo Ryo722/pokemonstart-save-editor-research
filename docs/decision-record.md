@@ -6,7 +6,7 @@ GitHub `main` is the only durable canonical authority for this project. Detailed
 
 The independently reviewed exact-v0.22 practical product candidate was explicitly authorized for adoption and merged to canonical `main` through PR #16 at merge commit `ab18419108eeed91288d440a6f154cac33a1cf2e`.
 
-The Human has additionally adopted the **Exact-v0.22 PKHeX-like Practical Editor Expansion** as the forward product goal. E1/E2 Inventory expansion is adopted on canonical `main` through PR #21 merge commit `3eb756cb1b74fc0d58637b82e93542836fa0b290`. E3 existing-Pokémon expansion is adopted on canonical `main` through PR #23 merge commit `165dda2edbb94dca559cd426ba37189e7220f18e`, from exact reviewed candidate `084f7e8089da2450521fb3069f6b0b62e85cc99b`. The fresh independent-review disposition `APPROVED_FOR_HUMAN_ADOPTION_DECISION` is recorded as Human-attested fresh-review evidence. Future expanded writer candidates remain separately review/adoption gated before merge.
+The Human has additionally adopted the **Exact-v0.22 PKHeX-like Practical Editor Expansion** as the forward product goal. E1/E2 Inventory expansion is adopted on canonical `main` through PR #21 merge commit `3eb756cb1b74fc0d58637b82e93542836fa0b290`. E3 existing-Pokémon expansion is adopted on canonical `main` through PR #23 merge commit `165dda2edbb94dca559cd426ba37189e7220f18e`, from exact reviewed candidate `084f7e8089da2450521fb3069f6b0b62e85cc99b`. E4 Party-only Pokémon creation is adopted on canonical `main` through PR #24 merge commit `146492eb2951ff10c9f7f9b83d634ac819e69993`, from exact reviewed reporting head `0ffa1fe5912201f51e4450d68205fcd51dee1e80` and Human-played implementation `3fd7c9ca43b1190feb47e89d2b1684a6344617bd`. The fresh independent-review disposition `APPROVED_FOR_HUMAN_ADOPTION_DECISION` is recorded as Human-attested fresh independent-review evidence. Future expanded writer candidates remain separately review/adoption gated before merge.
 
 The preceding sprint authorization remains historical authority for the R1–R4 implementation work:
 
@@ -131,9 +131,9 @@ Canonical exact-v0.22 GUI supports the independently reviewed recovery-medicine 
 
 The independently reviewed exact-v0.22 ordinary-class existing-Party editor is canonical through PR #23. Its adopted scope covers the qualified practical subset of species, level/EXP, four move slots with PP/PP-Up coupling, friendship, IV/EV, effective nature, ordinary ability resolution/selection, conservative held items, and required cached-stat/HP coherence. Unsupported runtime/facility contexts, exceptional species/forms/states and unsafe held-item cases remain fail-closed.
 
-### E4 — Pokémon creator — NEXT / NOT STARTED
+### E4 — Pokémon creator — COMPLETE / ADOPTED
 
-Construct new ordinary Pokémon from supported semantic parameters in the first eligible empty Party slot. Party-only for vNext; Box creation remains separately gated. E3 adoption does not itself authorize E4 implementation.
+The independently reviewed exact-v0.22 Party-only creator is canonical through PR #24. It constructs a bounded general class of new ordinary Pokémon in the first eligible empty Party slot from supported semantic parameters, independently reconstructs the complete record/output save, preserves unrelated state, and fails closed on unsupported contexts or a full Party with an explicit Box-not-supported reason. Box creation remains outside adopted scope.
 
 ### E5 — PKHeX-like product UX and acceptance
 
@@ -211,4 +211,4 @@ The following still require separate justification/authorization as applicable:
 
 ## Next execution step
 
-Reconstruct fresh current `main` after E3 adoption and perform the milestone-boundary check before any E4 implementation. Confirm that E4 remains the cheapest uncertainty-reducing path, restate its authorization boundary, and only then seek or use authority for bounded E4 work. E3 adoption alone does not authorize E4 implementation.
+Reconstruct fresh current `main` after E4 adoption and perform a milestone-boundary check before any E5 implementation. Confirm whether E5 PKHeX-like product UX / terminal acceptance remains the cheapest goal-aligned next step, restate the authorization boundary, and only then begin bounded E5 work. E4 adoption alone does not authorize E5 implementation.
