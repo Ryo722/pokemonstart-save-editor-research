@@ -90,12 +90,21 @@ class MedicineEditorTests(unittest.TestCase):
         with self.assertRaises(ValueError):editor.derive(self.raw,self.rom,[{'op':'remove','item_id':533}])
 
     def test_e2_composes_with_unchanged_party_money_families(self):
+        # E3 requires a complete artificial Party ROM, rather than the former
+        # hash-only friendship fixture. Inventory/Money assertions stay intact.
+        from test_v022_party_writer import synthetic_inputs
+        import pokemonstart_v022_party_model as party_model
+        import pokemonstart_v022_party_audit as party_audit
+        raw, rom = synthetic_inputs()
+        digest = hashlib.sha256(rom).hexdigest()
         request={'money':1234567,'party':[{'slot':0,'changes':{'friendship':1}}],
                  'items':[{'op':'set','item_id':13,'quantity':8}]}
-        output,receipt=core.derive(self.raw,core.profile.EXPECTED_ROM_SHA256,request,rom_bytes=self.rom)
+        with patch.object(model,'ROM_SHA256',digest),patch.object(auditor,'ROM_SHA256',digest),patch.object(party_model,'ROM_SHA256',digest),patch.object(party_audit,'EXACT',digest),patch.object(core.profile,'_require_rom_hash',return_value=None):
+            output,receipt=core.derive(raw,core.profile.EXPECTED_ROM_SHA256,request,rom_bytes=rom)
+            rows=[(e['item_id'],e['quantity']) for e in editor.inspect(output,rom)['entries']]
         self.assertEqual(core.money.inspect(output,core.profile.EXPECTED_ROM_SHA256)['money'],1234567)
         self.assertEqual(core.v.verify_bytes(output).party[0].friendship,1)
-        self.assertEqual(self.rows(output),[(533,1),(14,3),(13,8)])
+        self.assertEqual(rows,[(533,1),(14,3),(13,8)])
         self.assertEqual(set(receipt['families']),{'money','party_0','items'})
 
     def neutral_ids(self, count):
