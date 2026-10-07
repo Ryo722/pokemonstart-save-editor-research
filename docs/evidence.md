@@ -265,3 +265,14 @@ released. Private ROM/save inputs remain outside Git.
 Fresh-context independent review approved exact candidate `9f86be5e339067f88b3f557e5587c93f5fd17c96` for Human adoption. The Human explicitly authorized adoption and merge with no release, Stable promotion, or scope expansion. PR #21 merged as `3eb756cb1b74fc0d58637b82e93542836fa0b290`.
 
 Canonical scope remains bounded to the reviewed exact-v0.22 restricted recovery-medicine editor. Human normal-game acceptance covered quantity edit, removal, addition, normal SAVE, returned-save verification, and preservation of unrelated Inventory, Party, Money, and re-edit eligibility. Broader item authority and Give All remain unsupported.
+
+
+## E3 existing-Pokémon adoption — 2026-10-07
+
+Exact reviewed candidate `084f7e8089da2450521fb3069f6b0b62e85cc99b` (Human-played writer/GUI commit `34517a6e8664a510a8a909725ad5cf59cdaeecfb`) was approved by a fresh-context independent reviewer with disposition `APPROVED_FOR_HUMAN_ADOPTION_DECISION`. The Human explicitly authorized adoption and merge. PR #23 merged to canonical `main` as `165dda2edbb94dca559cd426ba37189e7220f18e`.
+
+Evidence classes remain separated. Repository implementation/tests and exact identities are independently inspectable canonical evidence. Exact-ROM/private-save probes and returned-save reconstruction are sanitized recorded machine evidence where protected inputs are unavailable to later reviewers. Human observations of gameplay actions are Human attestation and are not promoted to byte-level proof.
+
+The single grouped Human acceptance exercised representative E3 couplings across multiple materially different ordinary Party members, plus Money and Inventory regression. Returned-save verification recorded normal SAVE counter `10→11`, requested E3 state persistence, Money/Inventory persistence, explainable ordinary battle/heal drift, Rattata max/current HP path `3/13→13/13`, and subsequent ordinary eligibility. The post-gameplay correction permits normal-game changes to the opaque external 16-byte emulator trailer while preserving the canonical requirement that editor outputs preserve it; writer/model/core/GUI semantics were unchanged.
+
+Canonical E3 scope is the independently qualified exact-v0.22 ordinary existing-Party subset with fail-closed exclusions documented in `docs/e3-existing-party-writer-qualification.md` and review packet `docs/reviews/e3-existing-party-independent-review.md`. It does not establish all-species/all-state support, E4 creation, Box editing, public release, Stable promotion, cross-version support, or protected-data publication.
