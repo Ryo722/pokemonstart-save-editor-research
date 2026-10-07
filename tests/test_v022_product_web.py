@@ -11,7 +11,7 @@ class ProductWebTests(unittest.TestCase):
         mock=patch.object(w.core.profile,'_check_rom_file',return_value=ROM)
         mock.start();self.addCleanup(mock.stop)
         self.request={'money':1234567,'party':[{'slot':0,'changes':{'friendship':200}}],
-                      'items':{'potion_quantity':3,'insert_antidote':True}}
+                      'items':{'potion_quantity':3}}
 
     def test_upload_preview_export_download_matches_core(self):
         self.workflow.upload('original.sav',self.raw)

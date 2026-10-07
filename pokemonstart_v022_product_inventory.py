@@ -3,6 +3,7 @@ from __future__ import annotations
 import struct
 import pokemonstart_save_verifier as v
 import pokemonstart_fl2_core as profile
+import pokemonstart_fastlab_v022_creation as canonical_creation
 
 NAMES = {13:'Potion',14:'Antidote',533:'Preserved item #533'}
 OFFSET = 0xADC
@@ -23,8 +24,9 @@ def inspect(raw, rom_sha256):
     return {'entries':[{'slot':i,'item_id':item,'name':NAMES[item],'quantity':qty,
                         'editable':item==13,'removable':False}
                        for i,(item,qty) in enumerate(prefix) if item],
-            'can_insert_antidote':prefix[2]==(0,0),'window_slots':3,
+            'can_insert_antidote':prefix[2]==(0,0) and profile.sha(raw)==canonical_creation.INVENTORY_SOURCE_SHA256,'window_slots':3,
             'capacity':'unqualified beyond observed three-record window',
+            'insertion':'exact canonical pre-purchase root only; reusable whole-pocket uniqueness unqualified',
             'removal':'unsupported: exact-build removal/compaction behavior not established',
             'checksum_covered':False}
 
@@ -45,8 +47,9 @@ def derive(raw, rom_sha256, changes):
         allowed.update((base+2,base+3))
     if 'insert_antidote' in changes:
         if changes['insert_antidote'] is not True or not before['can_insert_antidote']:
-            raise ValueError('Antidote insertion requires observed empty slot3')
-        struct.pack_into('<HH',output,base+8,14,1)
+            raise ValueError('Antidote insertion requires exact canonical root; full-pocket uniqueness remains unqualified')
+        proven,_=canonical_creation.insert_inventory(raw,rom_sha256)
+        output[base+8:base+12]=proven[base+8:base+12]
         allowed.update(range(base+8,base+12))
     candidate=bytes(output)
     after=inspect(candidate,rom_sha256)

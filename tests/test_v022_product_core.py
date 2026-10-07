@@ -24,11 +24,11 @@ class ProductCompositionTests(unittest.TestCase):
         raw=save()
         request={'money':9999999,'party':[{'slot':0,'changes':{'friendship':100}},
                                         {'slot':2,'changes':{'friendship':101}}],
-                 'items':{'potion_quantity':3,'insert_antidote':True}}
+                 'items':{'potion_quantity':3}}
         out,receipt=c.derive(raw,ROM,request)
         self.assertEqual(c.inspect(out,ROM)['money']['money'],9999999)
         self.assertEqual([c.v.verify_bytes(out).party[x].friendship for x in (0,2)],[100,101])
-        self.assertEqual(len(c.items.inspect(out,ROM)['entries']),3)
+        self.assertEqual(c.items.inspect(out,ROM)['entries'][0]['quantity'],3)
         self.assertEqual(out,c.derive(raw,ROM,request)[0])
         active=c.v.verify_bytes(raw).active_slot
         other=(1-active)*14*4096

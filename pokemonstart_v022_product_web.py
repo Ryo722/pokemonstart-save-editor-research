@@ -146,7 +146,7 @@ def create_page(rom_path):
                             controls['insert']=ui.checkbox('Add Antidote x1（観測済み空き第3枠）')
                             controls['insert'].on_value_change(lambda _:invalidate())
                         ui.button('Remove item — 非対応').disable()
-                        ui.label('削除・整列・容量の規則が未確立。Give All Supported Ordinary Items は保留。')
+                        ui.label('Antidote 挿入は既存の正本 proof-root のみ。再利用時の重複確認・削除・整列・全容量は未確立。Give All Supported Ordinary Items は保留。')
                     else:ui.label('Items 非対応: '+report['rejections'].get('items',''))
                     ui.label('Balls / Medicine / Berries / TM / Key Items / その他の pocket: 未確立・編集非対応。')
                 with ui.tab_panel(trainer_tab):

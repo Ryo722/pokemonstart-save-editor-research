@@ -1,5 +1,6 @@
 import struct
 import unittest
+from unittest.mock import patch
 import pokemonstart_v022_product_inventory as i
 from test_v022_composition import composed_fixture
 ROM=i.profile.EXPECTED_ROM_SHA256
@@ -8,7 +9,8 @@ ROM=i.profile.EXPECTED_ROM_SHA256
 class ProductInventoryTests(unittest.TestCase):
     def test_unseen_hash_quantity_insertion_preservation(self):
         raw=composed_fixture()
-        out,receipt=i.derive(raw,ROM,{'potion_quantity':3,'insert_antidote':True})
+        with patch.object(i.canonical_creation,'INVENTORY_SOURCE_SHA256',i.profile.sha(raw)):
+            out,receipt=i.derive(raw,ROM,{'potion_quantity':3,'insert_antidote':True})
         self.assertEqual([(x['item_id'],x['quantity']) for x in i.inspect(out,ROM)['entries']],[(13,3),(533,1),(14,1)])
         parsed=i.v.verify_bytes(raw)
         base=parsed.slots[parsed.active_slot].section(13).physical_sector*4096+i.OFFSET
@@ -20,7 +22,7 @@ class ProductInventoryTests(unittest.TestCase):
 
     def test_unknown_layout_key_range_removal_fail_closed(self):
         raw=composed_fixture()
-        for changes in ({'potion_quantity':99},{'potion_quantity':True},{'remove':14}, {'insert_antidote':1}):
+        for changes in ({'insert_antidote':True},{'potion_quantity':99},{'potion_quantity':True},{'remove':14}, {'insert_antidote':1}):
             with self.subTest(changes=changes),self.assertRaises(ValueError):i.derive(raw,ROM,changes)
         parsed=i.v.verify_bytes(raw);base=parsed.slots[parsed.active_slot].section(13).physical_sector*4096
         for offset,value in ((i.OFFSET+12,13),(i.OFFSET+4,14),(i.OFFSET+8,15)):
