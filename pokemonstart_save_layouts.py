@@ -68,7 +68,12 @@ class Fragment:
     ram_start: int
     length: int
     source: str
-    epoch_authenticated: bool
+    # checksum_covered: inside the range a stored section/page checksum covers.
+    # epoch_bound: stored in a sector that belongs to the selected save epoch
+    # (active slot section, or a page referenced by the active SHEL table).
+    # Section tails past SECTION_LENGTHS are epoch-bound but NOT checksum-covered.
+    checksum_covered: bool
+    epoch_bound: bool
     data: bytes
 
 
@@ -256,12 +261,14 @@ def parse_v023plus(raw: bytes) -> SaveView:
         if kind == "section":
             data = active.section(ident).data[offset:offset + length]
             source = f"section {ident} +0x{offset:X}"
+            covered = offset + length <= verifier.SECTION_LENGTHS[ident]
         else:
             data = page_data[ident][offset:offset + length]
             source = f"page {ident} +0x{offset:X}"
+            covered = offset + length <= PAGE_DATA
         if len(data) != length:
             raise LayoutError("fragment truncated")
-        fragments.append(Fragment(start, length, source, True, data))
+        fragments.append(Fragment(start, length, source, covered, True, data))
     return SaveView(V023PLUS, len(raw), hashlib.sha256(raw).hexdigest(), footer, slots, active_index,
                     active.counter, (parsed[0][1], parsed[1][1]), active.counter,
                     tables[active_index], tables.get(inactive_index), pages[active_index], tuple(fragments))
@@ -278,11 +285,12 @@ def parse_legacy(raw: bytes) -> SaveView:
     for start, length, (kind, ident, offset), _ in FRAGMENTS:
         if kind == "section":
             data = active.section(ident).data[offset:offset + length]
-            fragments.append(Fragment(start, length, f"section {ident} +0x{offset:X}", True, data))
+            covered = offset + length <= verifier.SECTION_LENGTHS[ident]
+            fragments.append(Fragment(start, length, f"section {ident} +0x{offset:X}", covered, True, data))
         else:
             # Legacy extra sectors are global, unsigned and not epoch-bound.
             data = _sector(flash, ident)[offset:offset + length]
-            fragments.append(Fragment(start, length, f"sector {ident} +0x{offset:X}", False, data))
+            fragments.append(Fragment(start, length, f"sector {ident} +0x{offset:X}", False, False, data))
     return SaveView(LEGACY, result.file_size, result.file_sha256, result.footer, result.slots,
                     result.active_slot, active.counter, (None, None), None, None, None, (),
                     tuple(fragments), result)

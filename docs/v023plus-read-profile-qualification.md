@@ -1,6 +1,8 @@
 # v0.23+ save-layout family and exact-v0.27 read profile — qualification candidate
 
-Status: **CANDIDATE FOR INDEPENDENT REVIEW — not canonical, not adopted.**
+Status: **CORRECTED CANDIDATE FOR FOCUSED RE-REVIEW — not canonical, not adopted.**
+Correction 1 addresses the fresh independent review (`CHANGES_REQUIRED` on
+`318ee7d`); see [Correction 1](#correction-1-independent-review-findings).
 Read-only. This record grants **no write authority** of any kind, changes no
 canonical v0.22 module, and does not alter the E-series goal, terminal
 definition or milestone sequence. Adoption is separately Human-gated.
@@ -43,24 +45,52 @@ Three separate concepts, each explicit data rather than version conditionals:
 | Concept | Where | Meaning |
 |---|---|---|
 | Save-layout family | `pokemonstart_save_layouts.py` (`LEGACY`, `V023PLUS`) | structure only; strict parser per family; unique-match detection |
-| Semantic model | `pokemonstart_read_profiles.SEMANTIC_TABLES` | build-independent table identity by content hash |
-| Exact build read profile | `pokemonstart_read_profiles.V022_EXACT`, `V027_EXACT` | ROM size/SHA, per-build table offsets, header pointers, layout family, capability levels, profile-only constraints |
+| Semantic model | `pokemonstart_read_profiles.SemanticModel` (`CANONICAL_SEMANTIC_MODEL`) | build-independent table identity by content hash |
+| Exact build read profile | `pokemonstart_read_profiles.V022_EXACT`, `V027_EXACT` | ROM size/SHA, per-build table offsets, header pointers, layout family, semantic model, field reader, capability levels, profile-only constraints |
 
 Capability levels are never merged:
 
 | Level | v0.22 exact | v0.27 exact |
 |---|---|---|
-| 1. layout understood for reading | canonical | privately runtime-qualified |
-| 2. field location / semantic read | canonical (existing modules) | qualified: Party raw records, key0 Money, Inventory pocket entries and menu counts; semantic tables content-verified |
-| 3. write mechanics | canonical only through existing v0.22 writers; not granted by this profile | **not qualified** |
+| 1. layout understood for reading | canonical verifier, unchanged | privately runtime-qualified |
+| 2. field location / semantic read | **delegated** to canonical modules: Party records from the canonical verifier, Money via `pokemonstart_v022_product_money.inspect`, Inventory via `pokemonstart_v022_inventory_model.inspect` (exact canonical eligibility) | only after exact v0.27 ROM verification: Party raw records; key0 Money 0..9,999,999; Inventory under an E1-equivalent boundary (below); semantic tables content-verified |
+| 3. write mechanics | not granted by this profile (canonical v0.22 writers are separate) | **not qualified** |
+
+Field reads exist only as `read_save(profile, save, rom)`. It first calls
+`verify_rom` (size, SHA-256, header pointers, every semantic-table hash) and
+returns no field at all if that fails; there is no save-only field API. The
+CLI requires `--profile`, `--rom` and `--save`; every rejection, including
+malformed Party/field states, is reported as `REJECTED` with exit code 2.
+
+v0.27 Inventory boundary (mirrors canonical E1 `inspect`): key 0; if both
+slots are valid their counters are consecutive; Party count 1..6; ordinary
+bag only (RAM `0x0203B672` negative => unqualified); every entry has a
+catalog-valid item id (E1 validity rules applied to the verified v0.27 item
+table), matching pocket metadata, quantity 1..999 and no duplicate id. Any
+failure returns `{"qualified": false, "reason": ...}` with no pocket
+contents. The one structural difference from the legacy gate is that a
+migrated state with one erased slot may qualify, because every v0.23+
+fragment is read from the active slot or from pages its SHEL table
+references (there are no global extra sectors).
 
 `detect()` runs both strict family parsers and accepts only a unique match;
 two matches or none fail closed. The legacy family delegates unchanged to
 `pokemonstart_save_verifier.verify_bytes`; the canonical verifier still
 rejects v0.23+ saves. Both families expose one read-only `SaveView`
-(active slot, sections, Party, Money, RAM-fragment reads). Fragments carry an
-`epoch_authenticated` flag: legacy sectors 30/31 are global and unchecksummed
-(`False`), v0.23+ pages are checksummed and table-bound (`True`).
+(active slot, sections, Party, Money, RAM-fragment reads). Fragments carry two
+separate flags. `checksum_covered`: inside a stored checksum's range.
+`epoch_bound`: stored in a sector of the selected epoch (active slot section
+or page referenced by the active SHEL table).
+
+| Fragment | legacy (covered, bound) | v0.23+ (covered, bound) |
+|---|---|---|
+| section 0 tail `+0xF24` | False, True | False, True |
+| section 4 tail `+0xD98` | False, True | False, True |
+| `0x0203B40C` (Inventory regular pocket) | section 13 tail: False, True | page 0 `+0x18B`: True, True |
+| `0x0203BFAC`, `0x0203CF9C` | sectors 30/31: False, False | pages 15/16: True, True |
+
+The three unidentified first-native-save bytes lie in the section 0/4 tails,
+which are epoch-bound but **not** checksum-covered.
 
 ## `v023plus_shel_pages` family — read invariants encoded
 
@@ -118,9 +148,17 @@ The family parser reports rotation/parity but does not require parity.
 - Legacy `SaveView` *is* the canonical `VerificationResult`; Party equality,
   fragment offsets and menu counts (`0x1E716`) match the canonical Inventory
   `record_offset` mapping (synthetic test).
-- `LOCAL_PRIVATE_INPUT_VERIFICATION` on S0: the canonical Inventory model and
-  the new legacy view produce identical entries for all five pockets and
-  identical persisted menu counts; v0.22 ROM reproduces every semantic hash.
+- v0.22 Money/Inventory field reads call the canonical modules directly, so
+  their eligibility boundary is the canonical one (single slot, counter wrap,
+  alternate bag, non-key0 and catalog issues all stay unqualified).
+- Canonical v0.22 tests (`test_verifier`, `test_v022_inventory_model`,
+  `test_v022_party_model`, `test_v022_product_money`,
+  `test_v022_product_inventory`, `test_v022_product_core`,
+  `test_v022_readonly_probe`, `test_fl2_core`, `test_m5a_money_family`):
+  64 run, OK on both base `381bc80` and the corrected candidate.
+- `LOCAL_PRIVATE_INPUT_VERIFICATION` on S0: delegated reads qualify; the
+  catalog derived by `_catalog` equals canonical `extract_catalog` (v0.22) and
+  the v0.27 catalog is identical; v0.22 ROM reproduces every semantic hash.
 
 ## Private gate (`S0 -> M -> R1 -> R2`)
 
@@ -173,8 +211,8 @@ of v0.23–v0.26, and those builds receive no profile.
 
 ## Fail-closed coverage
 
-`tests/test_v023plus_read_profile.py` (synthetic; 35 run + 2 private-input
-tests skipped without environment variables):
+`tests/test_v023plus_read_profile.py` (53 tests: 49 synthetic, 4
+private-input tests skipped unless all three environment variables are set):
 
 missing SHEL magic; SHEL/slot counter mismatch; duplicate logical section;
 missing logical section; mixed slot counters; equal-counter ambiguity;
@@ -186,8 +224,25 @@ it; sector shared by different pages across slots; counter wrap; unknown
 layout; wrong size. Accepted: mixed page counters after copy-on-write;
 migrated single-slot state; steady state with shared tables; footer absent.
 Regression: legacy view equals canonical verifier result; canonical verifier
-still rejects v0.23+; profile layout mismatch; v0.27 parity rule; nonzero key
-leaves Money/Inventory unqualified; no write path in either module.
+still rejects v0.23+; profile layout mismatch; native parity rule; nonzero key
+leaves Money/Inventory unqualified; non-consecutive counters, catalog issues
+(invalid id, pocket mismatch, quantity, duplicate) leave Inventory
+unqualified; tampered semantic table rejected; no write path in either module.
+Synthetic profiles use a synthetic ROM and semantic model, so exact-ROM
+binding is exercised without protected data.
+
+## Correction 1 (independent review findings)
+
+Predecessor `318ee7d` (tree `54499f9f`). Each finding was reproduced against
+the predecessor and is covered by `ReviewFindingRegressionTests`:
+
+| Finding | Predecessor behaviour (reproduced) | Correction |
+|---|---|---|
+| F1 alternate bag | v0.23+ save with `0x0203B672 < 0` returned ordinary-bag pockets with `alternate_bag_state: true` | Inventory returns `qualified: false`, reason `alternate runtime bag state unsupported`, no pockets (v0.27 native gate; v0.22 via canonical `inspect`) |
+| F2 v0.22 boundary | single-slot and wrapped-counter legacy saves returned Inventory under a `CANONICAL` label | v0.22 Money/Inventory delegated to canonical `product_money.inspect` / `inventory_model.inspect`; label is `DELEGATED TO CANONICAL v0.22 MODULES` |
+| F3 ROM binding | `main(["--profile","v027"])` returned rc 0; `read_save` returned qualified Money from a save alone | `read_save(profile, save, rom)` requires `verify_rom`; CLI requires `--rom` and `--save`; structurally compatible saves cannot obtain the v0.27 label without the exact v0.27 ROM |
+| m1 rejection surface | CLI raised an uncaught `LayoutError` for Party count 7 | all layout/field errors become `ProfileError` -> `REJECTED`, rc 2 |
+| m2 fragment claims | section 0/4 tails reported `epoch_authenticated: true` | flags split into `checksum_covered` (tails `false`) and `epoch_bound` |
 
 ## Unresolved writer blockers (not encoded, not generalized)
 
@@ -221,4 +276,5 @@ python3 -m unittest tests.test_v023plus_read_profile -v
 POKEMONSTART_V027_GATE_DIR=/private/gate POKEMONSTART_V027_ROM=/private/v027.gba \
 POKEMONSTART_V022_ROM=/private/v022.gba python3 -m unittest tests.test_v023plus_read_profile -v
 python3 pokemonstart_read_profiles.py --profile v027 --rom /private/v027.gba --save /private/save.sav
+PYTHONPATH=.:tests python3 -m unittest discover -s tests -p "test_*.py"
 ```

@@ -32,17 +32,21 @@ for a review of a **read-only** candidate; no write authority is requested.
    nothing rejects the observed R1/R2 copy-on-write state.
 5. **Exact v0.27 profile.** ROM size/SHA binding, header pointers `0x1BC` and
    `0x1C8`, eight table offsets reproducing the semantic-model hashes
-   (items with pointer normalization). Parity rule is profile-only.
+   (items with pointer normalization). Parity rule is profile-only. Field
+   reads exist only through `read_save(profile, save, rom)`, which calls
+   `verify_rom` first; the CLI requires `--rom` and `--save`.
 6. **Capability separation.** `write_mechanics` is `NOT QUALIFIED` for
-   v0.27; Money/Inventory reads are qualified only for key 0.
+   v0.27; Money/Inventory reads are qualified only for key 0, and v0.27
+   Inventory only inside the E1-equivalent boundary. v0.22 Money/Inventory
+   are delegated to the canonical modules (`DELEGATED`, not `CANONICAL`).
 7. **Wording.** Only exact v0.27 is called privately runtime-qualified; the
    v0.23+ family is called structurally supported by public/static evidence.
 
 ## Suggested reproduction
 
 ```bash
-python3 -m unittest tests.test_v023plus_read_profile -v
-python3 -m unittest discover -s tests -v          # compare with base 381bc80
+PYTHONPATH=. python3 -m unittest tests.test_v023plus_read_profile -v
+PYTHONPATH=.:tests python3 -m unittest discover -s tests -p "test_*.py"   # compare with base 381bc80
 # with private inputs (outside Git):
 POKEMONSTART_V027_GATE_DIR=... POKEMONSTART_V027_ROM=... POKEMONSTART_V022_ROM=... \
   python3 -m unittest tests.test_v023plus_read_profile -v
@@ -58,7 +62,17 @@ Spare-sector reuse policy, populated Box pages, three first-save parasite
 bytes, native new-game SHEL state, v0.23–v0.26 runtime and every write
 envelope are unresolved and intentionally not encoded. The private gate is a
 single migrated save with empty Boxes. Eight NiceGUI/browser tests error in the
-maker's sandbox on both base and candidate (local-port binding denied).
+maker's sandbox on both base and candidate (seven: local-port binding denied;
+one: the git-ignored `work/` directory is absent).
+
+## Correction 1 (focused re-review scope)
+
+Predecessor `318ee7d` received `CHANGES_REQUIRED` (F1 alternate bag, F2 v0.22
+canonical boundary, F3 exact ROM binding, m1 rejection surface, m2 fragment
+claims). The correction commit changes only `pokemonstart_read_profiles.py`,
+`pokemonstart_save_layouts.py` (fragment flags), the focused test module and
+these docs. Check each finding against `ReviewFindingRegressionTests` and the
+code, and check that nothing else regressed.
 
 ## Requested verdict
 
