@@ -4,7 +4,7 @@
   "implementation_head_sha": "53b6282dda31347644a4358e18f607ae46374593",
   "candidate_branch": "codex/v022-practical-product-sprint",
   "disposition": "BOUNDED_STOP_WITH_CONCRETE_EVIDENCE",
-  "game_roundtrip_performed": false,
+  "game_roundtrip_performed": true,
   "r4_complete": false,
   "unittest_python3": {
     "run": 221,
@@ -115,5 +115,49 @@
     "gitleaks_candidate_commits": "PASS: eight implementation commits, zero leaks",
     "gitleaks_push_safe_directory": "PASS: source/tests/docs only, zero leaks",
     "imports": "PASS: full suite and GUI smoke"
+  },
+  "r4_cycle1": {
+    "exact_v022_load_succeeded": true,
+    "normal_save_succeeded": true,
+    "check_return": "STRUCTURAL_ROUNDTRIP_PASS_HUMAN_GAMEPLAY_ATTESTATION_REQUIRED",
+    "counter": [
+      6,
+      7
+    ],
+    "requested_semantics_retained": true,
+    "subsequent_gameplay_progress_hash_is_new": true,
+    "progress_status": "NEW_SAVE_QUALIFIES_NOT_PROOF_OF_GAMEPLAY",
+    "cycle2_transaction_prepared": true,
+    "r4_complete": false
+  },
+  "native_inventory_and_template_evidence": {
+    "document": "docs/v022-native-inventory-and-template-import-evidence-20261007.md",
+    "inventory_deletion": "slot 2 Antidote (14,1) zeroed in place; no compaction inferred",
+    "inventory_reinsertion": "slot 2 restored (14,1)",
+    "inventory_checksum_covered": false,
+    "reusable_scope": "observed Potion x3 / item #533 x1 / Antidote slot 2 with zero tail only",
+    "template_import": {
+      "source_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+      "template_record_sha256": "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3",
+      "candidate_sha256": "3b31b0e89c8907c61f81af836c117de7fc1a0cfd77662a218c492de0192ab96c",
+      "output": "/private/tmp/pokemonstart-rattata-template-import.sav",
+      "party_count": [
+        4,
+        5
+      ],
+      "changed_byte_count": 47,
+      "independent_expected_candidate_equal": true,
+      "outside_envelope_count": 0,
+      "verifier_accepted": true,
+      "human_game_roundtrip": false,
+      "independent_audit_complete_candidate_equal": true,
+      "independent_audit_unrelated_bytes_preserved": true
+    },
+    "exact_rom_wild_encounter_forcing": "not derived; no cheat address assumed"
+  },
+  "new_focused_tests": {
+    "run": 4,
+    "passed": 4,
+    "failures": 0
   }
 }

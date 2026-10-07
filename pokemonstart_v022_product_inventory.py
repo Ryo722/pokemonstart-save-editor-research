@@ -9,6 +9,48 @@ NAMES = {13:'Potion',14:'Antidote',533:'Preserved item #533'}
 OFFSET = 0xADC
 
 
+def _observed_antidote_state(raw, rom_sha256, present):
+    """Qualify only the captured three-record bag shape and zero tail."""
+    profile._require_rom_hash(rom_sha256)
+    result = v.verify_bytes(raw)
+    section = result.slots[result.active_slot].section(13)
+    prefix = [struct.unpack_from('<HH', section.data, OFFSET + 4*i) for i in range(3)]
+    expected = (13, 3), (533, 1), ((14, 1) if present else (0, 0))
+    if tuple(prefix) != expected or any(section.data[OFFSET + 12:0xFF4]):
+        raise ValueError('requires the observed ordered Potion / item #533 / Antidote state with zero tail')
+    return result, section
+
+
+def remove_observed_antidote(raw, rom_sha256):
+    """Zero the observed Antidote record in place; no compaction or checksum edit."""
+    result, section = _observed_antidote_state(raw, rom_sha256, True)
+    base = section.physical_sector * v.SECTOR_SIZE + OFFSET + 8
+    output = bytearray(raw)
+    output[base:base + 4] = b'\0' * 4
+    candidate = bytes(output)
+    v.verify_bytes(candidate)
+    if struct.unpack_from('<HH', candidate, base) != (0, 0):
+        raise ValueError('Antidote deletion postcondition failed')
+    return candidate, {'slot': 2, 'item_id': 14, 'quantity': 1,
+                       'removed_in_place': True, 'compacted': False,
+                       'checksum_changed': False, 'verifier_accepted': True}
+
+
+def insert_observed_antidote(raw, rom_sha256):
+    """Restore the observed Antidote record into its captured empty slot."""
+    _, section = _observed_antidote_state(raw, rom_sha256, False)
+    base = section.physical_sector * v.SECTOR_SIZE + OFFSET + 8
+    output = bytearray(raw)
+    struct.pack_into('<HH', output, base, 14, 1)
+    candidate = bytes(output)
+    v.verify_bytes(candidate)
+    if struct.unpack_from('<HH', candidate, base) != (14, 1):
+        raise ValueError('Antidote insertion postcondition failed')
+    return candidate, {'slot': 2, 'item_id': 14, 'quantity': 1,
+                       'restored_observed_position': True,
+                       'checksum_changed': False, 'verifier_accepted': True}
+
+
 def inspect(raw, rom_sha256):
     profile._require_rom_hash(rom_sha256)
     result=v.verify_bytes(raw)
