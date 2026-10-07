@@ -1,0 +1,284 @@
+{
+  "catalog": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "table_sha256": "fe732c6f7ca24e3200c7bbff34300e4d982ac8e39702c55c55ed85075a2d38a8",
+    "descriptor_sha256": "ae47094540732997b5a4dd462b4cbbbac0cfca84f1f2bdcfdc7580c14ad61e38",
+    "entries": 839,
+    "valid_entries": 837,
+    "excluded_ids": [
+      0,
+      375
+    ],
+    "proposed_ordinary_ids": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "writer_authorized": false,
+    "give_all_enabled": false
+  },
+  "snapshots": [
+    {
+      "snapshot": 1,
+      "sha256": "6f96f92f2d9761059d2e97fccc649d8316d2784820e1d8a200d337d39fd2a492",
+      "counter": 7,
+      "active_slot": 1,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 3,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    },
+    {
+      "snapshot": 2,
+      "sha256": "bf2f15e8ef595ddea1d5765bef5331baf5095c6ce041c4199808f4f00f7c8c8a",
+      "counter": 8,
+      "active_slot": 0,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 2,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    },
+    {
+      "snapshot": 3,
+      "sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+      "counter": 9,
+      "active_slot": 1,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 3,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    },
+    {
+      "snapshot": 4,
+      "sha256": "606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea",
+      "counter": 10,
+      "active_slot": 0,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 3,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    }
+  ],
+  "source_immutability": true,
+  "code_regions": [
+    {
+      "name": "bag_init",
+      "address": "0x90d39a4",
+      "length": 30,
+      "sha256": "066a48f38b0ccb71780171507d68da304c8b36eb6484cf2341cfd09a8449749c"
+    },
+    {
+      "name": "bag_override_condition",
+      "address": "0x90cdfcc",
+      "length": 20,
+      "sha256": "d17d02d606d7711d01b25ba9cc3ac77a7c828315ffde5779dd04e692e6855c85"
+    },
+    {
+      "name": "bag_override",
+      "address": "0x90cd770",
+      "length": 48,
+      "sha256": "2bf8a26e3243422a837cad161178505cd11d6e8029da912ca7183b8472e12ca9"
+    },
+    {
+      "name": "compact",
+      "address": "0x90d40d4",
+      "length": 14,
+      "sha256": "03edd01287f619c696b0cd752d097e9693f0eac91e38a49900abc7592b98a540"
+    },
+    {
+      "name": "null_compare",
+      "address": "0x90d2524",
+      "length": 48,
+      "sha256": "2756480ae6cb2479a3e683671743f8fc63b905e56fc2a18fbc44b49e3c4b9cbc"
+    },
+    {
+      "name": "save_parasite",
+      "address": "0x90ead2c",
+      "length": 62,
+      "sha256": "c6d8eb6956c63754578c4d84903138fb8d8544d49c67b5c657a6daec50afe662"
+    },
+    {
+      "name": "load",
+      "address": "0x90ead8c",
+      "length": 290,
+      "sha256": "b21c4104b4a4889e21823be92dc8ca422341b6dea1a63c2b766e726d5f47481c"
+    },
+    {
+      "name": "save",
+      "address": "0x90eb168",
+      "length": 362,
+      "sha256": "5504c613bcbdb41893dd3899b0c66bd879c31e33c4d4da457705075ca31716d2"
+    },
+    {
+      "name": "sanitizer",
+      "address": "0x90d29c0",
+      "length": 20,
+      "sha256": "adcf30c5229b303baa4b31803972dab87d5295c47531a4d863490fa72b82f65e"
+    },
+    {
+      "name": "quantity_getter",
+      "address": "0x80997a8",
+      "length": 4,
+      "sha256": "1c12c5c8ed673f4bf4306b046be164b2b946e87c391044609d4379f3c960a009"
+    },
+    {
+      "name": "quantity_setter",
+      "address": "0x80997c4",
+      "length": 28,
+      "sha256": "3a7ca69b1c5121bcd58584b1eee4abba72b669a4794ecbe2c19bf072c23c338b"
+    },
+    {
+      "name": "space",
+      "address": "0x8099a08",
+      "length": 132,
+      "sha256": "3d438ffd917be5df34ab9ed152e2c62a7cde1c7a27af522936d3bd094ee84d00"
+    },
+    {
+      "name": "add",
+      "address": "0x8099a8c",
+      "length": 340,
+      "sha256": "a350f715533b1dc012a6d6eda26f42f6a0589fcf3cd1c7efcbab653cc2113e59"
+    },
+    {
+      "name": "remove",
+      "address": "0x8099be0",
+      "length": 136,
+      "sha256": "163611f1e4e8536c21435751fc91f6f22ce7b284af1e2161e8cd5ea3742d7bb9"
+    }
+  ],
+  "writer_authorized": false,
+  "give_all_enabled": false,
+  "disposition": "BOUNDED_STOP_WITH_CONCRETE_EVIDENCE",
+  "canonical_base": "785e113fa1885ac17e19da842a74740f62a8e789"
+}
