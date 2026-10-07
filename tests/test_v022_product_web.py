@@ -10,6 +10,12 @@ class ProductWebTests(unittest.TestCase):
         self.raw=save();self.workflow=w.ProductWorkflow(Path('unused.gba'))
         mock=patch.object(w.core.profile,'_check_rom_file',return_value=ROM)
         mock.start();self.addCleanup(mock.stop)
+        # Retain the legacy API/GUI regression fixture explicitly. Production
+        # always reads actual ROM bytes; E2 has separate actual-catalog tests.
+        original_read=Path.read_bytes
+        read_mock=patch.object(Path,'read_bytes',autospec=True,
+                              side_effect=lambda path: None if path.name=='unused.gba' else original_read(path))
+        read_mock.start();self.addCleanup(read_mock.stop)
         self.request={'money':1234567,'party':[{'slot':0,'changes':{'friendship':200}}],
                       'items':{'potion_quantity':3}}
 

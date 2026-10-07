@@ -2,6 +2,7 @@
 from __future__ import annotations
 import argparse
 import copy
+import os
 import re
 from pathlib import Path
 import pokemonstart_v022_product_core as core
@@ -9,13 +10,16 @@ from pokemonstart_v022_web import BrowserWorkflow as LegacyWorkflow, server_opti
 
 
 class ProductWorkflow(LegacyWorkflow):
+    def _read_rom(self):
+        return self.rom_path.read_bytes()
+
     def upload(self, filename, raw):
         self._reset()
         name=Path(filename).name
         if Path(name).suffix.lower()!='.sav' or type(raw) is not bytes:
             raise ValueError('select a local .sav file')
         rom=core.profile._check_rom_file(self.rom_path)
-        report=core.inspect(raw,rom)
+        report=core.inspect(raw,rom,rom_bytes=self._read_rom())
         self.source_raw,self.source_sha256,self.source_name=raw,core.profile.sha(raw),name
         return report
 
@@ -27,7 +31,7 @@ class ProductWorkflow(LegacyWorkflow):
         if self.source_raw is None or core.profile.sha(self.source_raw)!=self.source_sha256:
             raise ValueError('missing or stale source')
         rom=core.profile._check_rom_file(self.rom_path)
-        return core.derive(self.source_raw,rom,request)
+        return core.derive(self.source_raw,rom,request,rom_bytes=self._read_rom())
 
     def preview(self, request):
         self.invalidate()
@@ -57,6 +61,19 @@ class ProductWorkflow(LegacyWorkflow):
         core.v.verify_bytes(expected)
         return expected,self.output_name
 
+    def export_verified(self, directory):
+        """Optional private host export; refuses every existing destination."""
+        parent=Path(directory).resolve(strict=True)
+        if not parent.is_dir() or not parent.is_relative_to(core.profile.PRIVATE_ROOT):
+            raise ValueError('export directory must be inside the private workspace')
+        raw,name=self.download()
+        destination=parent/name
+        with os.fdopen(os.open(destination,os.O_WRONLY|os.O_CREAT|os.O_EXCL,0o600),'wb') as handle:
+            handle.write(raw)
+        if destination.read_bytes()!=raw or self.download()[0]!=raw:
+            raise ValueError('private export equality failed')
+        return destination
+
 
 SPECIES_NAMES={1:'Bulbasaur',2:'Ivysaur',25:'Pikachu',288:'Zigzagoon'}
 STAT_NAMES=('HP','Attack','Defense','Speed','Sp. Atk','Sp. Def')
@@ -67,7 +84,7 @@ def control_integer(value):
     return int(value)
 
 
-def create_page(rom_path):
+def create_page(rom_path,export_directory=None):
     if ui is None:raise RuntimeError('install requirements-m4-ui.txt')
     workflow=ProductWorkflow(rom_path)
     ui.label('PokemonStart v0.22').classes('text-h4')
@@ -133,9 +150,28 @@ def create_page(rom_path):
                             ui.label('Ability / nature / held item / ball: 読み取り専用。解決・結合規則が未確立。')
                         controls[slot]=fields
                 with ui.tab_panel(items_tab):
-                    ui.label('Regular Items — 観測済みの最初の3枠のみ。バッグ全体の容量は未確立。')
+                    ui.label('通常の道具 — 対応する回復薬を編集できます。')
                     item_report=report['items']
-                    if item_report:
+                    if item_report and item_report.get('e2'):
+                        controls['medicine_rows']={}
+                        for entry in item_report['entries']:
+                            with ui.row():
+                                ui.label(entry['name'])
+                                if entry['editable']:
+                                    quantity=number('Quantity — '+entry['name'],entry['quantity'],1,999)
+                                    remove=ui.checkbox('Remove — '+entry['name'])
+                                    remove.on_value_change(lambda _:invalidate())
+                                    controls['medicine_rows'][entry['item_id']]=(quantity,remove)
+                                else:ui.label(f"x{entry['quantity']}（読み取り専用）")
+                        held={e['item_id'] for e in item_report['entries']}
+                        choices={i:name for i,name in item_report['supported_names'].items() if i not in held}
+                        if choices and item_report['occupied']<item_report['capacity']:
+                            controls['add_medicine']=ui.checkbox('Add Item')
+                            controls['add_medicine'].on_value_change(lambda _:invalidate())
+                            controls['medicine_name']=select('Item',choices,next(iter(choices)))
+                            controls['medicine_quantity']=number('Quantity — Add Item',1,1,999)
+                        ui.label('数量は 1〜999。削除は Remove を選択してください。その他の道具は読み取り専用です。')
+                    elif item_report:
                         for entry in item_report['entries']:
                             with ui.row():
                                 ui.label(entry['name'])
@@ -149,7 +185,7 @@ def create_page(rom_path):
                             controls['remove'].on_value_change(lambda _:invalidate())
                         ui.label('Antidote の追加・削除は Potion x1..3 / item #533 x1 / 第3枠とゼロ tail が一致する場合のみ対応。後続枠・容量・一般的な並べ替えは未確立。Give All Supported Ordinary Items は保留。')
                     else:ui.label('Items 非対応: '+report['rejections'].get('items',''))
-                    ui.label('Balls / Medicine / Berries / TM / Key Items / その他の pocket: 未確立・編集非対応。')
+                    ui.label('Balls / Berries / TM / Key Items: 編集非対応。Give All は無効です。')
                 with ui.tab_panel(trainer_tab):
                     if report['money']:controls['money']=number('Money',report['money']['money'],0,9999999)
                     else:ui.label('Money 非対応: '+report['rejections'].get('money',''))
@@ -181,6 +217,22 @@ def create_page(rom_path):
                 changes['moves']={0:control_integer(fields['move'].value)}
             if changes:edits.append({'slot':mon['slot'],'changes':changes})
         if edits:result['party']=edits
+        if inspection.get('items') and inspection['items'].get('e2'):
+            operations=[]
+            for entry in inspection['items']['entries']:
+                fields=controls.get('medicine_rows',{}).get(entry['item_id'])
+                if fields is None:continue
+                quantity,remove=fields
+                if remove.value:operations.append({'op':'remove','item_id':entry['item_id']})
+                else:
+                    value=control_integer(quantity.value)
+                    if value!=entry['quantity']:
+                        operations.append({'op':'set','item_id':entry['item_id'],'quantity':value})
+            if 'add_medicine' in controls and controls['add_medicine'].value:
+                operations.append({'op':'add','item_id':control_integer(controls['medicine_name'].value),
+                                   'quantity':control_integer(controls['medicine_quantity'].value)})
+            if operations:result['items']=operations
+            return result
         item_changes={}
         if 'potion' in controls:
             quantity=control_integer(controls['potion'].value)
@@ -211,7 +263,11 @@ def create_page(rom_path):
     def download():
         try:
             if request()!=workflow.plan['request']:raise ValueError('stale controls; preview again')
-            raw,name=workflow.download();ui.download.content(raw,name,media_type='application/octet-stream')
+            if export_directory is not None:
+                destination=workflow.export_verified(export_directory)
+                status.text='別 save を保存しました: '+destination.name
+            else:
+                raw,name=workflow.download();ui.download.content(raw,name,media_type='application/octet-stream')
         except (OSError,ValueError,TypeError) as exc:
             invalidate();status.text=f'REJECTED: {exc}'
 
@@ -227,11 +283,17 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rom',type=Path,default=core.profile.ROM_DEFAULT)
     parser.add_argument('--port',type=int,default=8766)
+    parser.add_argument('--export-directory',type=Path,
+                        help='Optional existing private directory for exclusive separate save export')
     args=parser.parse_args(argv)
     core.profile._check_rom_file(args.rom)
+    if args.export_directory is not None:
+        directory=args.export_directory.resolve(strict=True)
+        if not directory.is_dir() or not directory.is_relative_to(core.profile.PRIVATE_ROOT):
+            raise ValueError('export directory must be inside the private workspace')
     if ui is None:raise RuntimeError('install requirements-m4-ui.txt')
     @ui.page('/')
-    def page():create_page(args.rom)
+    def page():create_page(args.rom,args.export_directory)
     options=server_options(args.port);options['title']='PokemonStart v0.22 Practical Editor Candidate'
     ui.run(**options)
     return 0

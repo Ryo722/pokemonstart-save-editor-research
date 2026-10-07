@@ -6,10 +6,12 @@ import pokemonstart_save_verifier as v
 import pokemonstart_v022_product_money as money
 import pokemonstart_v022_product_party as party
 import pokemonstart_v022_product_inventory as items
+import pokemonstart_v022_inventory_editor as medicine_items
 
 
-def inspect(raw, rom_sha256):
+def inspect(raw, rom_sha256, *, rom_bytes=None):
     profile._require_rom_hash(rom_sha256)
+    if rom_bytes is not None:profile._require_rom_hash(profile.sha(rom_bytes))
     verified=v.verify_bytes(raw)
     report={'input_sha256':verified.file_sha256,'active_slot':verified.active_slot,
             'counter':verified.slots[verified.active_slot].counter,'money':None,
@@ -21,13 +23,15 @@ def inspect(raw, rom_sha256):
         try:record['capabilities']=party.capabilities(raw,rom_sha256,slot)
         except ValueError as exc:record['rejection']=str(exc)
         report['party'].append(record)
-    try:report['items']=items.inspect(raw,rom_sha256)
+    try:report['items']=(medicine_items.inspect(raw,rom_bytes) if rom_bytes is not None
+                         else items.inspect(raw,rom_sha256))
     except ValueError as exc:report['rejections']['items']=str(exc)
     return report
 
 
-def derive(raw, rom_sha256, request):
+def derive(raw, rom_sha256, request, *, rom_bytes=None):
     profile._require_rom_hash(rom_sha256)
+    if rom_bytes is not None:profile._require_rom_hash(profile.sha(rom_bytes))
     if not isinstance(request,dict) or not request or set(request)-{'money','party','items'}:
         raise ValueError('unsupported or empty product transaction')
     verified=v.verify_bytes(raw)
@@ -44,7 +48,10 @@ def derive(raw, rom_sha256, request):
             if type(slot) is not int or slot in slots:raise ValueError('duplicate/invalid Party slot')
             slots.add(slot)
             families.append((f'party_{slot}',*party.derive(raw,rom_sha256,slot,edit['changes'])))
-    if 'items' in request:families.append(('items',*items.derive(raw,rom_sha256,request['items'])))
+    if 'items' in request:
+        family=(medicine_items.derive(raw,rom_bytes,request['items']) if rom_bytes is not None
+                else items.derive(raw,rom_sha256,request['items']))
+        families.append(('items',*family))
     output=bytearray(raw)
     occupied=set();covered=set();checksums=set();reports={};semantics=[]
     for name,candidate,receipt in families:
@@ -95,7 +102,9 @@ def derive(raw, rom_sha256, request):
             if money.inspect(candidate,rom_sha256)['money']!=receipt['money']['to']:
                 raise ValueError('composed Money postcondition failed')
         elif name=='items':
-            if items.inspect(candidate,rom_sha256)!=receipt['after']:
+            current=(medicine_items.inspect(candidate,rom_bytes) if rom_bytes is not None
+                     else items.inspect(candidate,rom_sha256))
+            if current!=receipt['after']:
                 raise ValueError('composed Items postcondition failed')
         else:
             if party.existing._semantic(result.party[receipt['slot']])!=receipt['after']:

@@ -1,0 +1,891 @@
+{
+  "catalog": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "table_sha256": "fe732c6f7ca24e3200c7bbff34300e4d982ac8e39702c55c55ed85075a2d38a8",
+    "descriptor_sha256": "ae47094540732997b5a4dd462b4cbbbac0cfca84f1f2bdcfdc7580c14ad61e38",
+    "entries": 839,
+    "valid_entries": 837,
+    "excluded_ids": [
+      0,
+      375
+    ],
+    "proposed_ordinary_ids": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22
+    ],
+    "writer_authorized": false,
+    "give_all_enabled": false
+  },
+  "snapshots": [
+    {
+      "snapshot": 1,
+      "sha256": "c3ccabd5891d701ca2247649700e96087cb26281738995d9f88b8191fdc03366",
+      "counter": 11,
+      "active_slot": 1,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "restricted_eligible": true,
+      "restricted_rejection": null,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 3,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    },
+    {
+      "snapshot": 2,
+      "sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+      "counter": 12,
+      "active_slot": 0,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "restricted_eligible": true,
+      "restricted_rejection": null,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 2,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    },
+    {
+      "snapshot": 3,
+      "sha256": "369842f20634df82bad9f0a2e54048dd7ecb88e26ed01893f91f44a53616b9e6",
+      "counter": 13,
+      "active_slot": 1,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "restricted_eligible": true,
+      "restricted_rejection": null,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 3,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    },
+    {
+      "snapshot": 4,
+      "sha256": "6e2c92c4e86b9436ca0647b6852b999eb107318d1356098a3cddafba11d8c55f",
+      "counter": 14,
+      "active_slot": 0,
+      "state_supported": true,
+      "issues": [],
+      "independent_decode_equal": true,
+      "restricted_eligible": true,
+      "restricted_rejection": null,
+      "pockets": [
+        {
+          "name": "regular",
+          "capacity": 700,
+          "occupied": 3,
+          "holes": []
+        },
+        {
+          "name": "key",
+          "capacity": 75,
+          "occupied": 11,
+          "holes": []
+        },
+        {
+          "name": "balls",
+          "capacity": 50,
+          "occupied": 1,
+          "holes": []
+        },
+        {
+          "name": "tmhm",
+          "capacity": 128,
+          "occupied": 0,
+          "holes": []
+        },
+        {
+          "name": "berries",
+          "capacity": 72,
+          "occupied": 1,
+          "holes": []
+        }
+      ]
+    }
+  ],
+  "source_immutability": true,
+  "code_regions": [
+    {
+      "name": "bag_init",
+      "address": "0x90d39a4",
+      "length": 30,
+      "sha256": "066a48f38b0ccb71780171507d68da304c8b36eb6484cf2341cfd09a8449749c"
+    },
+    {
+      "name": "bag_override_condition",
+      "address": "0x90cdfcc",
+      "length": 20,
+      "sha256": "d17d02d606d7711d01b25ba9cc3ac77a7c828315ffde5779dd04e692e6855c85"
+    },
+    {
+      "name": "bag_override",
+      "address": "0x90cd770",
+      "length": 48,
+      "sha256": "2bf8a26e3243422a837cad161178505cd11d6e8029da912ca7183b8472e12ca9"
+    },
+    {
+      "name": "compact",
+      "address": "0x90d40d4",
+      "length": 14,
+      "sha256": "03edd01287f619c696b0cd752d097e9693f0eac91e38a49900abc7592b98a540"
+    },
+    {
+      "name": "null_compare",
+      "address": "0x90d2524",
+      "length": 48,
+      "sha256": "2756480ae6cb2479a3e683671743f8fc63b905e56fc2a18fbc44b49e3c4b9cbc"
+    },
+    {
+      "name": "save_parasite",
+      "address": "0x90ead2c",
+      "length": 62,
+      "sha256": "c6d8eb6956c63754578c4d84903138fb8d8544d49c67b5c657a6daec50afe662"
+    },
+    {
+      "name": "load",
+      "address": "0x90ead8c",
+      "length": 290,
+      "sha256": "b21c4104b4a4889e21823be92dc8ca422341b6dea1a63c2b766e726d5f47481c"
+    },
+    {
+      "name": "save",
+      "address": "0x90eb168",
+      "length": 362,
+      "sha256": "5504c613bcbdb41893dd3899b0c66bd879c31e33c4d4da457705075ca31716d2"
+    },
+    {
+      "name": "sanitizer",
+      "address": "0x90d29c0",
+      "length": 20,
+      "sha256": "adcf30c5229b303baa4b31803972dab87d5295c47531a4d863490fa72b82f65e"
+    },
+    {
+      "name": "quantity_getter",
+      "address": "0x80997a8",
+      "length": 4,
+      "sha256": "1c12c5c8ed673f4bf4306b046be164b2b946e87c391044609d4379f3c960a009"
+    },
+    {
+      "name": "quantity_setter",
+      "address": "0x80997c4",
+      "length": 28,
+      "sha256": "3a7ca69b1c5121bcd58584b1eee4abba72b669a4794ecbe2c19bf072c23c338b"
+    },
+    {
+      "name": "space",
+      "address": "0x8099a08",
+      "length": 132,
+      "sha256": "3d438ffd917be5df34ab9ed152e2c62a7cde1c7a27af522936d3bd094ee84d00"
+    },
+    {
+      "name": "add",
+      "address": "0x8099a8c",
+      "length": 340,
+      "sha256": "a350f715533b1dc012a6d6eda26f42f6a0589fcf3cd1c7efcbab653cc2113e59"
+    },
+    {
+      "name": "remove",
+      "address": "0x8099be0",
+      "length": 136,
+      "sha256": "163611f1e4e8536c21435751fc91f6f22ce7b284af1e2161e8cd5ea3742d7bb9"
+    },
+    {
+      "name": "classification_callbacks",
+      "address": "0x90b8164",
+      "length": 140,
+      "sha256": "1cac10715667a368ab386646ab1c643ef6209d57069ab575a06c482633a8cfc6"
+    },
+    {
+      "name": "classifier",
+      "address": "0x90b81f0",
+      "length": 112,
+      "sha256": "c36df0e2ac078d72ede7a149cf0d8ccfb49e6b7f78e805ae40004c7c3f090f66"
+    },
+    {
+      "name": "partition_count",
+      "address": "0x90b8274",
+      "length": 304,
+      "sha256": "76d5c1afd41acf7a0ec1ad83457178b64db1499f5c9a064ed419b5a0ec889017"
+    },
+    {
+      "name": "selector_clear_and_open_scan",
+      "address": "0x90b83f4",
+      "length": 184,
+      "sha256": "af6e3a828d37ef7e36163d65548d8470846ecfefc167b628f76072550cc6c58e"
+    },
+    {
+      "name": "store_counts",
+      "address": "0x90d3d74",
+      "length": 180,
+      "sha256": "cd52bbfaacdd7685fb8f41bc928df1ebe126756fa3adf8bc2a87ca312f4d9075"
+    },
+    {
+      "name": "list_builder",
+      "address": "0x90d43a8",
+      "length": 302,
+      "sha256": "f3770d57469939e3885dd8423b971365c1057e912ef4ad8a564f36a4e136c384"
+    },
+    {
+      "name": "quantity_display",
+      "address": "0x8109150",
+      "length": 260,
+      "sha256": "362f6d6972f8e3909df167dedf09c56367b53f7356e8a78eac7ec8aaac803c6a"
+    },
+    {
+      "name": "medicine_use",
+      "address": "0x90e6818",
+      "length": 568,
+      "sha256": "3f9050c6e5d044af91db115097d90ccf4fe176c688665a746686948fbf76b099"
+    }
+  ],
+  "writer_authorized": false,
+  "give_all_enabled": false,
+  "disposition": "READ_ONLY_RESTRICTED_INPUT_QUALIFICATION",
+  "semantic_contract": "docs/e1-restricted-state-qualification.md",
+  "e2_acceptance_recipe": {
+    "source_sha256": "6e2c92c4e86b9436ca0647b6852b999eb107318d1356098a3cddafba11d8c55f",
+    "counter": 14,
+    "size": 131088,
+    "operations": [
+      {
+        "op": "set",
+        "item_id": 14,
+        "quantity": 7
+      },
+      {
+        "op": "remove",
+        "item_id": 13
+      },
+      {
+        "op": "add",
+        "item_id": 15,
+        "quantity": 11
+      }
+    ],
+    "output_sha256": "633dbfbdc95e6970c66de049bf44452e80a46e75afb89e22890ba89940b801fe",
+    "output_size": 131088,
+    "gui_download_name": "E2_SOURCE_product_verified.sav",
+    "semantic_preview": [
+      "キズぐすり: x1 → x0",
+      "どくけし: x3 → x7",
+      "やけどなおし: x0 → x11"
+    ],
+    "expected_regular": [
+      {
+        "name": "フシギバナイト",
+        "quantity": 1,
+        "editable": false
+      },
+      {
+        "name": "どくけし",
+        "quantity": 7,
+        "editable": true
+      },
+      {
+        "name": "やけどなおし",
+        "quantity": 11,
+        "editable": true
+      }
+    ],
+    "changed_offsets": [
+      56034,
+      56036,
+      56038
+    ],
+    "gui_core_and_auditor_equal": true,
+    "all_unrelated_bytes_preserved": true,
+    "actual_catalog_range_cases": [
+      {
+        "item_id": 13,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 14,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 14,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 15,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 15,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 16,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 16,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 17,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 17,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 18,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 18,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 19,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 19,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 20,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 20,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 21,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 21,
+        "quantity": 999,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 22,
+        "quantity": 1,
+        "independent_audit_equal": true
+      },
+      {
+        "item_id": 22,
+        "quantity": 999,
+        "independent_audit_equal": true
+      }
+    ],
+    "source_and_rom_immutable": true,
+    "human_acceptance": "PASSED"
+  },
+  "isolated_exact_probe": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "both_classifier_predicates_match_all_839_ids": true,
+    "partition_cases": [
+      {
+        "occupied": 0,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 0,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 1,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 1,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 3,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 3,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 324,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 324,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 325,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 325,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 326,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 326,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 699,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 699,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 700,
+        "allocation_success": true,
+        "count_and_complete_order_equal": true
+      },
+      {
+        "occupied": 700,
+        "allocation_success": false,
+        "count_and_complete_order_equal": true
+      }
+    ],
+    "medicine_quantity_cases": [
+      {
+        "item_id": 13,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 13,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 13,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 13,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 14,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 14,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 14,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 14,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 15,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 15,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 15,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 15,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 16,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 16,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 16,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 16,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 17,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 17,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 17,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 17,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 18,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 18,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 18,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 18,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 19,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 19,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 19,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 19,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 20,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 20,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 20,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 20,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 21,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 21,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 21,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 21,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 22,
+        "quantity": 1,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 22,
+        "quantity": 3,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 22,
+        "quantity": 99,
+        "add_read_remove_and_1000_rejection": true
+      },
+      {
+        "item_id": 22,
+        "quantity": 999,
+        "add_read_remove_and_1000_rejection": true
+      }
+    ],
+    "limit": "Isolated Thumb execution with allocator/FlagGet/memcpy/free intercepted; no gameplay proof."
+  },
+  "candidate_scope": {
+    "disposition": "READY_FOR_INDEPENDENT_REVIEW",
+    "e1": "E1_MODEL_QUALIFIED_FOR_E2_CANDIDATE",
+    "canonical_base": "785e113fa1885ac17e19da842a74740f62a8e789",
+    "tested_implementation": "ca564db324b41cdb326fcdbfd582a36521c67f24",
+    "tested_tree": "e2570e3799045747ac8b1ffd1ba308f475d0a104",
+    "independent_review": "NOT_PERFORMED",
+    "human_game_acceptance": "PASSED",
+    "canonical_adoption": false
+  },
+  "current_verification": {
+    "focused_passed": 36,
+    "full_run": 256,
+    "full_passed": 241,
+    "full_skipped": 15,
+    "ast_compile_files": 107,
+    "actual_private_gui_export_equal": true,
+    "exclusive_output_refused_overwrite": true,
+    "protected_artifact_private_path_scan": "PASS",
+    "redacted_secret_scan": "PASS",
+    "diff_whitespace": "PASS"
+  },
+  "human_acceptance": {
+    "disposition": "HUMAN_E2_ACCEPTANCE_PASSED",
+    "source_sha256": "6e2c92c4e86b9436ca0647b6852b999eb107318d1356098a3cddafba11d8c55f",
+    "editor_sha256": "633dbfbdc95e6970c66de049bf44452e80a46e75afb89e22890ba89940b801fe",
+    "return_sha256": "39904e9943f594888af49f2deee7630f784154d148f63d6a47b471f52776f29a",
+    "size": 131088,
+    "return_read_only": true,
+    "human_attestation": "Human reports item editing and normal in-game SAVE succeeded. Retention command confirms mGBA closed before snapshot. No separate machine claim of visual observation.",
+    "regular": [
+      {
+        "name": "フシギバナイト",
+        "quantity": 1
+      },
+      {
+        "name": "どくけし",
+        "quantity": 7
+      },
+      {
+        "name": "やけどなおし",
+        "quantity": 11
+      }
+    ],
+    "all_five_pockets_equal_to_editor": true,
+    "both_decoders_equal": true,
+    "returned_e2_eligible": true,
+    "party_complete_600_bytes_and_count_equal": true,
+    "money_equal": true,
+    "money": 7653721,
+    "counter_transition": [
+      14,
+      15
+    ],
+    "saved_game_statistic_transition": [
+      14,
+      15
+    ],
+    "play_time_nondecreasing": true,
+    "previous_active_slot_byte_identical": true,
+    "all_sections_rotate_one": true,
+    "all_checksums_valid": true,
+    "checksum_excluded_tails_identical": true,
+    "sectors_28_31_identical": true,
+    "classified_native_payload_changes": [
+      {
+        "section": 0,
+        "offset": "0x11",
+        "semantic": "SaveBlock2.playTimeSeconds"
+      },
+      {
+        "section": 0,
+        "offset": "0x12",
+        "semantic": "SaveBlock2.playTimeVBlanks"
+      },
+      {
+        "section": 1,
+        "offset": "0x70c",
+        "semantic": "SaveBlock1.eventObjects[3].runtimeFlags[0]"
+      },
+      {
+        "section": 1,
+        "offset": "0x71c",
+        "semantic": "SaveBlock1.eventObjects[3].currentCoords.x"
+      },
+      {
+        "section": 1,
+        "offset": "0x724",
+        "semantic": "SaveBlock1.eventObjects[3].facingDirection/movementDirection"
+      },
+      {
+        "section": 1,
+        "offset": "0x728",
+        "semantic": "SaveBlock1.eventObjects[3].movementActionId"
+      },
+      {
+        "section": 1,
+        "offset": "0x72c",
+        "semantic": "SaveBlock1.eventObjects[3].previousMovementDirection"
+      },
+      {
+        "section": 2,
+        "offset": "0x210",
+        "semantic": "SaveBlock1.gameStats[GAME_STAT_SAVED_GAME]"
+      }
+    ],
+    "opaque_footer_changed": true,
+    "source_rom_and_snapshots_immutable": true,
+    "independent_review_performed": false
+  }
+}
