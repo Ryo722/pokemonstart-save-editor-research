@@ -121,7 +121,7 @@ At least multiple materially different supported items must independently surviv
 
 **Give All Supported Items** is allowed only if E1 establishes a safe catalog and sufficient pocket capacities/order semantics. It means supported ordinary items only; it must never blindly enumerate all item IDs or include unproven key/event/story items.
 
-### E3 — General existing-Pokémon editor — ACTIVE
+### E3 — General existing-Pokémon editor — COMPLETE / ADOPTED
 
 Goal: make existing ordinary Party Pokémon practically editable beyond the current canary models.
 
@@ -151,7 +151,7 @@ Success requires:
 
 Nickname, OT identity, gender, shiny/PID manipulation, ball, markings and other fields may remain later expansion unless evidence makes them cheap and safe. Do not let them block the practical major-field goal.
 
-### E4 — Pokémon creator
+### E4 — Pokémon creator — NEXT / NOT STARTED
 
 Goal: create a new ordinary Pokémon in the first empty Party slot from supported semantic parameters.
 
@@ -230,22 +230,20 @@ The following are not prerequisites:
 9. Money is regression-protected, not a research priority.
 10. Re-evaluate the milestone sequence when genuinely new evidence changes the cheapest path; do not redesign merely because a bounded task is in progress.
 
-## Immediate next work — E1
+## Immediate next work — post-E3 boundary
 
-Start with a fresh exact-v0.22 inventory qualification effort from current canonical `main`.
+E3 is complete / adopted. Before any E4 implementation, fresh-read current canonical `main` and re-evaluate the milestone boundary: confirm current position, completed proofs, unresolved creation uncertainties, authorization boundary, protected-data boundary, and whether E4 remains the cheapest uncertainty-reducing next step.
 
-Cheapest uncertainty-reducing path:
-
-1. inventory current source/save evidence and existing v0.22 item-related code;
-2. inspect exact-build upstream/source evidence for pocket definitions, capacities, item metadata and quantity/key handling;
-3. design a small native-transition evidence matrix using several materially different ordinary items rather than one canary at a time;
-4. build a read-only generalized inventory decoder/auditor first;
-5. only after the model survives adversarial checks, prepare bounded add/set/remove writer candidates;
-6. keep Give All disabled until catalog + capacity/order semantics are actually established.
-
-E1 implementation/evidence may proceed on a candidate branch. Merge of materially expanded writer capability into canonical `main` remains separately review/adoption gated.
+This E3 adoption action does **not** authorize E4 implementation. Any bounded E4 work must proceed only under the separately applicable project authorization boundary, with materially expanded writer adoption still independently reviewed and Human-gated.
 
 
 ## E1/E2 adoption record — 2026-10-07
 
 PR #21 merged the independently reviewed exact E1/E2 Inventory candidate into canonical `main` as merge commit `3eb756cb1b74fc0d58637b82e93542836fa0b290`. Adopted scope remains the reviewed restricted exact-v0.22 recovery-medicine editor only. Give All, broader regular-item authority, other pockets as writers, cross-version support, Stable promotion, and public release remain outside this adoption.
+
+
+## E3 adoption record — 2026-10-07
+
+PR #23 merged exact independently reviewed candidate `084f7e8089da2450521fb3069f6b0b62e85cc99b` into canonical `main` as merge commit `165dda2edbb94dca559cd426ba37189e7220f18e` after explicit Human adoption authorization. Human-played writer/GUI commit was `34517a6e8664a510a8a909725ad5cf59cdaeecfb`; the follow-up candidate changed returned-save verification for the opaque 16-byte emulator trailer without changing writer/model/core/GUI semantics.
+
+The grouped Human acceptance covered three materially different ordinary Party specimens plus Money/Inventory regression in one transaction. Returned-save verification recorded normal SAVE counter `10→11`, persistence of requested edits and regression state, Rattata recovery from `3/13` to `13/13`, explainable battle/heal drift, and continued ordinary eligibility. The fresh independent-review disposition was `APPROVED_FOR_HUMAN_ADOPTION_DECISION`, recorded as Human-attested fresh-review evidence. This adoption does not authorize E4, release, Stable promotion, cross-version expansion, Box/Pokédex/story/event scope, or protected-data publication.
