@@ -1,5 +1,12 @@
 # E1 / Issue #20: broader planning handoff for ChatGPT
 
+> Historical checkpoint. The current restricted-state E1 decision is in
+> [e1-restricted-state-qualification.md](e1-restricted-state-qualification.md);
+> the implemented E2 candidate and pending combined Human gate are in
+> [e1-e2-inventory-candidate.md](e1-e2-inventory-candidate.md).
+> Earlier STOP/unknown-field statements below describe the preceding checkpoint.
+
+
 Repository: `Ryo722/pokemonstart-save-editor-research`.
 Open work: Issue #20, draft PR #21, branch `codex/e1-v022-inventory-model-qualification`.
 Main at fresh preparation: `785e113fa1885ac17e19da842a74740f62a8e789`.

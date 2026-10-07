@@ -1,5 +1,12 @@
 # E1 Human native transitions: verified results
 
+> Historical checkpoint. The current restricted-state E1 decision is in
+> [e1-restricted-state-qualification.md](e1-restricted-state-qualification.md);
+> the implemented E2 candidate and pending combined Human gate are in
+> [e1-e2-inventory-candidate.md](e1-e2-inventory-candidate.md).
+> Earlier STOP/unknown-field statements below describe the preceding checkpoint.
+
+
 Disposition: **BOUNDED_STOP_WITH_CONCRETE_EVIDENCE**. E1 qualification remains incomplete; E2 has not started.
 
 Canonical base and fresh remote main at preparation: `785e113fa1885ac17e19da842a74740f62a8e789`.

@@ -1,5 +1,12 @@
 # E1 exact-v0.22 inventory research candidate
 
+> Historical checkpoint. The current restricted-state E1 decision is in
+> [e1-restricted-state-qualification.md](e1-restricted-state-qualification.md);
+> the implemented E2 candidate and pending combined Human gate are in
+> [e1-e2-inventory-candidate.md](e1-e2-inventory-candidate.md).
+> Earlier STOP/unknown-field statements below describe the preceding checkpoint.
+
+
 Disposition: **BOUNDED_STOP_WITH_CONCRETE_EVIDENCE**.
 
 Latest exact-ROM investigation: see
