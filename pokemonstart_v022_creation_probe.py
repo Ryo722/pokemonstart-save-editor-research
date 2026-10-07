@@ -26,7 +26,9 @@ class ConstructorExperiment:
         self.sections = self.parsed['slots'][self.parsed['active']]['sections']
         self.block1 = b''.join(self.sections[sid][:audit.structure.LENGTHS[sid]] for sid in (1,2,3,4))
         self.parasite = (self.sections[0][0xF24:0xFF0] + self.sections[4][0xD98:0xFF0]
-                         + self.sections[13][0x450:0xFF0])
+                         + self.sections[13][0x450:0xFF0]
+                         + raw[30*4096:30*4096+0xFF0]
+                         + raw[31*4096:31*4096+0xFF0])
         self.context = audit.inspect(raw, rom)['saved_context']
         if self.context['flag_0x930']:
             raise ValueError('saved facility state is unsupported')
@@ -89,6 +91,14 @@ class ConstructorExperiment:
         cpu.mem_write(0x03005040, struct.pack('<I', seed))
         cpu.mem_write(0x0203DFC0, bytes([runtime_byte]))
         target, stack = 0x02001000, 0x03007000
+        # Exact E1-qualified initializer derives pocket pointers/capacities
+        # from the restored image; no allocator/FlagGet interception.
+        cpu.reg_write(reg.UC_ARM_REG_SP, stack)
+        cpu.reg_write(reg.UC_ARM_REG_LR, 0x06000001)
+        cpu.reg_write(reg.UC_ARM_REG_R0, 0)
+        cpu.emu_start(0x090D39A5, 0x06000000, count=1000000)
+        if cpu.reg_read(reg.UC_ARM_REG_PC) != 0x06000000:
+            raise ValueError('native bag initializer instruction budget exceeded')
         allowed_controls = {0x03005040:4, 0x03005ED8:1, 0x020397E4:4,
                             0x0203DFC0:1, 0x0203DFD0:4, 0x03003569:1}
         for address, value in runtime_controls:

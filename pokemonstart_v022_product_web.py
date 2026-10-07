@@ -118,10 +118,56 @@ def create_page(rom_path,export_directory=None):
                 party_tab=ui.tab('Party');items_tab=ui.tab('Items');trainer_tab=ui.tab('Trainer')
             with ui.tab_panels(tabs,value=party_tab).classes('w-full'):
                 with ui.tab_panel(party_tab):
-                    ui.label('パーティの既存スロットを編集。空スロットの生成は非対応。')
+                    ui.label('Party を編集、または最初の空スロットから Pokémon を作成できます。')
+                    creator=report.get('creator',{})
+                    if creator and not creator.get('eligible'):
+                        ui.label('Create Pokémon 非対応: '+creator['reason'])
+                    controls['creations']=[]
                     for slot in range(6):
                         if slot>=len(report['party']):
-                            with ui.card():ui.label(f'Party #{slot+1} — Empty')
+                            with ui.expansion(f'Party #{slot+1} — Empty').classes('w-full'):
+                                if creator.get('eligible'):
+                                    options=creator['options'];fields={}
+                                    enabled=ui.checkbox(f'Create Pokémon — Party #{slot+1}')
+                                    fields['enabled']=enabled
+                                    controls['creations'].append(fields)
+                                    if slot>len(report['party']):enabled.disable()
+                                    def toggle_creation(event, index=len(controls['creations'])-1):
+                                        pending=controls['creations']
+                                        if not event.value:
+                                            for later in pending[index+1:]:
+                                                later['enabled'].value=False
+                                                later['enabled'].disable()
+                                        elif index+1<len(pending):pending[index+1]['enabled'].enable()
+                                        invalidate()
+                                    enabled.on_value_change(toggle_creation)
+                                    sid=next(iter(options['species']))
+                                    fields['species']=select(f'Create Species — Party #{slot+1}',options['species'],sid)
+                                    fields['level']=number(f'Create Level — Party #{slot+1}',3,1,100)
+                                    fields['nature']=select('Create Nature',{i:n for i,n in enumerate(NATURE_NAMES)},0)
+                                    fields['friendship']=number('Create Friendship',creator['friendship_defaults'][sid],0,255)
+                                    def choices(species):
+                                        return {aid:f'通常特性 {i+1} (#{aid})' for i,aid in enumerate(options['abilities'][species][:2]) if aid}
+                                    fields['ability']=select('Create Ability',choices(sid),options['abilities'][sid][0])
+                                    def species_changed(event, fields=fields, creator=creator):
+                                        abilities=creator['options']['abilities'][event.value][:2]
+                                        fields['ability'].options={aid:f'通常特性 {i+1} (#{aid})' for i,aid in enumerate(abilities) if aid}
+                                        fields['ability'].value=abilities[0];fields['ability'].update()
+                                        fields['friendship'].value=creator['friendship_defaults'][event.value]
+                                        invalidate()
+                                    fields['species'].on_value_change(species_changed)
+                                    fields['held_item']=select('Create Held item',options['held_item'],0)
+                                    for field,maximum in (('ivs',31),('evs',252)):
+                                        fields[field]=[]
+                                        with ui.row():
+                                            for name in STAT_NAMES:
+                                                fields[field].append(number(f'Create {name} {field.upper()}',0,0,maximum))
+                                    ui.label('EV 合計 ≤ 510。技を明示選択してください（自動 learnset は非対応）。PP は最大、PP-Up は 0。')
+                                    fields['moves']=[]
+                                    for index in range(4):
+                                        fields['moves'].append(select(f'Create Move {index+1}',options['moves'],33 if index==0 and 33 in options['moves'] else 0))
+                                    ui.label('生成 identity: 元 save の OT、通常色、種族名。PID / OT / 色 / Ball / 生成メタデータは編集できません。Pokédex は変更しません。')
+                                else:ui.label('Create Pokémon 非対応')
                             continue
                         mon=report['party'][slot];cap=mon['capabilities'];fields={}
                         with ui.expansion(f"Party #{slot+1} — {mon.get('species_name') or SPECIES_NAMES.get(mon['species'],'Species #'+str(mon['species']))} • Lv.{mon['level']} • HP {mon['cached_stats'][0]}/{mon['cached_stats'][1]}",value=slot==0).classes('w-full'):
@@ -262,6 +308,17 @@ def create_page(rom_path,export_directory=None):
                 if mapping:changes[field]=mapping
             if changes:edits.append({'slot':mon['slot'],'changes':changes})
         if edits:result['party']=edits
+        creations=[];gap=False
+        for fields in controls.get('creations',[]):
+            if not fields['enabled'].value:
+                gap=True;continue
+            if gap:raise ValueError('最初の空 Party スロットから順に作成してください')
+            creation={key:control_integer(fields[key].value) for key in
+                      ('species','level','nature','friendship','ability','held_item')}
+            for key in ('ivs','evs','moves'):
+                creation[key]=[control_integer(c.value) for c in fields[key]]
+            creations.append(creation)
+        if creations:result['create']=creations
         if inspection.get('items') and inspection['items'].get('e2'):
             operations=[]
             for entry in inspection['items']['entries']:

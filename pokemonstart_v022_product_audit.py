@@ -96,6 +96,16 @@ def audit_e3(before, after, rom, request):
     expected = bytearray(before)
     envelope = set()
     seen = set()
+    if 'create' in request:
+        import pokemonstart_v022_creation_baseline_audit as creation
+        appended=creation.expected_output(before,rom,request['create'])
+        count=len(parsed['records'])
+        expected[section+52]=appended[section+52]
+        envelope.add(section+52)
+        start=section+56+count*100
+        end=start+100*len(request['create'])
+        expected[start:end]=appended[start:end]
+        envelope.update(range(start,end))
     for edit in request.get('party',[]):
         slot = edit['slot']
         if type(slot) is not int or slot in seen:

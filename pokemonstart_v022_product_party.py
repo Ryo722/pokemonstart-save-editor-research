@@ -174,15 +174,13 @@ def ordinary_options(tables):
                                        if model.held_eligibility(i, tables)['safe_new_target']}}}
 
 
-def derive_ordinary(raw, rom, slot, changes):
-    """Generalize the existing product family under separate E3 exact-ROM gates.
-
-    In-memory immutable source; existing product workflow owns separate export.
-    No PID/identity edits. Independent reconstruction is mandatory before return.
-    """
+def transform_ordinary(source, tables, context, changes, *, slot=0):
+    """Adopted E3 record transformations, shared with the qualified E4 baseline."""
     import pokemonstart_v022_party_model as model
-    import pokemonstart_v022_party_audit as audit
-    verified, base, source, tables, mon, eligibility = ordinary_inspect(raw, rom, slot)
+    if len(source) != 100:
+        raise ValueError('ordinary record length')
+    mon = model.decode_record(source, slot, tables)
+    eligibility = model.write_eligibility(source, tables, context)
     if not eligibility['eligible']:
         raise ValueError('ordinary Party rejected: ' + '; '.join(eligibility['reasons']))
     fields = {'species', 'level', 'experience', 'moves', 'pp', 'pp_up', 'friendship',
@@ -288,6 +286,24 @@ def derive_ordinary(raw, rom, slot, changes):
             raise ValueError('HP decrease depends on unsaved in-battle context: current HP exceeds target maximum')
         hp = 0 if current == 0 else current + max(0, stats[0]-old_max)
         struct.pack_into('<7H', record, 86, hp, *stats)
+    final = bytes(record)
+    if not model.write_eligibility(final, tables, context)['eligible']:
+        raise ValueError('ordinary output eligibility failed')
+    return final
+
+
+def derive_ordinary(raw, rom, slot, changes):
+    """Generalize the existing product family under separate E3 exact-ROM gates.
+
+    In-memory immutable source; existing product workflow owns separate export.
+    No PID/identity edits. Independent reconstruction is mandatory before return.
+    """
+    import pokemonstart_v022_party_model as model
+    import pokemonstart_v022_party_audit as audit
+    verified, base, source, tables, mon, eligibility = ordinary_inspect(raw, rom, slot)
+    if not eligibility['eligible']:
+        raise ValueError('ordinary Party rejected: ' + '; '.join(eligibility['reasons']))
+    record = transform_ordinary(source, tables, model.saved_context(verified), changes, slot=slot)
     candidate = bytearray(raw)
     record_base = base+v.PARTY_OFFSET+slot*100
     candidate[record_base:record_base+100] = record
