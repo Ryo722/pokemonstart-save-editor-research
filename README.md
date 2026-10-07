@@ -67,10 +67,10 @@ The exact-v0.22 practical product is **COMPLETE / ADOPTED on canonical `main`**.
 - **E1 — Inventory model qualification: COMPLETE / ADOPTED**
 - **E2 — Practical Inventory editor: COMPLETE / ADOPTED**
 - **E3 — General existing-Pokémon editor: COMPLETE / ADOPTED**
-- **E4 — Pokémon creator (Party-only initial scope): NEXT / NOT STARTED**
-- **E5 — PKHeX-like product UX and acceptance**
+- **E4 — Pokémon creator (Party-only initial scope): COMPLETE / ADOPTED**
+- **E5 — PKHeX-like product UX and acceptance: NEXT / NOT STARTED**
 
-Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon generalization is now COMPLETE / ADOPTED through PR #23. E4 is the next milestone but has not been started by this adoption action. See `docs/v022-pkhex-like-editor-expansion.md`.
+Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon editing and E4 Party-only Pokémon creation are COMPLETE / ADOPTED through PR #23 and PR #24 respectively. E5 is next but has not been started by this adoption action. See `docs/v022-pkhex-like-editor-expansion.md`.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -90,7 +90,8 @@ Current Fast Lab evidence includes:
 - **Money:** disposable output edit with verifier acceptance and live v0.22 confirmation.
 - **Party:** the adopted E3 ordinary-class writer supports the independently qualified exact-v0.22 subset of species, level/EXP, moves/PP/PP-Up, friendship, IV/EV, effective nature, ordinary ability resolution/selection, conservative held items, and required cached-stat/HP coherence under fail-closed predicates.
 - **Inventory:** the adopted E1/E2 restricted recovery-medicine subset remains available and regression-protected.
-- **Ability:** practical ordinary ability editing is supported only inside E3's qualified predicate; special override species/states remain rejected.
+- **Ability:** practical ordinary ability editing is supported only inside E3/E4's qualified ordinary predicates; special override species/states remain rejected.
+- **Creation:** the adopted E4 creator constructs a bounded general class of new ordinary Pokémon in the first eligible empty Party slot from semantic parameters, with independent complete-record/save reconstruction and explicit full-Party Box rejection.
 
 These remain experimental until capability-specific reusable predicates and lifecycle evidence are established.
 
@@ -112,7 +113,7 @@ The canonical practical GUI provides ordinary Party / Items / Trainer controls a
 .venv/bin/python pokemonstart_v022_product_web.py --rom /path/inside/PokemonStart-private/exact-v022.gba
 ```
 
-The canonical product supports reusable Money, the adopted E1/E2 restricted recovery-medicine Inventory subset, and the adopted E3 ordinary existing-Party editor under its exact-v0.22 capability predicates. E3 acceptance includes one grouped GUI/game transaction with returned-save verification and independent reconstruction. It remains exact-v0.22 bounded and is **not** a public release or Stable-promotion claim. Give All Items, broader item authority, unsupported Party states, E4 creation, Box support, and other versions remain outside current adopted capability. See `docs/e3-existing-party-writer-qualification.md` and `docs/reviews/e3-existing-party-independent-review.md`.
+The canonical product supports reusable Money, the adopted E1/E2 restricted recovery-medicine Inventory subset, the adopted E3 ordinary existing-Party editor, and the adopted E4 Party-only ordinary Pokémon creator under exact-v0.22 fail-closed predicates. E3 and E4 each have grouped GUI/game acceptance with returned-save verification and independent reconstruction. It remains exact-v0.22 bounded and is **not** a public release or Stable-promotion claim. Give All Items, broader item authority, unsupported Party states, Box support, Pokédex/story/event/RTC mutation, and other versions remain outside current adopted capability. See `docs/e3-existing-party-writer-qualification.md`, `docs/e4-party-creator-construction-qualification.md`, and the corresponding review handoffs.
 The prior research GUI and bounded APIs retain their existing behavior.
 
 ## Shared safeguards
