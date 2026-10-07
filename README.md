@@ -28,17 +28,13 @@ Unsupported builds, malformed or ambiguous saves, unsupported save states, and u
 
 The project optimizes for **continuous owner use on a supported current build**, not for maximizing isolated proofs or field count.
 
-## Terminal goal
+## Terminal goals
 
-For the currently selected PokemonStart build/profile (currently exact v0.22), provide a **user-operable, recoverable local editor** that supports repeated:
+The previous exact-v0.22 practical Party / Items / Money terminal is **COMPLETE / ADOPTED**.
 
-`edit -> play/save -> ordinary progress -> save -> edit`
+The current vNext goal is the **Exact-v0.22 PKHeX-like Practical Editor**: supported ordinary-item add/quantity/remove, practical existing-Party editing, new ordinary Pokémon creation in an empty Party slot, already-proven Money editing, and a PKHeX-familiar GUI with semantic preview and verified separate output.
 
-cycles on naturally progressed owner saves using build-specific and capability-specific eligibility predicates rather than exact-save-hash allowlists.
-
-The practical terminal product is a PKHeX-familiar local GUI for a useful **Party / Items / Money** slice. It preserves original inputs, writes only separate outputs, previews semantic changes, verifies generated outputs, and rejects unsupported cases rather than guess.
-
-Terminal completion does **not** require all PokemonStart versions, all save fields, PKHeX parity, generic CFRU support, public release, Box editing, arbitrary Pokémon synthesis, or Stable promotion of every Fast Lab capability.
+PKHeX parity, legality parity, Box editing, Pokédex/story/event editing, public release and other PokemonStart versions are not vNext prerequisites.
 
 ## Current position
 
@@ -65,9 +61,16 @@ Stable provenance work remains separate and is not on the current practical term
 - **Exact-v0.22 Party append + Inventory insertion + localhost GUI: COMPLETE EXPERIMENTALLY / ADOPTED.**
 - **Exact-v0.22 composed Party append + Antidote insertion GUI transaction: COMPLETE EXPERIMENTALLY / ADOPTED.**
 
-The exact-v0.22 practical product is now **COMPLETE / ADOPTED on canonical `main`**. R1 reusable eligibility, R2 practical Party / Items / Money core, R3 localhost GUI, and R4 two-cycle naturally-progressed-save acceptance are complete under the bounded evidence recorded in the repository.
+The exact-v0.22 practical product is **COMPLETE / ADOPTED on canonical `main`**. The project has now entered the adopted vNext expansion path:
 
-See `docs/v022-practical-product-sprint.md` for the original scope and `docs/v022-product-sprint-completion-evidence.json` plus the review packets for the completed acceptance record.
+- **E0 — expansion contract: COMPLETE / ADOPTED**
+- **E1 — Inventory model qualification: ACTIVE**
+- **E2 — Practical Inventory editor**
+- **E3 — General existing-Pokémon editor**
+- **E4 — Pokémon creator (Party-only initial scope)**
+- **E5 — PKHeX-like product UX and acceptance**
+
+Money is DONE / maintenance-only for this expansion. See `docs/v022-pkhex-like-editor-expansion.md`.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -135,7 +138,8 @@ The verifier accepts only `0x20000` flash bytes or `0x20010` with a 16-byte opaq
 ## Canonical records
 
 - `docs/decision-record.md` — controlling North Star, terminal goal, current milestone/authority state, and forward path
-- `docs/v022-practical-product-sprint.md` — authorized R1–R4 exact-v0.22 product sprint scope
+- `docs/v022-pkhex-like-editor-expansion.md` — adopted vNext E0–E5 PKHeX-like editor expansion scope
+- `docs/v022-practical-product-sprint.md` — completed R1–R4 exact-v0.22 product sprint scope
 - `docs/post-fl2-acceptance-and-reusable-envelope-plan.md` — historical/adopted post-FL2 acceptance and reusable-envelope plan
 - `docs/money-reusable-envelope-qualification.md` — historical bounded reusable-Money qualification record
 - `docs/v022-creation-proofs-and-gui-prototype.md` — exact-v0.22 Party append, Inventory insertion and localhost GUI scope record

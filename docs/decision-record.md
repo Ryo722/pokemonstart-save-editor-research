@@ -6,6 +6,8 @@ GitHub `main` is the only durable canonical authority for this project. Detailed
 
 The independently reviewed exact-v0.22 practical product candidate was explicitly authorized for adoption and merged to canonical `main` through PR #16 at merge commit `ab18419108eeed91288d440a6f154cac33a1cf2e`.
 
+The Human has now additionally adopted the **Exact-v0.22 PKHeX-like Practical Editor Expansion** as the forward product goal. The expansion contract is `docs/v022-pkhex-like-editor-expansion.md`. This is a substantive capability expansion beyond the completed R1-R4 terminal, so future expanded writer candidates remain separately review/adoption gated before merge.
+
 The preceding sprint authorization remains historical authority for the R1–R4 implementation work:
 
 > `AUTHORIZE V0.22 PRACTICAL PRODUCT SPRINT REALIGNMENT AND BOUNDED R1-R4 IMPLEMENTATION`
@@ -22,17 +24,25 @@ Unsupported builds, malformed or ambiguous saves, unsupported save states, and u
 
 The project optimizes for **continuous owner use on a supported current build**, not for maximizing the number of isolated proofs or fields.
 
-## Terminal goal — current build
+## Terminal goals
 
-Deliver a **user-operable, recoverable local editor for the exact PokemonStart v0.22 profile** that supports repeated:
+### Previous terminal — exact-v0.22 practical editor — COMPLETE / ADOPTED
 
-`edit -> play/save -> ordinary progress -> save -> edit`
+The earlier R1-R4 terminal delivered a user-operable, recoverable exact-v0.22 Party / Items / Money editor with repeated `edit -> play/save -> progress -> save -> edit` closure. That achievement remains complete and is not invalidated by the new expansion.
 
-cycles on naturally progressed owner saves using build-specific and capability-specific eligibility predicates rather than exact-save-hash allowlists.
+### Current vNext terminal — Exact-v0.22 PKHeX-like Practical Editor
 
-The practical terminal surface is intentionally bounded to a useful **Party / Items / Money** product slice. It must preserve original inputs, write only separate outputs, preview semantic changes, verify generated outputs, and explicitly reject unsupported states.
+Expand the canonical exact-v0.22 editor so the owner can, through ordinary GUI controls:
 
-The GUI should be immediately understandable to a user familiar with PKHeX, but PKHeX visual parity, legality parity, or broad feature parity is not required.
+- add supported ordinary items, set/change quantities, and remove them;
+- use Give All Supported Items only if a safe ordinary-item catalog and pocket capacities are independently established;
+- practically edit existing ordinary Party Pokémon across the supported major-field set;
+- create a new ordinary Pokémon in an eligible empty Party slot from supported semantic parameters;
+- retain already-proven Money editing;
+- use a PKHeX-familiar Party / Items / Trainer workflow with semantic preview, verification and separate output;
+- return to normal gameplay/save and later reopen the progressed save.
+
+PKHeX parity, legality parity, Box editing, Pokédex/story/event editing, public release and cross-version support are not vNext terminal prerequisites.
 
 ## Terminal success characteristics
 
@@ -54,6 +64,21 @@ For exact v0.22, terminal completion requires:
 14. public release, Stable promotion, cross-version generalization, Box editing, Pokédex/event/story editing, and arbitrary Pokémon synthesis are not prerequisites.
 
 `Give All Items` is a stretch goal: implement only if a safe exact-v0.22 ordinary-item set and pocket capacities can be derived without guessing. Its absence does not block terminal completion.
+
+## vNext success characteristics
+
+For exact v0.22, vNext completion requires:
+
+1. Money remains regression-safe at the already proven `0..9,999,999` range and is not a research priority;
+2. supported ordinary-item pockets have an independently supported model for record encoding, quantity, insertion/removal, ordering and safe capacity semantics;
+3. supported ordinary items can be selected by name and added, quantity-edited, and removed through the GUI;
+4. Give All Supported Items exists only if the safe catalog and capacities are proven; otherwise it remains disabled without blocking terminal completion;
+5. existing ordinary Party Pokémon can be edited across the practical major-field set established in E3, with all required coupling/derived values coherent;
+6. the editor can construct at least a bounded general class of new ordinary Pokémon in an empty Party slot rather than only replay one exact captured record;
+7. representative materially different item edits, Pokémon edits, and Pokémon creations survive exact-v0.22 load, normal use/save, and returned-save verification;
+8. the GUI presents Party / Items / Trainer controls in a PKHeX-familiar workflow without exposing research internals during normal use;
+9. preview -> verify -> separate output and source immutability remain mandatory;
+10. unsupported, malformed, ambiguous, full-Party-without-Box, unsafe item, and unsupported field states fail closed.
 
 ## Version maintenance model
 
@@ -86,7 +111,36 @@ The reusable exact-v0.22 practical product is now **canonical and adopted on `ma
 
 ## Goal-aligned milestone path
 
-Historical M/FL milestones remain canonical evidence history. The forward critical path is now one bounded product sprint:
+Historical M/FL/R milestones remain canonical evidence history. R1-R4 and the previous terminal are COMPLETE / ADOPTED.
+
+The forward critical path is now the E-series expansion defined in `docs/v022-pkhex-like-editor-expansion.md`:
+
+### E0 — expansion contract — COMPLETE / ADOPTED
+
+The vNext goal, success characteristics, milestone sequence, Money maintenance status, safety boundaries and non-goals are canonical.
+
+### E1 — Inventory model qualification — ACTIVE
+
+Establish a reusable exact-v0.22 model for supported ordinary-item pockets: boundaries, record encoding, quantity representation, empty-slot semantics, ordering/compaction, safe capacity, checksum/key behavior and a safe item catalog. Prefer multi-item generalization evidence and source/ROM corroboration over serial single-item canaries.
+
+### E2 — Practical Inventory editor
+
+Implement GUI add / set quantity / remove for the E1-supported ordinary-item model. Give All Supported Items is conditional on proven catalog + capacity/order semantics.
+
+### E3 — General existing-Pokémon editor
+
+Generalize existing-Party editing across the supported major fields: species, level/EXP, moves/PP, friendship, IV/EV, nature, ability when resolved safely, held item, and required cached/derived coherence.
+
+### E4 — Pokémon creator
+
+Construct new ordinary Pokémon from supported semantic parameters in the first eligible empty Party slot. Party-only for vNext; Box creation remains separately gated.
+
+### E5 — PKHeX-like product UX and acceptance
+
+Deliver the PKHeX-familiar Party / Items / Trainer experience with Create Pokémon, semantic preview, verified separate output, and a representative real-game acceptance cycle spanning Items, existing-Pokémon editing, creation, and Money regression.
+
+
+## Historical completed R-series
 
 ### R0 — North Star / canonical alignment — COMPLETE
 
@@ -139,7 +193,9 @@ The canonical product satisfies the terminal success characteristics above. The 
 
 ## Current authorization boundary
 
-The exact-v0.22 practical editor is now canonical on `main`. No additional merge is pending for R1–R4.
+The exact-v0.22 R1-R4 practical editor is canonical on `main`. The Human has authorized bounded E1-E5 exact-v0.22 investigation, candidate implementation, tests, local private-input verification and review preparation under `docs/v022-pkhex-like-editor-expansion.md`.
+
+Materially expanded writer capability remains separately review/adoption gated before merge into canonical `main`.
 
 The following still require separate justification/authorization as applicable:
 
@@ -155,4 +211,4 @@ The following still require separate justification/authorization as applicable:
 
 ## Next execution step
 
-No terminal-critical implementation remains for exact v0.22. Default next work is to use the canonical editor in ordinary owner use and only open new work when concrete evidence justifies it. High-value optional follow-ups are: packaging/run ergonomics, a fresh stat-changing normal-save proof if wider Party stat support is desired, a GUI-created Antidote round trip, broader regular-item semantics only after exact evidence, and future-version onboarding when a new PokemonStart version actually matters.
+Start E1 from fresh current `main`. Inventory current exact-v0.22 item evidence/code; inspect exact-build source/ROM evidence for pocket definitions, capacities, item metadata and key/quantity handling; design a small multi-item native-transition matrix; build a read-only generalized inventory decoder/auditor first; only then prepare bounded add/set/remove writer candidates. Keep Give All disabled until safe catalog + capacity/order semantics are established.
