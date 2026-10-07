@@ -18,6 +18,8 @@ import pokemonstart_v022_party_audit as audit
 
 
 class ConstructorExperiment:
+    BLOCK1_ADDRESS = 0x02010000
+    BLOCK2_ADDRESS = 0x02014000
     def __init__(self, raw: bytes, rom: bytes):
         self.tables = model.extract_tables(rom)
         self.parsed = audit.structure.parse(raw)
@@ -53,8 +55,10 @@ class ConstructorExperiment:
 
     def _read(self, cpu, access, address, size, value, data):
         # Classify supplied save images, constructor target and ABI stack.
-        supplied = ((0x02001000, 0x02001064), (0x02020000, 0x02021000),
-                    (0x02021000, 0x02021000+len(self.block1)),
+        supplied = ((0x02001000, 0x02001064),
+                    (self.BLOCK2_ADDRESS, self.BLOCK2_ADDRESS+len(self.sections[0])),
+                    (self.BLOCK1_ADDRESS, self.BLOCK1_ADDRESS+len(self.block1)),
+                    (0x020241E4, 0x020241E4+600), (0x02023F89, 0x02023F8A),
                     (0x0203B0E8, 0x0203B0E8+len(self.parasite)),
                     (0x03006000, 0x03007100), (0x03005048, 0x03005050))
         if (0x02000000 <= address < 0x03008000
@@ -62,7 +66,8 @@ class ConstructorExperiment:
             self.reads.add((cpu.reg_read(self.reg.UC_ARM_REG_PC), address, size))
 
     def construct(self, species, level, personality, fixed_iv, *, fill=0xA5,
-                  seed=0, runtime_byte=0, ot_type=0, set_flags=(), stack_fill=0):
+                  seed=0, runtime_byte=0, ot_type=0, set_flags=(), stack_fill=0,
+                  clear_flags=(), runtime_controls=()):
         """RAM-only result; personality/OT controls are research ABI, not UX."""
         if species not in model.ORDINARY_SPECIES or not 1 <= level <= 100:
             raise ValueError('investigation requires E3 ordinary species and level')
@@ -72,16 +77,32 @@ class ConstructorExperiment:
         cpu.mem_write(0x02000000, bytes(0x40000))
         cpu.mem_write(0x03000000, bytes(0x8000))
         cpu.mem_write(0x03006000, bytes([stack_fill])*0x1100)
-        cpu.mem_write(0x02020000, self.sections[0])
-        cpu.mem_write(0x0300504C, struct.pack('<I', 0x02020000))
-        cpu.mem_write(0x02021000, self.block1)
-        cpu.mem_write(0x03005048, struct.pack('<I', 0x02021000))
+        cpu.mem_write(self.BLOCK2_ADDRESS, self.sections[0])
+        cpu.mem_write(0x0300504C, struct.pack('<I', self.BLOCK2_ADDRESS))
+        cpu.mem_write(self.BLOCK1_ADDRESS, self.block1)
+        cpu.mem_write(0x03005048, struct.pack('<I', self.BLOCK1_ADDRESS))
+        cpu.mem_write(0x02023F89, bytes([self.parsed['count']]))
+        cpu.mem_write(0x020241E4, self.sections[1][0x38:0x38+600])
         cpu.mem_write(0x0203B0E8, self.parasite)
         # Controlled unresolved RNG/runtime state, deliberately not claimed
         # to represent its values after a real game load.
         cpu.mem_write(0x03005040, struct.pack('<I', seed))
         cpu.mem_write(0x0203DFC0, bytes([runtime_byte]))
         target, stack = 0x02001000, 0x03007000
+        allowed_controls = {0x03005040:4, 0x03005ED8:1, 0x020397E4:4,
+                            0x0203DFC0:1, 0x0203DFD0:4, 0x03003569:1}
+        for address, value in runtime_controls:
+            width = allowed_controls.get(address)
+            if width is None or not 0 <= value < 1 << (width*8):
+                raise ValueError('unsupported runtime experimental control')
+            cpu.mem_write(address, value.to_bytes(width, 'little'))
+        for flag in clear_flags:
+            cpu.reg_write(reg.UC_ARM_REG_SP, stack)
+            cpu.reg_write(reg.UC_ARM_REG_LR, 0x06000001)
+            cpu.reg_write(reg.UC_ARM_REG_R0, flag)
+            cpu.emu_start(0x0806DE9D, 0x06000000, count=1000000)
+            if cpu.reg_read(reg.UC_ARM_REG_PC) != 0x06000000:
+                raise ValueError('FlagClear instruction budget exceeded')
         for flag in set_flags:
             cpu.reg_write(reg.UC_ARM_REG_SP, stack)
             cpu.reg_write(reg.UC_ARM_REG_LR, 0x06000001)

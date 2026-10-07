@@ -115,9 +115,9 @@ independent constructor has closed. Constants are candidate policies only.
 
 | Bytes/bits | Field | Classification / current rule |
 | --- | --- | --- |
-| 0–3 | personality | **UNRESOLVED / BLOCKING**: supplied synthetic PID is preserved in baseline cases but saved flag913 can rewrite it; owner-consistent deterministic non-shiny generator and complete postprocessing predicate not qualified |
+| 0–3 | personality | **UNRESOLVED / BLOCKING**: supplied synthetic PID is preserved in baseline cases but saved flag913 can rewrite it; flag913 source is section0:F26 mask08 under ordinary flag routing. Proposed creator rejects it true and retains E3 flag930 rejection. Generator/postconditions and other runtime modes remain unqualified |
 | 4–7 | OT ID | OWNER_SAVE_DERIVED: active section0 bytes10–13; equal in every native case; no arbitrary control |
-| 8–14 | species-default nickname | **UNRESOLVED / BLOCKING**: native species glyph prefix/terminator, followed by stack-dependent tail; deterministic safe tail policy/read consumers not qualified |
+| 8–14 | species-default nickname | **UNRESOLVED / BLOCKING**: native species glyph prefix/terminator, followed by stack-dependent tail. Native length/compare ignore tail, but both mon getters and Party nickname copy transport it. Downstream equivalence remains blocking; no padding selected |
 | 15 | nature mint | CONSERVATIVE_CONSTANT: baseline0; optional effective nature would use E3_DERIVED transformations |
 | 16, all bits | hyper-training/reserved bits | UNSUPPORTED / FAIL_CLOSED for nonzero; observed baseline0 |
 | 17 | tera/extended type | EXACT_CONSTRUCTOR_DERIVED: primary type in all probed ordinary species; no control |
@@ -139,13 +139,13 @@ independent constructor has closed. Constants are candidate policies only.
 | 56–61 | EVs | CONSERVATIVE_CONSTANT baseline six0; optional E3_DERIVED allocations/ranges |
 | 62–67 | contest/condition attributes | EXACT_CONSTRUCTOR_DERIVED: observed cleared; no controls |
 | 68, two nibbles | Pokerus days/strain | EXACT_CONSTRUCTOR_DERIVED: observed0; no control |
-| 69 | met location | OWNER_SAVE_DERIVED via native current-region route; independent saved map→region rule remains UNRESOLVED / BLOCKING for complete origin reconstruction |
+| 69 | met location | OWNER_SAVE_DERIVED via native current-region route; independent mapGroup/mapNum (section1:4/5) → exact-ROM map header+14 matches retained locations. General map-index bounds / regionFF fallback remain UNRESOLVED / BLOCKING |
 | 70 bits0–6 | met level | EXACT_CONSTRUCTOR_DERIVED from requested level |
 | 70 bit7 / 71 bits0–2 | met game | EXACT_CONSTRUCTOR_DERIVED: observed4; cross-owner independent reconstruction pending |
 | 71 bit3 | Gigantamax | UNSUPPORTED / FAIL_CLOSED: ordinary baseline clear |
 | 71 bit4 | hidden ability | EXACT_CONSTRUCTOR_DERIVED baseline clear; E4 initial optional ability policy not qualified, E3's selector/resolution remains reusable |
 | 71 bits5–6 | reserved origin bits | EXACT_CONSTRUCTOR_DERIVED: observed clear; no control |
-| 71 bit7 | OT gender | OWNER_SAVE_DERIVED; exact cross-owner source/encoding qualification pending; no control |
+| 71 bit7 | OT gender | OWNER_SAVE_DERIVED; source section0 byte8; synthetic gender0/1 exact constructor controls reproduced; natural cross-gender owner not asserted; no control |
 | 72–75 bits0–29 | six IVs | SEMANTIC_INPUT / E3_DERIVED; matrix uses uniform0/31, not a complete creation allocation policy |
 | 75 bit6 | egg | UNSUPPORTED / FAIL_CLOSED: clear |
 | 75 bit7 | ordinary ability selector | EXACT_CONSTRUCTOR_DERIVED: native ordinary choice; independent complete creation baseline binding to generated PID pending; E3's optional transformation remains reusable |
@@ -228,3 +228,123 @@ rejection, first eligible slot, count+1, separate non-overwriting output,
 checksums, untouched Party/unrelated state/footer, composition conflict checks,
 localhost/stale-state GUI and grouped two-Pokémon Human acceptance remain
 requirements for E4-B after E4-A closes; none is claimed newly implemented.
+
+
+## Continued focused investigation (2026-10-07)
+
+Remote main and candidate were freshly fetched before continuation; main
+remained `381bc80080919952c9a32bb7982dfcf24bc92ea5` and candidate began at
+`a8c905b91f42e8e970d868ff6d285f945ff0d7a0`. Issues/PRs remained empty.
+The controlling E4 contracts were freshly read; no authority was inferred
+from the user-supplied SHA or this checkpoint's prior conclusions.
+
+### Experimental correction
+
+The original probe placed reconstructed SaveBlock1 at02021000. That range
+intersected native gPlayerParty020241E4 and count02023F89. This does not
+constitute a fully restored runtime and its helper behavior must not be
+qualified from that placement. The probe now places SaveBlock1 at02010000
+and SaveBlock2 at02014000, disjoint from target, output buffers, native Party,
+parasite and stack, and explicitly restores the six saved Party slots/count.
+The evidence index retains the original checkpoint separately and provides
+fresh results under corrected placement. Bag/key/runtime state is still
+partial; this correction is not a claim of complete game-load restoration.
+
+### Nickname counterexample and stop
+
+The new read-only `pokemonstart_v022_creation_initialization_probe.py` varies
+only bytes after the first FF nickname terminator in eight ordinary species
+with encoded lengths4/5. Four synthetic fills (00/FF/A5/5A) are adversarial
+controls, **not** proposed padding. Exact GetBoxMonData0803F4B0 (field2),
+GetMonData0803F354 (field2), and Party-facing GetMonNickname08120AD0 all
+transport the changed tail into their output buffers. The copied terminated
+prefix is identical; the complete copied buffers differ. Native StringLength
+08008984 and StringCompare080089A4 return equal results; E3 reconstruction
+and eligibility are unchanged. These facts do not establish summary/battle
+consumer equivalence, default-name detection across all call sites, or normal
+save serialization equivalence. The fixed-field getter is already a concrete
+counterexample to “every consumer is terminator-bounded.”
+
+Static navigation around GetSpeciesName080406C4 and SetBoxMonData0803FBC4,
+and the exact executed getters, identified the stack-derived tail versus
+fixed-field transport. Native garbage must not be reproduced. No zero/FF
+canonical padding was selected, because full downstream equivalence has not
+been proven. A complete independent baseline is therefore not added.
+
+**Single cheapest next discriminator:** exact-ROM dataflow from the nickname
+buffers produced by GetMonNickname/GetMonData into ordinary summary, default-
+name detection and battle consumers, coupled with the same paired-tail RAM
+execution. This determines whether transported tail is only opaque storage
+or actually observed. It needs no new capture or Human movement/gameplay.
+
+### Saved creation flags and runtime boundary
+
+Native FlagClear0806DE9C then FlagSet0806DE74 identifies the bit even when
+the retained save already has it set. Native FlagGet0806DEC4 agrees with the
+independent saved bit reads in measured contexts, under controlled routing
+byte03005ED8=0. These are logical section offsets, not physical sectors:
+
+| Flag | Saved source | Construction evidence / creator status |
+| --- | --- | --- |
+| 0828 | section1 FE5 bit0 | queried by helper090B7380; native Party now restored; full helper/default-mode qualification unresolved |
+| 0913 | section0 F26 bit3 | constructor direct branch; native set changes supplied personality and native shiny false→true; reject true is proposed ordinary creator predicate |
+| 0930 | section0 F2A bit0 | E3 facility predicate remains controlling and rejects before execution |
+| 12F8 | section4 E0B bit0 | helper090B7E6C also queries saved bag item833; complete construction effect unresolved |
+
+The constructor separately calls native bag lookup for item471. Numeric
+item/flag identities are observed exact call arguments; upstream labels are
+not used as proof of integrated semantics. Extra-section parasite flags may
+be outside their base checksum envelopes, as in the canonical E3 mapping.
+
+Adversarial controls (1/2/all-bits-set) at each of the six requested runtime
+addresses were run under native-cleared0913. No-change observations are
+explicitly insufficient to claim irrelevance:
+
+| Runtime input | Current classification |
+| --- | --- |
+| 03005040 | controlled RNG; fixed-PID/fixed-IV variants observed unchanged, but random-generation policy not qualified |
+| 03005ED8 | required flag-routing runtime state; saved reconstruction/alternate-routing behavior unresolved |
+| 020397E4 | required bag runtime pointer/state; adversarial values fail native execution; valid saved-bag reconstruction unresolved/blocking |
+| 0203DFC0 | required runtime-dependent helper input; tested values unchanged, broader conditional reachability unresolved |
+| 0203DFD0 | required runtime-dependent helper input; tested values unchanged, broader conditional reachability unresolved |
+| 03003569 | observed in special shiny branch; false0913 variants unchanged; no global irrelevance claim |
+
+The 0913 fail-closed predicate closes the observed saved shiny-forcing mode,
+not every constructor mode. No personality generator, domain-wide native
+nature/gender/form postcondition claim or arbitrary identity controls were
+added. Their qualification is deferred at this concrete record-model stop.
+
+### Origin progress and remaining generalization
+
+Native current-region08055B20 reads SaveBlock1 bytes4/5 (saved map group/num),
+then map-header lookup08054AF8: exact group pointer table089A3D6C, group table
+entry[num], header byte14. The independent read-only lookup agrees with native
+execution in retained contexts; their distinct map keys and results are in the
+evidence index. Retained snapshots are existing private-save evidence, not
+new gameplay attestation or a source-hash creator whitelist.
+
+Synthetic owner section0 byte8 controls0/1 and levels1/3/20/100 establish met
+level=input, met game4, OT gender=owner byte8 bit0 for admitted ordinary gender
+values, and packed origin bits11–14 clear in this matrix. These are machine
+controls, not claims about two natural owners. The regionFF alternative and
+safe bounds for arbitrary map-table indices are not yet qualified; merely
+checking that a ROM pointer is in range cannot qualify general map validity.
+No constant met location or captured-record replay was introduced.
+
+The full 100-byte matrix above retains explicit blockers rather than silently
+promoting observations into independently qualified initialization. Explicit
+moves with empty slots/PP zero and occupied exact-table PP/PP-Up zero remain
+the smaller proposed surface; automatic learnsets were not allowed to delay
+this stop. No complete baseline, save writer, GUI, Human request, E5 expansion,
+merge, Box mutation or public protected-data payload was added.
+
+Reproduce the additional discriminators with private exact inputs:
+
+```sh
+.venv/bin/python pokemonstart_v022_creation_initialization_probe.py --rom <private-exact-ROM> --save <private-ordinary-save>
+.venv/bin/python -m unittest discover -s tests -p 'test_v022_creation*probe.py' -v
+```
+
+The added two malformed map-pointer tests use synthetic bytes and do not
+establish exact-ROM semantics. Exact pushed-candidate test counts and source
+immutability checks are supplied in the handoff, after freezing the candidate.

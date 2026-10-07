@@ -1,123 +1,7 @@
 {
   "canonical_base": "381bc80080919952c9a32bb7982dfcf24bc92ea5",
   "disposition": "BOUNDED_STOP_WITH_CONCRETE_EVIDENCE",
-  "probe_source_sha256": "890c313f55a41b4b6aa6c557e9e7defd231d5cbc32846d47e01f2d0a6067dfb7",
-  "constructor_experiment": {
-    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
-    "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
-    "evidence_class": "exact-ROM isolated execution with partially reconstructed RAM",
-    "constructor_entry": "0x0803D1C0",
-    "box_constructor_entry": "0x09075150",
-    "baseline_cases": 1216,
-    "destination_fill_comparisons": 1216,
-    "ordinary_disagreements": [],
-    "baseline_constant_disagreements": [],
-    "runtime_variants": [
-      {
-        "controlled_byte": 1,
-        "changed_record_offsets": [],
-        "personality_equal": true
-      },
-      {
-        "controlled_byte": 2,
-        "changed_record_offsets": [],
-        "personality_equal": true
-      },
-      {
-        "controlled_byte": 255,
-        "changed_record_offsets": [],
-        "personality_equal": true
-      }
-    ],
-    "flag_variants": [
-      {
-        "flag": 2088,
-        "changed_record_offsets": [],
-        "personality_equal": true,
-        "native_shiny": false,
-        "species_equal": true
-      },
-      {
-        "flag": 2323,
-        "changed_record_offsets": [
-          0,
-          1,
-          2,
-          3
-        ],
-        "personality_equal": false,
-        "native_shiny": true,
-        "species_equal": true
-      },
-      {
-        "flag": 2352,
-        "changed_record_offsets": [],
-        "personality_equal": true,
-        "native_shiny": false,
-        "species_equal": true
-      },
-      {
-        "flag": 4856,
-        "changed_record_offsets": [],
-        "personality_equal": true,
-        "native_shiny": false,
-        "species_equal": true
-      }
-    ],
-    "reference_native_shiny": false,
-    "unreconstructed_reads": [
-      {
-        "pc": "0x804448e",
-        "address": "0x3005040",
-        "size": 4
-      },
-      {
-        "pc": "0x806ddcc",
-        "address": "0x3005ed8",
-        "size": 1
-      },
-      {
-        "pc": "0x8099976",
-        "address": "0x20397e4",
-        "size": 2
-      },
-      {
-        "pc": "0x9075584",
-        "address": "0x203dfc0",
-        "size": 1
-      },
-      {
-        "pc": "0x9075590",
-        "address": "0x203dfd0",
-        "size": 1
-      },
-      {
-        "pc": "0x90758f4",
-        "address": "0x3003569",
-        "size": 1
-      }
-    ],
-    "flag_queries": [
-      2088,
-      2323,
-      2352,
-      4856
-    ],
-    "variable_queries": [
-      20504
-    ],
-    "stack_fill_comparisons": 152,
-    "complete_independent_constructor_established": false,
-    "writer_or_gui_creation_added": false,
-    "human_gameplay": false,
-    "limits": [
-      "runtime bag/key state and fishing state are not reconstructed",
-      "native default move algorithm not independently reconstructed",
-      "PID postprocessing and generated metadata not completely qualified",
-      "complete destination overwrite does not prove correct initialization"
-    ],
-    "sources_immutable": true
-  },
+  "probe_source_sha256": "426fd26bdf1931f05e936a9b018abc617447770d2fe83576ec2e66ff5689e833",
   "stack_dependence": {
     "affected_species_count": 152,
     "offset_histogram": [
@@ -303,5 +187,8418 @@
     "no game-load/gameplay/normal-SAVE experiment in this work",
     "no Human acceptance request",
     "no adoption or merge"
-  ]
+  ],
+  "constructor_experiment": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+    "evidence_class": "exact-ROM isolated execution with partially reconstructed RAM",
+    "constructor_entry": "0x0803D1C0",
+    "box_constructor_entry": "0x09075150",
+    "baseline_cases": 1216,
+    "destination_fill_comparisons": 1216,
+    "ordinary_disagreements": [],
+    "species_observations": {
+      "1": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            79,
+            36,
+            994,
+            75
+          ],
+          "100": [
+            38,
+            475,
+            235,
+            396
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "2": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            45,
+            73,
+            994
+          ],
+          "3": [
+            45,
+            73,
+            994,
+            0
+          ],
+          "20": [
+            79,
+            36,
+            994,
+            75
+          ],
+          "100": [
+            38,
+            475,
+            235,
+            76
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "3": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            45,
+            73,
+            22
+          ],
+          "3": [
+            45,
+            73,
+            22,
+            0
+          ],
+          "20": [
+            79,
+            36,
+            994,
+            75
+          ],
+          "100": [
+            475,
+            235,
+            490,
+            76
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "4": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            45,
+            0,
+            0
+          ],
+          "3": [
+            10,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            52,
+            108,
+            82,
+            184
+          ],
+          "100": [
+            163,
+            53,
+            83,
+            435
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "5": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            45,
+            52,
+            0
+          ],
+          "3": [
+            10,
+            45,
+            52,
+            0
+          ],
+          "20": [
+            52,
+            108,
+            82,
+            0
+          ],
+          "100": [
+            163,
+            53,
+            83,
+            435
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "6": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            356,
+            10,
+            45,
+            52
+          ],
+          "3": [
+            356,
+            10,
+            45,
+            52
+          ],
+          "20": [
+            52,
+            108,
+            82,
+            0
+          ],
+          "100": [
+            83,
+            435,
+            257,
+            434
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "7": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            145,
+            44,
+            995,
+            229
+          ],
+          "100": [
+            130,
+            334,
+            240,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "8": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            39,
+            55,
+            995
+          ],
+          "3": [
+            33,
+            39,
+            55,
+            995
+          ],
+          "20": [
+            110,
+            145,
+            44,
+            995
+          ],
+          "100": [
+            130,
+            334,
+            240,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "9": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            39,
+            55,
+            110
+          ],
+          "3": [
+            33,
+            39,
+            55,
+            110
+          ],
+          "20": [
+            110,
+            145,
+            44,
+            995
+          ],
+          "100": [
+            130,
+            334,
+            240,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "10": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            81,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            81,
+            0,
+            0
+          ],
+          "20": [
+            33,
+            81,
+            450,
+            0
+          ],
+          "100": [
+            33,
+            81,
+            450,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "11": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            106,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            106,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            106,
+            0,
+            0,
+            0
+          ],
+          "100": [
+            106,
+            0,
+            0,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "12": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            16,
+            93,
+            0,
+            0
+          ],
+          "3": [
+            16,
+            93,
+            0,
+            0
+          ],
+          "20": [
+            78,
+            79,
+            60,
+            318
+          ],
+          "100": [
+            515,
+            472,
+            356,
+            415
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "13": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            40,
+            81,
+            0,
+            0
+          ],
+          "3": [
+            40,
+            81,
+            0,
+            0
+          ],
+          "20": [
+            40,
+            81,
+            450,
+            0
+          ],
+          "100": [
+            40,
+            81,
+            450,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "14": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            106,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            106,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            106,
+            0,
+            0,
+            0
+          ],
+          "100": [
+            106,
+            0,
+            0,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "15": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            41,
+            31,
+            0,
+            0
+          ],
+          "3": [
+            41,
+            31,
+            0,
+            0
+          ],
+          "20": [
+            31,
+            99,
+            228,
+            116
+          ],
+          "100": [
+            424,
+            97,
+            283,
+            557
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "16": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            28,
+            16,
+            98,
+            18
+          ],
+          "100": [
+            472,
+            119,
+            356,
+            412
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "17": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            28,
+            16,
+            0
+          ],
+          "3": [
+            33,
+            28,
+            16,
+            0
+          ],
+          "20": [
+            28,
+            16,
+            98,
+            18
+          ],
+          "100": [
+            472,
+            119,
+            356,
+            412
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "18": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            28,
+            16,
+            98
+          ],
+          "3": [
+            33,
+            28,
+            16,
+            98
+          ],
+          "20": [
+            28,
+            16,
+            98,
+            18
+          ],
+          "100": [
+            472,
+            119,
+            356,
+            412
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "19": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            39,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            39,
+            0,
+            0
+          ],
+          "20": [
+            44,
+            228,
+            158,
+            485
+          ],
+          "100": [
+            458,
+            162,
+            38,
+            283
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "20": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            39,
+            98,
+            116
+          ],
+          "3": [
+            33,
+            39,
+            98,
+            116
+          ],
+          "20": [
+            44,
+            228,
+            158,
+            485
+          ],
+          "100": [
+            458,
+            162,
+            38,
+            283
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "21": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            45,
+            0,
+            0
+          ],
+          "3": [
+            64,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            228,
+            31,
+            332,
+            119
+          ],
+          "100": [
+            97,
+            116,
+            395,
+            65
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "22": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            45,
+            43,
+            228
+          ],
+          "3": [
+            64,
+            45,
+            43,
+            228
+          ],
+          "20": [
+            228,
+            31,
+            332,
+            119
+          ],
+          "100": [
+            116,
+            395,
+            65,
+            403
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "23": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            35,
+            43,
+            0,
+            0
+          ],
+          "3": [
+            35,
+            43,
+            0,
+            0
+          ],
+          "20": [
+            44,
+            137,
+            103,
+            51
+          ],
+          "100": [
+            641,
+            114,
+            411,
+            378
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "24": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            35,
+            43,
+            40,
+            44
+          ],
+          "3": [
+            35,
+            43,
+            40,
+            44
+          ],
+          "20": [
+            44,
+            137,
+            103,
+            51
+          ],
+          "100": [
+            641,
+            114,
+            411,
+            378
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "25": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            39,
+            84,
+            0,
+            0
+          ],
+          "3": [
+            39,
+            84,
+            0,
+            0
+          ],
+          "20": [
+            491,
+            98,
+            534,
+            86
+          ],
+          "100": [
+            97,
+            423,
+            113,
+            87
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "26": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            84,
+            39,
+            98,
+            85
+          ],
+          "3": [
+            84,
+            39,
+            98,
+            85
+          ],
+          "20": [
+            84,
+            39,
+            98,
+            85
+          ],
+          "100": [
+            84,
+            39,
+            98,
+            85
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "27": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            111,
+            0,
+            0
+          ],
+          "3": [
+            10,
+            111,
+            28,
+            0
+          ],
+          "20": [
+            210,
+            222,
+            129,
+            154
+          ],
+          "100": [
+            510,
+            14,
+            201,
+            89
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "28": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            111,
+            28,
+            40
+          ],
+          "3": [
+            111,
+            28,
+            40,
+            0
+          ],
+          "20": [
+            210,
+            222,
+            129,
+            154
+          ],
+          "100": [
+            510,
+            14,
+            201,
+            89
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "29": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            45,
+            10,
+            0,
+            0
+          ],
+          "3": [
+            45,
+            10,
+            0,
+            0
+          ],
+          "20": [
+            39,
+            24,
+            40,
+            154
+          ],
+          "100": [
+            260,
+            242,
+            515,
+            305
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "30": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            45,
+            10,
+            0,
+            0
+          ],
+          "3": [
+            45,
+            10,
+            0,
+            0
+          ],
+          "20": [
+            39,
+            24,
+            40,
+            154
+          ],
+          "100": [
+            260,
+            242,
+            515,
+            305
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "31": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            39,
+            24,
+            40
+          ],
+          "3": [
+            10,
+            39,
+            24,
+            40
+          ],
+          "20": [
+            10,
+            39,
+            24,
+            40
+          ],
+          "100": [
+            507,
+            34,
+            372,
+            276
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "32": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            43,
+            64,
+            0,
+            0
+          ],
+          "3": [
+            43,
+            64,
+            0,
+            0
+          ],
+          "20": [
+            116,
+            24,
+            40,
+            31
+          ],
+          "100": [
+            260,
+            424,
+            515,
+            32
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "33": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            43,
+            64,
+            0,
+            0
+          ],
+          "3": [
+            43,
+            64,
+            0,
+            0
+          ],
+          "20": [
+            116,
+            24,
+            40,
+            31
+          ],
+          "100": [
+            260,
+            424,
+            515,
+            32
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "34": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            116,
+            24,
+            40
+          ],
+          "3": [
+            64,
+            116,
+            24,
+            40
+          ],
+          "20": [
+            64,
+            116,
+            24,
+            40
+          ],
+          "100": [
+            507,
+            37,
+            372,
+            224
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "35": {
+        "growth": 4,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            467,
+            1,
+            45,
+            227
+          ],
+          "3": [
+            467,
+            1,
+            45,
+            227
+          ],
+          "20": [
+            3,
+            111,
+            266,
+            642
+          ],
+          "100": [
+            645,
+            309,
+            470,
+            669
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "36": {
+        "growth": 4,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            47,
+            3,
+            107,
+            118
+          ],
+          "3": [
+            47,
+            3,
+            107,
+            118
+          ],
+          "20": [
+            47,
+            3,
+            107,
+            118
+          ],
+          "100": [
+            47,
+            3,
+            107,
+            118
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "37": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            52,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            52,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            109,
+            83,
+            430,
+            261
+          ],
+          "100": [
+            126,
+            288,
+            515,
+            435
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "38": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            53,
+            98,
+            109,
+            219
+          ],
+          "3": [
+            53,
+            98,
+            109,
+            219
+          ],
+          "20": [
+            53,
+            98,
+            109,
+            219
+          ],
+          "100": [
+            53,
+            98,
+            109,
+            219
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "39": {
+        "growth": 4,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            47,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            47,
+            111,
+            0,
+            0
+          ],
+          "20": [
+            467,
+            50,
+            3,
+            205
+          ],
+          "100": [
+            510,
+            102,
+            304,
+            38
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "40": {
+        "growth": 4,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            47,
+            111,
+            50,
+            3
+          ],
+          "3": [
+            47,
+            111,
+            50,
+            3
+          ],
+          "20": [
+            47,
+            111,
+            50,
+            3
+          ],
+          "100": [
+            47,
+            111,
+            50,
+            3
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "41": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            71,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            71,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            44,
+            17,
+            109,
+            314
+          ],
+          "100": [
+            114,
+            422,
+            356,
+            637
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "42": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            71,
+            48,
+            310,
+            44
+          ],
+          "3": [
+            71,
+            48,
+            310,
+            44
+          ],
+          "20": [
+            44,
+            17,
+            109,
+            314
+          ],
+          "100": [
+            114,
+            422,
+            356,
+            637
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "43": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            71,
+            74,
+            0,
+            0
+          ],
+          "3": [
+            71,
+            74,
+            0,
+            0
+          ],
+          "20": [
+            77,
+            78,
+            79,
+            72
+          ],
+          "100": [
+            506,
+            464,
+            626,
+            80
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "44": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            71,
+            74,
+            230,
+            51
+          ],
+          "3": [
+            71,
+            74,
+            230,
+            51
+          ],
+          "20": [
+            77,
+            78,
+            79,
+            72
+          ],
+          "100": [
+            506,
+            490,
+            626,
+            80
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "45": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            72,
+            312,
+            77,
+            78
+          ],
+          "3": [
+            72,
+            312,
+            77,
+            78
+          ],
+          "20": [
+            72,
+            312,
+            77,
+            78
+          ],
+          "100": [
+            78,
+            490,
+            80,
+            76
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "46": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            10,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            78,
+            77,
+            71,
+            210
+          ],
+          "100": [
+            202,
+            312,
+            453,
+            400
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "47": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            78,
+            77,
+            71
+          ],
+          "3": [
+            10,
+            78,
+            77,
+            71
+          ],
+          "20": [
+            78,
+            77,
+            71,
+            210
+          ],
+          "100": [
+            202,
+            312,
+            453,
+            400
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "48": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            50,
+            193,
+            0
+          ],
+          "3": [
+            33,
+            50,
+            193,
+            0
+          ],
+          "20": [
+            48,
+            93,
+            77,
+            60
+          ],
+          "100": [
+            141,
+            401,
+            305,
+            94
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "49": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            50,
+            193,
+            48
+          ],
+          "3": [
+            33,
+            50,
+            193,
+            48
+          ],
+          "20": [
+            48,
+            93,
+            77,
+            60
+          ],
+          "100": [
+            305,
+            94,
+            362,
+            415
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "50": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            28,
+            10,
+            0,
+            0
+          ],
+          "3": [
+            28,
+            10,
+            0,
+            0
+          ],
+          "20": [
+            310,
+            189,
+            222,
+            404
+          ],
+          "100": [
+            91,
+            163,
+            89,
+            90
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "51": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            161,
+            10,
+            28,
+            45
+          ],
+          "3": [
+            161,
+            10,
+            28,
+            45
+          ],
+          "20": [
+            310,
+            189,
+            222,
+            404
+          ],
+          "100": [
+            91,
+            163,
+            89,
+            90
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "52": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            45,
+            0,
+            0
+          ],
+          "3": [
+            10,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            44,
+            252,
+            154,
+            103
+          ],
+          "100": [
+            485,
+            515,
+            387,
+            488
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "53": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            45,
+            44,
+            252
+          ],
+          "3": [
+            10,
+            45,
+            44,
+            252
+          ],
+          "20": [
+            44,
+            252,
+            154,
+            103
+          ],
+          "100": [
+            485,
+            515,
+            387,
+            488
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "54": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            346,
+            10,
+            0,
+            0
+          ],
+          "3": [
+            346,
+            10,
+            0,
+            0
+          ],
+          "20": [
+            93,
+            154,
+            352,
+            50
+          ],
+          "100": [
+            244,
+            133,
+            56,
+            634
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "55": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            346,
+            10,
+            39,
+            55
+          ],
+          "3": [
+            346,
+            10,
+            39,
+            55
+          ],
+          "20": [
+            93,
+            154,
+            352,
+            50
+          ],
+          "100": [
+            244,
+            133,
+            56,
+            634
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "56": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            67,
+            43,
+            116
+          ],
+          "3": [
+            10,
+            67,
+            43,
+            116
+          ],
+          "20": [
+            2,
+            228,
+            69,
+            207
+          ],
+          "100": [
+            103,
+            617,
+            200,
+            495
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "57": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            43,
+            643,
+            116
+          ],
+          "3": [
+            10,
+            43,
+            643,
+            116
+          ],
+          "20": [
+            154,
+            67,
+            69,
+            207
+          ],
+          "100": [
+            103,
+            617,
+            200,
+            495
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "58": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            44,
+            46,
+            0,
+            0
+          ],
+          "3": [
+            44,
+            46,
+            0,
+            0
+          ],
+          "20": [
+            316,
+            270,
+            172,
+            179
+          ],
+          "100": [
+            242,
+            257,
+            200,
+            434
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "59": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            44,
+            46,
+            316,
+            431
+          ],
+          "3": [
+            44,
+            46,
+            316,
+            431
+          ],
+          "20": [
+            44,
+            46,
+            316,
+            431
+          ],
+          "100": [
+            46,
+            316,
+            431,
+            245
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "60": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            346,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            346,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            95,
+            145,
+            3,
+            240
+          ],
+          "100": [
+            187,
+            454,
+            56,
+            385
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "61": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            346,
+            55,
+            95,
+            0
+          ],
+          "3": [
+            346,
+            55,
+            95,
+            0
+          ],
+          "20": [
+            95,
+            145,
+            3,
+            240
+          ],
+          "100": [
+            187,
+            454,
+            56,
+            385
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "62": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            445,
+            61,
+            95,
+            3
+          ],
+          "3": [
+            445,
+            61,
+            95,
+            3
+          ],
+          "20": [
+            445,
+            61,
+            95,
+            3
+          ],
+          "100": [
+            3,
+            223,
+            170,
+            445
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "63": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            100,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            100,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            100,
+            0,
+            0,
+            0
+          ],
+          "100": [
+            100,
+            0,
+            0,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "64": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            134,
+            100,
+            93,
+            0
+          ],
+          "3": [
+            134,
+            100,
+            93,
+            0
+          ],
+          "20": [
+            100,
+            93,
+            50,
+            0
+          ],
+          "100": [
+            94,
+            272,
+            248,
+            271
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "65": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            134,
+            100,
+            93,
+            0
+          ],
+          "3": [
+            134,
+            100,
+            93,
+            0
+          ],
+          "20": [
+            100,
+            93,
+            50,
+            0
+          ],
+          "100": [
+            94,
+            347,
+            248,
+            271
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "66": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            67,
+            43,
+            0,
+            0
+          ],
+          "3": [
+            67,
+            43,
+            116,
+            0
+          ],
+          "20": [
+            193,
+            417,
+            69,
+            279
+          ],
+          "100": [
+            339,
+            238,
+            184,
+            223
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "67": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            67,
+            43,
+            116,
+            2
+          ],
+          "3": [
+            43,
+            116,
+            2,
+            0
+          ],
+          "20": [
+            193,
+            417,
+            69,
+            279
+          ],
+          "100": [
+            339,
+            238,
+            184,
+            223
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "68": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            67,
+            43,
+            116,
+            2
+          ],
+          "3": [
+            43,
+            116,
+            2,
+            0
+          ],
+          "20": [
+            193,
+            417,
+            69,
+            279
+          ],
+          "100": [
+            339,
+            238,
+            184,
+            223
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "69": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            22,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            22,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            35,
+            79,
+            77,
+            78
+          ],
+          "100": [
+            75,
+            424,
+            21,
+            526
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "70": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            22,
+            74,
+            35,
+            0
+          ],
+          "3": [
+            22,
+            74,
+            35,
+            0
+          ],
+          "20": [
+            35,
+            79,
+            77,
+            78
+          ],
+          "100": [
+            75,
+            424,
+            21,
+            526
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "71": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            22,
+            79,
+            230,
+            75
+          ],
+          "3": [
+            22,
+            79,
+            230,
+            75
+          ],
+          "20": [
+            22,
+            79,
+            230,
+            75
+          ],
+          "100": [
+            230,
+            75,
+            428,
+            348
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "72": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            40,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            40,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            51,
+            469,
+            352,
+            35
+          ],
+          "100": [
+            436,
+            531,
+            56,
+            526
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "73": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            40,
+            48,
+            132,
+            51
+          ],
+          "3": [
+            40,
+            48,
+            132,
+            51
+          ],
+          "20": [
+            51,
+            469,
+            352,
+            35
+          ],
+          "100": [
+            436,
+            531,
+            56,
+            526
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "74": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            111,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            111,
+            0,
+            0
+          ],
+          "20": [
+            205,
+            222,
+            88,
+            508
+          ],
+          "100": [
+            89,
+            153,
+            38,
+            429
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "75": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            111,
+            300,
+            393
+          ],
+          "3": [
+            33,
+            111,
+            300,
+            393
+          ],
+          "20": [
+            205,
+            222,
+            88,
+            508
+          ],
+          "100": [
+            89,
+            153,
+            38,
+            429
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "76": {
+        "growth": 3,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            111,
+            300,
+            393
+          ],
+          "3": [
+            33,
+            111,
+            300,
+            393
+          ],
+          "20": [
+            420,
+            222,
+            88,
+            508
+          ],
+          "100": [
+            153,
+            38,
+            429,
+            532
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "77": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            45,
+            33,
+            0,
+            0
+          ],
+          "3": [
+            45,
+            33,
+            0,
+            0
+          ],
+          "20": [
+            39,
+            52,
+            172,
+            23
+          ],
+          "100": [
+            97,
+            126,
+            340,
+            434
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "78": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            45,
+            98,
+            39,
+            52
+          ],
+          "3": [
+            45,
+            98,
+            39,
+            52
+          ],
+          "20": [
+            39,
+            52,
+            172,
+            23
+          ],
+          "100": [
+            97,
+            126,
+            340,
+            434
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "79": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            174,
+            281,
+            33,
+            0
+          ],
+          "3": [
+            174,
+            281,
+            33,
+            0
+          ],
+          "20": [
+            45,
+            55,
+            93,
+            50
+          ],
+          "100": [
+            94,
+            240,
+            244,
+            448
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "80": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            174,
+            281,
+            33,
+            45
+          ],
+          "3": [
+            174,
+            281,
+            33,
+            45
+          ],
+          "20": [
+            45,
+            55,
+            93,
+            50
+          ],
+          "100": [
+            94,
+            240,
+            244,
+            448
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "81": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            48,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            48,
+            0,
+            0
+          ],
+          "20": [
+            384,
+            113,
+            49,
+            209
+          ],
+          "100": [
+            199,
+            650,
+            510,
+            192
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "82": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            48,
+            84,
+            86
+          ],
+          "3": [
+            33,
+            48,
+            84,
+            86
+          ],
+          "20": [
+            384,
+            113,
+            49,
+            209
+          ],
+          "100": [
+            199,
+            650,
+            510,
+            192
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "83": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            28,
+            43,
+            210
+          ],
+          "3": [
+            64,
+            28,
+            43,
+            210
+          ],
+          "20": [
+            31,
+            332,
+            282,
+            163
+          ],
+          "100": [
+            488,
+            206,
+            356,
+            361
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "84": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            45,
+            0,
+            0
+          ],
+          "3": [
+            64,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            99,
+            31,
+            228,
+            451
+          ],
+          "100": [
+            26,
+            65,
+            283,
+            37
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "85": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            45,
+            98,
+            99
+          ],
+          "3": [
+            64,
+            45,
+            98,
+            99
+          ],
+          "20": [
+            99,
+            31,
+            228,
+            451
+          ],
+          "100": [
+            26,
+            65,
+            283,
+            37
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "86": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            29,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            29,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            346,
+            196,
+            227,
+            381
+          ],
+          "100": [
+            358,
+            58,
+            219,
+            258
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "87": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            29,
+            45,
+            324,
+            196
+          ],
+          "3": [
+            45,
+            324,
+            196,
+            0
+          ],
+          "20": [
+            324,
+            196,
+            227,
+            381
+          ],
+          "100": [
+            358,
+            58,
+            219,
+            258
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "88": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            1,
+            139,
+            0,
+            0
+          ],
+          "3": [
+            1,
+            139,
+            0,
+            0
+          ],
+          "20": [
+            189,
+            50,
+            124,
+            385
+          ],
+          "100": [
+            378,
+            151,
+            641,
+            262
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "89": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            1,
+            139,
+            106,
+            189
+          ],
+          "3": [
+            1,
+            139,
+            106,
+            189
+          ],
+          "20": [
+            189,
+            50,
+            124,
+            385
+          ],
+          "100": [
+            378,
+            151,
+            641,
+            262
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "90": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            55,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            55,
+            0,
+            0
+          ],
+          "20": [
+            48,
+            333,
+            182,
+            43
+          ],
+          "100": [
+            334,
+            58,
+            452,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "91": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            110,
+            48,
+            182,
+            62
+          ],
+          "3": [
+            110,
+            48,
+            182,
+            62
+          ],
+          "20": [
+            48,
+            182,
+            62,
+            131
+          ],
+          "100": [
+            62,
+            131,
+            191,
+            413
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "92": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            95,
+            122,
+            0,
+            0
+          ],
+          "3": [
+            95,
+            122,
+            0,
+            0
+          ],
+          "20": [
+            212,
+            174,
+            101,
+            109
+          ],
+          "100": [
+            367,
+            194,
+            436,
+            171
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "93": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            325,
+            95,
+            122,
+            180
+          ],
+          "3": [
+            325,
+            95,
+            122,
+            180
+          ],
+          "20": [
+            212,
+            174,
+            101,
+            109
+          ],
+          "100": [
+            367,
+            194,
+            436,
+            171
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "94": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            325,
+            95,
+            122,
+            180
+          ],
+          "3": [
+            325,
+            95,
+            122,
+            180
+          ],
+          "20": [
+            212,
+            174,
+            101,
+            109
+          ],
+          "100": [
+            367,
+            194,
+            436,
+            171
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "95": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            300,
+            33,
+            106,
+            20
+          ],
+          "3": [
+            300,
+            33,
+            106,
+            20
+          ],
+          "20": [
+            99,
+            468,
+            393,
+            510
+          ],
+          "100": [
+            91,
+            429,
+            38,
+            201
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "96": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            1,
+            95,
+            0,
+            0
+          ],
+          "3": [
+            1,
+            95,
+            0,
+            0
+          ],
+          "20": [
+            50,
+            93,
+            29,
+            139
+          ],
+          "100": [
+            94,
+            386,
+            502,
+            248
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "97": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            1,
+            95,
+            50,
+            93
+          ],
+          "3": [
+            1,
+            95,
+            50,
+            93
+          ],
+          "20": [
+            50,
+            93,
+            29,
+            139
+          ],
+          "100": [
+            94,
+            386,
+            502,
+            248
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "98": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            300,
+            145,
+            0,
+            0
+          ],
+          "3": [
+            300,
+            145,
+            0,
+            0
+          ],
+          "20": [
+            43,
+            106,
+            61,
+            341
+          ],
+          "100": [
+            21,
+            460,
+            152,
+            175
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "99": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            300,
+            145,
+            11,
+            43
+          ],
+          "3": [
+            300,
+            145,
+            11,
+            43
+          ],
+          "20": [
+            43,
+            106,
+            61,
+            341
+          ],
+          "100": [
+            21,
+            460,
+            152,
+            175
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "100": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            268,
+            33,
+            0,
+            0
+          ],
+          "3": [
+            268,
+            33,
+            0,
+            0
+          ],
+          "20": [
+            205,
+            103,
+            364,
+            129
+          ],
+          "100": [
+            368,
+            153,
+            510,
+            243
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "101": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            268,
+            33,
+            49,
+            568
+          ],
+          "3": [
+            268,
+            33,
+            49,
+            568
+          ],
+          "20": [
+            205,
+            103,
+            364,
+            129
+          ],
+          "100": [
+            368,
+            153,
+            510,
+            243
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "102": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            140,
+            253,
+            95,
+            0
+          ],
+          "3": [
+            140,
+            253,
+            95,
+            0
+          ],
+          "20": [
+            115,
+            73,
+            331,
+            78
+          ],
+          "100": [
+            506,
+            76,
+            326,
+            642
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "103": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            396,
+            140,
+            95,
+            93
+          ],
+          "3": [
+            396,
+            140,
+            95,
+            93
+          ],
+          "20": [
+            140,
+            95,
+            93,
+            502
+          ],
+          "100": [
+            502,
+            121,
+            447,
+            428
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "104": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            45,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            45,
+            39,
+            0,
+            0
+          ],
+          "20": [
+            125,
+            29,
+            43,
+            116
+          ],
+          "100": [
+            283,
+            38,
+            498,
+            198
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "105": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            45,
+            39,
+            125,
+            29
+          ],
+          "3": [
+            39,
+            125,
+            29,
+            0
+          ],
+          "20": [
+            125,
+            29,
+            43,
+            116
+          ],
+          "100": [
+            283,
+            38,
+            498,
+            198
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "106": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            279,
+            96,
+            27,
+            26
+          ],
+          "3": [
+            279,
+            96,
+            27,
+            26
+          ],
+          "20": [
+            96,
+            27,
+            26,
+            280
+          ],
+          "100": [
+            203,
+            25,
+            365,
+            179
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "107": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            279,
+            97,
+            228,
+            183
+          ],
+          "3": [
+            279,
+            97,
+            228,
+            183
+          ],
+          "20": [
+            97,
+            228,
+            183,
+            363
+          ],
+          "100": [
+            197,
+            264,
+            68,
+            365
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "108": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            122,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            122,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            48,
+            111,
+            282,
+            35
+          ],
+          "100": [
+            287,
+            103,
+            390,
+            526
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "109": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            139,
+            33,
+            0,
+            0
+          ],
+          "3": [
+            139,
+            33,
+            0,
+            0
+          ],
+          "20": [
+            108,
+            485,
+            427,
+            124
+          ],
+          "100": [
+            153,
+            194,
+            641,
+            262
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "110": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            139,
+            33,
+            123,
+            108
+          ],
+          "3": [
+            139,
+            33,
+            123,
+            108
+          ],
+          "20": [
+            108,
+            485,
+            427,
+            124
+          ],
+          "100": [
+            153,
+            194,
+            641,
+            262
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "111": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            30,
+            39,
+            0,
+            0
+          ],
+          "3": [
+            30,
+            39,
+            0,
+            0
+          ],
+          "20": [
+            31,
+            184,
+            508,
+            23
+          ],
+          "100": [
+            429,
+            89,
+            224,
+            32
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "112": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            30,
+            39,
+            31,
+            184
+          ],
+          "3": [
+            30,
+            39,
+            31,
+            184
+          ],
+          "20": [
+            31,
+            184,
+            508,
+            23
+          ],
+          "100": [
+            429,
+            89,
+            224,
+            32
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "113": {
+        "growth": 4,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            38,
+            111,
+            1,
+            45
+          ],
+          "3": [
+            38,
+            111,
+            1,
+            45
+          ],
+          "20": [
+            287,
+            3,
+            135,
+            642
+          ],
+          "100": [
+            121,
+            113,
+            470,
+            38
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "114": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            275,
+            132,
+            0,
+            0
+          ],
+          "3": [
+            275,
+            132,
+            0,
+            0
+          ],
+          "20": [
+            71,
+            77,
+            20,
+            74
+          ],
+          "100": [
+            321,
+            526,
+            626,
+            390
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "115": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            4,
+            43,
+            0,
+            0
+          ],
+          "3": [
+            4,
+            43,
+            0,
+            0
+          ],
+          "20": [
+            252,
+            39,
+            44,
+            438
+          ],
+          "100": [
+            203,
+            200,
+            458,
+            179
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "116": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            145,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            145,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            108,
+            43,
+            55,
+            239
+          ],
+          "100": [
+            97,
+            370,
+            349,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "117": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            145,
+            108,
+            43,
+            55
+          ],
+          "3": [
+            145,
+            108,
+            43,
+            55
+          ],
+          "20": [
+            108,
+            43,
+            55,
+            239
+          ],
+          "100": [
+            97,
+            370,
+            349,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "118": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            39,
+            346,
+            0
+          ],
+          "3": [
+            64,
+            39,
+            346,
+            0
+          ],
+          "20": [
+            48,
+            30,
+            175,
+            352
+          ],
+          "100": [
+            127,
+            32,
+            656,
+            224
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "119": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            39,
+            346,
+            48
+          ],
+          "3": [
+            64,
+            39,
+            346,
+            48
+          ],
+          "20": [
+            48,
+            30,
+            175,
+            352
+          ],
+          "100": [
+            127,
+            32,
+            656,
+            224
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "120": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            106,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            106,
+            0,
+            0
+          ],
+          "20": [
+            105,
+            149,
+            129,
+            61
+          ],
+          "100": [
+            94,
+            113,
+            322,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "121": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            55,
+            229,
+            105,
+            129
+          ],
+          "3": [
+            55,
+            229,
+            105,
+            129
+          ],
+          "20": [
+            55,
+            229,
+            105,
+            129
+          ],
+          "100": [
+            229,
+            105,
+            129,
+            109
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "122": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            519,
+            112,
+            1,
+            93
+          ],
+          "3": [
+            519,
+            112,
+            1,
+            93
+          ],
+          "20": [
+            3,
+            102,
+            149,
+            227
+          ],
+          "100": [
+            94,
+            272,
+            226,
+            219
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "123": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            399,
+            98,
+            43,
+            0
+          ],
+          "3": [
+            399,
+            98,
+            43,
+            0
+          ],
+          "20": [
+            116,
+            228,
+            206,
+            97
+          ],
+          "100": [
+            438,
+            356,
+            14,
+            488
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "124": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            1,
+            122,
+            142,
+            181
+          ],
+          "3": [
+            1,
+            122,
+            142,
+            181
+          ],
+          "20": [
+            142,
+            181,
+            3,
+            8
+          ],
+          "100": [
+            34,
+            526,
+            195,
+            59
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "125": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            98,
+            43,
+            84,
+            0
+          ],
+          "3": [
+            98,
+            43,
+            84,
+            0
+          ],
+          "20": [
+            67,
+            129,
+            351,
+            86
+          ],
+          "100": [
+            368,
+            103,
+            85,
+            87
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "126": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            123,
+            43,
+            52,
+            0
+          ],
+          "3": [
+            123,
+            43,
+            52,
+            0
+          ],
+          "20": [
+            108,
+            185,
+            83,
+            427
+          ],
+          "100": [
+            383,
+            241,
+            53,
+            126
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "127": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            11,
+            116,
+            0,
+            0
+          ],
+          "3": [
+            11,
+            116,
+            0,
+            0
+          ],
+          "20": [
+            69,
+            106,
+            279,
+            233
+          ],
+          "100": [
+            14,
+            37,
+            276,
+            12
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "128": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            39,
+            0,
+            0
+          ],
+          "20": [
+            30,
+            184,
+            228,
+            156
+          ],
+          "100": [
+            207,
+            37,
+            38,
+            376
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "129": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            150,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            150,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            150,
+            33,
+            0,
+            0
+          ],
+          "100": [
+            150,
+            33,
+            175,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "130": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            44,
+            37,
+            0,
+            0
+          ],
+          "3": [
+            44,
+            37,
+            0,
+            0
+          ],
+          "20": [
+            44,
+            37,
+            0,
+            0
+          ],
+          "100": [
+            349,
+            412,
+            240,
+            63
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "131": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            47,
+            45,
+            55,
+            0
+          ],
+          "3": [
+            47,
+            45,
+            55,
+            0
+          ],
+          "20": [
+            109,
+            381,
+            352,
+            34
+          ],
+          "100": [
+            460,
+            219,
+            56,
+            329
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "132": {
+        "growth": 0,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            144,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            144,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            144,
+            0,
+            0,
+            0
+          ],
+          "100": [
+            144,
+            0,
+            0,
+            0
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "133": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            270,
+            45,
+            33,
+            39
+          ],
+          "3": [
+            270,
+            45,
+            33,
+            39
+          ],
+          "20": [
+            98,
+            44,
+            129,
+            287
+          ],
+          "100": [
+            226,
+            38,
+            674,
+            668
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "134": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            55,
+            270,
+            33,
+            39
+          ],
+          "3": [
+            55,
+            270,
+            33,
+            39
+          ],
+          "20": [
+            462,
+            98,
+            352,
+            62
+          ],
+          "100": [
+            114,
+            330,
+            674,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "135": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            84,
+            270,
+            33,
+            39
+          ],
+          "3": [
+            84,
+            270,
+            33,
+            39
+          ],
+          "20": [
+            462,
+            98,
+            24,
+            433
+          ],
+          "100": [
+            86,
+            368,
+            674,
+            87
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "136": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            52,
+            270,
+            33,
+            39
+          ],
+          "3": [
+            52,
+            270,
+            33,
+            39
+          ],
+          "20": [
+            462,
+            98,
+            44,
+            431
+          ],
+          "100": [
+            123,
+            383,
+            674,
+            434
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "137": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            176,
+            33,
+            160,
+            159
+          ],
+          "3": [
+            176,
+            33,
+            160,
+            159
+          ],
+          "20": [
+            159,
+            60,
+            97,
+            105
+          ],
+          "100": [
+            199,
+            161,
+            277,
+            192
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "138": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            132,
+            110,
+            0,
+            0
+          ],
+          "3": [
+            132,
+            110,
+            0,
+            0
+          ],
+          "20": [
+            44,
+            55,
+            205,
+            43
+          ],
+          "100": [
+            321,
+            350,
+            452,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "139": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            56,
+            132,
+            110,
+            44
+          ],
+          "3": [
+            56,
+            132,
+            110,
+            44
+          ],
+          "20": [
+            44,
+            55,
+            205,
+            43
+          ],
+          "100": [
+            321,
+            350,
+            452,
+            56
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "140": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            106,
+            0,
+            0
+          ],
+          "3": [
+            10,
+            106,
+            0,
+            0
+          ],
+          "20": [
+            106,
+            71,
+            43,
+            341
+          ],
+          "100": [
+            72,
+            319,
+            246,
+            526
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "141": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            10,
+            106,
+            71,
+            43
+          ],
+          "3": [
+            10,
+            106,
+            71,
+            43
+          ],
+          "20": [
+            43,
+            71,
+            341,
+            0
+          ],
+          "100": [
+            319,
+            246,
+            526,
+            387
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "142": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            17,
+            48,
+            44,
+            184
+          ],
+          "3": [
+            17,
+            48,
+            44,
+            184
+          ],
+          "20": [
+            44,
+            184,
+            46,
+            97
+          ],
+          "100": [
+            382,
+            63,
+            157,
+            376
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "143": {
+        "growth": 5,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            0,
+            0,
+            0
+          ],
+          "20": [
+            133,
+            122,
+            507,
+            281
+          ],
+          "100": [
+            187,
+            242,
+            532,
+            592
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "144": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            16,
+            181,
+            0,
+            0
+          ],
+          "3": [
+            16,
+            181,
+            0,
+            0
+          ],
+          "20": [
+            16,
+            181,
+            54,
+            381
+          ],
+          "100": [
+            59,
+            395,
+            412,
+            329
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "145": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            64,
+            84,
+            0,
+            0
+          ],
+          "3": [
+            64,
+            84,
+            0,
+            0
+          ],
+          "20": [
+            64,
+            84,
+            86,
+            197
+          ],
+          "100": [
+            87,
+            395,
+            651,
+            192
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "146": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            17,
+            52,
+            0,
+            0
+          ],
+          "3": [
+            17,
+            52,
+            0,
+            0
+          ],
+          "20": [
+            17,
+            52,
+            83,
+            97
+          ],
+          "100": [
+            143,
+            395,
+            412,
+            583
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "147": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            35,
+            43,
+            0,
+            0
+          ],
+          "3": [
+            35,
+            43,
+            0,
+            0
+          ],
+          "20": [
+            43,
+            86,
+            239,
+            82
+          ],
+          "100": [
+            219,
+            349,
+            200,
+            63
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "148": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            35,
+            43,
+            86,
+            239
+          ],
+          "3": [
+            35,
+            43,
+            86,
+            239
+          ],
+          "20": [
+            239,
+            86,
+            82,
+            0
+          ],
+          "100": [
+            219,
+            349,
+            200,
+            63
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "149": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            35,
+            43,
+            86,
+            239
+          ],
+          "3": [
+            35,
+            43,
+            86,
+            239
+          ],
+          "20": [
+            239,
+            86,
+            82,
+            0
+          ],
+          "100": [
+            349,
+            200,
+            63,
+            412
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "150": {
+        "growth": 5,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            149,
+            93,
+            50,
+            219
+          ],
+          "3": [
+            149,
+            93,
+            50,
+            219
+          ],
+          "20": [
+            50,
+            219,
+            129,
+            248
+          ],
+          "100": [
+            133,
+            54,
+            522,
+            528
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "151": {
+        "growth": 3,
+        "ability2_present": false,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            1,
+            654,
+            144,
+            0
+          ],
+          "3": [
+            1,
+            654,
+            144,
+            0
+          ],
+          "20": [
+            654,
+            144,
+            5,
+            118
+          ],
+          "100": [
+            522,
+            226,
+            386,
+            359
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      },
+      "288": {
+        "growth": 0,
+        "ability2_present": true,
+        "tera_matches_primary_type": true,
+        "nickname_matches_ROM_prefix": false,
+        "language": 1,
+        "ball": 3,
+        "sanity": 2,
+        "pokerus_timer": 255,
+        "native_moves_by_level": {
+          "1": [
+            33,
+            45,
+            0,
+            0
+          ],
+          "3": [
+            33,
+            45,
+            0,
+            0
+          ],
+          "20": [
+            462,
+            316,
+            300,
+            42
+          ],
+          "100": [
+            36,
+            156,
+            187,
+            643
+          ]
+        },
+        "identity_preserved_in_all_cases": true
+      }
+    },
+    "baseline_constant_disagreements": [],
+    "runtime_variants": [
+      {
+        "controlled_byte": 1,
+        "changed_record_offsets": [],
+        "personality_equal": true
+      },
+      {
+        "controlled_byte": 2,
+        "changed_record_offsets": [],
+        "personality_equal": true
+      },
+      {
+        "controlled_byte": 255,
+        "changed_record_offsets": [],
+        "personality_equal": true
+      }
+    ],
+    "flag_variants": [
+      {
+        "flag": 2088,
+        "changed_record_offsets": [],
+        "personality_equal": true,
+        "native_shiny": false,
+        "species_equal": true
+      },
+      {
+        "flag": 2323,
+        "changed_record_offsets": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "personality_equal": false,
+        "native_shiny": true,
+        "species_equal": true
+      },
+      {
+        "flag": 2352,
+        "changed_record_offsets": [],
+        "personality_equal": true,
+        "native_shiny": false,
+        "species_equal": true
+      },
+      {
+        "flag": 4856,
+        "changed_record_offsets": [],
+        "personality_equal": true,
+        "native_shiny": false,
+        "species_equal": true
+      }
+    ],
+    "reference_native_shiny": false,
+    "stack_fill_comparisons": 152,
+    "stack_dependent_records": [
+      {
+        "species": 1,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 2,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 3,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 4,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 5,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 6,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 7,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 8,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 9,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 10,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 11,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 12,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 13,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 14,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 15,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 16,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 17,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 18,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 19,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 20,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 21,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 22,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 23,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 24,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 25,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 26,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 27,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 28,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 29,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 30,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 31,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 32,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 33,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 34,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 35,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 36,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 37,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 38,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 39,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 40,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 41,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 42,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 43,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 44,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 45,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 46,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 47,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 48,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 49,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 50,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 51,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 52,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 53,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 54,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 55,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 56,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 57,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 58,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 59,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 60,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 61,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 62,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 63,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 64,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 65,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 66,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 67,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 68,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 69,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 70,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 71,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 72,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 73,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 74,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 75,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 76,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 77,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 78,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 79,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 80,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 81,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 82,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 83,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 84,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 85,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 86,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 87,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 88,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 89,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 90,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 91,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 92,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 93,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 94,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 95,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 96,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 97,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 98,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 99,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 100,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 101,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 102,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 103,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 104,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 105,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 106,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 107,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 108,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 109,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 110,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 111,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 112,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 113,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 114,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 115,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 116,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 117,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 118,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 119,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 120,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 121,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 122,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 123,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 124,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 125,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 126,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 127,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 128,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 129,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 130,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 131,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 132,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 133,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 134,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 135,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 136,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 137,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 138,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 139,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 140,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 141,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 142,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 143,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 144,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 145,
+        "changed_record_offsets": [
+          13,
+          14
+        ]
+      },
+      {
+        "species": 146,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 147,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 148,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 149,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 150,
+        "changed_record_offsets": [
+          14
+        ]
+      },
+      {
+        "species": 151,
+        "changed_record_offsets": [
+          12,
+          13,
+          14
+        ]
+      },
+      {
+        "species": 288,
+        "changed_record_offsets": [
+          14
+        ]
+      }
+    ],
+    "unreconstructed_reads": [
+      {
+        "pc": "0x804448e",
+        "address": "0x3005040",
+        "size": 4
+      },
+      {
+        "pc": "0x806ddcc",
+        "address": "0x3005ed8",
+        "size": 1
+      },
+      {
+        "pc": "0x8099976",
+        "address": "0x20397e4",
+        "size": 2
+      },
+      {
+        "pc": "0x9075584",
+        "address": "0x203dfc0",
+        "size": 1
+      },
+      {
+        "pc": "0x9075590",
+        "address": "0x203dfd0",
+        "size": 1
+      },
+      {
+        "pc": "0x90758f4",
+        "address": "0x3003569",
+        "size": 1
+      }
+    ],
+    "flag_queries": [
+      2088,
+      2323,
+      2352,
+      4856
+    ],
+    "variable_queries": [
+      20504
+    ],
+    "complete_independent_constructor_established": false,
+    "writer_or_gui_creation_added": false,
+    "human_gameplay": false,
+    "limits": [
+      "runtime bag/key state and fishing state are not reconstructed",
+      "native default move algorithm not independently reconstructed",
+      "PID postprocessing and generated metadata not completely qualified",
+      "complete destination overwrite does not prove correct initialization"
+    ],
+    "sources_immutable": true
+  },
+  "initialization_probe_source_sha256": "c57eaf6b38d7d7c0f72b6e2778992b348ba9cb5ba85372cde1bf6197ae34bb4b",
+  "focused_initialization_contexts": [
+    {
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "99e5f1d04a41d26fa95faf0ffba74a3c9bdc59a27919a9a7ca56c5c81a8d580e",
+      "evidence_class": "exact-ROM isolated execution with partially reconstructed RAM",
+      "disjoint_save_images_and_native_party_restored": true,
+      "runtime_adversarial_cases_under_cleared_913": [
+        {
+          "address": "0x3005040",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005040",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005040",
+          "controlled_value": 4294967295,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 1,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 2,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 4294967295,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 4294967295,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        }
+      ],
+      "nickname": [
+        {
+          "species": 1,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 19,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 25,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 63,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 129,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 133,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 150,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 288,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        }
+      ],
+      "flags_ordinary_runtime_route": [
+        {
+          "flag": "0x828",
+          "section": 1,
+          "offset": "0xfe5",
+          "mask": 1,
+          "saved_value": true,
+          "native_value": true,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x2010fe5",
+              "mask": 1
+            }
+          ]
+        },
+        {
+          "flag": "0x913",
+          "section": 0,
+          "offset": "0xf26",
+          "mask": 8,
+          "saved_value": false,
+          "native_value": false,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b0ea",
+              "mask": 8
+            }
+          ]
+        },
+        {
+          "flag": "0x930",
+          "section": 0,
+          "offset": "0xf2a",
+          "mask": 1,
+          "saved_value": false,
+          "native_value": false,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b0ee",
+              "mask": 1
+            }
+          ]
+        },
+        {
+          "flag": "0x12f8",
+          "section": 4,
+          "offset": "0xe0b",
+          "mask": 1,
+          "saved_value": true,
+          "native_value": true,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b227",
+              "mask": 1
+            }
+          ]
+        }
+      ],
+      "flag_913_effect": {
+        "personality_changed": true,
+        "native_shiny_before": false,
+        "native_shiny_after": true
+      },
+      "origin": {
+        "saved_map_group": 3,
+        "saved_map_number": 19,
+        "native_region": 101,
+        "independent_region": 101,
+        "match": true,
+        "special_region_fallback": false
+      },
+      "origin_level_gender_synthetic_controls": [
+        {
+          "requested_level": 1,
+          "synthetic_owner_gender": 0,
+          "met_location": 101,
+          "met_level": 1,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 3,
+          "synthetic_owner_gender": 0,
+          "met_location": 101,
+          "met_level": 3,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 20,
+          "synthetic_owner_gender": 0,
+          "met_location": 101,
+          "met_level": 20,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 100,
+          "synthetic_owner_gender": 0,
+          "met_location": 101,
+          "met_level": 100,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 1,
+          "synthetic_owner_gender": 1,
+          "met_location": 101,
+          "met_level": 1,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 3,
+          "synthetic_owner_gender": 1,
+          "met_location": 101,
+          "met_level": 3,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 20,
+          "synthetic_owner_gender": 1,
+          "met_location": 101,
+          "met_level": 20,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 100,
+          "synthetic_owner_gender": 1,
+          "met_location": 101,
+          "met_level": 100,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        }
+      ],
+      "complete_independent_constructor_established": false,
+      "writer_or_GUI_added": false,
+      "human_gameplay": false,
+      "limits": [
+        "getter copies transport post-terminator bytes; downstream material consumers unresolved",
+        "flag routing runtime byte is controlled zero, not game-load reconstruction",
+        "native bag/runtime initialization and personality generator not qualified",
+        "map table index bounds and special-region fallback remain unresolved"
+      ],
+      "sources_immutable": true
+    },
+    {
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+      "evidence_class": "exact-ROM isolated execution with partially reconstructed RAM",
+      "disjoint_save_images_and_native_party_restored": true,
+      "runtime_adversarial_cases_under_cleared_913": [
+        {
+          "address": "0x3005040",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005040",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005040",
+          "controlled_value": 4294967295,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 1,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 2,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 4294967295,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 4294967295,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        }
+      ],
+      "nickname": [
+        {
+          "species": 1,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 19,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 25,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 63,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 129,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 133,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 150,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 288,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        }
+      ],
+      "flags_ordinary_runtime_route": [
+        {
+          "flag": "0x828",
+          "section": 1,
+          "offset": "0xfe5",
+          "mask": 1,
+          "saved_value": true,
+          "native_value": true,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x2010fe5",
+              "mask": 1
+            }
+          ]
+        },
+        {
+          "flag": "0x913",
+          "section": 0,
+          "offset": "0xf26",
+          "mask": 8,
+          "saved_value": false,
+          "native_value": false,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b0ea",
+              "mask": 8
+            }
+          ]
+        },
+        {
+          "flag": "0x930",
+          "section": 0,
+          "offset": "0xf2a",
+          "mask": 1,
+          "saved_value": false,
+          "native_value": false,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b0ee",
+              "mask": 1
+            }
+          ]
+        },
+        {
+          "flag": "0x12f8",
+          "section": 4,
+          "offset": "0xe0b",
+          "mask": 1,
+          "saved_value": true,
+          "native_value": true,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b227",
+              "mask": 1
+            }
+          ]
+        }
+      ],
+      "flag_913_effect": {
+        "personality_changed": true,
+        "native_shiny_before": false,
+        "native_shiny_after": true
+      },
+      "origin": {
+        "saved_map_group": 5,
+        "saved_map_number": 4,
+        "native_region": 89,
+        "independent_region": 89,
+        "match": true,
+        "special_region_fallback": false
+      },
+      "origin_level_gender_synthetic_controls": [
+        {
+          "requested_level": 1,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 1,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 3,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 3,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 20,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 20,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 100,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 100,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 1,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 1,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 3,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 3,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 20,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 20,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 100,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 100,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        }
+      ],
+      "complete_independent_constructor_established": false,
+      "writer_or_GUI_added": false,
+      "human_gameplay": false,
+      "limits": [
+        "getter copies transport post-terminator bytes; downstream material consumers unresolved",
+        "flag routing runtime byte is controlled zero, not game-load reconstruction",
+        "native bag/runtime initialization and personality generator not qualified",
+        "map table index bounds and special-region fallback remain unresolved"
+      ],
+      "sources_immutable": true
+    },
+    {
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+      "evidence_class": "exact-ROM isolated execution with partially reconstructed RAM",
+      "disjoint_save_images_and_native_party_restored": true,
+      "runtime_adversarial_cases_under_cleared_913": [
+        {
+          "address": "0x3005040",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005040",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005040",
+          "controlled_value": 4294967295,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3005ed8",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 1,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 2,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x20397e4",
+          "controlled_value": 4294967295,
+          "execution_failure_class": "UcError"
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfc0",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x203dfd0",
+          "controlled_value": 4294967295,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 1,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 2,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        },
+        {
+          "address": "0x3003569",
+          "controlled_value": 255,
+          "changed_record_offsets": [],
+          "native_shiny": false
+        }
+      ],
+      "nickname": [
+        {
+          "species": 1,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 19,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 25,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 63,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 129,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 133,
+          "name_length": 4,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                5,
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 150,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        },
+        {
+          "species": 288,
+          "name_length": 5,
+          "tail_variants": 4,
+          "consumers": [
+            {
+              "consumer": "GetBoxMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonData",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            },
+            {
+              "consumer": "GetMonNickname",
+              "prefix_and_terminator_equal": true,
+              "complete_copy_equal": false,
+              "changed_copy_offsets": [
+                6
+              ]
+            }
+          ],
+          "native_string_length_and_compare_equal": true,
+          "E3_semantics_equal": true,
+          "E3_eligibility_equal": true
+        }
+      ],
+      "flags_ordinary_runtime_route": [
+        {
+          "flag": "0x828",
+          "section": 1,
+          "offset": "0xfe5",
+          "mask": 1,
+          "saved_value": true,
+          "native_value": true,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x2010fe5",
+              "mask": 1
+            }
+          ]
+        },
+        {
+          "flag": "0x913",
+          "section": 0,
+          "offset": "0xf26",
+          "mask": 8,
+          "saved_value": false,
+          "native_value": false,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b0ea",
+              "mask": 8
+            }
+          ]
+        },
+        {
+          "flag": "0x930",
+          "section": 0,
+          "offset": "0xf2a",
+          "mask": 1,
+          "saved_value": false,
+          "native_value": false,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b0ee",
+              "mask": 1
+            }
+          ]
+        },
+        {
+          "flag": "0x12f8",
+          "section": 4,
+          "offset": "0xe0b",
+          "mask": 1,
+          "saved_value": true,
+          "native_value": true,
+          "saved_matches_native": true,
+          "native_clear_set_changed_bits": [
+            {
+              "RAM": "0x203b227",
+              "mask": 1
+            }
+          ]
+        }
+      ],
+      "flag_913_effect": {
+        "personality_changed": true,
+        "native_shiny_before": false,
+        "native_shiny_after": true
+      },
+      "origin": {
+        "saved_map_group": 5,
+        "saved_map_number": 3,
+        "native_region": 89,
+        "independent_region": 89,
+        "match": true,
+        "special_region_fallback": false
+      },
+      "origin_level_gender_synthetic_controls": [
+        {
+          "requested_level": 1,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 1,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 3,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 3,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 20,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 20,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 100,
+          "synthetic_owner_gender": 0,
+          "met_location": 89,
+          "met_level": 100,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 0
+        },
+        {
+          "requested_level": 1,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 1,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 3,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 3,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 20,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 20,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        },
+        {
+          "requested_level": 100,
+          "synthetic_owner_gender": 1,
+          "met_location": 89,
+          "met_level": 100,
+          "met_game": 4,
+          "origin_bits_11_to_14": 0,
+          "OT_gender_bit": 1
+        }
+      ],
+      "complete_independent_constructor_established": false,
+      "writer_or_GUI_added": false,
+      "human_gameplay": false,
+      "limits": [
+        "getter copies transport post-terminator bytes; downstream material consumers unresolved",
+        "flag routing runtime byte is controlled zero, not game-load reconstruction",
+        "native bag/runtime initialization and personality generator not qualified",
+        "map table index bounds and special-region fallback remain unresolved"
+      ],
+      "sources_immutable": true
+    }
+  ],
+  "current_complete_constructor_qualified": false,
+  "single_cheapest_next_discriminator": "Exact-ROM downstream dataflow and paired-tail execution from fixed-field nickname copy buffers into summary/default-name/battle consumers.",
+  "previous_checkpoint_superseded_runtime_layout": {
+    "candidate": "a8c905b91f42e8e970d868ff6d285f945ff0d7a0",
+    "baseline_cases": 1216,
+    "reason": "SaveBlock1 overlapped native Party RAM; helper-runtime conclusions require corrected-placement reproduction."
+  }
 }
