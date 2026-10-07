@@ -1,0 +1,1448 @@
+{
+  "canonical_base": "3382de6b4be852b046cf484aee20bae6de3ae7c0",
+  "evidence_class": "fresh read-only retained-private and exact-ROM reconstruction",
+  "writer_authorized": false,
+  "snapshots": [
+    {
+      "evidence_name": "20_pokemon_pre_acquire.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "935f7bd8061f43569316239c2ab1bfcb7573fbc84601dffc823e0493bba38985",
+      "active_slot": 1,
+      "counter": 9,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "347fd050e14c7bd5a521bb9e2550e9bf0c2d047466a6c827755d117db9cb3a82",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    },
+    {
+      "evidence_name": "21_pokemon_post_acquire.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "c129892cd442fba6becd32db6dcb3061c9f8df9ea3d4550f53dff106b9abfbee",
+      "active_slot": 0,
+      "counter": 10,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "c0714d8166864b30980375abeb654deadbade75dbf1aabf618fdfc0b96162c8e",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e",
+        "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3"
+      ]
+    },
+    {
+      "evidence_name": "31_rattata_template_import_post_save.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "256bf24dd9d3c2d6601d5203f56ff8b2f9ef4d59c5d8114f684e81be69dccdbe",
+      "active_slot": 0,
+      "counter": 10,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "347fd050e14c7bd5a521bb9e2550e9bf0c2d047466a6c827755d117db9cb3a82",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e",
+        "af0a71ee3e52ca099366ae57b958d2b9d461abdaf7d19c30ee32fdcbb6d07a58"
+      ]
+    },
+    {
+      "evidence_name": "41_r4_cycle2_return.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "606af61f976b0634d6eaf11e58bf3b9693345120e34b6d998631e068ca77d9ea",
+      "active_slot": 0,
+      "counter": 10,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    },
+    {
+      "evidence_name": "E1_T1_PRE.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "c3ccabd5891d701ca2247649700e96087cb26281738995d9f88b8191fdc03366",
+      "active_slot": 1,
+      "counter": 11,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    },
+    {
+      "evidence_name": "E1_T1_POST_DELETE.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "108d9e17e138375f7f0099af742eb22aaf783794abbaf66bbc50ea072b77f3bd",
+      "active_slot": 0,
+      "counter": 12,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    },
+    {
+      "evidence_name": "E1_T2_POST_ACQUIRE.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "369842f20634df82bad9f0a2e54048dd7ecb88e26ed01893f91f44a53616b9e6",
+      "active_slot": 1,
+      "counter": 13,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    },
+    {
+      "evidence_name": "E1_T3_POST_STACK.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "6e2c92c4e86b9436ca0647b6852b999eb107318d1356098a3cddafba11d8c55f",
+      "active_slot": 0,
+      "counter": 14,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    },
+    {
+      "evidence_name": "E2_GAME_RETURN.sav",
+      "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+      "save_sha256": "39904e9943f594888af49f2deee7630f784154d148f63d6a47b471f52776f29a",
+      "active_slot": 1,
+      "counter": 15,
+      "independent_reconstruction_equal": true,
+      "sources_immutable": true,
+      "party_record_sha256": [
+        "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+        "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+        "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+        "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e"
+      ]
+    }
+  ],
+  "tables": {
+    "species": "f7ce80669fd5ada0b3ed2a847eea472712df7a83fda5db5e0e298de2ddae3fea",
+    "species_names": "527602d9a5679e2a21474d38f97bc91563029c0772f06374c9f6da2848a53a06",
+    "moves": "d23799854048201ee34ebbb38d8a15b423badbfb574029b8f2663785cb1f1471",
+    "move_names": "84b116b6f7a155b865b2665e108bc38f10a52eb1160e622a0145058ac67bbace",
+    "experience": "290cf4597a284b268b9f1f3cb6250d044d54ebbf51390a5f43e3f1c5419452c5",
+    "nature": "1c7d07b7ce4be855b42c3dd74c42d7a2ab7acc22fac4c43837e4d0fd32afcb0c"
+  },
+  "records": {
+    "347fd050e14c7bd5a521bb9e2550e9bf0c2d047466a6c827755d117db9cb3a82": {
+      "record_sha256": "347fd050e14c7bd5a521bb9e2550e9bf0c2d047466a6c827755d117db9cb3a82",
+      "species": 1,
+      "stored_level": 5,
+      "experience": 151,
+      "growth_rate": 3,
+      "exp_derived_level": 5,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 45,
+          "pp": 40,
+          "pp_up_count": 0,
+          "maximum_pp": 40,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        }
+      ],
+      "friendship": 180,
+      "ivs": [
+        10,
+        28,
+        19,
+        30,
+        31,
+        31
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "native_nature": 12,
+      "effective_nature": 12,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 65,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        20,
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "ordinary_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "legacy_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "five_matches": true,
+      "level_matches": true,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": false,
+          "writer_authorized": false,
+          "reasons": [
+            "move 3: empty slot retains nonzero PP",
+            "move 4: empty slot retains nonzero PP"
+          ]
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4": {
+      "record_sha256": "df05d1be97a808471f457543de1c45b77b99daa692274ef19e6a797977c27ca4",
+      "species": 288,
+      "stored_level": 5,
+      "experience": 125,
+      "growth_rate": 0,
+      "exp_derived_level": 5,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 45,
+          "pp": 40,
+          "pp_up_count": 0,
+          "maximum_pp": 40,
+          "issues": []
+        },
+        {
+          "move_id": 39,
+          "pp": 30,
+          "pp_up_count": 0,
+          "maximum_pp": 30,
+          "issues": []
+        },
+        {
+          "move_id": 996,
+          "pp": 15,
+          "pp_up_count": 0,
+          "maximum_pp": 15,
+          "issues": []
+        }
+      ],
+      "friendship": 50,
+      "ivs": [
+        31,
+        31,
+        31,
+        31,
+        31,
+        31
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_nature": 12,
+      "effective_nature": 12,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 53,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        20,
+        20,
+        9,
+        10,
+        12,
+        9,
+        10
+      ],
+      "ordinary_expected_stats": [
+        20,
+        9,
+        10,
+        12,
+        9,
+        10
+      ],
+      "legacy_expected_stats": [
+        20,
+        9,
+        10,
+        12,
+        9,
+        10
+      ],
+      "five_matches": true,
+      "level_matches": true,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935": {
+      "record_sha256": "bf84a45a51b97b0aadd6e287da2b45df6c76ff3254e1d58af2654672eb24e935",
+      "species": 25,
+      "stored_level": 5,
+      "experience": 125,
+      "growth_rate": 0,
+      "exp_derived_level": 5,
+      "moves": [
+        {
+          "move_id": 344,
+          "pp": 15,
+          "pp_up_count": 0,
+          "maximum_pp": 15,
+          "issues": []
+        },
+        {
+          "move_id": 237,
+          "pp": 15,
+          "pp_up_count": 0,
+          "maximum_pp": 15,
+          "issues": []
+        },
+        {
+          "move_id": 992,
+          "pp": 15,
+          "pp_up_count": 0,
+          "maximum_pp": 15,
+          "issues": []
+        },
+        {
+          "move_id": 993,
+          "pp": 15,
+          "pp_up_count": 0,
+          "maximum_pp": 15,
+          "issues": []
+        }
+      ],
+      "friendship": 52,
+      "ivs": [
+        30,
+        31,
+        30,
+        31,
+        31,
+        31
+      ],
+      "evs": [
+        0,
+        252,
+        0,
+        6,
+        252,
+        0
+      ],
+      "native_nature": 23,
+      "effective_nature": 23,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 9,
+      "held_item": 202,
+      "held_item_metadata": {
+        "pocket": 1,
+        "importance": 0,
+        "item_type": 4,
+        "hold_effect": 45,
+        "hold_effect_parameter": 0
+      },
+      "cached_hp_stats": [
+        20,
+        20,
+        15,
+        10,
+        15,
+        12,
+        12
+      ],
+      "ordinary_expected_stats": [
+        20,
+        15,
+        10,
+        15,
+        12,
+        12
+      ],
+      "legacy_expected_stats": [
+        20,
+        15,
+        10,
+        15,
+        12,
+        12
+      ],
+      "five_matches": true,
+      "level_matches": true,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e": {
+      "record_sha256": "3ed0a8c998755412513eba337c49f180e3fa7d2d13d02043b2af3c340960108e",
+      "species": 1,
+      "stored_level": 5,
+      "experience": 151,
+      "growth_rate": 3,
+      "exp_derived_level": 5,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 45,
+          "pp": 40,
+          "pp_up_count": 0,
+          "maximum_pp": 40,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        }
+      ],
+      "friendship": 59,
+      "ivs": [
+        10,
+        28,
+        19,
+        30,
+        31,
+        31
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "native_nature": 12,
+      "effective_nature": 12,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 65,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        20,
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "ordinary_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "legacy_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "five_matches": true,
+      "level_matches": true,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": false,
+          "writer_authorized": false,
+          "reasons": [
+            "move 3: empty slot retains nonzero PP",
+            "move 4: empty slot retains nonzero PP"
+          ]
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "c0714d8166864b30980375abeb654deadbade75dbf1aabf618fdfc0b96162c8e": {
+      "record_sha256": "c0714d8166864b30980375abeb654deadbade75dbf1aabf618fdfc0b96162c8e",
+      "species": 1,
+      "stored_level": 5,
+      "experience": 172,
+      "growth_rate": 3,
+      "exp_derived_level": 5,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 33,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 45,
+          "pp": 40,
+          "pp_up_count": 0,
+          "maximum_pp": 40,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        }
+      ],
+      "friendship": 180,
+      "ivs": [
+        10,
+        28,
+        19,
+        30,
+        31,
+        31
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        2,
+        0,
+        0
+      ],
+      "native_nature": 12,
+      "effective_nature": 12,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 65,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        20,
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "ordinary_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "legacy_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "five_matches": true,
+      "level_matches": true,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": false,
+          "writer_authorized": false,
+          "reasons": [
+            "move 3: empty slot retains nonzero PP",
+            "move 4: empty slot retains nonzero PP"
+          ]
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3": {
+      "record_sha256": "74d64c9dfbf4905bb0ca2abd7047d9834cb5b3bc8822cf95d538bba80da673f3",
+      "species": 19,
+      "stored_level": 3,
+      "experience": 27,
+      "growth_rate": 0,
+      "exp_derived_level": 3,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 39,
+          "pp": 28,
+          "pp_up_count": 0,
+          "maximum_pp": 30,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 0,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 0,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": []
+        }
+      ],
+      "friendship": 50,
+      "ivs": [
+        30,
+        30,
+        9,
+        18,
+        31,
+        27
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_nature": 9,
+      "effective_nature": 9,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 50,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        3,
+        15,
+        9,
+        7,
+        9,
+        7,
+        6
+      ],
+      "ordinary_expected_stats": [
+        15,
+        9,
+        7,
+        9,
+        7,
+        6
+      ],
+      "legacy_expected_stats": [
+        15,
+        7,
+        5,
+        7,
+        5,
+        4
+      ],
+      "five_matches": true,
+      "level_matches": false,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "af0a71ee3e52ca099366ae57b958d2b9d461abdaf7d19c30ee32fdcbb6d07a58": {
+      "record_sha256": "af0a71ee3e52ca099366ae57b958d2b9d461abdaf7d19c30ee32fdcbb6d07a58",
+      "species": 19,
+      "stored_level": 3,
+      "experience": 27,
+      "growth_rate": 0,
+      "exp_derived_level": 3,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 34,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 39,
+          "pp": 29,
+          "pp_up_count": 0,
+          "maximum_pp": 30,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        }
+      ],
+      "friendship": 50,
+      "ivs": [
+        30,
+        30,
+        9,
+        18,
+        31,
+        27
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "native_nature": 9,
+      "effective_nature": 9,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 50,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        4,
+        15,
+        9,
+        7,
+        9,
+        7,
+        6
+      ],
+      "ordinary_expected_stats": [
+        15,
+        9,
+        7,
+        9,
+        7,
+        6
+      ],
+      "legacy_expected_stats": [
+        15,
+        7,
+        5,
+        7,
+        5,
+        4
+      ],
+      "five_matches": true,
+      "level_matches": false,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": false,
+          "writer_authorized": false,
+          "reasons": [
+            "move 3: empty slot retains nonzero PP",
+            "move 4: empty slot retains nonzero PP"
+          ]
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    },
+    "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be": {
+      "record_sha256": "702d6591f7119c6b0afeedd6cae9861e25bacf7c780aa6473e57fa98bfffd7be",
+      "species": 1,
+      "stored_level": 5,
+      "experience": 151,
+      "growth_rate": 3,
+      "exp_derived_level": 5,
+      "moves": [
+        {
+          "move_id": 33,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 35,
+          "issues": []
+        },
+        {
+          "move_id": 45,
+          "pp": 40,
+          "pp_up_count": 0,
+          "maximum_pp": 40,
+          "issues": []
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        },
+        {
+          "move_id": 0,
+          "pp": 35,
+          "pp_up_count": 0,
+          "maximum_pp": 0,
+          "issues": [
+            "empty slot retains nonzero PP"
+          ]
+        }
+      ],
+      "friendship": 181,
+      "ivs": [
+        10,
+        28,
+        19,
+        30,
+        31,
+        31
+      ],
+      "evs": [
+        0,
+        0,
+        0,
+        1,
+        0,
+        0
+      ],
+      "native_nature": 12,
+      "effective_nature": 12,
+      "nature_mint": 0,
+      "hyper_training": 0,
+      "ability_selector": 0,
+      "hidden_ability": false,
+      "resolved_ability": 65,
+      "held_item": 0,
+      "held_item_metadata": null,
+      "cached_hp_stats": [
+        20,
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "ordinary_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "legacy_expected_stats": [
+        20,
+        11,
+        10,
+        11,
+        13,
+        13
+      ],
+      "five_matches": true,
+      "level_matches": true,
+      "is_egg": false,
+      "backup_species": 0,
+      "reasons": [],
+      "capabilities": {
+        "friendship": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "species": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "level_exp": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "ivs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "evs": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "effective_nature": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "cached_stats": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "moves_pp_pp_up": {
+          "model_qualified": false,
+          "writer_authorized": false,
+          "reasons": [
+            "move 3: empty slot retains nonzero PP",
+            "move 4: empty slot retains nonzero PP"
+          ]
+        },
+        "ability": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        },
+        "held_item": {
+          "model_qualified": true,
+          "writer_authorized": false,
+          "reasons": []
+        }
+      },
+      "limits": [
+        "ordinary non-facility stat hypothesis; live battle modes not inferred",
+        "held-item metadata does not establish safe grant authority",
+        "mint/selector/PP-Up edits lack natural transition acceptance"
+      ]
+    }
+  },
+  "isolated_exact_execution": {
+    "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+    "save_sha256": "c129892cd442fba6becd32db6dcb3061c9f8df9ea3d4550f53dff106b9abfbee",
+    "retained_records_recalculated_byte_identical": 5,
+    "stat_variants_passed": 300,
+    "move_pp_cases_passed": 15952,
+    "target_levels": [
+      3,
+      6,
+      20,
+      50,
+      100
+    ],
+    "mint_settings": [
+      0,
+      1,
+      10,
+      16,
+      24,
+      25
+    ],
+    "hidden_selector_combinations_per_retained_record": 4,
+    "intercepted_false_flags": [
+      2352
+    ],
+    "sources_immutable": true,
+    "gameplay_acceptance": false,
+    "limits": [
+      "ordinary non-facility branch only",
+      "in-memory variants are not native specimens",
+      "no writer or creation authority"
+    ]
+  },
+  "validation": {
+    "new_synthetic_tests_passed": 14,
+    "v022_suite_before_final_new_test_added": {
+      "run": 95,
+      "passed": 95
+    },
+    "existing_verifier_tests_passed": 13,
+    "existing_fastlab_party_tests_passed": 15,
+    "syntax_and_json_valid": true,
+    "sanitized_text_only_scan": true,
+    "private_snapshots_immutable": 9
+  }
+}
