@@ -1,5 +1,9 @@
 # Evidence ledger
 
+## v0.22 practical product adoption — 2026-10-07
+
+Human adoption decision followed independent correction re-review disposition `APPROVED_FOR_HUMAN_ADOPTION_DECISION`. PR #16 merged the exact reviewed packet-bearing candidate `cb4ef2fac0d3c9877ebcd984d4fde7fb501a647a` into canonical `main` as merge commit `ab18419108eeed91288d440a6f154cac33a1cf2e`. R1–R4 and the exact-v0.22 current-build terminal goal are therefore canonical COMPLETE / ADOPTED. This adoption does not claim Stable promotion, public release, cross-version support, broader item semantics, Box/Pokédex/story/event/RTC editing, or arbitrary Pokémon synthesis.
+
 ## v0.22 practical product sprint candidate — 2026-10-07
 
 **Interim snapshot, superseded by the completion evidence below.** This entry
