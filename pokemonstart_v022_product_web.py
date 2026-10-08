@@ -352,6 +352,14 @@ def create_page(rom_path,export_directory=None):
                 with ui.row():
                     abilities={aid:f'特性 #{aid}' for aid in row['ability_options']}
                     fields['ability']=select(f'Ability — {prefix}',abilities,mon['resolved_ability'])
+                    def update_ability(event,control=fields['ability']):
+                        choices={}
+                        for label,aid in zip(('通常特性 1','通常特性 2','隠れ特性'),options['abilities'][event.value]):
+                            if aid:choices.setdefault(aid,f'{label} (#{aid})')
+                        control.options=choices
+                        if control.value not in choices:control.value=next(iter(choices))
+                        control.update();invalidate()
+                    fields['species'].on_value_change(update_ability)
                     held=dict(options['held_item'])
                     if mon['held_item'] not in held:held[mon['held_item']]=row['held_item_name']+'（保持のみ）'
                     fields['held_item']=select(f'Held item — {prefix}',held,mon['held_item'])
