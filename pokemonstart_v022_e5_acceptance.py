@@ -38,10 +38,16 @@ def _restore_receipt(receipt):
 _HELD_CONSUMABLE=(139,142)
 
 
-def _assert_requested_persisted(changes, expected, actual, label):
-    """Fail closed unless each requested Party field survived the returned SAVE."""
+def _assert_requested_persisted(changes, expected, actual, label, source=None):
+    """Fail closed unless each requested Party field survived the returned SAVE.
+
+    `source` (pre-edit semantics) lets lower-bound fields detect a lost
+    decrease: returning to the pre-edit value counts as not persisted.
+    """
     def fail(field):
         raise ValueError(f'E5 requested Party state did not persist: {label} {field}')
+    def reverted(key, field):
+        return source is not None and source[field]!=expected[field] and actual[key]==source[field]
     for field,requested in changes.items():
         if field=='moves':
             current=[x['move_id'] for x in actual['moves']]
@@ -53,12 +59,14 @@ def _assert_requested_persisted(changes, expected, actual, label):
                    for i in requested):fail('pp')
         elif field in ('level','experience'):
             key='stored_level' if field=='level' else 'experience'
-            if actual[key]<expected[field]:fail(field)
+            if actual[key]<expected[field] or reverted(key,field):fail(field)
         elif field=='evs':
-            if any(a<b for a,b in zip(actual['evs'],expected['evs'])):fail('evs')
+            if any(a<b for a,b in zip(actual['evs'],expected['evs'])) or reverted('evs','evs'):fail('evs')
         elif field=='held_item':
-            if actual['held_item']!=expected['held_item'] and not (
-                    expected['held_item'] in _HELD_CONSUMABLE and actual['held_item']==0):fail('held_item')
+            consumed=expected['held_item'] in _HELD_CONSUMABLE and actual['held_item']==0
+            if actual['held_item']!=expected['held_item'] and not consumed:fail('held_item')
+            if consumed and (source is None or source['held_item']==0):
+                fail('held_item (loss indistinguishable from consumption)')
         elif field in ('ability','resolved_ability'):
             if actual['resolved_ability']!=expected[field]:fail('ability')
         elif field in ('species','friendship','ivs','effective_nature','nature'):
@@ -224,7 +232,8 @@ def check_cycle1_return(source: bytes, returned: bytes, rom: bytes, receipt: dic
         expected_after=dict(receipt['transaction']['families'][f"party_{edit['slot']}"]['after'])
         expected_after['ability']=expected_after['resolved_ability']
         _assert_requested_persisted(edit['changes'],expected_after,actual_party[edit['slot']],
-                                    f"slot {edit['slot']+1}")
+                                    f"slot {edit['slot']+1}",
+                                    receipt['transaction']['families'][f"party_{edit['slot']}"]['before'])
     for created in receipt['transaction']['families']['create']['created']:
         actual=actual_party[created['slot']]
         comparisons={'species':created['species'],'ivs':created['ivs'],
@@ -280,7 +289,8 @@ def check_cycle2_return(source: bytes, returned: bytes, rom: bytes, receipt: dic
         expected_after=dict(transaction['families'][f"party_{edit['slot']}"]['after'])
         expected_after['ability']=expected_after['resolved_ability']
         _assert_requested_persisted(edit['changes'],expected_after,returned_party[edit['slot']],
-                                    f"Cycle 2 slot {edit['slot']+1}")
+                                    f"Cycle 2 slot {edit['slot']+1}",
+                                    transaction['families'][f"party_{edit['slot']}"]['before'])
     return {'status':'MACHINE_CYCLE2_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED',
             'counter':[old['counter'],new['counter']],'previous_active_preserved':True,
             'normal_section_rotation':True,'continued_e1_e2_e3_e4_eligibility':True,

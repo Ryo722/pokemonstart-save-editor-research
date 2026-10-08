@@ -68,10 +68,10 @@ The exact-v0.22 practical product is **COMPLETE / ADOPTED on canonical `main`**.
 - **E2 — Practical Inventory editor: COMPLETE / ADOPTED**
 - **E3 — General existing-Pokémon editor: COMPLETE / ADOPTED**
 - **E4 — Pokémon creator (Party-only initial scope): COMPLETE / ADOPTED**
-- **E5 — PKHeX-like product UX and acceptance: CANDIDATE** — two-cycle Human acceptance recorded; focused review finding (requested-field persistence) corrected in `08d2151`, focused re-review pending.
+- **E5 — PKHeX-like product UX and acceptance: CANDIDATE (PR #25), awaiting Human adoption** — two-cycle Human acceptance recorded; review finding (requested-field persistence) corrected in `08d2151` and strengthened after the PR #25 focused review (lost decreases now detected); retained return saves still pass.
 - **Editor sprint (2026-10-08) — Give All, shiny, Box 1–19 editing: CANDIDATE / Human-accepted locally** — combined GUI→game→return acceptance passed; see `docs/v022-giveall-shiny-candidate.md`.
 
-Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon editing and E4 Party-only Pokémon creation are COMPLETE / ADOPTED through PR #23 and PR #24 respectively. E5 is next but has not been started by this adoption action. See `docs/v022-pkhex-like-editor-expansion.md`.
+Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All over 32 qualified recovery items is a PR #25 candidate, and broader item authority remains unsupported. E3 existing-Pokémon editing and E4 Party-only Pokémon creation are COMPLETE / ADOPTED through PR #23 and PR #24 respectively. E5 and the 2026-10-08 editor sprint (Give All, shiny, Box 1–19 editing) are candidates in PR #25, not yet adopted. See `docs/v022-pkhex-like-editor-expansion.md`.
 
 ## Exact v0.22 Fast Lab profile
 

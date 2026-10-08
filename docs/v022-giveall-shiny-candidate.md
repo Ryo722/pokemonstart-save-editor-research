@@ -132,3 +132,18 @@ except friendship (+2 from walking, ordinary gameplay); level 15, ordinary
 stats, full HP/PP; one newly qualified item consumed (99→98); all other Box
 records, Boxes 20-25, existing Party identity/shiny state and non-supported
 Inventory entries preserved; Money unchanged.
+
+## PR #25 focused independent review (2026-10-08)
+
+Separate-context reviewer, synthetic inputs only: **APPROVE_WITH_NOTES**, no
+blocking defects. Box mapping (2000-record round-trip probe), write envelope,
+straddling records, Box 1-19 gating, auditor independence, Give All scope,
+shiny nature/gender/OT coupling and composition confirmed. Notes:
+N1 E5 lower-bound fields could miss a lost decrease — fixed; N2 shiny has no
+E5 persistence rule (fails closed); N3 PID collisions are not cross-checked
+between new PIDs within one batch (only pre-existing clones can collide);
+N4 single Add still follows adopted E2 (up to 700) while Give All stops at
+325 — adopted E2 behaviour left unchanged; N5 Box auditor slot selection is
+counter-based (mismatch fails closed). Tests: unmodified 328 run with 11
+NiceGUI sandbox `sysconf` errors (+1 missing ignored `work/` in a fresh
+worktree), sandbox-adjusted runner 328 OK; 15 Windows skips.

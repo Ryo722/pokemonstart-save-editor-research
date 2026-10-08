@@ -102,10 +102,19 @@ class E5AcceptanceTests(unittest.TestCase):
                   'ability':50,'species':19,'ivs':[1]*6,'effective_nature':3}
         e5._assert_requested_persisted({'level':12,'experience':800,'evs':[0]*6,'held_item':139,
             'friendship':70,'ability':50,'species':19,'ivs':[1]*6,'effective_nature':3,
-            'moves':{0:33},'pp':{0:35},'pp_up':{0:0}},expected,actual,'test')
+            'moves':{0:33},'pp':{0:35},'pp_up':{0:0}},expected,actual,'test',
+            {**expected,'level':5,'experience':100,'held_item':7})
         for field,value in (('friendship',71),('level',14),('species',20),('held_item',1)):
             with self.subTest(field=field),self.assertRaisesRegex(ValueError,'did not persist'):
                 e5._assert_requested_persisted({field:value},{**expected,field:value},actual,'test')
+        # Review N1: a requested decrease that comes back as the pre-edit value is lost.
+        source={**expected,'level':50,'experience':5000,'evs':[100,0,0,0,0,0],'held_item':0}
+        lost={**actual,'stored_level':50,'experience':5000,'evs':[100,0,0,0,0,0]}
+        for field,value in (('level',12),('experience',800),('evs',[0]*6)):
+            with self.subTest(lost=field),self.assertRaisesRegex(ValueError,'did not persist'):
+                e5._assert_requested_persisted({field:value},expected,lost,'test',source)
+        with self.assertRaisesRegex(ValueError,'indistinguishable'):
+            e5._assert_requested_persisted({'held_item':139},expected,actual,'test',source)
         with self.assertRaisesRegex(ValueError,'no rule'):
             e5._assert_requested_persisted({'unknown':1},expected,actual,'test')
 

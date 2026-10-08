@@ -165,3 +165,17 @@ write authority. Report blocking findings with file/line references and exact
 reproduction, or provide a review disposition for a separate explicit Human
 adoption decision. Do not merge, add save semantics, incorporate v0.23+,
 expand scope, release, promote Stable, or publish protected data.
+
+## Post-acceptance correction and PR #25 (2026-10-08)
+
+- Focused review finding: return checkers did not assert persistence of every
+  requested field. Corrected in `08d2151`; strengthened after the PR #25
+  focused review so a requested decrease returning to its pre-edit value, or
+  an ambiguous one-use held-item loss, fails. Retained Cycle 1/2 return saves
+  pass the corrected rule.
+- Receipt reproducibility: the retained E5 receipts regenerate byte-exactly on
+  the E5 commits. On the merged PR #25 head, the receipt JSON carries new
+  report keys (shiny, Give All status), so `audit-export` against the old
+  receipts reports a schema difference; the E5 requests still derive outputs
+  byte-identical to the Human-accepted artifacts.
+- Disposition: candidate for Human adoption via PR #25; not merged.
