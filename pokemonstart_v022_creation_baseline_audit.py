@@ -122,7 +122,7 @@ class BaselineAudit:
 def expected_record(raw,rom,request):
     """Independent final record, including adopted independent E3 overrides."""
     if (not isinstance(request,dict) or not {'species','level','moves'}<=set(request)
-            or set(request)-{'species','level','moves','nature','ivs','evs','friendship','ability','held_item'}):
+            or set(request)-{'species','level','moves','nature','ivs','evs','friendship','ability','held_item','shiny'}):
         raise ValueError('independent creator request contract')
     baseline=BaselineAudit(raw,rom)
     count=len(baseline.parsed['records'])
@@ -135,9 +135,14 @@ def expected_record(raw,rom,request):
         choices=(int.from_bytes(metadata[22:24],'little'),int.from_bytes(metadata[26:28],'little'))
         if type(request['ability']) is not int or not request['ability'] or request['ability'] not in choices:
             raise ValueError('independent ordinary ability target')
+    if type(request.get('shiny',False)) is not bool:
+        raise ValueError('independent shiny request')
     changes={x:request[x] for x in ('ivs','evs','friendship','ability','held_item') if x in request}
+    if request.get('shiny') is True:changes['shiny']=True
     if changes:
         record,_=e3.expected_record(record,rom,baseline.context,changes)
+    if int.from_bytes(record[:4],'little') in baseline.used_personalities:
+        raise ValueError('independent personality collision')
     if record[71]&16 or e3.ordinary_reasons(record,rom,baseline.context):
         raise ValueError('independent final creator ordinary gate')
     return record

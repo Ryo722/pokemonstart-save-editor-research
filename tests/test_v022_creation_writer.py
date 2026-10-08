@@ -123,12 +123,24 @@ class CreationTests(unittest.TestCase):
         for changes in ({'species':303},{'species':496},{'species':700},{'species':757},{'species':913},{'species':1460},
                         {'species':True},{'level':0},{'level':101},{'nature':25},{'moves':[]},{'moves':[0]},
                         {'moves':[998]},{'moves':[True]},{'ivs':[32]*6},{'evs':[252]*6},{'ability':9},
-                        {'held_item':835},{'held_item':202},{'pid':1},{'shiny':True},{'ot_id':1},
+                        {'held_item':835},{'held_item':202},{'pid':1},{'shiny':1},{'shiny':'yes'},{'ot_id':1},
                         {'hyper_training':1},{'friendship':True},{'egg':True}):
             request={**self.request,**changes}
             with self.subTest(changes=changes),self.assertRaises(ValueError):writer.derive(self.raw,self.rom,[request])
         for requests in ([],{},[{}]):
             with self.assertRaises(ValueError):writer.derive(self.raw,self.rom,requests)
+    def test_shiny_creation_pid_only_and_independent(self):
+        out,receipt=writer.derive(self.raw,self.rom,[{**self.request,'shiny':True}])
+        plain,_=writer.derive(self.raw,self.rom,[{**self.request,'shiny':False}])
+        self.assertEqual(plain,writer.derive(self.raw,self.rom,[self.request])[0])
+        shiny=party_audit.structure.parse(out)['records'][3];base=party_audit.structure.parse(plain)['records'][3]
+        self.assertEqual(shiny[4:],base[4:])
+        pid,tid=struct.unpack_from('<II',shiny,0)
+        self.assertLess(party.shiny_score(tid,pid),8)
+        self.assertEqual(pid%25,3)
+        self.assertEqual(shiny,audit.expected_record(self.raw,self.rom,{**self.request,'shiny':True}))
+        self.assertTrue(receipt['created'][0]['shiny'])
+        self.assertTrue(receipt['independent_audit']['complete_output_equal'])
     def test_source_predicates_and_bad_context(self):
         v=core.v.verify_bytes(self.raw);active=v.slots[v.active_slot]
         owner=active.section(0).physical_sector*4096;base=active.section(1).physical_sector*4096

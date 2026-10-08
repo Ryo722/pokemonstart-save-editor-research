@@ -1,6 +1,7 @@
 """Candidate reusable edits of present ordinary Party records; bounded stat model."""
 from __future__ import annotations
 from dataclasses import replace
+import hashlib
 import struct
 import pokemonstart_save_verifier as v
 import pokemonstart_fl2_core as profile
@@ -174,6 +175,27 @@ def ordinary_options(tables):
                                        if model.held_eligibility(i, tables)['safe_new_target']}}}
 
 
+def shiny_personality(personality, ot_id, ratio, shiny):
+    """Deterministic PID-only shiny transition keeping OT/TID, nature and gender.
+
+    Ability selector/hidden bits, IVs and tera type are stored separately and
+    are untouched. Only ordinary species without PID-derived forms reach here.
+    """
+    import pokemonstart_v022_party_model as model
+    trainer = (ot_id >> 16) ^ (ot_id & 0xFFFF)
+    for attempt in range(4096):
+        digest = hashlib.sha256(b'E6 PID-only shiny transition v1\0' + struct.pack(
+            '<IIBH', personality, ot_id, int(shiny), attempt)).digest()
+        low = int.from_bytes(digest[:2], 'little')
+        high = trainer ^ low ^ (digest[2] & 7) if shiny else int.from_bytes(digest[2:4], 'little')
+        value = high << 16 | low
+        if ((model.shiny_score(ot_id, value) < 8) == shiny and value != personality
+                and value % 25 == personality % 25
+                and model.native_gender(ratio, value) == model.native_gender(ratio, personality)):
+            return value
+    raise ValueError('bounded shiny personality search exhausted')
+
+
 def transform_ordinary(source, tables, context, changes, *, slot=0):
     """Adopted E3 record transformations, shared with the qualified E4 baseline."""
     import pokemonstart_v022_party_model as model
@@ -184,7 +206,7 @@ def transform_ordinary(source, tables, context, changes, *, slot=0):
     if not eligibility['eligible']:
         raise ValueError('ordinary Party rejected: ' + '; '.join(eligibility['reasons']))
     fields = {'species', 'level', 'experience', 'moves', 'pp', 'pp_up', 'friendship',
-              'ivs', 'evs', 'effective_nature', 'ability', 'held_item'}
+              'ivs', 'evs', 'effective_nature', 'ability', 'held_item', 'shiny'}
     if not isinstance(changes, dict) or not changes or set(changes)-fields:
         raise ValueError('unsupported or empty ordinary Party changes')
     options = ordinary_options(tables)
@@ -246,6 +268,17 @@ def transform_ordinary(source, tables, context, changes, *, slot=0):
         _, selector, hidden = min(candidates)
         record[71] = (record[71] & ~16) | (16 if hidden else 0)
         record[75] = (record[75] & ~128) | (128 if selector else 0)
+    if 'shiny' in changes:
+        if type(changes['shiny']) is not bool:
+            raise ValueError('shiny requires true or false')
+        if 'species' in changes:
+            raise ValueError('combine shiny with species change in separate edits')
+        personality, ot_id = struct.unpack_from('<II', record, 0)
+        if (model.shiny_score(ot_id, personality) < 8) != changes['shiny']:
+            ratio = tables.species[int.from_bytes(record[32:34], 'little')].gender_ratio
+            struct.pack_into('<I', record, 0, shiny_personality(personality, ot_id, ratio, changes['shiny']))
+        elif len(changes) == 1:
+            raise ValueError('Pokémon already has the requested shiny state')
     # Slot-local operations: untouched slots preserve every byte, even empty
     # slots with stale PP/bonuses. No cosmetically canonical global rewrite.
     updates = {}
@@ -312,6 +345,10 @@ def derive_ordinary(raw, rom, slot, changes):
     candidate = bytes(candidate)
     if candidate == raw:
         raise ValueError('Party unchanged; no output')
+    if record[:4] != source[:4] and any(
+            raw[base+v.PARTY_OFFSET+i*100:base+v.PARTY_OFFSET+i*100+4] == record[:4]
+            for i in range(verified.party_count) if i != slot):
+        raise ValueError('generated personality collides with another Party member')
     after = v.verify_bytes(candidate)
     independent = audit.audit_edit(raw, candidate, rom, slot, changes)
     final = model.decode_record(bytes(record), slot, tables)
@@ -322,6 +359,8 @@ def derive_ordinary(raw, rom, slot, changes):
     after_semantic = existing._semantic(after.party[slot])
     before_semantic.update(resolved_ability=mon['resolved_ability'], hidden_ability=mon['hidden_ability'])
     after_semantic.update(resolved_ability=final['resolved_ability'], hidden_ability=final['hidden_ability'])
+    before_semantic.update(shiny=model.shiny_score(*struct.unpack_from('<II', source, 0)) < 8)
+    after_semantic.update(shiny=model.shiny_score(*struct.unpack_from('<II', record, 0)) < 8)
     return candidate, {'slot': slot, 'before': before_semantic, 'after': after_semantic,
                        'changed_offsets': independent['changed_offsets'], 'verifier_accepted': True,
                        'e3': True, 'eligibility': eligibility, 'independent_audit': independent}
