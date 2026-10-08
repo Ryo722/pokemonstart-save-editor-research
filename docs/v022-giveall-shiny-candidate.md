@@ -37,3 +37,23 @@ Base: canonical `main` `5864e7a`. E5 is not incorporated.
 - GUI controls (after E5 adoption, on top of the E5 GUI).
 - Human gameplay: Bag display after Give All and use of one newly qualified
   item; shiny appearance in summary/battle; normal SAVE and return checks.
+
+## Additional evidence (2026-10-08)
+
+- Human observation: the Party Zigzagoon that the formula and the native
+  `IsMonShiny` classify as already shiny was seen as shiny in game.
+
+## Box read-only qualification (viewer only; no writer)
+
+- Exact ROM box pointer table (25 entries) equals the pinned CFRU-JP layout:
+  boxes 1–19 in the original storage block, 20–22 in global extra sectors
+  30/31 (not slot-rotated, not checksummed), 23–24 in SaveBlock1, 25 in
+  SaveBlock2. Records are the 58-byte CompressedPokemon (packed 10-bit
+  moves, no stored PP/stats); records may straddle section boundaries.
+- Native observation (owner, disposable non-E5 pair): one normal SAVE after
+  depositing Zigzagoon to Box 1/1 and Bulbasaur to Box 25/30. The read-only
+  decoder found exactly those two records; species, EXP-derived level,
+  friendship, EVs, IVs, held item, moves and ability selector all equal the
+  source Party records.
+- `pokemonstart_v022_box_model.py` is read-only. Boxes 2–24 are ROM/source
+  mapped but not natively observed. Box writing remains unauthorized.
