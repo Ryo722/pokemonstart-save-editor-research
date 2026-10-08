@@ -128,6 +128,82 @@ def check_return(source: bytes, exported: bytes, returned: bytes, rom: bytes) ->
             'human_gameplay_attestation': False}
 
 
+def _one_normal_save(previous: bytes, current: bytes) -> tuple[dict, dict]:
+    core.v.verify_bytes(current)
+    before, after = party_audit.structure.parse(previous), party_audit.structure.parse(current)
+    old, new = before['slots'][before['active']], after['slots'][after['active']]
+    if len(previous) != len(current) or after['active'] == before['active'] or new['counter'] != old['counter'] + 1:
+        raise ValueError('requires exactly one ordinary SAVE slot/counter transition')
+    prior = before['active'] * 14 * 4096
+    if previous[prior:prior + 14 * 4096] != current[prior:prior + 14 * 4096]:
+        raise ValueError('prior active slot was not preserved')
+    if any(new['positions'][s] % 14 != (old['positions'][s] % 14 + 1) % 14 for s in range(14)):
+        raise ValueError('normal SAVE section rotation mismatch')
+    return before, after
+
+
+def check_followup(previous: bytes, current: bytes, rom: bytes, *, box_number: int = 1, position: int = 1) -> dict:
+    """Withdraw the edited Box Pokémon and consume one supported item, then one SAVE."""
+    before, after = _one_normal_save(previous, current)
+    context = party_audit.inspect(current, rom)['saved_context']
+    location = {'box': box_number, 'position': position}
+    boxed = _box_record(previous, rom, location)
+    if not any(boxed) or any(_box_record(current, rom, location)):
+        raise ValueError(f'Box {box_number} #{position} was not withdrawn')
+    for number in range(1, 20):
+        for slot in range(1, 31):
+            if (number, slot) != (box_number, position) and _box_record(previous, rom, {'box': number, 'position': slot}) != \
+                    _box_record(current, rom, {'box': number, 'position': slot}):
+                raise ValueError(f'unrelated Box {number} #{slot} changed')
+    import pokemonstart_v022_box_model as box
+    rest = lambda raw: [r for r in box.inspect(raw, rom)['occupied'] if r['box'] > 19]
+    if rest(previous) != rest(current):
+        raise ValueError('Boxes 20-25 changed')
+    if after['count'] != before['count'] + 1:
+        raise ValueError('Party count must grow by exactly the withdrawn Pokémon')
+    matches = [r for r in after['records'] if r[:4] == boxed[:4]]
+    if len(matches) != 1:
+        raise ValueError('withdrawn Pokémon not found exactly once in Party')
+    withdrawn = matches[0]
+    if box_audit._compress(withdrawn) != boxed:
+        raise ValueError('withdrawn Pokémon differs from its Box record (was it used in battle?)')
+    row = party_audit.reconstruct(withdrawn, rom)
+    if party_audit.ordinary_reasons(withdrawn, rom, context):
+        raise ValueError('withdrawn Pokémon is not ordinary-consistent')
+    if row['cached_hp_stats'][0] != row['cached_hp_stats'][1] or any(m['pp'] != m['maximum_pp'] for m in row['moves']):
+        raise ValueError('withdrawn Pokémon lacks full HP/PP')
+    for record in before['records']:
+        now = [r for r in after['records'] if r[:4] == record[:4]]
+        if len(now) != 1 or now[0][32:34] != record[32:34] or _shiny(now[0]) != _shiny(record):
+            raise ValueError('existing Party member identity/species/shiny changed')
+        if party_audit.ordinary_reasons(now[0], rom, context):
+            raise ValueError('existing Party member lost ordinary eligibility')
+    names = items.supported_catalog(rom)
+    old_items = {e['item_id']: e['quantity'] for e in items.inspect(previous, rom)['entries']}
+    new_items = {e['item_id']: e['quantity'] for e in items.inspect(current, rom)['entries']}
+    unsupported = lambda q: {i: n for i, n in q.items() if i not in names}
+    if unsupported(old_items) != unsupported(new_items):
+        raise ValueError('non-supported Inventory entries changed')
+    used = {i: old_items.get(i, 0) - new_items.get(i, 0) for i in names if old_items.get(i, 0) != new_items.get(i, 0)}
+    if any(delta < 0 for delta in used.values()):
+        raise ValueError('a supported item increased during gameplay')
+    if not used:
+        raise ValueError('no supported item was consumed')
+    report = core.inspect(current, core.profile.sha(rom), rom_bytes=rom)
+    if not report['items'] or not report['items'].get('e2'):
+        raise ValueError('Inventory eligibility lost')
+    newly = {names[i]: d for i, d in used.items() if i not in items.MEDICINES}
+    money = report['money']['money'] - core.inspect(previous, core.profile.sha(rom), rom_bytes=rom)['money']['money']
+    return {'status': 'MACHINE_FOLLOWUP_PASS_HUMAN_ATTESTATION_REQUIRED',
+            'counter': [before['slots'][before['active']]['counter'], after['slots'][after['active']]['counter']],
+            'withdrawn': {'species': row['species'], 'level': withdrawn[84], 'stats': row['cached_hp_stats'][1:],
+                          'moves': [m['move_id'] for m in row['moves']], 'full_hp_pp': True,
+                          'stored_bytes_equal_box_record': True},
+            'items_consumed': {names[i]: d for i, d in used.items()}, 'newly_qualified_item_consumed': bool(newly),
+            'money_delta': money, 'unrelated_box_records_preserved': True,
+            'party_identity_shiny_preserved': True, 'human_gameplay_attestation': False}
+
+
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rom', type=Path, default=core.profile.ROM_DEFAULT)
@@ -136,11 +212,14 @@ def main(argv=None):
     p = sub.add_parser('audit-export'); p.add_argument('source', type=Path); p.add_argument('exported', type=Path)
     p = sub.add_parser('check-return'); p.add_argument('source', type=Path); p.add_argument('exported', type=Path)
     p.add_argument('returned', type=Path)
+    p = sub.add_parser('check-followup'); p.add_argument('previous', type=Path); p.add_argument('current', type=Path)
     args = parser.parse_args(argv)
     rom = args.rom.read_bytes()
     core.profile._require_rom_hash(core.profile.sha(rom))
     if args.action == 'recipe':
         result = recipe(args.source.read_bytes(), rom)
+    elif args.action == 'check-followup':
+        result = check_followup(args.previous.read_bytes(), args.current.read_bytes(), rom)
     elif args.action == 'audit-export':
         result = audit_export(args.source.read_bytes(), args.exported.read_bytes(), rom)
     else:
