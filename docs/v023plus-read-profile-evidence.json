@@ -1,0 +1,328 @@
+{
+  "schema": "pokemonstart-v023plus-read-profile-evidence/1",
+  "status": "CORRECTED_CANDIDATE_NOT_CANONICAL_NOT_ADOPTED",
+  "date": "2026-10-08",
+  "base_main": "381bc80080919952c9a32bb7982dfcf24bc92ea5",
+  "write_authority_granted": false,
+  "wording": {
+    "family": "v0.23+ save-layout family: structurally supported by public/static evidence",
+    "exact_v027": "exact v0.27 read profile: privately runtime-qualified"
+  },
+  "investigation_inputs_reconciled_not_merged": {
+    "research/v027-64mib-recon": "b70644449ab0f3dd9a26c2e344a1ebbca3c930c6",
+    "research/v027-rom64-mgba-static-verification": "92986bddbfd74c66cda424fd58b3ab6ac7cd3fcc"
+  },
+  "identity": {
+    "label": "INDEPENDENTLY_REPRODUCED",
+    "upstream": "onikoro334274-cell/PokemonStart",
+    "v027_commit": "23007d4ef95ae1dc8788fbb34c8f1d93118231d1",
+    "v027_pks_blob": "359a097ef2b78f00ec37fa45633165c173d68000",
+    "v027_pks_sha256": "d81b965d5194195055ca704cc487bf89f61a1f2cb9f741077bd9273ff8fe5a90",
+    "v027_bps_sha256": "64cadabd2a399b1c3c7eb1b48973580d4f4fe4cab53b54d9d369e5f2976b6535",
+    "owned_source_sha256": "1e4af44b0c75cc8649bfb8649dc4ae5850bf5358bd6b9cd0bf779c99f9db1486",
+    "v027_rom": {
+      "sha256": "455f5294af9cb728ea577cafea3f8a27d5efc18e8f1371e1a76492e79d3781ac",
+      "size": 67108864,
+      "crc32": "84202DAB"
+    },
+    "rom64_mgba": {
+      "zip_sha256": "7a3abada5655e60a039029f281a3a21401efcdc7346bb7dead373776a46ebf96",
+      "exe_sha256": "69afb3724a77281a4e8d532e8413186b99869b6f7d167a7a9c06f11cf3cee473"
+    },
+    "migration_html_sha256": "141920a25726cc42eb22cf0496e3231261b6207212f475d955064580c9358dfc",
+    "migration_decoded_script_sha256": "2211bb9911d3817cfbad22b849c7006cc1f93c96bd747eb03d10adb5bf10fbe3"
+  },
+  "static_family": {
+    "label": "INDEPENDENTLY_REPRODUCED",
+    "builds": {
+      "v0.22": {
+        "commit": "ddd054d46fc1bd0555badf738572620b1ee4670d",
+        "rom_sha256": "6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0",
+        "migration_html": null,
+        "aligned_shel_literals": 0
+      },
+      "v0.23": {
+        "commit": "f5a4555b522135c327149195968ee5b808871353",
+        "pks_sha256": "0f4f3d7d3a9855c6d5c39134986ff4566694a701a11836bb0d20c9fae169c7ae",
+        "rom_sha256": "e3178c826e4d3fe10059a7fdecf9d683af5b94fbe0f4491a03eebfc2bb3a1f81",
+        "migration_html_identical": true,
+        "aligned_shel_literals": 3
+      },
+      "v0.24": {
+        "commit": "64a9099740377ceb94f68eb9b6b80e56b5d25939",
+        "pks_sha256": "110306819a32c448edb19e0dadabec972e6fc326867d873ef67b13f20eeacf1c",
+        "rom_sha256": "0b8aa072d724b7b49d07b608445c1f4b8a7e0e7423f3e186970e0340269d8c8a",
+        "migration_html_identical": true,
+        "aligned_shel_literals": 3
+      },
+      "v0.25": {
+        "commit": "03aa0ccec67043adfc41eb31e3cdd1baffd75a94",
+        "pks_sha256": "13b3a603e37bf4afe3ce4814494d28bb5366fc42d24e94fb56e5c116686ff2af",
+        "rom_sha256": "7c079a05491a9d2b15959a751799b48a2a05a1c805084055e8e31b1e636bfe9d",
+        "migration_html_identical": true,
+        "aligned_shel_literals": 3
+      },
+      "v0.26": {
+        "commit": "faf63dd08b3bbb1064570a1b29062491cdb381bf",
+        "pks_sha256": "4e1fe86131257db506e028c7cb9cad2701d34c46c94d189481de0b46d010fb3f",
+        "rom_sha256": "7b0c8ed2d525286e99ec0d6ff49e0839514d71e0a9b80acb308ea11a7d592837",
+        "migration_html_identical": true,
+        "aligned_shel_literals": 3
+      },
+      "v0.27": {
+        "commit": "23007d4ef95ae1dc8788fbb34c8f1d93118231d1",
+        "rom_sha256": "455f5294af9cb728ea577cafea3f8a27d5efc18e8f1371e1a76492e79d3781ac",
+        "migration_html_identical": true,
+        "aligned_shel_literals": 3
+      }
+    },
+    "runtime_qualified": [
+      "v0.27"
+    ],
+    "profiles_issued": [
+      "v0.27"
+    ]
+  },
+  "semantic_model": {
+    "id": "pokemonstart-cfru-jp-e1e3-tables/1",
+    "label": "LOCAL_PRIVATE_INPUT_VERIFICATION",
+    "v022_hashes_in_canonical_evidence": true,
+    "tables": {
+      "species": {
+        "size": 47648,
+        "sha256": "f7ce80669fd5ada0b3ed2a847eea472712df7a83fda5db5e0e298de2ddae3fea",
+        "v022": "0x19B8B40",
+        "v027": "0x17D8F74"
+      },
+      "species_names": {
+        "size": 11912,
+        "sha256": "527602d9a5679e2a21474d38f97bc91563029c0772f06374c9f6da2848a53a06",
+        "v022": "0x16570A4",
+        "v027": "0x16570D4"
+      },
+      "moves": {
+        "size": 11976,
+        "sha256": "d23799854048201ee34ebbb38d8a15b423badbfb574029b8f2663785cb1f1471",
+        "v022": "0x14A3238",
+        "v027": "0x141A840"
+      },
+      "move_names": {
+        "size": 15968,
+        "sha256": "84b116b6f7a155b865b2665e108bc38f10a52eb1160e622a0145058ac67bbace",
+        "v022": "0x111A74C",
+        "v027": "0x111D9A4"
+      },
+      "experience": {
+        "size": 6144,
+        "sha256": "290cf4597a284b268b9f1f3cb6250d044d54ebbf51390a5f43e3f1c5419452c5",
+        "v022": "0x14C5D54",
+        "v027": "0x143D35C"
+      },
+      "nature": {
+        "size": 125,
+        "sha256": "1c7d07b7ce4be855b42c3dd74c42d7a2ab7acc22fac4c43837e4d0fd32afcb0c",
+        "v022": "0x20F550",
+        "v027": "0x20F550"
+      },
+      "pocket_descriptor": {
+        "size": 40,
+        "sha256": "ae47094540732997b5a4dd462b4cbbbac0cfca84f1f2bdcfdc7580c14ad61e38",
+        "v022": "0x1490E68",
+        "v027": "0x1408400"
+      },
+      "items": {
+        "size": 33560,
+        "normalization": "pointer fields +16/+24/+32 -> null/non-null flag",
+        "sha256": "b4dbebb54aca935a9f3e54654b6b6204727f00743eb993081d10c79cc3822365",
+        "v022_raw_sha256": "fe732c6f7ca24e3200c7bbff34300e4d982ac8e39702c55c55ed85075a2d38a8",
+        "v022": "0x15199C8",
+        "v027": "0x1490FD0"
+      }
+    },
+    "code_path_equivalence": "HYPOTHESIS_UNVERIFIED (recon static claim not reproduced)"
+  },
+  "private_gate": {
+    "label": "LOCAL_PRIVATE_INPUT_VERIFICATION",
+    "path": "S0 -> M -> R1 -> R2",
+    "disposition": "V027_PRIVATE_GATE_PASS",
+    "saves": {
+      "S0": {
+        "sha256": "b153720a8180c1635bac2a86fb75460c9f34430ea8589df8f29afa46692026b2",
+        "layout": "legacy_v022_14_section",
+        "active_slot": 1,
+        "counter": 11,
+        "canonical_source": "docs/reviews/e3-existing-party-independent-review.md"
+      },
+      "M": {
+        "sha256": "f4df12ccd85df5a0325fcca9398c74a6685076704703c0e66b827cf6b10d441c",
+        "layout": "v023plus_shel_pages",
+        "active_slot": 1,
+        "counter": 11,
+        "rotation": 0,
+        "shel_counter": 11,
+        "page_table": "10..26",
+        "page_counters": [
+          11
+        ]
+      },
+      "R1": {
+        "sha256": "325e355f1726dea64c13f454975f2b5246f70e0e59ed2b77f7b3e9e0c4d099d3",
+        "layout": "v023plus_shel_pages",
+        "active_slot": 0,
+        "counter": 12,
+        "rotation": 1,
+        "shel_counter": 12,
+        "page_table": "27,11..26",
+        "page_counters": [
+          11,
+          12
+        ],
+        "raw_sectors_written": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          27
+        ]
+      },
+      "R2": {
+        "sha256": "68e18ae410bb63eb9c5c4de9fea51e24cf8a953ac6d858637d381893f01467e9",
+        "layout": "v023plus_shel_pages",
+        "active_slot": 1,
+        "counter": 13,
+        "rotation": 2,
+        "shel_counter": 13,
+        "page_table": "27,11..26",
+        "page_counters": [
+          11,
+          12
+        ],
+        "raw_sectors_written": [
+          5,
+          6,
+          7,
+          8,
+          9
+        ]
+      }
+    },
+    "migration_changes": "SHEL magic/counter/table over SB1+0x1400..0x1419 (all-zero in S0): 22 data bytes; relocation only otherwise",
+    "semantic_equality_S0_M_R1_R2": {
+      "party": true,
+      "money_key0": true,
+      "inventory_pockets_and_menu_counts": true
+    },
+    "box_pokemon": 0,
+    "first_save_normalisation": [
+      "object-event template script pointers (SB1 0x8E0-0xEE0, stride 0x18)",
+      "default 9-byte box names for boxes 2-15 in page-0 storage tail",
+      "3 parasite bytes (section-0 / section-4 tails): meaning unidentified"
+    ],
+    "original_immutable": true,
+    "human_observation": {
+      "label": "HUMAN_OBSERVATION",
+      "load_normal": true,
+      "unexpected_dialogs": false,
+      "pictures_displayed_normally": true,
+      "overwrite_confirmation": "not specified"
+    }
+  },
+  "unresolved_writer_blockers": [
+    "spare-sector selection/reuse on later page writes",
+    "populated Box-page rewrite behaviour",
+    "three first-native-save parasite bytes",
+    "native new-game SHEL table state (0xFF) unqualified",
+    "v0.23-v0.26 runtime qualification",
+    "any v0.23+ write envelope",
+    "ROM code-path equivalence for derived calculations"
+  ],
+  "tests": {
+    "focused_synthetic": "53 run: 49 passed, 4 private-input tests skipped",
+    "focused_with_private_inputs": "53 run, all passed (LOCAL_PRIVATE_INPUT_VERIFICATION)",
+    "canonical_v022_set": "64 run, OK on base 381bc80 and on the corrected candidate",
+    "full_suite_corrected": "338 run; 8 errors; 19 skipped",
+    "full_suite_base": "285 run; 8 errors; 15 skipped",
+    "error_set": "identical 8 NiceGUI/browser tests on base and candidate (7 sandbox local-port PermissionError, 1 missing ignored work dir)"
+  },
+  "correction_1": {
+    "predecessor": "318ee7d97785fbb2de7eabe9ba3f5c3de2324f9d",
+    "predecessor_tree": "54499f9f4fb6f68b32981a8ba02f9df66f811e2b",
+    "review_disposition": "CHANGES_REQUIRED",
+    "findings": {
+      "F1": "alternate runtime bag state now leaves Inventory unqualified (no pockets)",
+      "F2": "v0.22 Money/Inventory delegated to canonical product_money.inspect / inventory_model.inspect; label DELEGATED, not CANONICAL",
+      "F3": "read_save(profile, save, rom) requires verify_rom; CLI requires --rom and --save; no save-only field API",
+      "m1": "layout/field errors normalised to ProfileError -> REJECTED rc 2",
+      "m2": "fragment flags split into checksum_covered and epoch_bound; section 0/4 tails are epoch-bound, not checksum-covered"
+    },
+    "before_after": "each finding reproduced on the predecessor and absent after correction; ReviewFindingRegressionTests"
+  },
+  "v027_inventory_boundary": "key0; consecutive counters when both slots valid; Party 1..6; ordinary bag only; catalog-valid ids (E1 rules on the verified v0.27 item table), pocket match, quantity 1..999, no duplicates; single erased slot allowed (no global sectors in v0.23+)",
+  "catalog_equivalence": {
+    "label": "LOCAL_PRIVATE_INPUT_VERIFICATION",
+    "v022_derived_equals_canonical_extract_catalog": true,
+    "v027_equals_v022": true
+  },
+  "fragment_flags": {
+    "legacy": [
+      [
+        "section 0 +0xF24",
+        false,
+        true
+      ],
+      [
+        "section 4 +0xD98",
+        false,
+        true
+      ],
+      [
+        "section 13 +0x450",
+        false,
+        true
+      ],
+      [
+        "sector 30",
+        false,
+        false
+      ],
+      [
+        "sector 31",
+        false,
+        false
+      ]
+    ],
+    "v023plus": [
+      [
+        "section 0 +0xF24",
+        false,
+        true
+      ],
+      [
+        "section 4 +0xD98",
+        false,
+        true
+      ],
+      [
+        "page 0 +0x18B",
+        true,
+        true
+      ],
+      [
+        "page 15",
+        true,
+        true
+      ],
+      [
+        "page 16",
+        true,
+        true
+      ]
+    ],
+    "columns": [
+      "source",
+      "checksum_covered",
+      "epoch_bound"
+    ]
+  }
+}
