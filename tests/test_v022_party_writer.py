@@ -206,6 +206,36 @@ class OrdinaryWriterTests(unittest.TestCase):
             self.assertTrue(record[71]&128)
             self.assertEqual(record[:15],audit.structure.parse(source)['records'][0][:15])
 
+    def test_shiny_pid_only_transition_preserves_identity_invariants(self):
+        tables=model.extract_tables(self.rom)
+        for slot in range(len(audit.structure.parse(self.raw)['records'])):
+            source=audit.structure.parse(self.raw)['records'][slot]
+            if audit.ordinary_reasons(source,self.rom,audit.inspect(self.raw,self.rom)['saved_context']):continue
+            with self.subTest(slot=slot):
+                out,receipt=self.edit({'shiny':True},slot=slot)
+                after=audit.structure.parse(out)['records'][slot]
+                old_pid,tid=struct.unpack_from('<II',source,0);pid=struct.unpack_from('<I',after,0)[0]
+                self.assertLess(model.shiny_score(tid,pid),8)
+                self.assertEqual(after[4:],source[4:])
+                self.assertEqual(pid%25,old_pid%25)
+                ratio=tables.species[int.from_bytes(source[32:34],'little')].gender_ratio
+                self.assertEqual(model.native_gender(ratio,pid),model.native_gender(ratio,old_pid))
+                self.assertEqual(receipt['changed_offsets'][:4],[o for o in receipt['changed_offsets']][:4])
+                self.assertEqual((receipt['before']['shiny'],receipt['after']['shiny']),(False,True))
+                back,_=self.edit({'shiny':False},out,slot=slot)
+                self.assertGreaterEqual(model.shiny_score(tid,struct.unpack_from('<I',audit.structure.parse(back)['records'][slot],0)[0]),8)
+                with self.assertRaisesRegex(ValueError,'already'):self.edit({'shiny':True},out,slot=slot)
+                combined,_=self.edit({'shiny':True,'friendship':9},slot=slot)
+                self.assertEqual(audit.structure.parse(combined)['records'][slot][:4],after[:4])
+                tampered=bytearray(out);v=core.v.verify_bytes(out)
+                base=v.slots[v.active_slot].section(1).physical_sector*4096
+                tampered[base+56+slot*100]^=0x40
+                struct.pack_into('<H',tampered,base+0xFF6,core.v.calculate_save_checksum(tampered[base:base+0xFF0]))
+                with self.assertRaises(ValueError):audit.audit_edit(self.raw,bytes(tampered),self.rom,slot,{'shiny':True})
+                break
+        for bad in ({'shiny':1},{'shiny':None},{'shiny':True,'species':2}):
+            with self.subTest(bad=bad),self.assertRaises(ValueError):self.edit(bad)
+
     def test_exp_boundaries_species_level_conflicts_and_nature(self):
         damaged=self.change_record(86,struct.pack('<H',5))
         for exp,level in ((1,1),(7,1),(8,2),(27,3),(1000000,100)):

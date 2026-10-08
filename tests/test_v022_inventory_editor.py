@@ -86,7 +86,7 @@ class MedicineEditorTests(unittest.TestCase):
         self.assertEqual(combined, out)
         self.assertEqual(len(receipt['semantic_diff']), 3)
         self.assertTrue(report['independent_audit']['unrelated_bytes_preserved'])
-        self.assertFalse(editor.inspect(out,self.rom)['give_all_enabled'])
+        self.assertTrue(editor.inspect(out,self.rom)['give_all']['enabled'])
         with self.assertRaises(ValueError):editor.derive(self.raw,self.rom,[{'op':'remove','item_id':533}])
 
     def test_e2_composes_with_unchanged_party_money_families(self):
@@ -134,6 +134,40 @@ class MedicineEditorTests(unittest.TestCase):
         rows=[(533,77),(13,999),(30,31),(14,3)]
         raw=self.make_save(rows)
         self.check(raw,[{'op':'remove','item_id':13}],[(533,77),(30,31),(14,3)])
+
+    def test_give_all_raises_supported_items_to_99_and_audits(self):
+        rows=[(533,1),(14,3),(13,150),(30,99)]
+        raw=self.make_save(rows)
+        status=editor.inspect(raw,self.rom)['give_all']
+        self.assertEqual((status['enabled'],status['supported_items'],status['quantity']),(True,32,99))
+        added=sorted(editor.RECOVERY_ITEMS-{13,14,30})
+        out,report=self.check(raw,[{'op':'give_all'}],[(533,1),(14,99),(13,150),(30,99)]+[(i,99) for i in added])
+        self.assertEqual(len(report['after']['entries']),4+29)
+        self.assertFalse(editor.inspect(out,self.rom)['give_all']['enabled'])
+        with self.assertRaisesRegex(ValueError,'Give All unavailable'):editor.derive(out,self.rom,[{'op':'give_all'}])
+        combined,receipt=core.derive(raw,self.digest,{'items':[{'op':'give_all'}]},rom_bytes=self.rom)
+        self.assertEqual(combined,out)
+        self.assertEqual(auditor.expand_give_all([(533,1)]),
+                         [{'op':'add','item_id':i,'quantity':99} for i in sorted(editor.RECOVERY_ITEMS)])
+
+    def test_give_all_stays_inside_section13_and_rejects_mixing(self):
+        filler=[i for i in self.neutral_ids(400) if i not in editor.RECOVERY_ITEMS]
+        fits=self.make_save([(i,1) for i in filler[:293]])
+        self.check(fits,[{'op':'give_all'}],[(i,1) for i in filler[:293]]+[(i,99) for i in sorted(editor.RECOVERY_ITEMS)])
+        over=self.make_save([(i,1) for i in filler[:294]])
+        self.assertFalse(editor.inspect(over,self.rom)['give_all']['enabled'])
+        for raw in (over,):
+            with self.assertRaisesRegex(ValueError,'Give All'):editor.derive(raw,self.rom,[{'op':'give_all'}])
+            with self.assertRaises(ValueError):auditor.expand_give_all([(i,1) for i in filler[:294]])
+        for ops in ([{'op':'give_all'},{'op':'set','item_id':14,'quantity':5}],[{'op':'give_all','quantity':5}]):
+            with self.subTest(ops=ops),self.assertRaises(ValueError):editor.derive(self.raw,self.rom,ops)
+
+    def test_newly_qualified_item_add_set_remove(self):
+        out,_=self.check(self.raw,[{'op':'add','item_id':82,'quantity':5}],[(533,1),(14,3),(13,1),(82,5)])
+        self.check(out,[{'op':'remove','item_id':82}],[(533,1),(14,3),(13,1)])
+        for item in (34,37,42,57,533):
+            with self.subTest(item=item),self.assertRaises(ValueError):
+                editor.derive(self.raw,self.rom,[{'op':'add','item_id':item,'quantity':1}])
 
     def test_full_pocket_rejection(self):
         raw=self.make_save([(i,1) for i in self.neutral_ids(700)])

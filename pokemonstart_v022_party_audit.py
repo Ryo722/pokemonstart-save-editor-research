@@ -172,6 +172,31 @@ def safe_item(item_id, metadata, *, retained=False):
         'pocket','importance','item_type','hold_effect','hold_effect_parameter')) == expected.get(item_id)
 
 
+def independent_shiny_identity(record, rom: bytes, changes: dict):
+    """Independent PID-only transition: same documented derivation, own checks."""
+    want = changes['shiny']
+    if type(want) is not bool or 'species' in changes:
+        raise ValueError('independent shiny contract')
+    old = int.from_bytes(record[0:4], 'little')
+    tid = int.from_bytes(record[4:8], 'little')
+    xor = lambda p: (tid & 65535) ^ (tid >> 16) ^ (p & 65535) ^ (p >> 16)
+    if (xor(old) < 8) == want:
+        if len(changes) == 1:
+            raise ValueError('independent unchanged shiny state')
+        return bytes(record[0:4]), set()
+    ratio = rom[0x19B8B40 + int.from_bytes(record[32:34], 'little') * 32 + 16]
+    sex = lambda p: ratio if ratio in (0, 254, 255) else (254 if p % 256 < ratio else 0)
+    for attempt in range(4096):
+        digest = hashlib.sha256(b'E6 PID-only shiny transition v1\0' + old.to_bytes(4, 'little')
+                                + tid.to_bytes(4, 'little') + bytes((want,)) + attempt.to_bytes(2, 'little')).digest()
+        low = digest[0] | digest[1] << 8
+        high = ((tid & 65535) ^ (tid >> 16) ^ low ^ digest[2] % 8) if want else digest[2] | digest[3] << 8
+        candidate = high * 65536 + low
+        if (xor(candidate) < 8) is want and candidate != old and candidate % 25 == old % 25 and sex(candidate) == sex(old):
+            return candidate.to_bytes(4, 'little'), {0, 1, 2, 3}
+    raise ValueError('independent shiny search exhausted')
+
+
 def expected_record(source: bytes, rom: bytes, context: dict, changes: dict):
     """Independent adopted E3 record arithmetic, reusable by creator audit."""
     def number(x, low, high):
@@ -181,7 +206,7 @@ def expected_record(source: bytes, rom: bytes, context: dict, changes: dict):
     if len(source) != 100 or ordinary_reasons(source, rom, context):
         raise ValueError('independent ordinary source gate')
     permitted = {'species','level','experience','ivs','evs','effective_nature','ability',
-                 'held_item','friendship','moves','pp','pp_up'}
+                 'held_item','friendship','moves','pp','pp_up','shiny'}
     if not isinstance(changes, dict) or not changes or set(changes)-permitted:
         raise ValueError('independent field contract')
     old = reconstruct(source, rom)
@@ -296,6 +321,9 @@ def expected_record(source: bytes, rom: bytes, context: dict, changes: dict):
             envelope.add(52+index)
         if 'pp_up' in change:
             envelope.update((40,52+index))
+    if 'shiny' in changes:
+        record[0:4], identity = independent_shiny_identity(record, rom, changes)
+        envelope.update(identity)
     if set(changes) & {'species','level','experience','ivs','evs','effective_nature'}:
         stats = reconstruct(record,rom)['ordinary_expected_stats']
         current, maximum = old['cached_hp_stats'][:2]

@@ -40,6 +40,16 @@ NATURE_NAMES = ('Hardy','Lonely','Brave','Adamant','Naughty','Bold','Docile','Re
                 'Calm','Gentle','Sassy','Careful','Quirky')
 
 
+def shiny_score(ot_id: int, personality: int) -> int:
+    """Exact IsShinyOtIdPersonality operand; shiny means a score below 8."""
+    return (ot_id >> 16) ^ (ot_id & 0xFFFF) ^ (personality >> 16) ^ (personality & 0xFFFF)
+
+
+def native_gender(ratio: int, personality: int) -> int:
+    """Native-corroborated GetGenderFromSpeciesAndPersonality outcome."""
+    return ratio if ratio in (0, 254, 255) else 254 if personality & 255 < ratio else 0
+
+
 def held_eligibility(item_id: int, tables: Tables) -> dict:
     item = tables.items.get(item_id)
     metadata = ((item.pocket, item.importance, item.item_type,
@@ -103,6 +113,7 @@ class Species:
     bases: tuple[int, ...]
     growth: int
     abilities: tuple[int, int, int]
+    gender_ratio: int = 0
 
 
 @dataclass(frozen=True)
@@ -142,7 +153,7 @@ def extract_tables(rom: bytes) -> Tables:
                                tuple(record[:6]), record[19],
                                (int.from_bytes(record[22:24], 'little'),
                                 int.from_bytes(record[26:28], 'little'),
-                                int.from_bytes(record[28:30], 'little'))))
+                                int.from_bytes(record[28:30], 'little')), record[16]))
     moves = tuple(Move(mid, _name(rom[MOVE_NAMES + mid*16:MOVE_NAMES + (mid+1)*16]),
                        rom[MOVE_TABLE + mid*12 + 4]) for mid in range(MOVE_COUNT))
     growth_count = max(s.growth for s in species) + 1

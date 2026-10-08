@@ -13,6 +13,23 @@ import pokemonstart_v022_creation_audit as structure
 ROM_SHA256 = '6abce6aac402b18ab2b67a4b86b8b6153520afb0c92cebec570883b4880adbb0'
 NON_NEUTRAL_IDS = (frozenset(range(57, 72)) | frozenset(range(753, 774))
                    | frozenset(range(824, 829)) | {639, 640, 728, 729, 832, 836, 838})
+# Independently enumerated exact-ROM recovery-signature IDs (13..33, 38..41,
+# 44, 52..56, 82). Give All raises each to 99 within section 13 only.
+RECOVERY_TARGETS = (frozenset(range(13, 34)) | frozenset(range(38, 42))
+                    | frozenset(range(52, 57)) | {44, 82})
+
+
+def expand_give_all(records: list[tuple[int, int]]) -> list[dict]:
+    present = dict(records)
+    expanded = []
+    for target in sorted(RECOVERY_TARGETS):
+        if target not in present:
+            expanded.append({'op': 'add', 'item_id': target, 'quantity': 99})
+        elif present[target] < 99:
+            expanded.append({'op': 'set', 'item_id': target, 'quantity': 99})
+    if not expanded or len(records) + sum(x['op'] == 'add' for x in expanded) > 325:
+        raise ValueError('independent Give All eligibility')
+    return expanded
 
 
 def audit_edit(before: bytes, after: bytes, rom: bytes, operations: list[dict]) -> dict:
@@ -21,13 +38,15 @@ def audit_edit(before: bytes, after: bytes, rom: bytes, operations: list[dict]) 
     records = [(row[1], row[2]) for row in old['pockets'][0]['entries']]
     if not isinstance(operations, list) or not operations:
         raise ValueError('independent empty edit')
+    if operations == [{'op': 'give_all'}]:
+        operations = expand_give_all(records)
     seen = set()
     for edit in operations:
         if not isinstance(edit, dict) or edit.get('op') not in ('add', 'set', 'remove'):
             raise ValueError('independent operation invalid')
         op, target = edit['op'], edit.get('item_id')
         keys = {'op', 'item_id'} | (set() if op == 'remove' else {'quantity'})
-        if set(edit) != keys or type(target) is not int or target not in range(13, 23) or target in seen:
+        if set(edit) != keys or type(target) is not int or target not in RECOVERY_TARGETS or target in seen:
             raise ValueError('independent unsafe/repeated target')
         seen.add(target)
         metadata = rom[0x15199C8 + target * 40:0x15199C8 + (target + 1) * 40]

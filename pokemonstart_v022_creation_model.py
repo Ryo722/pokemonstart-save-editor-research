@@ -78,7 +78,7 @@ class Creator:
         raise ValueError('bounded personality generator exhausted')
 
     def record(self,request):
-        allowed={'species','level','moves','nature','ivs','evs','friendship','ability','held_item'}
+        allowed={'species','level','moves','nature','ivs','evs','friendship','ability','held_item','shiny'}
         if not isinstance(request,dict) or set(request)-allowed or not {'species','level','moves'}<=set(request):
             raise ValueError('creation requires species, level and explicit moves; unsupported controls rejected')
         number=transformations.integer
@@ -122,9 +122,15 @@ class Creator:
         if stats is None:
             raise ValueError('ordinary initial stats unavailable')
         struct.pack_into('<7H',record,86,stats[0],*stats)
+        if 'shiny' in request and type(request['shiny']) is not bool:
+            raise ValueError('shiny requires true or false')
         changes={key:request[key] for key in ('ivs','evs','friendship','ability','held_item') if key in request}
+        if request.get('shiny'):
+            changes['shiny']=True
         result=(transformations.transform_ordinary(bytes(record),self.tables,self.context,changes)
                 if changes else bytes(record))
+        if int.from_bytes(result[:4],'little') in self.used:
+            raise ValueError('generated personality collides with an existing Party member')
         if not e3.write_eligibility(result,self.tables,self.context)['eligible'] or result[71]&16:
             raise ValueError('created record outside qualified ordinary class')
         return result
