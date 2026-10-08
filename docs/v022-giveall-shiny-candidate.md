@@ -117,8 +117,18 @@ Lv.10 created in Party #4, Give All, Box 1 #1 Level 5→15).
 - Machine return: `MACHINE_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED`; one normal
   SAVE (counter 15→16), shiny states preserved, all 32 items present,
   Box 1 #1 edited record preserved byte-for-byte in the Box.
-- Not evidenced by the returned save: consumption of a newly qualified item
-  (no quantity below 99; all Party HP full, so a use likely had no effect)
-  and a withdrawn-to-Party state (record was in Box at SAVE). The checker
-  supports both; an optional follow-up from RETURN can cover them.
+- Not evidenced by that returned save: item consumption and a withdrawn
+  state; covered by the follow-up below.
 - Status: candidate accepted for local use; not reviewed, not adopted.
+
+## Follow-up Human acceptance (2026-10-08)
+
+From a disposable copy of the accepted return save, the owner withdrew the
+edited Box 1 #1 Pokémon (Lv.15), used おいしいみず on a damaged Pokémon, and
+performed one normal SAVE. `check-followup` →
+`MACHINE_FOLLOWUP_PASS_HUMAN_ATTESTATION_REQUIRED`: one SAVE (counter 16→17);
+the withdrawn Party record equals the edited Box record on every stored byte
+except friendship (+2 from walking, ordinary gameplay); level 15, ordinary
+stats, full HP/PP; one newly qualified item consumed (99→98); all other Box
+records, Boxes 20-25, existing Party identity/shiny state and non-supported
+Inventory entries preserved; Money unchanged.

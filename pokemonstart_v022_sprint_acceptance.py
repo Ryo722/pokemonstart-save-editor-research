@@ -165,7 +165,9 @@ def check_followup(previous: bytes, current: bytes, rom: bytes, *, box_number: i
     if len(matches) != 1:
         raise ValueError('withdrawn Pokémon not found exactly once in Party')
     withdrawn = matches[0]
-    if box_audit._compress(withdrawn) != boxed:
+    stored = box_audit._compress(withdrawn)
+    # Walking in the Party raises friendship (byte 37 of the Box form); every other stored byte must match.
+    if stored[:37] + stored[38:] != boxed[:37] + boxed[38:] or stored[37] < boxed[37]:
         raise ValueError('withdrawn Pokémon differs from its Box record (was it used in battle?)')
     row = party_audit.reconstruct(withdrawn, rom)
     if party_audit.ordinary_reasons(withdrawn, rom, context):
@@ -198,7 +200,8 @@ def check_followup(previous: bytes, current: bytes, rom: bytes, *, box_number: i
             'counter': [before['slots'][before['active']]['counter'], after['slots'][after['active']]['counter']],
             'withdrawn': {'species': row['species'], 'level': withdrawn[84], 'stats': row['cached_hp_stats'][1:],
                           'moves': [m['move_id'] for m in row['moves']], 'full_hp_pp': True,
-                          'stored_bytes_equal_box_record': True},
+                          'stored_bytes_equal_box_record_except_friendship': True,
+                          'friendship_gameplay_increase': stored[37] - boxed[37]},
             'items_consumed': {names[i]: d for i, d in used.items()}, 'newly_qualified_item_consumed': bool(newly),
             'money_delta': money, 'unrelated_box_records_preserved': True,
             'party_identity_shiny_preserved': True, 'human_gameplay_attestation': False}
