@@ -95,6 +95,28 @@ Current Fast Lab evidence includes:
 
 These remain experimental until capability-specific reusable predicates and lifecycle evidence are established.
 
+## Quick start — exact-v0.22 editor (Mac)
+
+```bash
+./start-editor.command            # or double-click it in Finder
+./start-editor.command /path/inside/PokemonStart-private/exact-v022.gba   # explicit ROM
+```
+
+The first run creates `.venv` and installs `requirements-m4-ui.txt`. The editor serves only
+`http://127.0.0.1:8766` and opens it in the default browser. Workflow: open a `.sav` →
+edit → Preview → 検証して別 save を生成 → 検証済み .sav を保存. The source save is never modified.
+
+| Area | Supported (exact v0.22, fail-closed predicates) | Not supported |
+| --- | --- | --- |
+| Party | species, level/EXP, moves/PP/PP-Up, friendship, IV/EV, nature, ability, held item, **shiny toggle** (PID-only) | nickname, OT/TID, Ball, origin data, special/override species states |
+| Create | ordinary Pokémon into the first empty Party slot, optional **shiny** | creation into Boxes, full Party |
+| Items | 32 qualified recovery items: add/set/remove, **Give All** (each to 99, larger stacks kept) | Balls, Berries, TMs, Key Items, all-item Give All |
+| Trainer | Money 0–9,999,999 | identity, story, Pokédex, RTC |
+| PC Box | **read-only viewer** (25 boxes × 30) | any Box write (not authorized) |
+
+Give All, shiny and the Box viewer are sprint candidates (`codex/v022-editor-sprint-20261008`),
+not yet canonically adopted; see `docs/v022-giveall-shiny-candidate.md`.
+
 ## Localhost GUI
 
 The existing NiceGUI prototype provides upload, inspection, preview and verified separate downloads, bound only to `127.0.0.1`:

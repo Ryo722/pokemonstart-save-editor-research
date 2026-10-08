@@ -1,7 +1,9 @@
 # Exact-v0.22 Give All (recovery subset) and PID-only shiny — candidate
 
-Status: **core candidate; not GUI-integrated, not game-accepted, not reviewed.**
-Base: canonical `main` `5864e7a`. E5 is not incorporated.
+Status: **GUI-integrated sprint candidate; not game-accepted, not reviewed, not adopted.**
+Integration branch: `codex/v022-editor-sprint-20261008` = E5 candidate (with the
+requested-field persistence correction `08d2151`) + this candidate + GUI wiring.
+Launch: `./start-editor.command` (see README Quick start).
 
 ## Scope
 
@@ -32,9 +34,22 @@ Base: canonical `main` `5864e7a`. E5 is not incorporated.
   `IsMonShiny`-expected state, nature, `GetMonGender`, `GetMonAbility` and
   bytes 4..99.
 
+## GUI integration (2026-10-08 sprint)
+
+- Items tab: `Give All Supported Items` checkbox (single-operation, disabled with
+  the reason when unavailable); refuses combination with other Items edits.
+- Party: `Shiny（色違い）` checkbox for E3-eligible members, ★ in headers;
+  creation: optional `Create Shiny`. Request schema unchanged when unused, so
+  E5 Cycle 1/2 requests derive byte-identical outputs to the Human-accepted
+  E5 artifacts (checked on the retained private inputs).
+- `PC Box` tab: read-only table (species, level, held item, moves, IV/EV,
+  friendship, ★, native-observed flag); fails closed off the exact ROM.
+- Item identities of all 32 Give All targets were listed from the exact ROM:
+  recovery medicines, status cures, revives, drinks/food, Berry Juice and the
+  three flutes; all share the adopted medicine field/battle routines.
+
 ## Pending before review
 
-- GUI controls (after E5 adoption, on top of the E5 GUI).
 - Human gameplay: Bag display after Give All and use of one newly qualified
   item; shiny appearance in summary/battle; normal SAVE and return checks.
 
@@ -57,3 +72,16 @@ Base: canonical `main` `5864e7a`. E5 is not incorporated.
   source Party records.
 - `pokemonstart_v022_box_model.py` is read-only. Boxes 2–24 are ROM/source
   mapped but not natively observed. Box writing remains unauthorized.
+
+## Box writer — authorization decision (prepared, not requested as a blocker)
+
+Evidence is sufficient for the read-only viewer only. A Box writer would need,
+at minimum: (1) native observation of one deposit in each storage class not yet
+observed (boxes 2–19 storage block, 20–22 unchecksummed extra sectors, 23–24
+SaveBlock1); (2) a qualified Party(100)↔CompressedPokemon(58) mapping proven
+by round-trip on natively deposited records; (3) a first writer limited to
+editing existing records in boxes 1–19 (checksummed, slot-rotated) with
+independent reconstruction; (4) one grouped Human SAVE/withdraw check.
+Decision requested from the owner when convenient: **authorize step (1)–(3)
+as a bounded Box-edit candidate (boxes 1–19, existing records only)?**
+Box creation and boxes 20–25 writes stay out of scope until separately evidenced.

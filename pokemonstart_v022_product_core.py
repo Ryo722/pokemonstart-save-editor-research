@@ -1,6 +1,7 @@
 """One deterministic immutable-input transaction across independent product families."""
 from __future__ import annotations
 import copy
+import struct
 import pokemonstart_fl2_core as profile
 import pokemonstart_save_verifier as v
 import pokemonstart_v022_product_money as money
@@ -25,8 +26,11 @@ def inspect(raw, rom_sha256, *, rom_bytes=None):
                 _,_,_,tables,decoded,eligibility=party.ordinary_inspect(raw,rom_bytes,slot)
                 record.update(species_name=decoded['species_name'],held_item_name=decoded['held_item_name'],resolved_ability=decoded['resolved_ability'],
                               hidden_ability=decoded['hidden_ability'],ordinary_eligibility=eligibility)
+                import pokemonstart_v022_party_model as model
+                base=verified.slots[verified.active_slot].section(1).physical_sector*4096+v.PARTY_OFFSET+slot*100
+                record['shiny']=model.shiny_score(*struct.unpack_from('<II',raw,base))<8
                 record['capabilities']={'e3':True,**{field:eligibility['eligible'] for field in
-                    ('friendship','moves','stats','level_exp','effective_nature','ability','held_item')},
+                    ('friendship','moves','stats','level_exp','effective_nature','ability','held_item','shiny')},
                     'stats_reason':'; '.join(eligibility['reasons'])}
                 record['options']=party.ordinary_options(tables)
                 record['ability_options']=sorted(set(x for x in tables.species[mon.species].abilities if x)) if 0<mon.species<len(tables.species) else []
@@ -45,7 +49,26 @@ def inspect(raw, rom_sha256, *, rom_bytes=None):
                                'friendship_defaults':{i:rom_bytes[0x19B8B40+i*32+18] for i in creator.options['species']}}
         except ValueError as exc:
             report['creator']={'eligible':False,'reason':str(exc)}
+        report['box']=inspect_boxes(raw,rom_bytes,report['rejections'])
     return report
+
+
+def inspect_boxes(raw, rom_bytes, rejections):
+    """Read-only PC Box view; no Box writer is authorized."""
+    import pokemonstart_v022_box_model as box
+    import pokemonstart_v022_party_model as model
+    try:
+        result=box.inspect(raw,rom_bytes)
+    except ValueError as exc:
+        rejections['box']=str(exc)
+        return None
+    tables=model.extract_tables(rom_bytes)
+    options=party.ordinary_options(tables)
+    for row in result['occupied']:
+        row['move_names']=[options['moves'].get(m,f'#{m}') for m in row['moves'] if m]
+        row['held_item_name']='None' if not row['held_item'] else (
+            tables.items[row['held_item']].name if row['held_item'] in tables.items else f"#{row['held_item']}")
+    return result
 
 
 def derive(raw, rom_sha256, request, *, rom_bytes=None):
@@ -115,7 +138,7 @@ def derive(raw, rom_sha256, request, *, rom_bytes=None):
                     label={'species':'Species','level':'Level','experience':'EXP','friendship':'Friendship',
                            'moves':'Moves','pp':'PP','ivs':'IVs','evs':'EVs','cached_stats':'Stats',
                            'effective_nature':'Effective nature','resolved_ability':'Ability','held_item':'Held item',
-                           'pp_bonuses':'PP-Up'}.get(field,field)
+                           'pp_bonuses':'PP-Up','shiny':'Shiny'}.get(field,field)
                     if e3_tables is not None and field=='effective_nature':
                         from pokemonstart_v022_party_model import NATURE_NAMES
                         before,after=NATURE_NAMES[before],NATURE_NAMES[after]
