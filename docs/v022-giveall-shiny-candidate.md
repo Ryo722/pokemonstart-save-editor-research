@@ -103,3 +103,22 @@ Box creation and boxes 20–25 writes stay out of scope until separately evidenc
 - Fail-closed: Boxes 20-25, empty positions, eggs, non-round-tripping
   records, special species/states, facility context, PP edits, PID collisions.
 - Pending: one Human withdraw/summary/SAVE check of an edited Box record.
+
+## Combined Human acceptance (2026-10-08)
+
+Source: disposable copy of the native Box-deposit save; GUI export produced by
+the owner through `start-editor.command` (Party #1 shiny, shiny Charmander
+Lv.10 created in Party #4, Give All, Box 1 #1 Level 5→15).
+
+- Pre-gameplay: `audit-export` on the actual downloaded GUI file →
+  `EXPORT_VERIFIED_READY_FOR_GAMEPLAY` (byte-equal to independent derivation).
+- Human: owner reported all requested observations OK (shiny appearance,
+  Bag ×99, Box display/summary, normal SAVE, no corruption/freeze).
+- Machine return: `MACHINE_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED`; one normal
+  SAVE (counter 15→16), shiny states preserved, all 32 items present,
+  Box 1 #1 edited record preserved byte-for-byte in the Box.
+- Not evidenced by the returned save: consumption of a newly qualified item
+  (no quantity below 99; all Party HP full, so a use likely had no effect)
+  and a withdrawn-to-Party state (record was in Box at SAVE). The checker
+  supports both; an optional follow-up from RETURN can cover them.
+- Status: candidate accepted for local use; not reviewed, not adopted.
