@@ -80,10 +80,10 @@ CAPABILITY_SUMMARY='''対応（exact v0.22 のみ・条件を満たす場合）
 • Pokémon 作成: Party の最初の空きスロットへ通常個体を作成（色違い指定可）
 • Items: 回復系 32 種の追加・数量変更・削除、Give All（32 種を各 99 個）
 • Trainer: お金 0〜9,999,999
-• PC Box: 閲覧のみ（read-only）
+• PC Box: 全 Box 閲覧、Box 1〜19 の既存ポケモン編集（候補版）
 
 非対応（変更しません）
-• PC Box の編集・Box への作成、ニックネーム / OT / TID / Ball / 生成情報
+• Box 20〜25 の編集・Box への作成、ニックネーム / OT / TID / Ball / 生成情報
 • 回復系 32 種以外の道具（ボール・きのみ・技マシン・大切なもの等）、全道具 Give All
 • 図鑑 / ストーリー / イベント / 時計、v0.22 以外の版'''
 
@@ -318,32 +318,96 @@ def create_page(rom_path,export_directory=None):
                     ui.label('Trainer identity / story / Pokédex / RTC: read-only; editing is unsupported.')
 
     def render_boxes(report):
-        boxes=report.get('box')
-        ui.label('PC Box — 閲覧のみ（read-only）。Box の編集・Box への作成は未承認のため無効です。')
+        boxes=report.get('box');controls['box_edits']={}
+        ui.label('PC Box — Box 1〜19 の既存ポケモンを編集できます（候補版）。Box 20〜25 は閲覧のみ。Box への作成は非対応。')
         if not boxes:
             ui.label('PC Box 読み取り非対応: '+report['rejections'].get('box','ROM が必要です'));return
-        ui.label(f"格納数: {len(boxes['occupied'])} 匹 / {boxes['boxes']} Box × 30。"
-                 'Box 1 と 25 は実機保存で確認済み。その他の Box は ROM/ソース対応のみ（未観測）。').classes('text-caption')
-        for issue in boxes['issues']:
-            ui.label(f"Box {issue['box']} #{issue['position']}: {issue['reason']}")
-        rows=[{'box':row['box'],'position':row['position'],
-               'species':('★ ' if row['shiny'] else '')+(row['species_name'] or f"#{row['species']}"),
-               'level':row['level_from_exp'],'held':row['held_item_name'],'moves':' / '.join(row['move_names']),
-               'ivs':'/'.join(map(str,row['ivs'])),'evs':'/'.join(map(str,row['evs'])),
-               'friendship':row['friendship'],'observed':'確認済' if row['native_observed_box'] else '未観測'}
-              for row in boxes['occupied']]
-        columns=[{'name':key,'label':label,'field':key,'align':'left'} for key,label in (
-            ('box','Box'),('position','#'),('species','Species'),('level','Lv'),('held','Held item'),
-            ('moves','Moves'),('ivs','IVs'),('evs','EVs'),('friendship','Friendship'),('observed','Box 観測'))]
-        if rows:ui.table(columns=columns,rows=rows,row_key='position',pagination=30).classes('w-full')
-        else:ui.label('Box は空です。')
+        by_position={(row['box'],row['position']):row for row in boxes['occupied']}
+        counts={box_number:sum(1 for row in boxes['occupied'] if row['box']==box_number) for box_number in range(1,boxes['boxes']+1)}
+        first=next((box_number for box_number in counts if counts[box_number]),1)
+        ui.label(f"格納数: {len(boxes['occupied'])} 匹。セルを選ぶと下に詳細・編集欄が開きます。★ = 色違い。").classes('text-caption')
+        box_select=ui.select({box_number:f'Box {box_number}（{counts[box_number]} 匹）'+('・閲覧のみ' if box_number>19 else '')
+                              for box_number in counts},value=first,label='Box').classes('w-64')
+        grid=ui.grid(columns=6).classes('gap-1')
+        detail=ui.column().classes('w-full')
+        options=boxes['options']
+
+        def editor(row):
+            key=(row['box'],row['position']);prefix=f"Box {key[0]} #{key[1]}"
+            with detail:
+                container=ui.column().classes('w-full')
+            with container:
+                ui.label(f"{prefix} — {('★ ' if row['shiny'] else '')}{row['species_name']} Lv.{row['level_from_exp']}").classes('text-subtitle1')
+                if not row['editable']:
+                    ui.label('編集不可: '+'; '.join(row['edit_reasons']))
+                    ui.label(f"Held item: {row['held_item_name']} • Moves: {' / '.join(row['move_names'])} • IVs {row['ivs']} • EVs {row['evs']}")
+                    return container,{}
+                mon=row['semantic'];fields={}
+                fields['shiny']=ui.checkbox(f'Shiny（色違い） — {prefix}',value=mon['shiny'])
+                fields['shiny'].on_value_change(lambda _:invalidate())
+                with ui.row():
+                    fields['species']=select(f'Species — {prefix}',options['species'],mon['species'])
+                    fields['level']=number(f'Level — {prefix}',mon['level'],1,100)
+                    fields['effective_nature']=select(f'Nature — {prefix}',{i:n for i,n in enumerate(NATURE_NAMES)},mon['effective_nature'])
+                with ui.row():
+                    abilities={aid:f'特性 #{aid}' for aid in row['ability_options']}
+                    fields['ability']=select(f'Ability — {prefix}',abilities,mon['resolved_ability'])
+                    held=dict(options['held_item'])
+                    if mon['held_item'] not in held:held[mon['held_item']]=row['held_item_name']+'（保持のみ）'
+                    fields['held_item']=select(f'Held item — {prefix}',held,mon['held_item'])
+                    fields['friendship']=number(f'Friendship — {prefix}',mon['friendship'],0,255)
+                for field,maximum in (('ivs',31),('evs',252)):
+                    fields[field]=[]
+                    with ui.row():
+                        for index,name in enumerate(STAT_NAMES):
+                            fields[field].append(number(f'{name} {field.upper()} — {prefix}',mon[field][index],0,maximum))
+                fields['moves']={};fields['pp_up']={}
+                with ui.row():
+                    for index in range(4):
+                        with ui.column():
+                            fields['moves'][index]=select(f'Move {index+1} — {prefix}',options['moves'],mon['moves'][index])
+                            fields['pp_up'][index]=number(f'PP-Up {index+1} — {prefix}',mon['pp_up'][index],0,3)
+                ui.label('Box では PP / 能力値は保存されず、引き出し時にゲームが再計算します。色違いと種族変更は別々に行ってください。').classes('text-caption')
+            return container,fields
+
+        def choose(row):
+            key=(row['box'],row['position'])
+            if key not in controls['box_edits']:
+                container,fields=editor(row)
+                controls['box_edits'][key]=(container,fields,row)
+            for other,(container,_,_) in controls['box_edits'].items():
+                container.set_visibility(other==key)
+
+        def show_box():
+            grid.clear()
+            with grid:
+                for position in range(1,31):
+                    row=by_position.get((box_select.value,position))
+                    if row is None:
+                        ui.button(f'{position}. —').props('flat dense').classes('text-xs w-36').disable();continue
+                    text=f"{position}. {'★' if row['shiny'] else ''}{row['species_name']} Lv{row['level_from_exp']}"
+                    ui.button(text,on_click=lambda _,row=row:choose(row)).props(
+                        'outline dense' if row['editable'] else 'flat dense').classes('text-xs w-36')
+        box_select.on_value_change(lambda _:show_box())
+        show_box()
+        with ui.expansion('一覧（全 Box）').classes('w-full'):
+            rows=[{'box':row['box'],'position':row['position'],
+                   'species':('★ ' if row['shiny'] else '')+(row['species_name'] or f"#{row['species']}"),
+                   'level':row['level_from_exp'],'held':row['held_item_name'],'moves':' / '.join(row['move_names']),
+                   'ivs':'/'.join(map(str,row['ivs'])),'evs':'/'.join(map(str,row['evs'])),
+                   'edit':'可' if row['editable'] else '不可'} for row in boxes['occupied']]
+            columns=[{'name':key,'label':label,'field':key,'align':'left'} for key,label in (
+                ('box','Box'),('position','#'),('species','Species'),('level','Lv'),('held','Held item'),
+                ('moves','Moves'),('ivs','IVs'),('evs','EVs'),('edit','編集'))]
+            if rows:ui.table(columns=columns,rows=rows,row_key='position',pagination=30).classes('w-full')
+            else:ui.label('Box は空です。')
 
     async def upload(event):
         invalidate();preview_button.disable();editor.clear();controls.clear();inspection.clear()
         try:
             report=workflow.upload(event.file.name,await event.file.read())
             inspection.update(report);render(report)
-            status.text='読み込み済み — Party / Items / Trainer を編集できます（PC Box は閲覧のみ）。'
+            status.text='読み込み済み — Party / Items / PC Box / Trainer を編集できます。'
             details.text=str(report);preview_button.enable()
         except (OSError,ValueError) as exc:status.text=f'REJECTED: {exc}'
 
@@ -386,6 +450,25 @@ def create_page(rom_path,export_directory=None):
             if fields.get('shiny') is not None and fields['shiny'].value:creation['shiny']=True
             creations.append(creation)
         if creations:result['create']=creations
+        box_edits=[]
+        for (box_number,position),(_,fields,row) in controls.get('box_edits',{}).items():
+            if not fields:continue
+            mon=row['semantic'];changes={}
+            if bool(fields['shiny'].value)!=mon['shiny']:changes['shiny']=bool(fields['shiny'].value)
+            for field in ('species','level','effective_nature','held_item','friendship'):
+                value=control_integer(fields[field].value)
+                if value!=mon[field]:changes[field]=value
+            value=control_integer(fields['ability'].value)
+            if value!=mon['resolved_ability']:changes['ability']=value
+            for field in ('ivs','evs'):
+                values=[control_integer(c.value) for c in fields[field]]
+                if values!=mon[field]:changes[field]=values
+            for field in ('moves','pp_up'):
+                mapping={index:control_integer(c.value) for index,c in fields[field].items()
+                         if control_integer(c.value)!=mon[field][index]}
+                if mapping:changes[field]=mapping
+            if changes:box_edits.append({'box':box_number,'position':position,'changes':changes})
+        if box_edits:result['box']=box_edits
         if inspection.get('items') and inspection['items'].get('e2'):
             operations=[]
             for entry in inspection['items']['entries']:
@@ -418,11 +501,13 @@ def create_page(rom_path,export_directory=None):
         invalidate()
         try:
             report=workflow.preview(request())
-            groups={'Party':[],'Created Pokémon':[],'Items':[],'Trainer':[]}
+            groups={'Party':[],'Created Pokémon':[],'PC Box':[],'Items':[],'Trainer':[]}
             in_creation=False
             for line in report['semantic_diff']:
                 if line.startswith('Money:'):
                     groups['Trainer'].append(line);in_creation=False
+                elif line.startswith('Box '):
+                    groups['PC Box'].append(line);in_creation=False
                 elif line.startswith('Party #'):
                     groups['Party'].append(line);in_creation=False
                 elif line.startswith('Create Pokémon'):

@@ -112,9 +112,9 @@ edit → Preview → 検証して別 save を生成 → 検証済み .sav を保
 | Create | ordinary Pokémon into the first empty Party slot, optional **shiny** | creation into Boxes, full Party |
 | Items | 32 qualified recovery items: add/set/remove, **Give All** (each to 99, larger stacks kept) | Balls, Berries, TMs, Key Items, all-item Give All |
 | Trainer | Money 0–9,999,999 | identity, story, Pokédex, RTC |
-| PC Box | **read-only viewer** (25 boxes × 30) | any Box write (not authorized) |
+| PC Box | viewer for all 25 boxes; **candidate editing of existing Pokémon in Boxes 1–19** (same fields as Party except PP) | Boxes 20–25 writes, Box creation, eggs/special states |
 
-Give All, shiny and the Box viewer are sprint candidates (`codex/v022-editor-sprint-20261008`),
+Give All, shiny and Box viewing/editing are sprint candidates (`codex/v022-editor-sprint-20261008`),
 not yet canonically adopted; see `docs/v022-giveall-shiny-candidate.md`.
 
 ## Localhost GUI

@@ -1,4 +1,4 @@
-"""Combined Give All / shiny / shiny-creation acceptance for the exact-v0.22 editor.
+"""Combined Give All / shiny / shiny-creation / Box-edit acceptance for the exact-v0.22 editor.
 
 The recipe is derived deterministically from the source save and equals what the
 GUI produces with the checklist steps (GUI defaults plus the listed changes), so
@@ -12,6 +12,7 @@ from pathlib import Path
 import pokemonstart_v022_product_core as core
 import pokemonstart_v022_party_audit as party_audit
 import pokemonstart_v022_inventory_editor as items
+import pokemonstart_v022_box_audit as box_audit
 
 CREATE_SPECIES = 4  # ヒトカゲ: shiny palette is easy to recognise in game
 CREATE_LEVEL = 10
@@ -40,8 +41,18 @@ def recipe(raw: bytes, rom: bytes) -> dict:
                               'friendship': creator['friendship_defaults'][CREATE_SPECIES],
                               'ability': options['abilities'][CREATE_SPECIES][0], 'held_item': 0,
                               'ivs': [0]*6, 'evs': [0]*6, 'moves': [33, 0, 0, 0], 'shiny': True}]
+    editable = [row for row in (report.get('box') or {}).get('occupied', []) if row['editable']]
+    if editable:
+        row = editable[0]
+        request['box'] = [{'box': row['box'], 'position': row['position'],
+                           'changes': {'level': min(row['semantic']['level'] + 10, 100)}}]
     request['items'] = [{'op': 'give_all'}]
     return request
+
+
+def _box_record(raw: bytes, rom: bytes, edit: dict) -> bytes:
+    offsets = box_audit._record_offsets(box_audit._active_sectors(raw), rom, edit['box'], edit['position'])
+    return bytes(raw[o] for o in offsets)
 
 
 def audit_export(source: bytes, actual: bytes, rom: bytes) -> dict:
@@ -58,6 +69,11 @@ def audit_export(source: bytes, actual: bytes, rom: bytes) -> dict:
     shiny_slots = [request['party'][0]['slot']] + [parsed['count'] - 1] * ('create' in request)
     if not all(_shiny(parsed['records'][slot]) for slot in shiny_slots):
         raise ValueError('independent shiny formula disagrees with the export')
+    if 'box' in request:
+        edit = request['box'][0]
+        level = party_audit.reconstruct(box_audit._expand(_box_record(actual, rom, edit), rom), rom)['exp_derived_level']
+        if level != edit['changes']['level']:
+            raise ValueError('independent Box level disagrees with the export')
     return {'status': 'EXPORT_VERIFIED_READY_FOR_GAMEPLAY', 'semantic_diff': transaction['semantic_diff'],
             'shiny_slots': [s + 1 for s in shiny_slots], 'gameplay_attestation': False}
 
@@ -74,7 +90,25 @@ def check_return(source: bytes, exported: bytes, returned: bytes, rom: bytes) ->
         raise ValueError('prior active slot was not preserved')
     if any(new['positions'][s] % 14 != (old['positions'][s] % 14 + 1) % 14 for s in range(14)):
         raise ValueError('normal SAVE section rotation mismatch')
-    if before['count'] != after['count']:
+    request = recipe(source, rom)
+    box_result = None
+    if 'box' in request:
+        edit = request['box'][0]
+        exported_record, returned_record = _box_record(exported, rom, edit), _box_record(returned, rom, edit)
+        if returned_record == exported_record:
+            box_result = 'kept in Box: edited record preserved'
+        elif not any(returned_record) and after['count'] == before['count'] + 1:
+            withdrawn = after['records'][-1]
+            if box_audit._compress(withdrawn) != exported_record:
+                raise ValueError('withdrawn Box Pokémon differs from the edited record')
+            if party_audit.ordinary_reasons(withdrawn, rom, party_audit.inspect(returned, rom)['saved_context']):
+                raise ValueError('withdrawn Box Pokémon is not ordinary-consistent (level/stats/PP)')
+            if withdrawn[84] != edit['changes']['level']:
+                raise ValueError('withdrawn Box Pokémon level differs from the requested level')
+            box_result = 'withdrawn to Party: stored bytes equal, level/stats/PP consistent'
+        else:
+            raise ValueError('edited Box record neither preserved nor cleanly withdrawn')
+    if after['count'] != before['count'] + (box_result is not None and box_result.startswith('withdrawn')):
         raise ValueError('Party count changed during gameplay')
     for slot, (a, b) in enumerate(zip(before['records'], after['records'])):
         if a[:4] != b[:4] or a[32:34] != b[32:34] or _shiny(a) != _shiny(b):
@@ -90,6 +124,7 @@ def check_return(source: bytes, exported: bytes, returned: bytes, rom: bytes) ->
         raise ValueError('returned save lost Inventory eligibility')
     return {'status': 'MACHINE_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED', 'counter': [old['counter'], new['counter']],
             'shiny_preserved': True, 'give_all_items_present': len(rom_names), 'items_used_in_game': used,
+            'box_edit': box_result,
             'human_gameplay_attestation': False}
 
 

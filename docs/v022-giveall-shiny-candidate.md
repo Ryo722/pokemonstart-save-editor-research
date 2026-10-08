@@ -85,3 +85,21 @@ independent reconstruction; (4) one grouped Human SAVE/withdraw check.
 Decision requested from the owner when convenient: **authorize step (1)–(3)
 as a bounded Box-edit candidate (boxes 1–19, existing records only)?**
 Box creation and boxes 20–25 writes stay out of scope until separately evidenced.
+
+## Box 1-19 existing-record editing (candidate, owner-authorized 2026-10-08)
+
+- Conversion: a boxed record is expanded exactly as CFRU
+  `CreateBoxMonFromCompressedMon`/`BoxMonToMon` do (bytes 0-27, substruct0
+  without its pad byte, packed 10-bit moves, EVs, misc incl. IV word; PP to
+  maximum; level and stats derived), edited by the adopted E3 transform, and
+  compressed back. Changes outside stored or withdrawal-derived bytes reject.
+- Native evidence: both natively deposited records (Box 1/1, Box 25/30) equal
+  their source Party records on every stored byte; all unstored Party bytes
+  were zero; both round-trip exactly.
+- Writer `pokemonstart_v022_box_writer.py`; independent reconstruction
+  `pokemonstart_v022_box_audit.py` (own slot/sector discovery, placement,
+  conversion and checksums; record arithmetic from the independent E3 auditor)
+  must equal the complete output. Composed with Money/Party/Items/creation.
+- Fail-closed: Boxes 20-25, empty positions, eggs, non-round-tripping
+  records, special species/states, facility context, PP edits, PID collisions.
+- Pending: one Human withdraw/summary/SAVE check of an edited Box record.
