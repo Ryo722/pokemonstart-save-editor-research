@@ -58,6 +58,57 @@ class E5AcceptanceTests(unittest.TestCase):
         self.assertEqual(result['status'],'MACHINE_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED')
         self.assertTrue(result['continued_e1_e2_e3_e4_eligibility'])
 
+    @staticmethod
+    def _with_record(returned, donor, slot, offsets=range(100)):
+        """Restore donor Party record bytes in the returned save, as if the edit was lost."""
+        v=web.core.v
+        def location(raw):
+            result=v.verify_bytes(raw);section=result.slots[result.active_slot].section(1)
+            return section.physical_sector*4096
+        base,donor_base=location(returned),location(donor)
+        out=bytearray(returned);start=v.PARTY_OFFSET+slot*100
+        for offset in offsets:out[base+start+offset]=donor[donor_base+start+offset]
+        checksum=v.calculate_save_checksum(out[base:base+v.SECTION_LENGTHS[1]])
+        out[base+0xFF6:base+0xFF8]=checksum.to_bytes(2,'little')
+        return bytes(out)
+
+    def test_cycle1_return_rejects_lost_requested_party_field(self):
+        from test_v022_product_acceptance import resave
+        receipt=e5.prepare(self.raw,self.rom)
+        output,_=web.core.derive(self.raw,self.digest,receipt['transaction']['request'],rom_bytes=self.rom)
+        slot=receipt['transaction']['request']['party'][0]['slot']
+        self.assertIn('friendship',receipt['transaction']['request']['party'][0]['changes'])
+        lost=self._with_record(resave(output),self.raw,slot,offsets=(41,))  # friendship byte
+        with self.assertRaisesRegex(ValueError,'requested Party state did not persist: slot .* friendship'):
+            e5.check_cycle1_return(self.raw,lost,self.rom,receipt)
+
+    def test_cycle2_return_rejects_lost_requested_friendship(self):
+        from test_v022_product_acceptance import resave
+        receipt=e5.prepare(self.raw,self.rom)
+        output,_=web.core.derive(self.raw,self.digest,receipt['transaction']['request'],rom_bytes=self.rom)
+        slot=receipt['created_slot']
+        second=e5.prepare_cycle2(output,self.rom,created_slot=slot)
+        second_output,_=web.core.derive(output,self.digest,second['transaction']['request'],rom_bytes=self.rom)
+        self.assertTrue(e5.check_cycle2_return(output,resave(second_output),self.rom,second)['requested_fields_persisted'])
+        lost=self._with_record(resave(second_output),output,slot)
+        with self.assertRaisesRegex(ValueError,'Cycle 2 slot .* friendship'):
+            e5.check_cycle2_return(output,lost,self.rom,second)
+
+    def test_persistence_rules_allow_only_gameplay_monotone_drift(self):
+        actual={'stored_level':13,'experience':900,'evs':[1,0,0,0,0,0],'held_item':0,
+                'friendship':70,'resolved_ability':50,'species':19,'ivs':[1]*6,'effective_nature':3,
+                'moves':[{'move_id':33,'pp':30,'pp_up_count':0,'maximum_pp':35}]+[{'move_id':0,'pp':0,'pp_up_count':0,'maximum_pp':0}]*3}
+        expected={'level':12,'experience':800,'evs':[0]*6,'held_item':139,'friendship':70,
+                  'ability':50,'species':19,'ivs':[1]*6,'effective_nature':3}
+        e5._assert_requested_persisted({'level':12,'experience':800,'evs':[0]*6,'held_item':139,
+            'friendship':70,'ability':50,'species':19,'ivs':[1]*6,'effective_nature':3,
+            'moves':{0:33},'pp':{0:35},'pp_up':{0:0}},expected,actual,'test')
+        for field,value in (('friendship',71),('level',14),('species',20),('held_item',1)):
+            with self.subTest(field=field),self.assertRaisesRegex(ValueError,'did not persist'):
+                e5._assert_requested_persisted({field:value},{**expected,field:value},actual,'test')
+        with self.assertRaisesRegex(ValueError,'no rule'):
+            e5._assert_requested_persisted({'unknown':1},expected,actual,'test')
+
     def test_actual_gui_maps_all_four_families_and_invalidates_preview(self):
         if web.ui is None:self.skipTest('NiceGUI optional dependency unavailable')
         from nicegui.elements.upload import Upload

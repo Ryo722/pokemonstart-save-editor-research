@@ -33,6 +33,40 @@ def _restore_receipt(receipt):
     return result
 
 
+# Gameplay may only raise EXP/level/EVs and consume one-use held items; every
+# other requested field must persist exactly through the ordinary SAVE.
+_HELD_CONSUMABLE=(139,142)
+
+
+def _assert_requested_persisted(changes, expected, actual, label):
+    """Fail closed unless each requested Party field survived the returned SAVE."""
+    def fail(field):
+        raise ValueError(f'E5 requested Party state did not persist: {label} {field}')
+    for field,requested in changes.items():
+        if field=='moves':
+            current=[x['move_id'] for x in actual['moves']]
+            if any(current[int(i)]!=v for i,v in requested.items()):fail('moves')
+        elif field=='pp_up':
+            if any(actual['moves'][int(i)]['pp_up_count']!=v for i,v in requested.items()):fail('pp_up')
+        elif field=='pp':
+            if any(not 0<=actual['moves'][int(i)]['pp']<=actual['moves'][int(i)]['maximum_pp']
+                   for i in requested):fail('pp')
+        elif field in ('level','experience'):
+            key='stored_level' if field=='level' else 'experience'
+            if actual[key]<expected[field]:fail(field)
+        elif field=='evs':
+            if any(a<b for a,b in zip(actual['evs'],expected['evs'])):fail('evs')
+        elif field=='held_item':
+            if actual['held_item']!=expected['held_item'] and not (
+                    expected['held_item'] in _HELD_CONSUMABLE and actual['held_item']==0):fail('held_item')
+        elif field in ('ability','resolved_ability'):
+            if actual['resolved_ability']!=expected[field]:fail('ability')
+        elif field in ('species','friendship','ivs','effective_nature','nature'):
+            key='effective_nature' if field=='nature' else field
+            if actual[key]!=expected[field]:fail(field)
+        else:raise ValueError(f'E5 persistence check has no rule for requested field: {field}')
+
+
 def _build_recipe(raw: bytes, rom: bytes):
     digest=core.profile.sha(rom)
     report=core.inspect(raw,digest,rom_bytes=rom)
@@ -187,19 +221,10 @@ def check_cycle1_return(source: bytes, returned: bytes, rom: bytes, receipt: dic
         for field in ('held_item','experience','stored_level','friendship','evs','cached_hp_stats','moves'):
             if left[field]!=right[field]:drifts.append({'slot':slot,'created':slot>=initial_count,'field':field})
     for edit in receipt['transaction']['request']['party']:
-        expected=receipt['transaction']['families'][f"party_{edit['slot']}"]['after']
-        actual=actual_party[edit['slot']]
-        for field in edit['changes']:
-            expected_value=expected[field]
-            actual_value=actual[field]
-            if field=='moves':
-                expected_value=expected['moves']
-                actual_value=[x['move_id'] for x in actual['moves']]
-                for index,value in edit['changes']['moves'].items():
-                    if actual_value[index]!=value:raise ValueError('E5 requested move did not persist')
-                continue
-            if field in ('ivs','evs') and actual_value!=expected_value:
-                raise ValueError(f'E5 requested Party state did not persist: {field}')
+        expected_after=dict(receipt['transaction']['families'][f"party_{edit['slot']}"]['after'])
+        expected_after['ability']=expected_after['resolved_ability']
+        _assert_requested_persisted(edit['changes'],expected_after,actual_party[edit['slot']],
+                                    f"slot {edit['slot']+1}")
     for created in receipt['transaction']['families']['create']['created']:
         actual=actual_party[created['slot']]
         comparisons={'species':created['species'],'ivs':created['ivs'],
@@ -209,9 +234,13 @@ def check_cycle1_return(source: bytes, returned: bytes, rom: bytes, receipt: dic
             current=[x['move_id'] for x in actual['moves']] if field=='moves' else actual[field]
             if current!=value:
                 raise ValueError(f'E5 created Pokémon invariant did not persist: {field}')
+        _assert_requested_persisted({'level':created['level'],'friendship':created['friendship'],
+                                     'held_item':created['held_item'],'evs':created['evs']},
+                                    created,actual,f"created slot {created['slot']+1}")
     return {'status':'MACHINE_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED','counter':[old['counter'],new['counter']],
             'previous_active_preserved':True,'normal_section_rotation':True,
             'money_inventory_persisted':True,'continued_e1_e2_e3_e4_eligibility':True,
+            'requested_fields_persisted':True,
             'reported_gameplay_drift_fields':drifts,'human_gameplay_attestation':False,
             'independent_e4_audit':transaction['independent_e4_audit']}
 
@@ -246,9 +275,16 @@ def check_cycle2_return(source: bytes, returned: bytes, rom: bytes, receipt: dic
         raise ValueError('E5 Cycle 2 Money changed unexpectedly')
     if inventory_audit.restricted(source,rom)['pockets']!=inventory_audit.restricted(returned,rom)['pockets']:
         raise ValueError('E5 Cycle 2 Inventory changed unexpectedly')
+    returned_party=inspection['party']
+    for edit in receipt['transaction']['request']['party']:
+        expected_after=dict(transaction['families'][f"party_{edit['slot']}"]['after'])
+        expected_after['ability']=expected_after['resolved_ability']
+        _assert_requested_persisted(edit['changes'],expected_after,returned_party[edit['slot']],
+                                    f"Cycle 2 slot {edit['slot']+1}")
     return {'status':'MACHINE_CYCLE2_RETURN_PASS_HUMAN_ATTESTATION_REQUIRED',
             'counter':[old['counter'],new['counter']],'previous_active_preserved':True,
             'normal_section_rotation':True,'continued_e1_e2_e3_e4_eligibility':True,
+            'requested_fields_persisted':True,
             'independent_e3_audit':transaction['independent_e3_audit'],
             'human_gameplay_attestation':False}
 
