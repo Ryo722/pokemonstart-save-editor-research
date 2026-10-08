@@ -10,12 +10,21 @@ import pokemonstart_v022_inventory_audit as audit
 import pokemonstart_fl2_core as profile
 
 MEDICINES = frozenset(range(13, 23))
+# Exact-v0.22 regular items sharing the adopted medicines' complete behavior
+# signature (field/battle use routines). Membership is pinned by ID and the
+# signature is re-checked against the ROM; neither alone grants support.
+RECOVERY_ITEMS = MEDICINES | frozenset(range(23, 34)) | frozenset(range(38, 42)) | {44, 82} \
+    | frozenset(range(52, 57))
+GIVE_ALL_QUANTITY = 99
+# Give All stays within logical section 13 (slots 0..324); slot 325 onward is
+# serialized to the shared unchecksummed sector 30 without native evidence.
+GIVE_ALL_OCCUPANCY_LIMIT = 325
 
 
 def supported_catalog(rom: bytes) -> dict:
     catalog, _ = model.extract_catalog(rom)
     selected = {}
-    for item_id in MEDICINES:
+    for item_id in sorted(RECOVERY_ITEMS):
         item = catalog.get(item_id)
         if item is None:
             raise ValueError('qualified medicine metadata missing')
@@ -44,7 +53,31 @@ def inspect(raw: bytes, rom: bytes) -> dict:
                for entry in decoded['pockets'][0]['entries']]
     return {'e2': True, 'entries': entries, 'supported_names': names,
             'capacity': 700, 'quantity_min': 1, 'quantity_max': 999,
-            'occupied': len(entries), 'give_all_enabled': False}
+            'occupied': len(entries), 'give_all': give_all_status(decoded['pockets'][0]['entries'], names)}
+
+
+def give_all_operations(entries: list[dict], names: dict) -> list[dict]:
+    """Raise every supported item to 99 without lowering a larger stack."""
+    present = {e['item_id']: e['quantity'] for e in entries}
+    operations = [{'op': 'add' if item_id not in present else 'set', 'item_id': item_id,
+                   'quantity': GIVE_ALL_QUANTITY}
+                  for item_id in sorted(names) if present.get(item_id, 0) < GIVE_ALL_QUANTITY]
+    occupied = len(entries) + sum(op['op'] == 'add' for op in operations)
+    if occupied > GIVE_ALL_OCCUPANCY_LIMIT:
+        raise ValueError('Give All would extend the regular pocket past slot 325')
+    return operations
+
+
+def give_all_status(entries: list[dict], names: dict) -> dict:
+    status = {'supported_items': len(names), 'quantity': GIVE_ALL_QUANTITY,
+              'scope': 'qualified recovery items only; not all items'}
+    try:
+        operations = give_all_operations(entries, names)
+    except ValueError as exc:
+        return status | {'enabled': False, 'reason': str(exc)}
+    if not operations:
+        return status | {'enabled': False, 'reason': 'every supported item already has 99 or more'}
+    return status | {'enabled': True, 'changes': len(operations)}
 
 
 def derive(raw: bytes, rom: bytes, operations: list[dict]) -> tuple[bytes, dict]:
@@ -52,6 +85,15 @@ def derive(raw: bytes, rom: bytes, operations: list[dict]) -> tuple[bytes, dict]
     if not isinstance(operations, list) or not operations:
         raise ValueError('Items requires a nonempty operation list')
     rows = [(e['item_id'], e['quantity']) for e in before['entries']]
+    if any(isinstance(x, dict) and x.get('op') == 'give_all' for x in operations):
+        if operations != [{'op': 'give_all'}]:
+            raise ValueError('Give All must be the only Items operation')
+        if not before['give_all']['enabled']:
+            raise ValueError('Give All unavailable: ' + before['give_all']['reason'])
+        request = operations
+        operations = give_all_operations(before['entries'], before['supported_names'])
+    else:
+        request = operations
     seen = set()
     for operation in operations:
         if not isinstance(operation, dict):
@@ -61,7 +103,7 @@ def derive(raw: bytes, rom: bytes, operations: list[dict]) -> tuple[bytes, dict]
         if verb not in ('add', 'set', 'remove') or set(operation) != expected:
             raise ValueError('unsupported Items operation')
         item_id = operation['item_id']
-        if type(item_id) is not int or item_id not in MEDICINES or item_id in seen:
+        if type(item_id) is not int or item_id not in RECOVERY_ITEMS or item_id in seen:
             raise ValueError('unsupported or repeated medicine target')
         seen.add(item_id)
         quantity = operation.get('quantity')
@@ -91,7 +133,7 @@ def derive(raw: bytes, rom: bytes, operations: list[dict]) -> tuple[bytes, dict]
     if candidate == raw:
         raise ValueError('Items unchanged; no output')
     after = inspect(candidate, rom)
-    independent = audit.audit_edit(raw, candidate, rom, operations)
+    independent = audit.audit_edit(raw, candidate, rom, request)
     return candidate, {'before': before, 'after': after,
                        'changed_offsets': independent['changed_offsets'],
                        'independent_audit': independent, 'verifier_accepted': True}

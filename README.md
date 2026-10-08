@@ -68,9 +68,10 @@ The exact-v0.22 practical product is **COMPLETE / ADOPTED on canonical `main`**.
 - **E2 — Practical Inventory editor: COMPLETE / ADOPTED**
 - **E3 — General existing-Pokémon editor: COMPLETE / ADOPTED**
 - **E4 — Pokémon creator (Party-only initial scope): COMPLETE / ADOPTED**
-- **E5 — PKHeX-like product UX and acceptance: NEXT / NOT STARTED**
+- **E5 — PKHeX-like product UX and acceptance: CANDIDATE (PR #25), awaiting Human adoption** — two-cycle Human acceptance recorded; review finding (requested-field persistence) corrected in `08d2151` and strengthened after the PR #25 focused review (lost decreases now detected); retained return saves still pass.
+- **Editor sprint (2026-10-08) — Give All, shiny, Box 1–19 editing: CANDIDATE / Human-accepted locally** — combined GUI→game→return acceptance passed; see `docs/v022-giveall-shiny-candidate.md`.
 
-Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All and broader item authority remain unsupported. E3 existing-Pokémon editing and E4 Party-only Pokémon creation are COMPLETE / ADOPTED through PR #23 and PR #24 respectively. E5 is next but has not been started by this adoption action. See `docs/v022-pkhex-like-editor-expansion.md`.
+Money is DONE / maintenance-only for this expansion. Inventory E1/E2 is canonical for the reviewed restricted exact-v0.22 recovery-medicine subset; Give All over 32 qualified recovery items is a PR #25 candidate, and broader item authority remains unsupported. E3 existing-Pokémon editing and E4 Party-only Pokémon creation are COMPLETE / ADOPTED through PR #23 and PR #24 respectively. E5 and the 2026-10-08 editor sprint (Give All, shiny, Box 1–19 editing) are candidates in PR #25, not yet adopted. See `docs/v022-pkhex-like-editor-expansion.md`.
 
 ## Exact v0.22 Fast Lab profile
 
@@ -94,6 +95,28 @@ Current Fast Lab evidence includes:
 - **Creation:** the adopted E4 creator constructs a bounded general class of new ordinary Pokémon in the first eligible empty Party slot from semantic parameters, with independent complete-record/save reconstruction and explicit full-Party Box rejection.
 
 These remain experimental until capability-specific reusable predicates and lifecycle evidence are established.
+
+## Quick start — exact-v0.22 editor (Mac)
+
+```bash
+./start-editor.command            # or double-click it in Finder
+./start-editor.command /path/inside/PokemonStart-private/exact-v022.gba   # explicit ROM
+```
+
+The first run creates `.venv` and installs `requirements-m4-ui.txt`. The editor serves only
+`http://127.0.0.1:8766` and opens it in the default browser. Workflow: open a `.sav` →
+edit → Preview → 検証して別 save を生成 → 検証済み .sav を保存. The source save is never modified.
+
+| Area | Supported (exact v0.22, fail-closed predicates) | Not supported |
+| --- | --- | --- |
+| Party | species, level/EXP, moves/PP/PP-Up, friendship, IV/EV, nature, ability, held item, **shiny toggle** (PID-only) | nickname, OT/TID, Ball, origin data, special/override species states |
+| Create | ordinary Pokémon into the first empty Party slot, optional **shiny** | creation into Boxes, full Party |
+| Items | 32 qualified recovery items: add/set/remove, **Give All** (each to 99, larger stacks kept) | Balls, Berries, TMs, Key Items, all-item Give All |
+| Trainer | Money 0–9,999,999 | identity, story, Pokédex, RTC |
+| PC Box | viewer for all 25 boxes; **candidate editing of existing Pokémon in Boxes 1–19** (same fields as Party except PP) | Boxes 20–25 writes, Box creation, eggs/special states |
+
+Give All, shiny and Box viewing/editing are sprint candidates (`codex/v022-editor-sprint-20261008`),
+not yet canonically adopted; see `docs/v022-giveall-shiny-candidate.md`.
 
 ## Localhost GUI
 

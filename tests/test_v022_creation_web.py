@@ -55,6 +55,11 @@ class CreationWebTests(unittest.TestCase):
                     upload=next(iter(user.find(kind=Upload).elements))
                     await upload.handle_uploads([SmallFileUpload('source.sav','application/octet-stream',self.raw)])
                     await user.should_see('読み込み済み')
+                    for slot in range(1,7):await user.should_see(f'Party #{slot}')
+                    await user.should_see('Open Save')
+                    writable_labels=[x.label for x in user.find(kind=Number).elements]
+                    self.assertFalse(any(token in label.lower() for label in writable_labels
+                                         for token in ('pid','ot id','offset','checksum','ability selector')))
                     boxes={c.text:c for c in user.find(kind=Checkbox).elements if c.text.startswith('Create Pokémon')}
                     self.assertFalse(boxes['Create Pokémon — Party #5'].enabled)
                     boxes['Create Pokémon — Party #4'].value=True

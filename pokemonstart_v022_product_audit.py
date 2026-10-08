@@ -127,12 +127,21 @@ def audit_e3(before, after, rom, request):
             raise ValueError('independent Money range')
         expected[section+656:section+660] = target.to_bytes(4,'little')
         envelope.update(range(section+656,section+660))
+    box_changes = {}
+    if 'box' in request:
+        import pokemonstart_v022_box_audit as box_audit
+        box_changes, _, _ = box_audit.expected_changes(before, rom, request['box'])
+        for offset, value in box_changes.items():
+            expected[offset] = value
+        envelope.update(box_changes)
     if 'items' in request:
         # Remove Party/Money changes before passing the isolated inventory
         # output to its established full independent auditor. It then admits
         # exactly its own bytes, without borrowing a production family result.
         isolated = bytearray(after)
         isolated[section:section+4096] = before[section:section+4096]
+        for offset in box_changes:
+            isolated[offset] = before[offset]
         inventory.audit_edit(before,bytes(isolated),rom,request['items'])
         for i,(x,y) in enumerate(zip(before,isolated)):
             if x != y:

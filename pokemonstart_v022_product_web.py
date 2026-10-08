@@ -75,6 +75,19 @@ class ProductWorkflow(LegacyWorkflow):
         return destination
 
 
+CAPABILITY_SUMMARY='''対応（exact v0.22 のみ・条件を満たす場合）
+• Party: 種族 / Level・EXP / 技・PP・PP-Up / なつき度 / IV・EV / 性格 / 特性 / 持ち物 / 色違い（Shiny）切替
+• Pokémon 作成: Party の最初の空きスロットへ通常個体を作成（色違い指定可）
+• Items: 回復系 32 種の追加・数量変更・削除、Give All（32 種を各 99 個）
+• Trainer: お金 0〜9,999,999
+• PC Box: 全 Box 閲覧、Box 1〜19 の既存ポケモン編集（候補版）
+
+非対応（変更しません）
+• Box 20〜25 の編集・Box への作成、ニックネーム / OT / TID / Ball / 生成情報
+• 回復系 32 種以外の道具（ボール・きのみ・技マシン・大切なもの等）、全道具 Give All
+• 図鑑 / ストーリー / イベント / 時計、v0.22 以外の版'''
+
+
 SPECIES_NAMES={1:'Bulbasaur',2:'Ivysaur',25:'Pikachu',288:'Zigzagoon'}
 NATURE_NAMES=('Hardy','Lonely','Brave','Adamant','Naughty','Bold','Docile','Relaxed','Impish','Lax','Timid','Hasty','Serious','Jolly','Naive','Modest','Mild','Quiet','Bashful','Rash','Calm','Gentle','Sassy','Careful','Quirky')
 STAT_NAMES=('HP','Attack','Defense','Speed','Sp. Atk','Sp. Def')
@@ -88,8 +101,11 @@ def control_integer(value):
 def create_page(rom_path,export_directory=None):
     if ui is None:raise RuntimeError('install requirements-m4-ui.txt')
     workflow=ProductWorkflow(rom_path)
-    ui.label('PokemonStart v0.22').classes('text-h4')
-    ui.label('候補版 / Fast Lab • ローカル専用 • 元の save を保管し、別の検証済み save を出力')
+    ui.label('PokemonStart v0.22 Editor').classes('text-h4')
+    ui.label('候補版 / Fast Lab • ローカル専用 • 元の save は変更せず、検証済みの別 save を出力')
+    with ui.expansion('対応機能 / 非対応機能').classes('w-full'):
+        ui.label(CAPABILITY_SUMMARY).classes('whitespace-pre-line text-body2')
+    ui.label('Open Save  →  Edit  →  Preview  →  Verify  →  Export').classes('text-subtitle1')
     status=ui.label('ローカル .sav を開いてください。').classes('whitespace-pre-line')
     editor=ui.column().classes('w-full')
     preview_text=ui.label('').classes('whitespace-pre-line text-body1')
@@ -115,10 +131,10 @@ def create_page(rom_path,export_directory=None):
         editor.clear();controls.clear()
         with editor:
             with ui.tabs() as tabs:
-                party_tab=ui.tab('Party');items_tab=ui.tab('Items');trainer_tab=ui.tab('Trainer')
+                party_tab=ui.tab('Party');items_tab=ui.tab('Items');box_tab=ui.tab('PC Box');trainer_tab=ui.tab('Trainer')
             with ui.tab_panels(tabs,value=party_tab).classes('w-full'):
                 with ui.tab_panel(party_tab):
-                    ui.label('Party を編集、または最初の空スロットから Pokémon を作成できます。')
+                    ui.label('Party positions 1–6 — 編集は対応するメンバーのみ。作成は最初の空きから順に行います。')
                     creator=report.get('creator',{})
                     if creator and not creator.get('eligible'):
                         ui.label('Create Pokémon 非対応: '+creator['reason'])
@@ -157,6 +173,8 @@ def create_page(rom_path,export_directory=None):
                                         invalidate()
                                     fields['species'].on_value_change(species_changed)
                                     fields['held_item']=select('Create Held item',options['held_item'],0)
+                                    fields['shiny']=ui.checkbox(f'Create Shiny（色違い） — Party #{slot+1}')
+                                    fields['shiny'].on_value_change(lambda _:invalidate())
                                     for field,maximum in (('ivs',31),('evs',252)):
                                         fields[field]=[]
                                         with ui.row():
@@ -166,12 +184,13 @@ def create_page(rom_path,export_directory=None):
                                     fields['moves']=[]
                                     for index in range(4):
                                         fields['moves'].append(select(f'Create Move {index+1}',options['moves'],33 if index==0 and 33 in options['moves'] else 0))
-                                    ui.label('生成 identity: 元 save の OT、通常色、種族名。PID / OT / 色 / Ball / 生成メタデータは編集できません。Pokédex は変更しません。')
+                                    ui.label('生成 identity: 元 save の OT、種族名。色違いは上のチェックで指定。PID / OT / Ball / 生成メタデータは直接編集できません。Pokédex は変更しません。')
                                 else:ui.label('Create Pokémon 非対応')
                             continue
                         mon=report['party'][slot];cap=mon['capabilities'];fields={}
-                        with ui.expansion(f"Party #{slot+1} — {mon.get('species_name') or SPECIES_NAMES.get(mon['species'],'Species #'+str(mon['species']))} • Lv.{mon['level']} • HP {mon['cached_stats'][0]}/{mon['cached_stats'][1]}",value=slot==0).classes('w-full'):
+                        with ui.expansion(f"Party #{slot+1} — {'★ ' if mon.get('shiny') else ''}{mon.get('species_name') or SPECIES_NAMES.get(mon['species'],'Species #'+str(mon['species']))} • Lv.{mon['level']} • HP {mon['cached_stats'][0]}/{mon['cached_stats'][1]}",value=slot==0).classes('w-full'):
                             if mon.get('rejection'):ui.label('非対応: '+mon['rejection'])
+                            ui.label('Main').classes('text-subtitle1')
                             if cap.get('friendship'):fields['friendship']=number(f'Friendship — Party #{slot+1}',mon['friendship'],0,255)
                             if cap.get('e3') and cap.get('stats'):
                                 options=mon['options']
@@ -179,12 +198,10 @@ def create_page(rom_path,export_directory=None):
                                 fields['level']=number('Level',mon['level'],1,100)
                                 fields['experience']=number('EXP',mon['experience'],1,2000000)
                                 ui.label('Level の変更では EXP も再計算します。EXP も変更する場合は Level と一致させてください。')
-                                fields['ivs']=[];fields['evs']=[]
-                                for field,maximum in (('ivs',31),('evs',252)):
-                                    with ui.row():
-                                        for index,name in enumerate(STAT_NAMES):
-                                            fields[field].append(number(f'{name} {field.upper()}',mon[field][index],0,maximum))
-                                ui.label('EV 合計 ≤ 510。現在 HP を下回る最大 HP への減少は非対応です。')
+                                if cap.get('shiny'):
+                                    fields['shiny']=ui.checkbox(f'Shiny（色違い） — Party #{slot+1}',value=bool(mon.get('shiny')))
+                                    fields['shiny'].on_value_change(lambda _:invalidate())
+                                    ui.label('色違い切替は PID のみ変更（OT / TID / 性格 / 性別 / 特性 / IV は維持）。種族変更とは別に行ってください。').classes('text-caption')
                                 fields['effective_nature']=select('Effective nature',{i:name for i,name in enumerate(NATURE_NAMES)},mon['effective_nature'])
                                 def ability_choices(sid):
                                     result={}
@@ -203,17 +220,27 @@ def create_page(rom_path,export_directory=None):
                                 held=dict(options['held_item'])
                                 if mon['held_item'] not in held:held[mon['held_item']]=(mon.get('held_item_name') or str(mon['held_item']))+'（保持のみ）'
                                 fields['held_item']=select('Held item',held,mon['held_item'])
+                                ui.label('Stats').classes('text-subtitle1')
+                                fields['ivs']=[];fields['evs']=[]
+                                for field,maximum in (('ivs',31),('evs',252)):
+                                    with ui.row():
+                                        for index,name in enumerate(STAT_NAMES):
+                                            fields[field].append(number(f'{name} {field.upper()}',mon[field][index],0,maximum))
+                                ui.label('EV 合計 ≤ 510。現在 HP を下回る最大 HP への減少は非対応です。')
                             elif cap.get('stats'):
                                 fields['species']=select('Species',core.party.SPECIES,mon['species'])
                                 ui.label('Level: 読み取り専用 — Level 6 の stat 計算は exact build で未確認です。')
                                 fields['experience']=number('EXP (Lv.5 range)',mon['experience'],135,178)
                                 ui.label('IV / EV — 合計 EV ≤ 510。最大 HP の減少は非対応。')
+                                ui.label('Stats').classes('text-subtitle1')
                                 fields['ivs']=[];fields['evs']=[]
                                 for field,maximum in (('ivs',31),('evs',252)):
                                     with ui.row():
                                         for index,name in enumerate(STAT_NAMES):
                                             fields[field].append(number(f'{name} {field.upper()}',mon[field][index],0,maximum))
                             else:ui.label('Species / Level / EXP / IV / EV: 読み取り専用 — '+cap.get('stats_reason','構造未対応'))
+                            ui.label('Derived stats (read-only): '+', '.join(f'{name} {value}' for name,value in zip(STAT_NAMES,mon['cached_stats'][1:])))
+                            ui.label('Moves').classes('text-subtitle1')
                             with ui.row():
                                 for index,move in enumerate(mon['moves']):
                                     with ui.column():
@@ -227,19 +254,22 @@ def create_page(rom_path,export_directory=None):
                                         else:ui.label(core.party.MOVES.get(move,'Empty' if move==0 else f'Move #{move}'))
                                         if not cap.get('e3') or not cap.get('moves'):
                                             ui.label(f"PP {mon['pp'][index]} • PP-Up {(mon['pp_bonuses']>>(index*2))&3} (read-only)")
-                            ui.label('Stats: '+', '.join(f'{name} {value}' for name,value in zip(STAT_NAMES,mon['cached_stats'][1:])))
-                            ui.label(f"Nature #{mon['effective_nature']} • Held item #{mon['held_item']} • Ball #{mon['ball']} • Ability selector {mon['ability_selector']}")
+                            ui.label(f"Effective nature: {NATURE_NAMES[mon['effective_nature']]} • Held item: {mon.get('held_item_name') or mon['held_item']}")
                             if not cap.get('e3'):ui.label('Ability / nature / held item / ball: 読み取り専用。解決・結合規則が未確立。')
                             if cap.get('e3'):ui.label('空技の未編集 PP は保持します。技変更時はその枠の PP を初期化します。Ball / identity は読み取り専用です。')
                         controls[slot]=fields
                 with ui.tab_panel(items_tab):
-                    ui.label('通常の道具 — 対応する回復薬を編集できます。')
+                    ui.label('Items — 対応する回復薬のみ編集できます。')
                     item_report=report['items']
                     if item_report and item_report.get('e2'):
                         controls['medicine_rows']={}
+                        with ui.row().classes('w-full items-center'):
+                            ui.label('Item').classes('font-bold w-48')
+                            ui.label('Quantity').classes('font-bold w-48')
+                            ui.label('Action').classes('font-bold')
                         for entry in item_report['entries']:
-                            with ui.row():
-                                ui.label(entry['name'])
+                            with ui.row().classes('w-full items-center'):
+                                ui.label(entry['name']).classes('w-48')
                                 if entry['editable']:
                                     quantity=number('Quantity — '+entry['name'],entry['quantity'],1,999)
                                     remove=ui.checkbox('Remove — '+entry['name'])
@@ -254,6 +284,17 @@ def create_page(rom_path,export_directory=None):
                             controls['medicine_name']=select('Item',choices,next(iter(choices)))
                             controls['medicine_quantity']=number('Quantity — Add Item',1,1,999)
                         ui.label('数量は 1〜999。削除は Remove を選択してください。その他の道具は読み取り専用です。')
+                        give_all=item_report.get('give_all') or {}
+                        ui.separator()
+                        controls['give_all']=ui.checkbox(
+                            f"Give All Supported Items — 対応 {give_all.get('supported_items','?')} 種を各 {give_all.get('quantity',99)} 個に")
+                        controls['give_all'].on_value_change(lambda _:invalidate())
+                        if give_all.get('enabled'):
+                            ui.label(f"{give_all['changes']} 種を追加 / 99 に変更します（99 超の所持数は減らしません）。"
+                                     '回復系のみ・全道具ではありません。Give All は他の Items 変更と同時には使えません。').classes('text-caption')
+                        else:
+                            controls['give_all'].disable()
+                            ui.label('Give All 無効: '+str(give_all.get('reason','未対応'))).classes('text-caption')
                     elif item_report:
                         for entry in item_report['entries']:
                             with ui.row():
@@ -268,18 +309,113 @@ def create_page(rom_path,export_directory=None):
                             controls['remove'].on_value_change(lambda _:invalidate())
                         ui.label('Antidote の追加・削除は Potion x1..3 / item #533 x1 / 第3枠とゼロ tail が一致する場合のみ対応。後続枠・容量・一般的な並べ替えは未確立。Give All Supported Ordinary Items は保留。')
                     else:ui.label('Items 非対応: '+report['rejections'].get('items',''))
-                    ui.label('Balls / Berries / TM / Key Items: 編集非対応。Give All は無効です。')
+                    ui.label('Balls / Berries / TM / Key Items: 編集非対応（Give All の対象外）。')
+                with ui.tab_panel(box_tab):
+                    render_boxes(report)
                 with ui.tab_panel(trainer_tab):
                     if report['money']:controls['money']=number('Money',report['money']['money'],0,9999999)
                     else:ui.label('Money 非対応: '+report['rejections'].get('money',''))
-                    ui.label('Trainer identity / story / Pokédex / RTC: 編集非対応。')
+                    ui.label('Trainer identity / story / Pokédex / RTC: read-only; editing is unsupported.')
+
+    def render_boxes(report):
+        boxes=report.get('box');controls['box_edits']={}
+        ui.label('PC Box — Box 1〜19 の既存ポケモンを編集できます（候補版）。Box 20〜25 は閲覧のみ。Box への作成は非対応。')
+        if not boxes:
+            ui.label('PC Box 読み取り非対応: '+report['rejections'].get('box','ROM が必要です'));return
+        by_position={(row['box'],row['position']):row for row in boxes['occupied']}
+        counts={box_number:sum(1 for row in boxes['occupied'] if row['box']==box_number) for box_number in range(1,boxes['boxes']+1)}
+        first=next((box_number for box_number in counts if counts[box_number]),1)
+        ui.label(f"格納数: {len(boxes['occupied'])} 匹。セルを選ぶと下に詳細・編集欄が開きます。★ = 色違い。").classes('text-caption')
+        box_select=ui.select({box_number:f'Box {box_number}（{counts[box_number]} 匹）'+('・閲覧のみ' if box_number>19 else '')
+                              for box_number in counts},value=first,label='Box').classes('w-64')
+        grid=ui.grid(columns=6).classes('gap-1')
+        detail=ui.column().classes('w-full')
+        options=boxes['options']
+
+        def editor(row):
+            key=(row['box'],row['position']);prefix=f"Box {key[0]} #{key[1]}"
+            with detail:
+                container=ui.column().classes('w-full')
+            with container:
+                ui.label(f"{prefix} — {('★ ' if row['shiny'] else '')}{row['species_name']} Lv.{row['level_from_exp']}").classes('text-subtitle1')
+                if not row['editable']:
+                    ui.label('編集不可: '+'; '.join(row['edit_reasons']))
+                    ui.label(f"Held item: {row['held_item_name']} • Moves: {' / '.join(row['move_names'])} • IVs {row['ivs']} • EVs {row['evs']}")
+                    return container,{}
+                mon=row['semantic'];fields={}
+                fields['shiny']=ui.checkbox(f'Shiny（色違い） — {prefix}',value=mon['shiny'])
+                fields['shiny'].on_value_change(lambda _:invalidate())
+                with ui.row():
+                    fields['species']=select(f'Species — {prefix}',options['species'],mon['species'])
+                    fields['level']=number(f'Level — {prefix}',mon['level'],1,100)
+                    fields['effective_nature']=select(f'Nature — {prefix}',{i:n for i,n in enumerate(NATURE_NAMES)},mon['effective_nature'])
+                with ui.row():
+                    abilities={aid:f'特性 #{aid}' for aid in row['ability_options']}
+                    fields['ability']=select(f'Ability — {prefix}',abilities,mon['resolved_ability'])
+                    def update_ability(event,control=fields['ability']):
+                        choices={}
+                        for label,aid in zip(('通常特性 1','通常特性 2','隠れ特性'),options['abilities'][event.value]):
+                            if aid:choices.setdefault(aid,f'{label} (#{aid})')
+                        control.options=choices
+                        if control.value not in choices:control.value=next(iter(choices))
+                        control.update();invalidate()
+                    fields['species'].on_value_change(update_ability)
+                    held=dict(options['held_item'])
+                    if mon['held_item'] not in held:held[mon['held_item']]=row['held_item_name']+'（保持のみ）'
+                    fields['held_item']=select(f'Held item — {prefix}',held,mon['held_item'])
+                    fields['friendship']=number(f'Friendship — {prefix}',mon['friendship'],0,255)
+                for field,maximum in (('ivs',31),('evs',252)):
+                    fields[field]=[]
+                    with ui.row():
+                        for index,name in enumerate(STAT_NAMES):
+                            fields[field].append(number(f'{name} {field.upper()} — {prefix}',mon[field][index],0,maximum))
+                fields['moves']={};fields['pp_up']={}
+                with ui.row():
+                    for index in range(4):
+                        with ui.column():
+                            fields['moves'][index]=select(f'Move {index+1} — {prefix}',options['moves'],mon['moves'][index])
+                            fields['pp_up'][index]=number(f'PP-Up {index+1} — {prefix}',mon['pp_up'][index],0,3)
+                ui.label('Box では PP / 能力値は保存されず、引き出し時にゲームが再計算します。色違いと種族変更は別々に行ってください。').classes('text-caption')
+            return container,fields
+
+        def choose(row):
+            key=(row['box'],row['position'])
+            if key not in controls['box_edits']:
+                container,fields=editor(row)
+                controls['box_edits'][key]=(container,fields,row)
+            for other,(container,_,_) in controls['box_edits'].items():
+                container.set_visibility(other==key)
+
+        def show_box():
+            grid.clear()
+            with grid:
+                for position in range(1,31):
+                    row=by_position.get((box_select.value,position))
+                    if row is None:
+                        ui.button(f'{position}. —').props('flat dense').classes('text-xs w-36').disable();continue
+                    text=f"{position}. {'★' if row['shiny'] else ''}{row['species_name']} Lv{row['level_from_exp']}"
+                    ui.button(text,on_click=lambda _,row=row:choose(row)).props(
+                        'outline dense' if row['editable'] else 'flat dense').classes('text-xs w-36')
+        box_select.on_value_change(lambda _:show_box())
+        show_box()
+        with ui.expansion('一覧（全 Box）').classes('w-full'):
+            rows=[{'box':row['box'],'position':row['position'],
+                   'species':('★ ' if row['shiny'] else '')+(row['species_name'] or f"#{row['species']}"),
+                   'level':row['level_from_exp'],'held':row['held_item_name'],'moves':' / '.join(row['move_names']),
+                   'ivs':'/'.join(map(str,row['ivs'])),'evs':'/'.join(map(str,row['evs'])),
+                   'edit':'可' if row['editable'] else '不可'} for row in boxes['occupied']]
+            columns=[{'name':key,'label':label,'field':key,'align':'left'} for key,label in (
+                ('box','Box'),('position','#'),('species','Species'),('level','Lv'),('held','Held item'),
+                ('moves','Moves'),('ivs','IVs'),('evs','EVs'),('edit','編集'))]
+            if rows:ui.table(columns=columns,rows=rows,row_key='position',pagination=30).classes('w-full')
+            else:ui.label('Box は空です。')
 
     async def upload(event):
         invalidate();preview_button.disable();editor.clear();controls.clear();inspection.clear()
         try:
             report=workflow.upload(event.file.name,await event.file.read())
             inspection.update(report);render(report)
-            status.text='読み込み済み — Party / Items / Trainer から編集できます。'
+            status.text='読み込み済み — Party / Items / PC Box / Trainer を編集できます。'
             details.text=str(report);preview_button.enable()
         except (OSError,ValueError) as exc:status.text=f'REJECTED: {exc}'
 
@@ -296,6 +432,8 @@ def create_page(rom_path,export_directory=None):
                 value=([control_integer(e.value) for e in fields[field]] if field in ('ivs','evs')
                        else control_integer(fields[field].value))
                 if value!=mon['resolved_ability' if field=='ability' else field]:changes[field]=value
+            if 'shiny' in fields and bool(fields['shiny'].value)!=bool(mon.get('shiny')):
+                changes['shiny']=bool(fields['shiny'].value)
             if 'move' in fields and fields['move'].value!=mon['moves'][0]:
                 changes['moves']={0:control_integer(fields['move'].value)}
             for field in ('moves','pp','pp_up'):
@@ -317,8 +455,28 @@ def create_page(rom_path,export_directory=None):
                       ('species','level','nature','friendship','ability','held_item')}
             for key in ('ivs','evs','moves'):
                 creation[key]=[control_integer(c.value) for c in fields[key]]
+            if fields.get('shiny') is not None and fields['shiny'].value:creation['shiny']=True
             creations.append(creation)
         if creations:result['create']=creations
+        box_edits=[]
+        for (box_number,position),(_,fields,row) in controls.get('box_edits',{}).items():
+            if not fields:continue
+            mon=row['semantic'];changes={}
+            if bool(fields['shiny'].value)!=mon['shiny']:changes['shiny']=bool(fields['shiny'].value)
+            for field in ('species','level','effective_nature','held_item','friendship'):
+                value=control_integer(fields[field].value)
+                if value!=mon[field]:changes[field]=value
+            value=control_integer(fields['ability'].value)
+            if value!=mon['resolved_ability']:changes['ability']=value
+            for field in ('ivs','evs'):
+                values=[control_integer(c.value) for c in fields[field]]
+                if values!=mon[field]:changes[field]=values
+            for field in ('moves','pp_up'):
+                mapping={index:control_integer(c.value) for index,c in fields[field].items()
+                         if control_integer(c.value)!=mon[field][index]}
+                if mapping:changes[field]=mapping
+            if changes:box_edits.append({'box':box_number,'position':position,'changes':changes})
+        if box_edits:result['box']=box_edits
         if inspection.get('items') and inspection['items'].get('e2'):
             operations=[]
             for entry in inspection['items']['entries']:
@@ -333,6 +491,9 @@ def create_page(rom_path,export_directory=None):
             if 'add_medicine' in controls and controls['add_medicine'].value:
                 operations.append({'op':'add','item_id':control_integer(controls['medicine_name'].value),
                                    'quantity':control_integer(controls['medicine_quantity'].value)})
+            if 'give_all' in controls and controls['give_all'].value:
+                if operations:raise ValueError('Give All は他の Items 変更と同時に使えません。どちらかを解除してください')
+                operations=[{'op':'give_all'}]
             if operations:result['items']=operations
             return result
         item_changes={}
@@ -348,7 +509,24 @@ def create_page(rom_path,export_directory=None):
         invalidate()
         try:
             report=workflow.preview(request())
-            preview_text.text='Preview\n'+'\n'.join(report['semantic_diff'])
+            groups={'Party':[],'Created Pokémon':[],'PC Box':[],'Items':[],'Trainer':[]}
+            in_creation=False
+            for line in report['semantic_diff']:
+                if line.startswith('Money:'):
+                    groups['Trainer'].append(line);in_creation=False
+                elif line.startswith('Box '):
+                    groups['PC Box'].append(line);in_creation=False
+                elif line.startswith('Party #'):
+                    groups['Party'].append(line);in_creation=False
+                elif line.startswith('Create Pokémon'):
+                    groups['Created Pokémon'].append(line);in_creation=True
+                elif in_creation:
+                    groups['Created Pokémon'].append(line)
+                else:
+                    groups['Items'].append(line)
+            rendered=['Preview — semantic changes']
+            rendered.extend(f"\n{family}\n"+'\n'.join(lines) for family,lines in groups.items() if lines)
+            preview_text.text=''.join(rendered)
             details.text=str(report);status.text='プレビューを確認して出力を作成してください。'
             export_button.enable()
         except (OSError,ValueError) as exc:status.text=f'REJECTED: {exc}'
@@ -385,6 +563,7 @@ def main(argv=None):
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--rom',type=Path,default=core.profile.ROM_DEFAULT)
     parser.add_argument('--port',type=int,default=8766)
+    parser.add_argument('--open',action='store_true',help='open the editor in the default browser')
     parser.add_argument('--export-directory',type=Path,
                         help='Optional existing private directory for exclusive separate save export')
     args=parser.parse_args(argv)
@@ -396,7 +575,8 @@ def main(argv=None):
     if ui is None:raise RuntimeError('install requirements-m4-ui.txt')
     @ui.page('/')
     def page():create_page(args.rom,args.export_directory)
-    options=server_options(args.port);options['title']='PokemonStart v0.22 Practical Editor Candidate'
+    options=server_options(args.port);options['title']='PokemonStart v0.22 Editor'
+    options['show']=bool(args.open)
     ui.run(**options)
     return 0
 

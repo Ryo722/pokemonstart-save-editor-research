@@ -15,12 +15,13 @@ def synthetic_rom():
     struct.pack_into('<I', data, 0x1C8, model.ITEM_TABLE)
     pairs = tuple(x for _, ram, cap, _ in model.POCKETS for x in (ram, cap))
     struct.pack_into('<10I', data, model.DESCRIPTOR - model.ROM_BASE, *pairs)
-    for item, pocket in tuple((i, 1) for i in range(13, 23)) + ((57, 1), (533, 1), (267, 2), (4, 3), (289, 4), (142, 5)):
+    recovery = sorted(set(range(13, 34)) | set(range(38, 42)) | set(range(52, 57)) | {44, 82})
+    for item, pocket in tuple((i, 1) for i in recovery) + ((57, 1), (533, 1), (267, 2), (4, 3), (289, 4), (142, 5)):
         base = model.ITEM_TABLE - model.ROM_BASE + item * 40
         data[base:base + 10] = bytes([0x01, 0xFF]) + bytes(8)
         struct.pack_into('<H', data, base + 10, item)
         data[base + 22] = pocket
-        if 13 <= item <= 22:
+        if item in recovery:
             data[base + 23] = 1
             struct.pack_into('<I', data, base + 24, 0x080A29B5)
             data[base + 28] = 1

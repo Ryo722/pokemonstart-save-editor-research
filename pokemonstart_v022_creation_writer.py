@@ -32,7 +32,9 @@ def derive(raw,rom,requests):
                         'moves':list(request['moves']),'ability':decoded['resolved_ability'],
                         'held_item':decoded['held_item'],'friendship':decoded['friendship'],
                         'ivs':decoded['ivs'],'evs':decoded['evs'],
-                        'identity_policy':'Owner-consistent, non-shiny, default species name; generated identity is not editable'})
+                        'shiny':bool(request.get('shiny')),
+                        'identity_policy':('Owner-consistent, '+('PID-only shiny' if request.get('shiny') else 'non-shiny')
+                                           +', default species name; OT/TID are not editable')})
     proof=independent.audit_output(raw,current,rom,requests)
     return current,{'e4':True,'created':created,'party_count':{'from':source.party_count,'to':source.party_count+len(requests)},
                     'independent_audit':proof}
