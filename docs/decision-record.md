@@ -2,6 +2,9 @@
 
 GitHub `main` is the only durable canonical authority for this project. Detailed proof history lives in the linked evidence/scope records; this file intentionally keeps only the current decision state.
 
+## Proposed exact-v0.30 terminal-goal realignment (2026-10-09)
+
+**Human-directed successor objective:** the exact-v0.30 final product must include Ability/Shiny/Held Item, Pokemon PC editing/creation/movement, bag and PC item storage, and integrated real-game round-trip support. The v0.22 completed milestones remain historical; their narrower scope must not be copied into a v0.30 final-completion claim. See `docs/v030-full-terminal-goal-and-execution-policy.md` (**proposal pending independent review / canonical adoption**). Current v0.30 local work remains unmerged, and the ongoing review candidate is unchanged.
 ## Current Human decision
 
 The independently reviewed exact-v0.22 practical product candidate was explicitly authorized for adoption and merged to canonical `main` through PR #16 at merge commit `ab18419108eeed91288d440a6f154cac33a1cf2e`.
