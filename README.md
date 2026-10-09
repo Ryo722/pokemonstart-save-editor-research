@@ -2,6 +2,9 @@
 
 Evidence-first research and tooling for a user-controlled PokemonStart save editor. Protected game data is not part of this repository.
 
+## Proposed exact-v0.30 terminal-goal realignment (2026-10-09)
+
+**Human-directed successor objective:** the exact-v0.30 final product must include Ability/Shiny/Held Item, Pokemon PC editing/creation/movement, bag and PC item storage, and integrated real-game round-trip support. The v0.22 completed milestones remain historical; their narrower scope must not be copied into a v0.30 final-completion claim. See `docs/v030-full-terminal-goal-and-execution-policy.md` (**proposal pending independent review / canonical adoption**). Current v0.30 local work remains unmerged, and the ongoing review candidate is unchanged.
 ## Current strategy
 
 The project uses a canonical **two-lane model**:
